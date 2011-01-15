@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<project name="Robot" default="compile" basedir=".">
+	<property environment="env"/>
+	<property file="build.properties"/>
+	
+	<property name="src.dir" value="src" />
+	<property name="class.dir" value="classes" />
+	<property name="bin.dir" value="bin" />
+
+	<property name="program" value="Marvin" />
+	<property name="binary.name" value="${program}.nxj" />
+	<property name="binary.path" value="${bin.dir}/${binary.name}" />
+	<property name="robot.address" value="00:16:53:0A:07:1D" />
+
+	<!-- deletes class files -->
+	<target name="clean" description="clean up all generated files">
+		<delete dir="${class.dir}" />
+	</target>
+
+	<target name="clobber" depends="clean" description="clean up all generated files">
+		<delete dir="${bin.dir}" />
+	</target>
+
+	<target name="compile" depends="clean" description="compile the source" >
+		<!-- Compile the java code from ${src}  -->
+		<mkdir dir="${class.dir}" />
+		<javac srcdir="${src.dir}" destdir="${class.dir}" includeantruntime="false">
+			<bootclasspath>
+				<pathelement location="${nxj.classes.jar}"/>
+			</bootclasspath>
+		</javac>
+	</target>
+
+	<target name="link" depends="compile" description="link the binary" >
+		<mkdir dir="${bin.dir}" />
+		<!-- Link the binary and create a signature file -->
+		<java classname="js.tinyvm.TinyVM">
+			<arg value="--bootclasspath"/>
+			<arg path="${nxj.classes.jar}" /> 
+			<arg value="--classpath"/>
+			<arg path="${class.dir}" /> 
+			<arg value="--writeorder" />
+			<arg value="LE" />
+			<arg value="${program}"/>
+			<arg value="-o"/>
+			<arg value="${binary.path}"/>
+			<!--<arg value="-v"/>-->
+			<classpath>
+				<pathelement location="${nxj.jtools.jar}"/>
+				<pathelement location="${nxj.commons.jar}"/>
+				<pathelement location="${nxj.bcel.jar}"/>
+			</classpath>
+		</java>
+	</target>
+
+	<target name="upload" depends="link"
+		description="upload the binary" >
+		<java classname="lejos.pc.tools.NXJUpload" fork="true">
+			<jvmarg value="-Djava.library.path=${nxj.library.path}"/>
+			<jvmarg value="-Dnxj.home=${nxj.home}"/>
+			<arg value="-b" />
+			<arg value="-d ${robot.address}" />
+			<arg value="${binary.path}"/>
+			<classpath>
+				<pathelement location="${nxj.jtools.jar}"/>
+				<pathelement location="${nxj.pctools.jar}"/>
+				<pathelement location="${nxj.pccomm.jar}"/>
+				<pathelement location="${nxj.commons.jar}"/>
+				<pathelement location="${nxj.bcel.jar}"/>
+				<pathelement location="${nxj.bluecove.jar}"/>
+				<pathelement location="${nxj.bluecove-gpl.jar}"/>
+			</classpath>
+		</java>
+	</target>
+
+	<target name="uploadandrun" depends="link"
+		description="upload and run the binary" >
+		<java classname="lejos.pc.tools.NXJUpload" fork="true">
+			<jvmarg value="-Djava.library.path=${nxj.library.path}"/>
+			<jvmarg value="-Dnxj.home=${nxj.home}"/>
+			<arg value="-b" />
+			<arg value="-d ${robot.address}" />
+			<arg value="${binary.path}"/>
+			<arg value="-r"/>
+			<classpath>
+				<pathelement location="${nxj.jtools.jar}"/>
+				<pathelement location="${nxj.pctools.jar}"/>
+				<pathelement location="${nxj.pccomm.jar}"/>
+				<pathelement location="${nxj.commons.jar}"/>
+				<pathelement location="${nxj.bcel.jar}"/>
+				<pathelement location="${nxj.bluecove.jar}"/>
+				<pathelement location="${nxj.bluecove-gpl.jar}"/>
+			</classpath>
+		</java>
+	</target>
+</project>
+
