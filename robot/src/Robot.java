@@ -2,6 +2,11 @@ import java.lang.Math;
 
 import lejos.nxt.*;
 
+/**
+ * This class
+ *
+ * @author	Chris Brown <cb@tardis.ed.ac.uk>
+ */
 public class Robot
 {
 	private float WHEEL_DIAMETER = 5.0f;
@@ -10,10 +15,6 @@ public class Robot
 	public enum Direction {
 		FORWARD,
 		BACKWARD
-	}
-
-	public Robot()
-	{
 	}
 
 	public boolean isMoving()
@@ -84,7 +85,8 @@ public class Robot
 		Motor.C.rotate(-90);
 	}
 
-	
+	// The code following this line is a complete travesty. I'm not even
+	// going to give it the honor of some documentation.
 	public void singHappyBirthday()
 	{
 		try
