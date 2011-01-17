@@ -9,7 +9,7 @@ import lejos.nxt.*;
  */
 public class Robot
 {
-	private float WHEEL_DIAMETER = 5.0f;
+	private float WHEEL_DIAMETER = 5.5f;
 	private double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * Math.PI;
 
 	public enum Direction {
@@ -81,8 +81,8 @@ public class Robot
 
 	public void shoot()
 	{
-		Motor.C.rotate(90);
-		Motor.C.rotate(-90);
+		Motor.C.rotate(180);
+		Motor.C.rotate(-180);
 	}
 
 	// The code following this line is a complete travesty. I'm not even

@@ -17,18 +17,26 @@ public class FatController
 		{
 			e.printStackTrace();
 		}
-		
-
-		OutputStream stream = nxtComm.getOutputStream();
 
 		try
 		{
-			stream.write(1);
-			stream.close();	
+			sendCommand("drivef");
+			sendCommand("driveb");
+			sendCommand("shoot");
+			sendCommand("finish");
 		}
 		catch (IOException e)
 		{
 			System.out.println("IOException");
 		}
+	}
+
+	public void static sendCommand(String command) throws IOException
+	{
+		OutputStream istream = nxtComm.getOutputStream();
+		DataOutputStream stream = new DataOutputStream(istream);
+		stream.writeBytes(command);
+		stream.flush();
+		stream.close();
 	}
 }

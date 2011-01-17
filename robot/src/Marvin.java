@@ -11,41 +11,56 @@ public class Marvin
 		System.out.println("Waiting for a connection...");
 		NXTConnection blueT = Bluetooth.waitForConnection();
 		System.out.println("Got a connection.");
-		InputStream stream = blueT.openInputStream();
+		DataInputStream stream = blueT.openDataInputStream();
+		String data = null;
 
 		while (true)
 		{
 			try
 			{
-				System.out.println("Waiting for a signal...");
-				int data = stream.read();
-				System.out.println("Got a " + data);
+				data = stream.readLine();
 
-				if (data == 0)
+				if (data == null)
 				{
-					System.out.println("Driving forward...");
-					robot.drive(Robot.Direction.FORWARD);
+					System.exit(0);
 				}
 
-				else if (data == 1)
-				{
-					System.out.println("Driving backward...");
-					robot.drive(Robot.Direction.BACKWARD);
-				}
-
-				else if (data == 2)
-				{
-					System.out.println("Shooting...");
-					robot.shoot();
-				}
+				System.out.println("command = " + data);
+				Thread.sleep(5000);
 			}
 
 			catch (IOException e)
 			{
-				System.out.println(e.getMessage());
+				System.out.println("IOERROR");
 				Thread.sleep(5000);
-				System.exit(0);
+			}
+
+			if (data.equals("drivef"))
+			{
+				System.out.println("Driving forward...");
+				robot.drive(Robot.Direction.FORWARD, 20);
+			}
+			
+			else if (data.equals("driveb"))
+			{
+				System.out.println("Driving backward...");
+				robot.drive(Robot.Direction.BACKWARD);
+			}
+
+			else if (data.equals("shoot"))
+			{
+				System.out.println("Shooting...");
+				robot.shoot();
+			}
+
+			else if (data.equals("finish"))
+			{
+				break;
 			}
 		}
+		
+		System.out.println("Exiting...");
+		Thread.sleep(5000);
+		System.exit(0);
 	}
 }
