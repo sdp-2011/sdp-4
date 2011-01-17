@@ -13,7 +13,6 @@ public class FatController
 			NXTInfo nxtInfo = new NXTInfo(NXTCommFactory.BLUETOOTH, "WAR BASTARD", "00:16:53:0A:07:1D");
 			nxtComm.open(nxtInfo);
 		}
-
 		catch (NXTCommException e)
 		{
 			e.printStackTrace();
@@ -24,10 +23,9 @@ public class FatController
 
 		try
 		{
-			stream.write(2);
+			stream.write(1);
 			stream.close();	
 		}
-
 		catch (IOException e)
 		{
 			System.out.println("IOException");
