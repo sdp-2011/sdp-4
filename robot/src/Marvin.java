@@ -38,13 +38,13 @@ public class Marvin
 			if (data.equals("drivef"))
 			{
 				System.out.println("Driving forward...");
-				robot.drive(Robot.Direction.FORWARD, 20);
+				robot.drive(20.0f);
 			}
 			
 			else if (data.equals("driveb"))
 			{
 				System.out.println("Driving backward...");
-				robot.drive(Robot.Direction.BACKWARD);
+				robot.drive(-20.0f);
 			}
 
 			else if (data.equals("shoot"))

@@ -1,6 +1,8 @@
 import java.lang.Math;
 
 import lejos.nxt.*;
+import lejos.robotics.navigation.Pilot;
+import lejos.robotics.navigation.TachoPilot;
 
 /**
  * This class
@@ -9,63 +11,35 @@ import lejos.nxt.*;
  */
 public class Robot
 {
-	private float WHEEL_DIAMETER = 5.5f;
-	private double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * Math.PI;
+	private Motor LEFT_MOTOR = Motor.A;
+	private Motor RIGHT_MOTOR = Motor.B;
 
-	public enum Direction {
-		FORWARD,
-		BACKWARD
+	private Motor SHOOT_MOTOR = Motor.C;
+	private int SHOOT_ANGLE = 180;
+
+	private float WHEEL_DIAMETER = 5.5f;
+	private float TRACK_WIDTH = 10.0f;
+
+	private Pilot pilot;
+
+	public Robot()
+	{
+		pilot = new TachoPilot(WHEEL_DIAMETER, TRACK_WIDTH, LEFT_MOTOR, RIGHT_MOTOR);
 	}
 
 	public boolean isMoving()
 	{
-		return (Motor.A.isMoving() || Motor.B.isMoving());
+		return pilot.isMoving();
 	}
 
-	public void drive(Direction direction)
+	public void drive(float distance)
 	{
-		if (direction.equals(Direction.FORWARD))
-		{
-			Motor.A.forward();
-			Motor.B.forward();
-		}
-		else if (direction.equals(Direction.BACKWARD))
-		{
-			Motor.A.backward();
-			Motor.B.backward();
-		}
-	}
-
-	public void drive(Direction direction, int distance)
-	{
-		double rotations = distance / WHEEL_CIRCUMFERENCE;
-		int angle = (int)(rotations * 360);
-
-		if (direction.equals(Direction.BACKWARD))
-		{
-			angle *= -1;
-		}
-
-		Motor.A.rotate(angle, true);
-		Motor.B.rotate(angle, true);
-	}
-
-	public void reverseDirection()
-	{
-		Motor.A.reverseDirection();
-		Motor.B.reverseDirection();
-	}
-
-	public void floatMotors()
-	{
-		Motor.A.flt();
-		Motor.B.flt();
+		pilot.travel(distance, true);
 	}
 
 	public void stop()
 	{
-		Motor.A.stop();
-		Motor.B.stop();
+		pilot.stop();
 	}
 
 	public void hold()
@@ -75,14 +49,14 @@ public class Robot
 
 	public void hold(int power)
 	{
-		Motor.A.lock(power);
-		Motor.B.lock(power);
+		LEFT_MOTOR.lock(power);
+		RIGHT_MOTOR.lock(power);
 	}
 
 	public void shoot()
 	{
-		Motor.C.rotate(180);
-		Motor.C.rotate(-180);
+		SHOOT_MOTOR.rotate(SHOOT_ANGLE);
+		SHOOT_MOTOR.rotate(-SHOOT_ANGLE);
 	}
 
 	// The code following this line is a complete travesty. I'm not even
@@ -121,21 +95,12 @@ public class Robot
 			playNote(587,500);
 			playNote(523,500);
 		}
-		catch (InterruptedException e)
-		{
-		}
+		catch (InterruptedException e) {}
 	}
 
-	private void playNote(int frequency, int length)
+	private void playNote(int frequency, int length) throws InterruptedException
 	{
 		Sound.playTone(frequency, length);
-
-		try
-		{
-			Thread.sleep(length);
-		}
-		catch (InterruptedException e)
-		{
-		}
+		Thread.sleep(length);
 	}
 }
