@@ -3,10 +3,10 @@ import java.io.*;
 
 public class FatController
 {
-	public static void main(String[] args)
-	{
-		NXTComm nxtComm = null;
+	private NXTComm nxtComm;
 
+	public FatController()
+	{
 		try
 		{
 			nxtComm = NXTCommFactory.createNXTComm(NXTCommFactory.BLUETOOTH);
@@ -17,26 +17,56 @@ public class FatController
 		{
 			e.printStackTrace();
 		}
-
-		try
-		{
-			sendCommand("drivef");
-			sendCommand("driveb");
-			sendCommand("shoot");
-			sendCommand("finish");
-		}
-		catch (IOException e)
-		{
-			System.out.println("IOException");
-		}
 	}
 
-	public void static sendCommand(String command) throws IOException
+	public void drivef(int distance)
 	{
-		OutputStream istream = nxtComm.getOutputStream();
-		DataOutputStream stream = new DataOutputStream(istream);
-		stream.writeBytes(command);
-		stream.flush();
-		stream.close();
+		//calls drive on the robot
+		sendCommand("drivef," + distance);
+	}
+
+	public void driveb(int distance)
+	{
+		//calls drive on the robot
+		sendCommand("driveb," + distance);
+	}
+
+	public void shoot()
+	{
+		//calls shoot on the robot
+		sendCommand("shoot");
+	}
+
+	public void finish()
+	{
+		//calls finish on robot
+		try
+		{
+			nxtComm.close();
+		}
+
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+
+		sendCommand("finish");
+	}
+
+	private void sendCommand(String command)
+	{
+		try
+		{
+			OutputStream istream = nxtComm.getOutputStream();
+			DataOutputStream stream = new DataOutputStream(istream);
+			stream.writeBytes(command);
+			stream.flush();
+			stream.close();
+		}
+
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 }
