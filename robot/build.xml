@@ -41,6 +41,7 @@
 			<arg path="${class.dir}" /> 
 			<arg value="--writeorder" />
 			<arg value="LE" />
+			<arg value="-v" />
 			<arg value="${program}"/>
 			<arg value="-o"/>
 			<arg value="${binary.path}"/>
@@ -55,43 +56,21 @@
 
 	<target name="upload" depends="link"
 		description="upload the binary" >
-		<java classname="lejos.pc.tools.NXJUpload" fork="true">
-			<jvmarg value="-Djava.library.path=${nxj.library.path}"/>
-			<jvmarg value="-Dnxj.home=${nxj.home}"/>
+		<exec executable="nxjupload" error="/dev/null">
 			<arg value="-b" />
-			<arg value="-d ${robot.address}" />
-			<arg value="${binary.path}"/>
-			<classpath>
-				<pathelement location="${nxj.jtools.jar}"/>
-				<pathelement location="${nxj.pctools.jar}"/>
-				<pathelement location="${nxj.pccomm.jar}"/>
-				<pathelement location="${nxj.commons.jar}"/>
-				<pathelement location="${nxj.bcel.jar}"/>
-				<pathelement location="${nxj.bluecove.jar}"/>
-				<pathelement location="${nxj.bluecove-gpl.jar}"/>
-			</classpath>
-		</java>
+			<arg value="-d${robot.address}" />
+			<arg value="${binary.path}" />
+		</exec>
 	</target>
 
-	<target name="uploadandrun" depends="link"
-		description="upload and run the binary" >
-		<java classname="lejos.pc.tools.NXJUpload" fork="true">
-			<jvmarg value="-Djava.library.path=${nxj.library.path}"/>
-			<jvmarg value="-Dnxj.home=${nxj.home}"/>
+	<target name="run" depends="link"
+		description="upload the binary" >
+		<exec executable="nxjupload">
 			<arg value="-b" />
-			<arg value="-d ${robot.address}" />
-			<arg value="${binary.path}"/>
-			<arg value="-r"/>
-			<classpath>
-				<pathelement location="${nxj.jtools.jar}"/>
-				<pathelement location="${nxj.pctools.jar}"/>
-				<pathelement location="${nxj.pccomm.jar}"/>
-				<pathelement location="${nxj.commons.jar}"/>
-				<pathelement location="${nxj.bcel.jar}"/>
-				<pathelement location="${nxj.bluecove.jar}"/>
-				<pathelement location="${nxj.bluecove-gpl.jar}"/>
-			</classpath>
-		</java>
+			<arg value="-d${robot.address}" />
+			<arg value="-r" />
+			<arg value="${binary.path}" />
+		</exec>
 	</target>
 </project>
 
