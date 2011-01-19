@@ -30,25 +30,25 @@ public class FatController
 	public void drivef(int distance)
 	{
 		//calls drive on the robot
-		sendCommand("drivef," + distance);
+		sendCommand(0, distance);
 	}
 
 	public void driveb(int distance)
 	{
 		//calls drive on the robot
-		sendCommand("driveb," + distance);
+		sendCommand(1, distance);
 	}
 
 	public void shoot()
 	{
 		//calls shoot on the robot
-		sendCommand("shoot");
+		sendCommand(2, 0);
 	}
 
 	public void finish()
 	{
 		//calls finish on robot
-		sendCommand("finish");
+		sendCommand(3, 0);
 
 		try
 		{
@@ -63,11 +63,12 @@ public class FatController
 		}
 	}
 
-	private void sendCommand(String command)
+	private void sendCommand(int command, int argument)
 	{
 		try
 		{
-			dataOut.writeBytes(command);
+			dataOut.writeInt(command);
+			dataOut.writeInt(argument);
 			dataOut.flush();
 		}
 

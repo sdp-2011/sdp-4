@@ -4,13 +4,13 @@ public class Test
 	{
 		FatController fatty = new FatController();
 		fatty.drivef(40);
-		Thread.sleep(5000);
+		Thread.sleep(100);
 		fatty.driveb(20);
-		Thread.sleep(5000);
+		Thread.sleep(100);
 		fatty.drivef(20);
-		Thread.sleep(5000);
+		Thread.sleep(100);
 		fatty.shoot();
-		Thread.sleep(5000);
+		Thread.sleep(100);
 		fatty.finish();
 	}
 }
