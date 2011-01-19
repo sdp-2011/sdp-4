@@ -22,29 +22,28 @@ public class Marvin
 				int command = communicator.getCommand();
 				int argument = communicator.getArgument();
 
-			}
+				LCD.drawInt(command, 0, 4);
+				LCD.drawInt(argument, 0, 5);
 
-			LCD.drawInt(command, 0, 4);
-			LCD.drawInt(argument, 0, 5);
+				if (command == 0)
+				{
+					robot.drive((float)argument);
+				}
+				else if (command == 1)
+				{
+					robot.drive((float)argument);
+				}
+				else if (command == 2)
+				{
+					robot.shoot();
+				}
+				else if (command == 3)
+				{
+					break;
+				}
 
-			if (command == 0)
-			{
-				robot.drive((float)argument);
+				communicator.commandRecieved = false;
 			}
-			else if (command == 1)
-			{
-				robot.drive((float)argument);
-			}
-			else if (command == 2)
-			{
-				robot.shoot();
-			}
-			else if (command == 3)
-			{
-				break;
-			}
-
-			communicator.commandRecieved = false;
 		}
 		
 		System.exit(0);
