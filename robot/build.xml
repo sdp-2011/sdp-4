@@ -54,8 +54,7 @@
 		</java>
 	</target>
 
-	<target name="upload" depends="link"
-		description="upload the binary" >
+	<target name="upload" description="upload the binary" >
 		<exec executable="nxjupload" error="/dev/null">
 			<arg value="-b" />
 			<arg value="-d${robot.address}" />
@@ -63,9 +62,8 @@
 		</exec>
 	</target>
 
-	<target name="run" depends="link"
-		description="upload the binary" >
-		<exec executable="nxjupload">
+	<target name="run" description="upload the binary" >
+		<exec executable="nxjupload" error="/dev/null">
 			<arg value="-b" />
 			<arg value="-d${robot.address}" />
 			<arg value="-r" />
