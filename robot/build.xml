@@ -45,7 +45,6 @@
 			<arg value="${program}"/>
 			<arg value="-o"/>
 			<arg value="${binary.path}"/>
-			<!--<arg value="-v"/>-->
 			<classpath>
 				<pathelement location="${nxj.jtools.jar}"/>
 				<pathelement location="${nxj.commons.jar}"/>
