@@ -5,11 +5,9 @@ import java.util.Queue;
 
 public class Communicator
 {
-	//public static boolean commandRecieved = false;
-	//public static int command = -1;
-	//public static int argument = -1;
-
-	public static Queue commands;
+	public static boolean commandRecieved = false;
+	public static int command = -1;
+	public static int argument = -1;
 
 	private static BTConnection connection;
 	private static DataOutputStream dataOut;
@@ -21,15 +19,19 @@ public class Communicator
 
 	public Communicator()
 	{
-		commands = new Queue();
 		//delegate = cd;
 		new Thread(new CommandReciever()).start();
 	}
 
-	public int[] getCommand()
+	public int getCommand()
 	{
-		//commandRecieved = !commands.empty();
-		return (int[]) commands.pop();
+		commandRecieved = false;
+		return command;
+	}
+
+	public int getArgument()
+	{
+		return argument;
 	}
 
 	private class CommandReciever implements Runnable
@@ -46,13 +48,11 @@ public class Communicator
 			{
 				try
 				{
-					Integer[] command = new Integer[2];
-					command[0] = dataIn.readInt();
-					command[1] = dataIn.readInt();
-					commands.push(command);
-					//commandRecieved = true;
-					LCD.drawInt(command[0], 0, 1);
-					LCD.drawInt(command[1], 0, 2);
+					command = dataIn.readInt();
+					argument = dataIn.readInt();
+					commandRecieved = true;
+					LCD.drawInt(command, 0, 1);
+					LCD.drawInt(argument, 0, 2);
 				}
 				catch (IOException e)
 				{
