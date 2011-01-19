@@ -17,27 +17,26 @@ public class Marvin
 				break;
 			}
 
-			if (communicator.commandRecieved)
+			if (!communicator.commands.empty())
 			{
-				int command = communicator.getCommand();
-				int argument = communicator.getArgument();
+				int[] command = communicator.getCommand();
 
-				LCD.drawInt(command, 0, 4);
-				LCD.drawInt(argument, 0, 5);
+				LCD.drawInt(command[0], 0, 4);
+				LCD.drawInt(command[1], 0, 5);
 
-				if (command == 0)
+				if (command[0] == 0)
 				{
-					robot.drive((float)argument);
+					robot.drive((float)command[1]);
 				}
-				else if (command == 1)
+				else if (command[0] == 1)
 				{
-					robot.drive((float)argument);
+					robot.drive((float)command[1]);
 				}
-				else if (command == 2)
+				else if (command[0] == 2)
 				{
 					robot.shoot();
 				}
-				else if (command == 3)
+				else if (command[0] == 3)
 				{
 					break;
 				}
