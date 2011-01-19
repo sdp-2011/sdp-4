@@ -5,6 +5,7 @@ public class Test
 		FatController fatty = new FatController();
 		fatty.drivef(40);
 		fatty.driveb(20);
+		fatty.drivef(20);
 		fatty.shoot();
 		fatty.finish();
 	}

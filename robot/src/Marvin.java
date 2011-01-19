@@ -18,14 +18,18 @@ public class Marvin
 		{
 			try
 			{
-				data = split(stream.readLine());
+				String idata = stream.readLine();
 
-				if (data == null)
+				if (idata == null)
 				{
+					System.out.println("Recieved null command");
+					Thread.sleep(1000);
 					System.exit(0);
 				}
 
-				System.out.println("command = " + data[0]);
+				data = split(idata);
+
+				System.out.println("command = " + idata);
 				Thread.sleep(5000);
 			}
 
@@ -43,7 +47,7 @@ public class Marvin
 
 			else if (data[0].equals("driveb"))
 			{
-				System.out.println("Driving forward....");
+				System.out.println("Driving backward....");
 				robot.drive(Float.parseFloat(data[1]));
 			}
 

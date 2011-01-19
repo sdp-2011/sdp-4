@@ -40,6 +40,8 @@ public class FatController
 	public void finish()
 	{
 		//calls finish on robot
+		sendCommand("finish");
+
 		try
 		{
 			nxtComm.close();
@@ -49,8 +51,6 @@ public class FatController
 		{
 			e.printStackTrace();
 		}
-
-		sendCommand("finish");
 	}
 
 	private void sendCommand(String command)
