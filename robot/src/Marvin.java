@@ -17,7 +17,7 @@ public class Marvin
 				break;
 			}
 
-			if (!communicator.commandRecieved)
+			if (communicator.commandRecieved)
 			{
 				int command = communicator.getCommand();
 				int argument = communicator.getArgument();
