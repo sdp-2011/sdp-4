@@ -42,7 +42,7 @@ IplImage *process(IplImage **_img)
 
 	// Look for the red colour and create a mask of just red objects
 	CvMat *mask = cvCreateMat(size.height,size.width,CV_8UC1);
-	cvInRangeS(hsv,cvScalar(0.00*256,0.60*256,0.20*256,0),
+	cvInRangeS(hsv,cvScalar(0.00*256,0.50*256,0.50*256,0),
 				   cvScalar(0.05*256,1.0*256,1.0*256,0), mask);
 	cvReleaseImage(&hsv);
 
@@ -54,7 +54,8 @@ IplImage *process(IplImage **_img)
 	cvOpen(mask,mask,se11);
 	cvReleaseStructuringElement(&se21);
 	cvReleaseStructuringElement(&se11);
-	
+	cvNamedWindow("Mask:",CV_WINDOW_AUTOSIZE);
+	cvShowImage("Mask:",mask);	
 	// Perform Hough Transform
 	IplImage *contourImage = cvCreateImage(size,8,1);                                 
 	cvCopy(mask,contourImage,NULL);
