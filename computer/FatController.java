@@ -67,7 +67,7 @@ public class FatController
 	{
 		try
 		{
-			dataOut.writeUTF(command);
+			dataOut.writeBytes(command);
 			dataOut.flush();
 		}
 
