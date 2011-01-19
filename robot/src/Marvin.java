@@ -12,7 +12,7 @@ public class Marvin
 
 		while (true)
 		{
-			if (Button.isPressed)
+			if (Button.ESCAPE.isPressed())
 			{
 				System.exit(0);
 			}

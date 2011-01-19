@@ -1,33 +1,47 @@
+import java.io.*;
+import lejos.nxt.*;
+import lejos.nxt.comm.*;
+
 public class Communicator
 {
-	public static boolean commandRecieved = false
+	public static boolean commandRecieved = false;
 
-	private DataOutputStream dataOut;
-	private DataIntputStream dataIn;
+	private static BTConnection connection;
+	private static DataOutputStream dataOut;
+	private static DataInputStream dataIn;
 
 	private static boolean keepReceiving = true;
 
 	public Communicator()
 	{
-		LCD.drawString("No connection...");
-		BTConnection connection = Bluetooth.waitForConnection();
-		dataOut = connection.openDataOutputStream();
-		dataIn = connection.openDataIntputStream();
-		LCD.drawString("Connection Opened");
-
-		new Thread(CommandReciever).start();
+		new Thread(new CommandReciever()).start();
 	}
 
 	private class CommandReciever implements Runnable
 	{
 		public void run()
 		{
+			LCD.drawString("No connection...", 0, 0);
+			connection = Bluetooth.waitForConnection();
+			LCD.drawString("Connection Open", 0, 0);
+			dataOut = connection.openDataOutputStream();
+			dataIn = connection.openDataInputStream();
+
 			while (keepReceiving)
 			{
 				commandRecieved = false;
-				String command = dataIn.readUTF();
-				commandRecieved = true;
-				LCD.drawString(command, 1, 0);
+
+				try
+				{
+					String command = dataIn.readLine();
+					commandRecieved = true;
+					LCD.drawString(command, 0, 1);
+				}
+				catch (IOException e)
+				{
+					LCD.drawString("Connection Done", 0, 0);
+					keepReceiving = false;
+				}
 			}
 		}
 	}

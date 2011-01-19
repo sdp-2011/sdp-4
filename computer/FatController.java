@@ -11,15 +11,15 @@ public class FatController
 	{
 		try
 		{
-			System.out.print("Attempting connection with robot... ")
+			System.out.println("Attempting connection with robot...");
 			nxtComm = NXTCommFactory.createNXTComm(NXTCommFactory.BLUETOOTH);
 			NXTInfo nxtInfo = new NXTInfo(NXTCommFactory.BLUETOOTH, "WAR BASTARD", "00:16:53:0A:07:1D");
 			nxtComm.open(nxtInfo);
-			System.out.println("COMPLETED")
+			System.out.println("Connection achieved!");
 		}
 		catch (NXTCommException e)
 		{
-			System.out.println("FAILED")
+			System.out.println("FAILED");
 			e.printStackTrace();
 		}
 
@@ -67,8 +67,8 @@ public class FatController
 	{
 		try
 		{
-			stream.writeUTF(command);
-			stream.flush();
+			dataOut.writeUTF(command);
+			dataOut.flush();
 		}
 
 		catch (IOException e)
