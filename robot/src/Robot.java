@@ -15,7 +15,7 @@ public class Robot
 	private Motor RIGHT_MOTOR = Motor.B;
 
 	private Motor SHOOT_MOTOR = Motor.C;
-	private int SHOOT_ANGLE = 180;
+	private int SHOOT_ANGLE = 90;
 
 	private float WHEEL_DIAMETER = 5.5f;
 	private float TRACK_WIDTH = 10.0f;
@@ -24,7 +24,11 @@ public class Robot
 
 	public Robot()
 	{
-		pilot = new TachoPilot(WHEEL_DIAMETER, TRACK_WIDTH, LEFT_MOTOR, RIGHT_MOTOR);
+		pilot = new TachoPilot(WHEEL_DIAMETER, TRACK_WIDTH, LEFT_MOTOR, RIGHT_MOTOR, true);
+
+		Motor.A.setSpeed(900);
+		Motor.B.setSpeed(900);
+		Motor.C.setSpeed(900);
 	}
 
 	public boolean isMoving()
