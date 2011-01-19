@@ -8,6 +8,7 @@ public class Marvin
 	public static void main(String [] args) throws InterruptedException
 	{
 		Robot robot = new Robot();
+<<<<<<< Updated upstream
 		Communicator communicator = new Communicator();
 
 		while (true)
@@ -22,6 +23,32 @@ public class Marvin
 
 			//}
 
+=======
+		robot.shoot();
+
+		Motor.A.backward();
+		Motor.B.backward();
+
+		Thread.sleep(3000);
+
+		Motor.B.reverseDirection();
+
+		Thread.sleep(3000);
+
+		Motor.A.stop();
+		Motor.B.stop();
+
+		robot.singHappyBirthday();
+		Button.waitForPress();
+		//System.out.println("Waiting for a connection...");
+		//NXTConnection blueT = Bluetooth.waitForConnection();
+		//System.out.println("Got a connection.");
+		//DataInputStream stream = blueT.openDataInputStream();
+		//String[] data = null;
+
+		//while (true)
+		//{
+>>>>>>> Stashed changes
 			//try
 			//{
 				//String idata = stream.readLine();
@@ -54,7 +81,11 @@ public class Marvin
 			//else if (data[0].equals("driveb"))
 			//{
 				//System.out.println("Driving backward....");
+<<<<<<< Updated upstream
 				//robot.drive(-Float.parseFloat(data[1]));
+=======
+				//robot.drive(Float.parseFloat(data[1]));
+>>>>>>> Stashed changes
 			//}
 
 			//else if (data[0].equals("shoot"))
