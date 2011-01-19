@@ -4,19 +4,27 @@ import java.io.*;
 public class FatController
 {
 	private NXTComm nxtComm;
+	private DataInputStream dataIn;
+	private DataOutputStream dataOut;
 
 	public FatController()
 	{
 		try
 		{
+			System.out.print("Attempting connection with robot... ")
 			nxtComm = NXTCommFactory.createNXTComm(NXTCommFactory.BLUETOOTH);
 			NXTInfo nxtInfo = new NXTInfo(NXTCommFactory.BLUETOOTH, "WAR BASTARD", "00:16:53:0A:07:1D");
 			nxtComm.open(nxtInfo);
+			System.out.println("COMPLETED")
 		}
 		catch (NXTCommException e)
 		{
+			System.out.println("FAILED")
 			e.printStackTrace();
 		}
+
+		dataOut = new DataOutputStream(nxtComm.getOutputStream());
+		dataIn = new DataInputStream(nxtComm.getInputStream());
 	}
 
 	public void drivef(int distance)
@@ -44,6 +52,8 @@ public class FatController
 
 		try
 		{
+			dataIn.close();
+			dataOut.close();
 			nxtComm.close();
 		}
 
@@ -57,11 +67,8 @@ public class FatController
 	{
 		try
 		{
-			OutputStream istream = nxtComm.getOutputStream();
-			DataOutputStream stream = new DataOutputStream(istream);
-			stream.writeBytes(command);
+			stream.writeUTF(command);
 			stream.flush();
-			stream.close();
 		}
 
 		catch (IOException e)
