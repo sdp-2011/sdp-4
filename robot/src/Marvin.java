@@ -8,79 +8,45 @@ public class Marvin
 	public static void main(String [] args) throws InterruptedException
 	{
 		Robot robot = new Robot();
-		System.out.println("Waiting for a connection...");
-		NXTConnection blueT = Bluetooth.waitForConnection();
-		System.out.println("Got a connection.");
-		DataInputStream stream = blueT.openDataInputStream();
-		String[] data = null;
+		Communicator communicator = new Communicator();
 
 		while (true)
 		{
-			try
-			{
-				String idata = stream.readLine();
-
-				if (idata == null)
-				{
-					System.out.println("Recieved null command");
-					Thread.sleep(1000);
-					System.exit(0);
-				}
-
-				data = split(idata);
-
-				System.out.println("command = " + idata);
-				Thread.sleep(5000);
-			}
-
-			catch (IOException e)
-			{
-				System.out.println("IOERROR");
-				Thread.sleep(5000);
-			}
-
-			if (data[0].equals("drivef"))
-			{
-				System.out.println("Driving forward....");
-				robot.drive(Float.parseFloat(data[1]));
-			}
-
-			else if (data[0].equals("driveb"))
-			{
-				System.out.println("Driving backward....");
-				robot.drive(Float.parseFloat(data[1]));
-			}
-
-			else if (data[0].equals("shoot"))
-			{
-				System.out.println("Shooting...");
-				robot.shoot();
-			}
-
-			else if (data[0].equals("finish"))
+			if (Button.ESCAPE.isPressed())
 			{
 				break;
 			}
+
+			if (communicator.commandRecieved)
+			{
+				int command = communicator.getCommand();
+				int argument = communicator.getArgument();
+
+			}
+
+			LCD.drawInt(command, 0, 4);
+			LCD.drawInt(argument, 0, 5);
+
+			if (command == 0)
+			{
+				robot.drive((float)argument);
+			}
+			else if (command == 1)
+			{
+				robot.drive((float)argument);
+			}
+			else if (command == 2)
+			{
+				robot.shoot();
+			}
+			else if (command == 3)
+			{
+				break;
+			}
+
+			communicator.commandRecieved = false;
 		}
 		
-		System.out.println("Exiting...");
-		Thread.sleep(1000);
 		System.exit(0);
-	}
-
-	private static String[] split(String line)
-	{
-		String[] arr = new String[2];
-		int split = line.indexOf(",");
-
-		if (split == -1)
-		{
-			return new String[] { line };
-		}
-		
-		arr[0] = line.substring(0, split);
-		arr[1] = line.substring(split+1, line.length());
-
-		return arr;
 	}
 }

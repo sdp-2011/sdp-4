@@ -7,7 +7,7 @@ import lejos.robotics.navigation.TachoPilot;
 /**
  * This class
  *
- * @author	Chris Brown <cb@tardis.ed.ac.uk>
+ * @author Chris Brown <cb@tardis.ed.ac.uk>
  */
 public class Robot
 {

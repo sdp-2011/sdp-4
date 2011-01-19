@@ -4,46 +4,56 @@ import java.io.*;
 public class FatController
 {
 	private NXTComm nxtComm;
+	private DataInputStream dataIn;
+	private DataOutputStream dataOut;
 
 	public FatController()
 	{
 		try
 		{
+			System.out.println("Attempting connection with robot...");
 			nxtComm = NXTCommFactory.createNXTComm(NXTCommFactory.BLUETOOTH);
 			NXTInfo nxtInfo = new NXTInfo(NXTCommFactory.BLUETOOTH, "WAR BASTARD", "00:16:53:0A:07:1D");
 			nxtComm.open(nxtInfo);
+			System.out.println("Connection achieved!");
 		}
 		catch (NXTCommException e)
 		{
+			System.out.println("FAILED");
 			e.printStackTrace();
 		}
+
+		dataOut = new DataOutputStream(nxtComm.getOutputStream());
+		dataIn = new DataInputStream(nxtComm.getInputStream());
 	}
 
 	public void drivef(int distance)
 	{
 		//calls drive on the robot
-		sendCommand("drivef," + distance);
+		sendCommand(0, distance);
 	}
 
 	public void driveb(int distance)
 	{
 		//calls drive on the robot
-		sendCommand("driveb," + distance);
+		sendCommand(1, distance);
 	}
 
 	public void shoot()
 	{
 		//calls shoot on the robot
-		sendCommand("shoot");
+		sendCommand(2, 0);
 	}
 
 	public void finish()
 	{
 		//calls finish on robot
-		sendCommand("finish");
+		sendCommand(3, 0);
 
 		try
 		{
+			dataIn.close();
+			dataOut.close();
 			nxtComm.close();
 		}
 
@@ -53,15 +63,13 @@ public class FatController
 		}
 	}
 
-	private void sendCommand(String command)
+	private void sendCommand(int command, int argument)
 	{
 		try
 		{
-			OutputStream istream = nxtComm.getOutputStream();
-			DataOutputStream stream = new DataOutputStream(istream);
-			stream.writeBytes(command);
-			stream.flush();
-			stream.close();
+			dataOut.writeInt(command);
+			dataOut.writeInt(argument);
+			dataOut.flush();
 		}
 
 		catch (IOException e)
