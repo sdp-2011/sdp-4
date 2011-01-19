@@ -1,12 +1,15 @@
 import java.io.*;
 import lejos.nxt.*;
 import lejos.nxt.comm.*;
+import java.util.Queue;
 
 public class Communicator
 {
-	public static boolean commandRecieved = false;
-	public static int command = -1;
-	public static int argument = -1;
+	//public static boolean commandRecieved = false;
+	//public static int command = -1;
+	//public static int argument = -1;
+
+	public static Queue commands;
 
 	private static BTConnection connection;
 	private static DataOutputStream dataOut;
@@ -18,19 +21,15 @@ public class Communicator
 
 	public Communicator()
 	{
+		commands = new Queue();
 		//delegate = cd;
 		new Thread(new CommandReciever()).start();
 	}
 
-	public int getCommand()
+	public int[] getCommand()
 	{
-		commandRecieved = false;
-		return command;
-	}
-
-	public int getArgument()
-	{
-		return argument;
+		//commandRecieved = !commands.empty();
+		return (int[]) commands.pop();
 	}
 
 	private class CommandReciever implements Runnable
@@ -47,11 +46,13 @@ public class Communicator
 			{
 				try
 				{
-					command = dataIn.readInt();
-					argument = dataIn.readInt();
-					commandRecieved = true;
-					LCD.drawInt(command, 0, 1);
-					LCD.drawInt(argument, 0, 2);
+					Integer[] command = new Integer[2];
+					command[0] = dataIn.readInt();
+					command[1] = dataIn.readInt();
+					commands.push(command);
+					//commandRecieved = true;
+					LCD.drawInt(command[0], 0, 1);
+					LCD.drawInt(command[1], 0, 2);
 				}
 				catch (IOException e)
 				{
