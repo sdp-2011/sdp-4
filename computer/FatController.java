@@ -63,7 +63,8 @@ public class FatController
 		}
 	}
 
-	private void sendCommand(int command, int argument)
+	//change this back!!!!!!!
+	public void sendCommand(int command, int argument)
 	{
 		try
 		{

@@ -1,16 +1,22 @@
+import java.io.*;
+
 public class Test
 {
-	public static void main(String[] args) throws InterruptedException
+	public static void main(String[] args) throws InterruptedException, IOException
 	{
+		BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
 		FatController fatty = new FatController();
-		fatty.drivef(40);
-		Thread.sleep(100);
-		fatty.driveb(20);
-		Thread.sleep(100);
-		fatty.drivef(20);
-		Thread.sleep(100);
-		fatty.shoot();
-		Thread.sleep(100);
-		fatty.finish();
-	}
+		
+		while (true)
+		{
+			System.out.println("Command?");
+			String command = keyboard.readLine();
+
+			System.out.println("Argument?");
+			String argument = keyboard.readLine();
+
+			fatty.sendCommand(Integer.parseInt(command), Integer.parseInt(argument));
+		}
+	}	
+
 }
