@@ -7,6 +7,10 @@ public class Marvin
 {
 	public static void main(String [] args) throws InterruptedException
 	{
+
+		TouchSensor sensor1 = new TouchSensor(SensorPort.S1);
+		TouchSensor sensor2 = new TouchSensor(SensorPort.S2);
+		UltrasonicSensor sensor3 = new UltrasonicSensor(SensorPort.S3);
 		Robot robot = new Robot();
 		Communicator communicator = new Communicator();
 
@@ -40,6 +44,14 @@ public class Marvin
 				{
 					break;
 				}
+			}
+
+			if ((sensor1.isPressed() == true) || (sensor2.isPressed() == true)){
+				robot.drive(-20);
+			}
+
+			if (sensor3.getDistance()<10) {
+				robot.drive(10);
 			}
 		}
 		
