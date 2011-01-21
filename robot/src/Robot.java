@@ -38,7 +38,12 @@ public class Robot
 
 	public void drive(float distance)
 	{
-		pilot.travel(distance, true);
+		this.drive(distance, false);
+	}
+
+	public void drive(float distance, boolean instant)
+	{
+		pilot.travel(distance, instant);
 	}
 
 	public void stop()

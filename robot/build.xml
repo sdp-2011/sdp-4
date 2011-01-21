@@ -69,5 +69,38 @@
 			<arg value="${binary.path}" />
 		</exec>
 	</target>
+
+	<target name="demo" description="upload the demo program">
+		<mkdir dir="${class.dir}" />
+		<javac srcdir="${src.dir}" destdir="${class.dir}" includeantruntime="false">
+			<bootclasspath>
+				<pathelement location="${nxj.classes.jar}"/>
+			</bootclasspath>
+		</javac>
+		
+		<java classname="js.tinyvm.TinyVM">
+			<arg value="--bootclasspath"/>
+			<arg path="${nxj.classes.jar}" /> 
+			<arg value="--classpath"/>
+			<arg path="${class.dir}" /> 
+			<arg value="--writeorder" />
+			<arg value="LE" />
+			<arg value="-v" />
+			<arg value="Demo"/>
+			<arg value="-o"/>
+			<arg value="bin/Demo.nxj"/>
+			<classpath>
+				<pathelement location="${nxj.jtools.jar}"/>
+				<pathelement location="${nxj.commons.jar}"/>
+				<pathelement location="${nxj.bcel.jar}"/>
+			</classpath>
+		</java>
+
+		<exec executable="nxjupload" error="/dev/null">
+			<arg value="-b" />
+			<arg value="-d${robot.address}" />
+			<arg value="bin/Demo.nxj" />
+		</exec>
+	</target>
 </project>
 
