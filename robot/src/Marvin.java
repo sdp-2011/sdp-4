@@ -21,6 +21,7 @@ public class Marvin
 				break;
 			}
 
+			//process commands
 			if (!communicator.commands.empty())
 			{
 				int[] command = communicator.getCommand();
@@ -34,7 +35,7 @@ public class Marvin
 				}
 				else if (command[0] == 1)
 				{
-					robot.drive((float)command[1]);
+					robot.drive((float)command[1] * -1);
 				}
 				else if (command[0] == 2)
 				{
@@ -46,11 +47,14 @@ public class Marvin
 				}
 			}
 
-			if ((sensor1.isPressed() == true) || (sensor2.isPressed() == true)){
+			//check sensors
+			if ((sensor1.isPressed()) || (sensor2.isPressed()))
+			{
 				robot.drive(-20);
 			}
 
-			if (sensor3.getDistance()<10) {
+			if (sensor3.getDistance() < 10) 
+			{
 				robot.drive(10);
 			}
 		}
