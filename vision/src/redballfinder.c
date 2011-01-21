@@ -8,28 +8,40 @@ void cvClose(const CvArr *src, CvArr *dst, IplConvKernel *element);
 
 int main(int argc, char **argv)
 {
-	if (argc != 2)
-	{
-		printf("Not enough arguments! 1 image required");
-		return 1;
-	}
- 	// Load in image given and set up two windows to display original and processed image
+	// Load in image given and set up two windows to display original and processed image
 	cvInitSystem(argc,argv);
-    IplImage* input = cvLoadImage(argv[1],CV_LOAD_IMAGE_UNCHANGED);
-	cvNamedWindow("Original:", CV_WINDOW_AUTOSIZE);
-	cvNamedWindow("Processed:", CV_WINDOW_AUTOSIZE);
-	cvMoveWindow("Original:", 200, 200);
-	cvMoveWindow("Processed:", 200, 200);
+	CvCapture* cam = cvCreateCameraCapture(0);
+    
+	while(1)
+	{
 
-	// Process the image
-	IplImage* orig = cvCloneImage(input);
-	IplImage* processedImage = process(&input);
+		IplImage* input = cvQueryFrame(cam);
+		
+		if (input)
+		{
+			cvNamedWindow("Original:", CV_WINDOW_AUTOSIZE);
+			cvNamedWindow("Processed:", CV_WINDOW_AUTOSIZE);
+			cvMoveWindow("Original:", 200, 200);
+			cvMoveWindow("Processed:", 200, 200);
 
-	// Actually show both windows with corresponding images
-    cvShowImage("Original:", orig);
-    cvShowImage("Processed:", processedImage);
+			// Process the image
+			IplImage* orig = cvCloneImage(input);
+			IplImage* processedImage = process(&input);
 
-    cvWaitKey(0);
+			// Actually show both windows with corresponding images
+			cvShowImage("Original:", orig);
+		
+			if (!processedImage)
+			{
+				cvShowImage("Processed:",orig);
+			} else {
+				cvShowImage("Processed:",processedImage);
+			}					
+		}		
+		if (cvWaitKey(30) >= 0)
+				return 0;	
+
+	}
 }
                       
 IplImage *process(IplImage **_img)
@@ -69,13 +81,34 @@ IplImage *process(IplImage **_img)
               
 	// Actually find contours and store in the list
     cvFindContours(contourImage, storage, &contour, sizeof(CvContour), CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE, cvPoint(0,0));
+    
+    if (!contour)
+		return NULL;
+		
     contourLow = cvApproxPoly(contour,sizeof(CvContour), storage, CV_POLY_APPROX_DP,1,1);
 	
 	// This bit needs to change. Doesn't check if it's a circle. Will use compactness as a measure.
 	// Therefore A ~= P^2/4pi. A = cvContourArea P = cvArcLength
+	
+	   double max = 0;
+	CvSeq* largestArea = NULL;
+
+    for ( ; contourLow != 0; contourLow = contourLow->h_next)
+	{
+		double area = cvContourArea(contourLow,CV_WHOLE_SEQ,0);
+		
+		if (area > max)
+		{
+			max = area;
+			largestArea = contourLow;
+		}    
+	}
+	
+	fprintf(stderr,"Max area is %fL",max);
+	
 	CvRect rect;
 	CvPoint pt1,pt2,center;
-	rect = cvBoundingRect(contourLow, 0);
+	rect = cvBoundingRect(largestArea, 0);
 	pt1.x = rect.x;
 	pt2.x = (rect.x+rect.width);
 	pt1.y = rect.y;
