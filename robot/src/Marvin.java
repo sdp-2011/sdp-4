@@ -6,6 +6,26 @@ public class Marvin
 {
 	boolean sensorsActive = true;
 
+	public enum Instruction
+	{
+		FORWARD  (0),
+		BACKWARD (1),
+		SHOOT    (2),
+		FINISH   (3);
+
+		private int value;
+
+		private Instruction(int value)
+		{
+			this.value = value;
+		}
+
+		public int getValue()
+		{
+			return this.value;
+		}
+	}
+
 	public static void main(String [] args)
 	{
 		new Marvin().start();
@@ -53,23 +73,25 @@ public class Marvin
 			if (!communicator.commands.empty())
 			{
 				int[] command = communicator.getCommand();
+				int instruction = command[0];
+				int argument = command[1];
 
-				LCD.drawInt(command[0], 0, 4);
-				LCD.drawInt(command[1], 0, 5);
+				LCD.drawInt(instruction, 0, 4);
+				LCD.drawInt(argument, 0, 5);
 
-				if (command[0] == 0)
+				if (instruction == Instruction.FORWARD.getValue())
 				{
-					robot.drive((float)command[1]);
+					robot.drive((float)argument);
 				}
-				else if (command[0] == 1)
+				else if (instruction == Instruction.BACKWARD.getValue())
 				{
-					robot.drive((float)command[1] * -1);
+					robot.drive((float)argument * -1);
 				}
-				else if (command[0] == 2)
+				else if (instruction == Instruction.SHOOT.getValue())
 				{
 					robot.shoot();
 				}
-				else if (command[0] == 3)
+				else if (instruction == Instruction.FINISH.getValue())
 				{
 					break;
 				}
