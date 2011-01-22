@@ -2,10 +2,34 @@ import lejos.nxt.*;
 import lejos.nxt.comm.*;
 import java.io.*;
 
+/**
+ * Main class for all of the code running on the robot.
+ *
+ * Operation Instructions:
+ *
+ *   Escape Button - Exit program.
+ *   Left button   - Toggle sensors.
+ */
 public class Marvin
 {
+	// Basic control and communication utility classes
+	Robot robot = new Robot();
+	Communicator communicator = new Communicator();
+
+	// Sensors
+	TouchSensor leftTouchSensor = new TouchSensor(SensorPort.S1);
+	TouchSensor rightTouchSensor = new TouchSensor(SensorPort.S2);
+	UltrasonicSensor ultrasonicSensor = new UltrasonicSensor(SensorPort.S3);
+
+	// Fields
 	boolean sensorsActive = true;
 
+	/**
+	 * Allows for a standard interface of instructions throughout the code.
+	 *
+	 * This is to stop "magic" integer comparisons appearing and getting out of
+	 * hand.
+	 */
 	public enum Instruction
 	{
 		FORWARD  (0),
@@ -15,103 +39,160 @@ public class Marvin
 
 		private int value;
 
+		/**
+		 * Enum Constructor taking a command number
+		 */
 		private Instruction(int value)
 		{
 			this.value = value;
 		}
 
+		/**
+		 * Returns the value of a command for comparisons.
+		 *
+		 * @return the command number
+		 */
 		public int getValue()
 		{
 			return this.value;
 		}
 	}
 
+	/**
+	 * The starting point for the program.
+	 *
+	 * This method just makes in instance of the {@link Marvin} class in
+	 * a non-static way and then gets the program going.
+	 */
 	public static void main(String [] args)
 	{
 		new Marvin().start();
 	}
 
-	public void start()
-	{
-		// Basic control and communication utility classes
-		Robot robot = new Robot();
-		Communicator communicator = new Communicator();
-
-		// Sensors
-		TouchSensor leftTouchSensor = new TouchSensor(SensorPort.S1);
-		TouchSensor rightTouchSensor = new TouchSensor(SensorPort.S2);
-		UltrasonicSensor ultrasonicSensor = new UltrasonicSensor(SensorPort.S3);
+	/**
+	 * Runs the main control loop for the robot along with other
+	 * responsibilities.
+	 *
+	 * This method has an infinite while loop in which is the main event loop
+	 * for the robot. Each cycle it checks if any buttons have been pressed and
+	 * handles their actions. It then checks for if any commands have been sent
+	 * to the robot with the {@link Communicator} class. Finally, it checks to
+	 * see if any of the sensors have been activated and reacts accordingly.
+	 *
+	 * @see Communicator
+	 * @see Robot
+	 */
+	public void start() {
 
 		// UI Setup
 		LCD.drawString("Sensors: ACTIVE", 0, 7);
 
 		while (true)
 		{
-			// If the escape button is pressed then we should exit out of the
-			// program. This saves us from having to do hard resets on the
-			// device and having to endure the annoying-as-fuck startup sound.
-			if (Button.ESCAPE.isPressed())
+			checkButtons();
+			processCommands();
+			checkSensors();
+		}
+	}
+
+	/**
+	 * Shuts the robot down.
+	 *
+	 * Perform any clean up actions that need to be done in this method.
+	 */
+	private void shutdown()
+	{
+		System.exit(0);
+	}
+
+	/**
+	 * Checks to see if any of the buttons have been pressed in this loop
+	 * iteration.
+	 */
+	private void checkButtons()
+	{
+		// If the escape button is pressed then we should exit out of the
+		// program. This saves us from having to do hard resets on the
+		// device and having to endure the annoying-as-fuck startup sound.
+		if (Button.ESCAPE.isPressed())
+		{
+			shutdown();
+		}
+
+		// If the left arrow is pressed then the robot should stop reacting
+		// to its sensors. This allows the robot to be moved and tested
+		// without it spinning up it's tracks because the sensors have been
+		// accidentally triggered.
+		if (Button.LEFT.isPressed())
+		{
+			sensorsActive = !sensorsActive;
+
+			StringBuffer message = new StringBuffer("Sensors: ");
+			message.append(sensorsActive ? "ACTIVE" : "INACTIVE");
+
+			LCD.drawString(message.toString(), 0, 7);
+		}
+	}
+
+	/**
+	 * Runs any new commands from the PC controller.
+	 *
+	 * If there are any commands in the command queue from the PC then
+	 * parse them and run them.
+	 */
+	private void processCommands()
+	{
+		// Process Commands
+		if (!communicator.commands.empty())
+		{
+			int[] command = communicator.getCommand();
+			int instruction = command[0];
+			int argument = command[1];
+
+			LCD.drawInt(instruction, 0, 4);
+			LCD.drawInt(argument, 0, 5);
+
+			// What should we do?
+			if (instruction == Instruction.FORWARD.getValue())
 			{
-				break;
+				robot.drive((float)argument);
 			}
-
-			// If the left arrow is pressed then the robot should stop reacting
-			// to its sensors. This allows the robot to be moved and tested
-			// without it spinning up it's tracks because the sensors have been
-			// accidentally triggered.
-			if (Button.LEFT.isPressed())
+			else if (instruction == Instruction.BACKWARD.getValue())
 			{
-				sensorsActive = !sensorsActive;
-
-				StringBuffer message = new StringBuffer("Sensors: ");
-				message.append(sensorsActive ? "ACTIVE" : "INACTIVE");
-
-				LCD.drawString(message.toString(), 0, 7);
+				robot.drive((float)argument * -1);
 			}
-
-			// Process Commands
-			if (!communicator.commands.empty())
+			else if (instruction == Instruction.SHOOT.getValue())
 			{
-				int[] command = communicator.getCommand();
-				int instruction = command[0];
-				int argument = command[1];
-
-				LCD.drawInt(instruction, 0, 4);
-				LCD.drawInt(argument, 0, 5);
-
-				if (instruction == Instruction.FORWARD.getValue())
-				{
-					robot.drive((float)argument);
-				}
-				else if (instruction == Instruction.BACKWARD.getValue())
-				{
-					robot.drive((float)argument * -1);
-				}
-				else if (instruction == Instruction.SHOOT.getValue())
-				{
-					robot.shoot();
-				}
-				else if (instruction == Instruction.FINISH.getValue())
-				{
-					break;
-				}
+				robot.shoot();
 			}
-
-			// Check Sensors
-			if (sensorsActive)
+			else if (instruction == Instruction.FINISH.getValue())
 			{
-				if ((leftTouchSensor.isPressed()) || (rightTouchSensor.isPressed()))
-				{
-					robot.drive(-20);
-				}
-
-				if (ultrasonicSensor.getDistance() < 10) 
-				{
-					robot.drive(10);
-				}
+				shutdown();	
 			}
 		}
-		
-		System.exit(0);
+	}
+
+	/**
+	 * Check any sensors for input this loop iteration.
+	 */
+	private void checkSensors()
+	{
+		// Check Sensors
+		if (sensorsActive)
+		{
+			// If one of the (front) touch sensors are pressed then the
+			// robot should drive a short distance backwards.
+			if ((leftTouchSensor.isPressed()) || (rightTouchSensor.isPressed()))
+			{
+				robot.drive(-10);
+			}
+
+			// If the (back) ultrasonic sensors are triggered then the
+			// robot should drive a short distance forwards.
+			if (ultrasonicSensor.getDistance() < 10) 
+			{
+				robot.drive(10);
+			}
+		}
 	}
 }
