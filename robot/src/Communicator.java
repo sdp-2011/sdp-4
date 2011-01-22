@@ -13,12 +13,9 @@ public class Communicator
 
 	private static boolean keepReceiving = true;
 
-	private CommunicationDelegate delegate = null;
-
 	public Communicator()
 	{
 		commands = new Queue();
-		//delegate = cd;
 		new Thread(new CommandReciever()).start();
 	}
 
