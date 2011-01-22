@@ -38,8 +38,8 @@ public class Robot
 
 	public void drive(float distance)
 	{
-		this.drive(distance, false);
-	}
+		this.drive(distance, true);
+	}	
 
 	public void drive(float distance, boolean instant)
 	{
