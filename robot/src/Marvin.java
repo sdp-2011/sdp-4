@@ -5,7 +5,12 @@ import java.io.*;
 
 public class Marvin
 {
-	public static void main(String [] args) throws InterruptedException
+	public static void main(String [] args)
+	{
+		new Marvin().start();
+	}
+
+	public void start()
 	{
 		Robot robot = new Robot();
 		Communicator communicator = new Communicator();
