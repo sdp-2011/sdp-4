@@ -22,11 +22,13 @@ curve should be small and shallow.
 There are many git tutorials online to get you familiar with the basic commands.
 The two that I would recommend are:
 
-* Git Immersion - [](http://library.edgecase.com/git_immersion/)
+* Git Immersion - [http://library.edgecase.com/git_immersion/](http://library.edgecase.com/git_immersion/)
+
   A great beginner's tutorial that steps through everything you need to know and
   more.
 
-* Git Reference - [](http://gitref.org/)
+* Git Reference - [http://library.edgecase.com/git_immersion/](http://gitref.org/)
+
   This is a good reference tutorial that links well with the official git
   documentation and a free book written by the same author.
 
@@ -97,4 +99,34 @@ a detailed list of everything you have done.
 A good format to use with commit messages is the one that Tim Pope describes
 here: [](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html).
 
+### Normal Git Workflow
 
+Your master branch should always be stable and so you should avoid doing any
+work in that branch directly. You should create topic branches to keep
+relevant work in the same place.
+
+Let's say we want to work on the first issue in the issue tracker...
+
+1. First we should update our code and create a new branch:
+
+    git pull origin master
+    git checkout master
+	git branch 1-blocking-shoot
+	git checkout 1-blocking-shoot
+
+   Notice that we prepend the name of the branch with the issue number to keep
+   a reference.
+
+2. Now we can work-add-commit on the branch to fix the issue.
+
+3. On the final commit if you include the phrase "Fixes #1." (where 1 is the
+   issue number) then Github will automatically close the issue and make a link
+   to your commit in the comments.
+
+4. Push your changes to Github.
+
+    git push origin 1-blocking-shoot
+
+5. Now if you go to Github and open a pull request from your branch to the
+   master branch then someone will review the changes and pull them into the
+   master for everyone else to get!
