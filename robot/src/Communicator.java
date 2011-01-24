@@ -1,7 +1,8 @@
 import java.io.*;
+import java.util.Queue;
+
 import lejos.nxt.*;
 import lejos.nxt.comm.*;
-import java.util.Queue;
 
 public class Communicator
 {
