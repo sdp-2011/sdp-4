@@ -127,8 +127,8 @@ public class Marvin
 		{
 			sensorsActive = !sensorsActive;
 
-			StringBuffer message = new StringBuffer("Sensors: ");
-			message.append(sensorsActive ? "ACTIVE" : "INACTIVE");
+			StringBuffer message = new StringBuffer("Sensors:");
+			message.append(sensorsActive ? "ACTIVE  " : "INACTIVE");
 
 			LCD.drawString(message.toString(), 0, 7);
 		}
@@ -173,7 +173,8 @@ public class Marvin
 	}
 
 	/**
-	 * Check any sensors for input this loop iteration.
+	 * Check any sensors for input this loop iteration. This method will 
+	 * block if sensors aren't actually connected.
 	 */
 	private void checkSensors()
 	{
