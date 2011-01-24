@@ -9,13 +9,21 @@ public class Test
 		
 		while (true)
 		{
-			System.out.println("Command?");
-			String command = keyboard.readLine();
+			try
+			{
+				System.out.println("Command?");
+				int command = Integer.parseInt(keyboard.readLine());
 
-			System.out.println("Argument?");
-			String argument = keyboard.readLine();
+				System.out.println("Argument?");
+				int argument = Integer.parseInt(keyboard.readLine());
 
-			fatty.sendCommand(Integer.parseInt(command), Integer.parseInt(argument));
+				fatty.sendCommand(command, argument);
+			}
+
+			catch (NumberFormatException e)
+			{
+				System.out.println("IS THAT A NUMBER? NO! TRY AGAIN DUMBASS");
+			}
 		}
 	}	
 
