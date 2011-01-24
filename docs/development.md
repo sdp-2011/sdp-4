@@ -22,12 +22,12 @@ curve should be small and shallow.
 There are many git tutorials online to get you familiar with the basic commands.
 The two that I would recommend are:
 
-* Git Immersion - [http://library.edgecase.com/git_immersion/](http://library.edgecase.com/git_immersion/)
+* Git Immersion - [http://library.edgecase.com/git_immersion/]()
 
   A great beginner's tutorial that steps through everything you need to know and
   more.
 
-* Git Reference - [http://library.edgecase.com/git_immersion/](http://gitref.org/)
+* Git Reference - [http://gitref.org/]()
 
   This is a good reference tutorial that links well with the official git
   documentation and a free book written by the same author.
@@ -94,8 +94,8 @@ weeks for writing your personal reports. You can do this with the command:
 This command will get all of your commits from the last 2 weeks so you can get
 a detailed list of everything you have done.
 
-A good format to use with commit messages is the one that Tim Pope describes
-here: [](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html).
+A good format to use with commit messages is the one that Tim Pope describes here:
+[http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html]().
 
 ### Normal Git Workflow
 
@@ -108,8 +108,11 @@ Let's say we want to work on the first issue in the issue tracker...
 1. First we should update our code and create a new branch:
 
     `git pull origin master`
+
     `git checkout master`
+	
 	`git branch 1-blocking-shoot`
+
 	`git checkout 1-blocking-shoot`
 
    Notice that we prepend the name of the branch with the issue number to keep
