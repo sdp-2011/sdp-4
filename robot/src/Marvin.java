@@ -133,11 +133,6 @@ public class Marvin
 
 			LCD.drawString(message.toString(), 0, 7);
 		}
-
-		if (Button.RIGHT.isPressed())
-		{
-			test();
-		}
 	}
 
 	/**
@@ -211,13 +206,5 @@ public class Marvin
 	private void sensorSwitch(boolean val)
 	{
 		sensorsActive = val;
-	}
-
-	private void test()
-	{
-		robot.drive(10.0f);
-		robot.drive(-10.0f);
-		robot.shoot();
-		shutdown();
 	}
 }
