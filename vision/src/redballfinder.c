@@ -66,9 +66,7 @@ IplImage *process(IplImage **_img)
 	cvOpen(mask,mask,se11);
 	cvReleaseStructuringElement(&se21);
 	cvReleaseStructuringElement(&se11);
-	cvNamedWindow("Mask:",CV_WINDOW_AUTOSIZE);
-	cvShowImage("Mask:",mask);	
-	// Perform Hough Transform
+
 	IplImage *contourImage = cvCreateImage(size,8,1);                                 
 	cvCopy(mask,contourImage,NULL);
 	CvMemStorage *storage = cvCreateMemStorage(0);
@@ -90,7 +88,7 @@ IplImage *process(IplImage **_img)
 	// This bit needs to change. Doesn't check if it's a circle. Will use compactness as a measure.
 	// Therefore A ~= P^2/4pi. A = cvContourArea P = cvArcLength
 	
-	   double max = 0;
+	double max = 0;
 	CvSeq* largestArea = NULL;
 
     for ( ; contourLow != 0; contourLow = contourLow->h_next)
@@ -103,8 +101,6 @@ IplImage *process(IplImage **_img)
 			largestArea = contourLow;
 		}    
 	}
-	
-	fprintf(stderr,"Max area is %fL",max);
 	
 	CvRect rect;
 	CvPoint pt1,pt2,center;
