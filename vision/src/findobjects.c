@@ -2,9 +2,14 @@
 #include <highgui.h>
 #include <stdio.h>
 
-IplImage *process(IplImage **_img);
+#define RED 0
+#define BLUE 1
+#define YELLOW 2
+
+CvRect process(IplImage **_img, int colour);
 void cvOpen(const CvArr *src, CvArr *dst, IplConvKernel *element);
 void cvClose(const CvArr *src, CvArr *dst, IplConvKernel *element);
+
 
 int main(int argc, char **argv)
 {
@@ -22,21 +27,21 @@ int main(int argc, char **argv)
 			cvNamedWindow("Original:", CV_WINDOW_AUTOSIZE);
 			cvNamedWindow("Processed:", CV_WINDOW_AUTOSIZE);
 			cvMoveWindow("Original:", 200, 200);
-			cvMoveWindow("Processed:", 200, 200);
+			cvMoveWindow("Processed:", 500, 200);
 
 			// Process the image
 			IplImage* orig = cvCloneImage(input);
-			IplImage* processedImage = process(&input);
-
+			
+			CvRect redImage = process(&input,RED);
+			CvRect blueImage = process(&input,BLUE);
+			
+			cvRectangle(input,cvPoint(redImage.x,redImage.y),cvPoint(redImage.x+redImage.width,redImage.y+redImage.height), CV_RGB(0,0,255), 1, 8, 0);
+			cvRectangle(input,cvPoint(blueImage.x,blueImage.y),cvPoint(blueImage.x+blueImage.width,blueImage.y+blueImage.height), CV_RGB(255,0,0), 1, 8, 0);
+			
 			// Actually show both windows with corresponding images
 			cvShowImage("Original:", orig);
-		
-			if (!processedImage)
-			{
-				cvShowImage("Processed:",orig);
-			} else {
-				cvShowImage("Processed:",processedImage);
-			}
+			cvShowImage("Processed:",input);
+			
 					
 		}
 		
@@ -46,28 +51,48 @@ int main(int argc, char **argv)
 	}
 }
                       
-IplImage *process(IplImage **_img)
+CvRect process(IplImage **_img,  int colour)
 {
 	// Convert to HSV. Better for locating colours
-	IplImage *img = *_img;                                               
+	IplImage *img = *_img;                                              
 	CvSize size = cvGetSize(img);
 	IplImage *hsv = cvCreateImage(size, IPL_DEPTH_8U,3);                        
 	cvCvtColor(img,hsv,CV_BGR2HSV);
 
 	// Look for the blue colour and create a mask of just red objects
 	CvMat *mask = cvCreateMat(size.height,size.width,CV_8UC1);
-	cvInRangeS(hsv,cvScalar(0.30*256,0.30*256,0.30*256,0),
-				   cvScalar(0.80*256,1.00*256,1.00*256,0), mask);
+	
+	switch (colour) 
+	{
+		case RED:
+			cvInRangeS(hsv,cvScalar(0.00*256,0.50*256,0.50*256,0),
+				   cvScalar(0.05*256,1.0*256,1.0*256,0), mask);
+		case BLUE:		
+			fprintf(stderr, "hello");
+			cvInRangeS(hsv,cvScalar(0.30*256,0.30*256,0.30*256,0),
+				   cvScalar(0.80*256,1.00*256,1.00*256,0), mask);		
+	}
+	
 	
 	cvReleaseImage(&hsv);
 
 	// Morphological operations to reduce noise.
 	cvSmooth(mask,mask,CV_GAUSSIAN,3,3,0,0); // Added extra noise reduction with gaussian blur
-	IplConvKernel *se21 = cvCreateStructuringElementEx(1,1,0,0,CV_SHAPE_RECT,NULL);
-	IplConvKernel *se11 = cvCreateStructuringElementEx(1,1,0,0,CV_SHAPE_RECT,NULL);
+	IplConvKernel *se21 = NULL;
+	IplConvKernel *se11 = NULL;
+	
+	switch (colour)
+	{
+		case RED:
+			se21 = cvCreateStructuringElementEx(1,1,0,0,CV_SHAPE_ELLIPSE,NULL);
+			se11 = cvCreateStructuringElementEx(1,1,0,0,CV_SHAPE_ELLIPSE,NULL);
+		case BLUE:
+			fprintf(stderr, "hello");
+			se21 = cvCreateStructuringElementEx(1,1,0,0,CV_SHAPE_RECT,NULL);
+			se11 = cvCreateStructuringElementEx(1,1,0,0,CV_SHAPE_RECT,NULL);
+	} 
+	
 	cvClose(mask,mask,se21);
-	cvNamedWindow("After first:", CV_WINDOW_AUTOSIZE);
-	cvShowImage("After first:",mask);
 	cvOpen(mask,mask,se11);
 	cvReleaseStructuringElement(&se21);
 	cvReleaseStructuringElement(&se11);
@@ -86,8 +111,10 @@ IplImage *process(IplImage **_img)
     cvFindContours(contourImage, storage, &contour, sizeof(CvContour), CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE, cvPoint(0,0));
 
 	if (!contour)
-		return NULL;
-
+	{	
+		CvRect c = {0, 0, 0 ,0};
+		return c;
+	}	
     contourLow = cvApproxPoly(contour,sizeof(CvContour), storage, CV_POLY_APPROX_DP,1,1);
 	
     double max = 0;
@@ -116,13 +143,13 @@ IplImage *process(IplImage **_img)
 	center.x = pt1.x + (rect.width/2);
 	center.y = pt1.y + (rect.height/2);
 
-	cvCircle(img,center,1,CV_RGB(0,0,0),CV_FILLED,8,0);
-	cvRectangle(img,pt1,pt2, CV_RGB(0,0,255), 1, 8, 0);
+//	cvCircle(drawingImage,center,1,CV_RGB(0,0,0),CV_FILLED,8,0);
+//  cvRectangle(drawingImage,pt1,pt2, CV_RGB(0,0,255), 1, 8, 0);
 
 	cvReleaseImage(&contourImage);
 	cvReleaseMemStorage(&storage);
 
-	return img;
+	return rect;
 
 }
 
