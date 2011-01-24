@@ -22,11 +22,11 @@ curve should be small and shallow.
 There are many git tutorials online to get you familiar with the basic commands.
 The two that I would recommend are:
 
-* Git Immersion - http://library.edgecase.com/git_immersion/
+* Git Immersion - [](http://library.edgecase.com/git_immersion/)
   A great beginner's tutorial that steps through everything you need to know and
   more.
 
-* Git Reference - http://gitref.org/
+* Git Reference - [](http://gitref.org/)
   This is a good reference tutorial that links well with the official git
   documentation and a free book written by the same author.
 
@@ -81,3 +81,20 @@ Best Practices
 --------------
 
 ### Git Commit Messages
+
+Having useful and meaningful commit messages is essential to having
+a manageable project history. It allows for everyone to see at a glance what
+work is being done by other people on the project.
+
+It is also a great tool to check what work *you* have done over the past two
+weeks for writing your personal reports. You can do this with the command:
+
+    git log --author="Chris Brown" --after="14 days"
+
+This command will get all of your commits from the last 2 weeks so you can get
+a detailed list of everything you have done.
+
+A good format to use with commit messages is the one that Tim Pope describes
+here: [](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html).
+
+
