@@ -136,7 +136,7 @@ public class Marvin
 
 		if (Button.RIGHT.isPressed())
 		{
-			Demo.newBuild(robot);
+			test();
 		}
 	}
 
@@ -177,7 +177,7 @@ public class Marvin
 			}
 			else if (instruction == Instruction.BESERK.getValue())
 			{
-				if (argument == 1) sensorSwitch(true);
+				if (argument == 0) sensorSwitch(true);
 				else sensorSwitch(false);
 			}
 		}
@@ -211,5 +211,13 @@ public class Marvin
 	private void sensorSwitch(boolean val)
 	{
 		sensorsActive = val;
+	}
+
+	private void test()
+	{
+		robot.drive(10.0f);
+		robot.drive(-10.0f);
+		robot.shoot();
+		shutdown();
 	}
 }
