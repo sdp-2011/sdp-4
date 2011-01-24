@@ -56,7 +56,7 @@ public class FatController
 	public void finish()
 	{
 		//calls finish on robot
-		sendCommand(3, 0);
+		sendCommand(99, 0);
 
 		try
 		{
