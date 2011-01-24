@@ -109,10 +109,10 @@ Let's say we want to work on the first issue in the issue tracker...
 
 1. First we should update our code and create a new branch:
 
-    git pull origin master
-    git checkout master
-	git branch 1-blocking-shoot
-	git checkout 1-blocking-shoot
+    `git pull origin master`
+    `git checkout master`
+	`git branch 1-blocking-shoot`
+	`git checkout 1-blocking-shoot`
 
    Notice that we prepend the name of the branch with the issue number to keep
    a reference.
@@ -125,7 +125,7 @@ Let's say we want to work on the first issue in the issue tracker...
 
 4. Push your changes to Github.
 
-    git push origin 1-blocking-shoot
+    `git push origin 1-blocking-shoot`
 
 5. Now if you go to Github and open a pull request from your branch to the
    master branch then someone will review the changes and pull them into the
