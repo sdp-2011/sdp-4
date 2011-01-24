@@ -45,6 +45,14 @@ public class FatController
 		sendCommand(2, 0);
 	}
 
+	public void beserk(int beserk)
+	{
+		if (beserk < 2 && beserk >= 0)
+		{
+			sendCommand(3, beserk);
+		}
+	}
+
 	public void finish()
 	{
 		//calls finish on robot

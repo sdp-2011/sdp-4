@@ -35,7 +35,8 @@ public class Marvin
 		FORWARD  (0),
 		BACKWARD (1),
 		SHOOT    (2),
-		FINISH   (3);
+		BESERK   (3),
+		FINISH   (99);
 
 		private int value;
 
@@ -169,6 +170,11 @@ public class Marvin
 			{
 				shutdown();	
 			}
+			else if (instruction == Instruction.BESERK.getValue())
+			{
+				if (argument == 1) sensorSwitch(true);
+				else sensorSwitch(false);
+			}
 		}
 	}
 
@@ -195,5 +201,10 @@ public class Marvin
 				robot.drive(10);
 			}
 		}
+	}
+
+	private void sensorSwitch(boolean val)
+	{
+		sensorsActive = val;
 	}
 }
