@@ -1,0 +1,27 @@
+Meeting - 21/1/11
+
+Sorry these minutes are very poor. However, most of the items discussed here
+were completed almost immediately.
+-- Chris
+
+Minutes
+=======
+
+* Name
+  - Castle Crasher
+
+* Robot Name
+  - Marvin
+
+* Logo
+  - It's done!
+
+* Group Report
+  - Vision
+  - Communications and Robot
+  - Engineering
+
+* Strategy
+  - Wall Bounce
+  - Custom Strategy per enemy team
+  - Move Touch Sensors
