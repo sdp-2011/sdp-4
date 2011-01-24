@@ -133,6 +133,11 @@ public class Marvin
 
 			LCD.drawString(message.toString(), 0, 7);
 		}
+
+		if (Button.RIGHT.isPressed())
+		{
+			Demo.newBuild(robot);
+		}
 	}
 
 	/**
