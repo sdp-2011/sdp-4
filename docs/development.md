@@ -77,10 +77,8 @@ over it if you would like):
    of sharing distributed version control code and dressed it up with a great
    interface, some brilliant features and a tonne of useful functionality.
 
-### Development with Git
-
-Best Practices
---------------
+Development with Git
+--------------------
 
 ### Git Commit Messages
 
