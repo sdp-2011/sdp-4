@@ -1,0 +1,22 @@
+<project name="Computer" default="build" basedir="."> 	
+	<property environment="env" />
+	<property name="nxj.home" value="${env.NXJ_HOME}" />
+
+  	<target name="build" description="compile PC samples">
+    	<mkdir dir="classes"/>
+    	<javac srcdir="." destdir="classes" fork="yes" optimize="on" debug="on" source="1.5" target="1.5" includeantruntime="false">
+			<classpath location="${nxj.home}/projects/pccomms/lib/pccomm.jar"/>
+			<classpath location="${nxj.home}/projects/pccomms/3rdparty/bluecove.jar"/>
+			<classpath location="${nxj.home}/projects/pctools/lib/pctools.jar"/>
+		</javac>
+  	</target>
+	
+	<!-- deletes class files -->
+	<target name="clean" description="clean up all generated files">
+		<delete>
+			<fileset dir="."> 
+				<include name="**/*.class"/>
+			</fileset>
+		</delete>
+	</target>
+</project>
