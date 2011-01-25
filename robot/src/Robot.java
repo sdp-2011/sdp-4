@@ -17,8 +17,8 @@ public class Robot
 	private Motor SHOOT_MOTOR = Motor.C;
 	private int SHOOT_ANGLE = 90;
 
-	private float WHEEL_DIAMETER = 5.5f;
-	private float TRACK_WIDTH = 10.0f;
+	private float WHEEL_DIAMETER = 2.0f * 2.4f;
+	private float TRACK_WIDTH = 13.0f;
 
 	private Pilot pilot;
 
