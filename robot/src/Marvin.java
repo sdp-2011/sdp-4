@@ -36,6 +36,8 @@ public class Marvin
 		BACKWARD (1),
 		SHOOT    (2),
 		BESERK   (3),
+		LEFT     (4),
+		RIGHT    (5),
 		FINISH   (99);
 
 		private int value;
@@ -172,8 +174,22 @@ public class Marvin
 			}
 			else if (instruction == Instruction.BESERK.getValue())
 			{
-				if (argument == 0) sensorSwitch(true);
-				else sensorSwitch(false);
+				if (argument == 0)
+				{
+					sensorSwitch(true);
+				}
+				else
+				{
+					sensorSwitch(false);
+				}
+			}
+			else if (instruction == Instruction.LEFT.getValue())
+			{
+				robot.left(argument);
+			}
+			else if (instruction == Instruction.RIGHT.getValue())
+			{
+				robot.right(argument);
 			}
 		}
 	}
