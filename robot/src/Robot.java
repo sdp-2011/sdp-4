@@ -68,6 +68,16 @@ public class Robot
 		SHOOT_MOTOR.rotate(-SHOOT_ANGLE);
 	}
 
+	public void left(int degrees)
+	{
+		pilot.rotate(-degrees);
+	}
+
+	public void right(int degrees)
+	{
+		pilot.rotate(degrees);
+	}
+
 	// The code following this line is a complete travesty. I'm not even
 	// going to give it the honor of some documentation.
 	public void singHappyBirthday()
