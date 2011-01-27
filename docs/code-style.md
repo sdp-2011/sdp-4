@@ -8,7 +8,7 @@ All of our Java code is formatted with astyle. The command to get a similar form
 
     astyle -r --mode=java --style=allman --indent=tab --indent-switches \
 		--pad-oper --pad-header --unpad-paren --delete-empty-lines \
-		--add-brackets src/*
+		--add-brackets --suffix=none src/*
 
 Python
 ------
