@@ -62,7 +62,7 @@
 \title{\small{SDP Group Report - Milestone 1} \\ \huge Group 4 -- Castle Crashers}
 \author{Andrew Johnstone \and Callum Stott \and Christopher Brown \and Daniel Wren \and Emil Georgiev \and Katherine Findlay \and Magdelena Konkiewicz \and Sittikorn Assavanives \and Steven Skelton \and William Bradshaw}
 \date{\today}
-\titlepic{\includegraphics[width=0.8\textwidth]{images/team-logo.jpg}\\[1cm]}
+\titlepic{\includegraphics[width=0.8\textwidth]{images/team-logo.png}\\[1cm]}
 
 \begin{document}
 \maketitle
@@ -167,53 +167,53 @@ while being sturdy and light.
 
 \subsection{Movement}
 
-Our initial design involved two wheels at the front connected to individual
-motors and one small wheel at the back to handle turning. The result
-of this was a robot that could move quickly while at the same time turning
-smoothly. We tried using four normal wheels with gears to speed up the movement.
-By connecting two motors to the front wheels and using gears alongside the
-Lego Technic beams to connect the back wheels. This design gives decent speed
-but the problem with this design is the robot cannot turn sideways smoothly as
-the wheels jump off the pitch while turning. Our final design uses tank tracks
-along the sides of the robot. This is by far the fastest moving and turning of
-all our designs. However, there is a slight problem as the robot slips while
-moving, because the tracks have insufficient grip.
+Our initial design involved two wheels at the front connect to individual
+motors, one for each wheel, and using one small wheel at the back to handle
+turning. The result of this was a robot that could move quickly while at the
+same time had smooth turning. Next we tried using four wheels, geared up to
+increase speed. This process involved connecting two motors to the front wheels
+and using a gear chain to connect the rear wheels. This design gave decent
+speed but the problem with this design was that robot could not turn sideways
+smoothly, as the wheels rose off the pitch while turning. Our final design
+uses tank tracks (Figure~\ref{fig:tanktracks}) along the sides of the robot.
+The resulting design is by far the fastest moving and turning of the designs.
+However, the tank tracks currently slip slightly on the surface due to a lack of
+friction.
 
 \subsection{Kicker}
 
-The kicker, unlike much of our design, went through a number of different
-prototypes. We toyed with various ideas, all powered by an NXT motor, using
-different structures and gearing. Some of our designs include examples such as
-a kicker made up of long blocks stacked up (to present a large face) but this
-proved too heavy. Another prototype was made from more castle walls but again we
-thought we could push the design further and when we implemented the spinner we
-made up our new kicker out of basic reinforced bars so as to follow our mantra
-of ``light and sturdy''. We are satisfied with the power our kicker currently
-offers but cannot help but feel that through some testing and more prototypes we
-can improve it through either using another motor or a gearing system.
+After discussing coverage rules with Garry we produced a kicker incorporating
+four short teeth (Figure~\ref{fig:firstkicker}) that could trap the ball, albeit
+poorly. This was implemented naively by attaching it to the motor and gave a
+surprisingly powerful and accurate kick. We next attempted to improve upon the
+design by gearing it up, reasoning that an increased kicker speed would result
+in a faster shot. However, after experimenting with the gears we found that the
+naïve approach was the most effective. A second design based on the castle
+wall pieces (Figure~\ref{fig:secondkicker}) was implemented, which was lighter
+and as such more powerful. We followed this trend to create our final design
+(Figure~\ref{fig:thirdkicker}) which is lighter still. We improved upon this
+model by adding a spinner in an effort to control the ball, at the expense of a
+small degree of power.
 
 \subsection{Spinner}
 
-A spinner of sorts was implemented. It works by using RCX motors to power
-a pulley system. The pulleys then power a large wheel that is used to spin
-additional wheels built into our kicker. The spinner applies back spin to the
-ball so that the robot can control it to a certain degree by keeping it close
-enough to get maximum force out of each kick. This system in no way removes the
-ball from play, it merely rolls the ball toward our robot to keep it close.
+To control the ball a spinner was implemented. The spinner is comprised
+of a line of spinning wheels attached to the spinner, which are turned
+by a driver wheel connected via a pulley system to two RCX motors
+(Figure~\ref{fig:spinner}). The spinner applies friction to the ball so that
+the robot can control it to a certain degree by keeping it close enough to get
+maximum force out of each kick. This system rolls the ball toward our robot but
+does not obstruct the ball from play.
 
 \subsection{Sensors}
 
-We have decided to use two touch sensors at the front of the robot, placed on
-the left and right side of the kicker, and one ultrasonic sensor at the back.
-We also have tested the robot with sensors which were placed much higher (about
-10 cm from the ground), which would still detect the walls of the pitch but
-possibly not the robot's opponent. However, we have decided that it is important
-to recognize both walls and the opponent, and agreed to place the sensors on
-the lower level. For similar reasons we have implemented one ultrasonic sensor
-at the back placing it about 5 cm from the ground. Figures~\ref{fig:frontview}
-and~\ref{fig:backview} show the actual placement of the sensors in our robot. We
-also decided not to have any sensors at the sides of the robot, as it is using
-tank tracks which limits the movement to backwards and forwards directions.
+We have decided to use two touch sensors at the front of the robot
+(Figure~\ref{fig:frontview}), placed on the left and right side of the kicker,
+and one ultrasonic sensor at the back (Figure~\ref{fig:backview}). These allow
+us to detect walls and other robots that impede movement. We decided not to
+have any sensors at the sides of the robot, as our tank tracks prohibit lateral
+movement. The frontal sensors originally occupied a higher position but were
+lowered to ensure contact with opposing robots.
 
 \section{Future Plans}
 
@@ -224,10 +224,14 @@ start on a simulator for our strategy. For the next milestone we aim to have a
 working simulator and the robot will be able to make decisions about what to do
 based on the world state.
 
-On the robot side we are going to be interweaving two rubber bands through each
-tank track. This gives our robot more speed (by reducing “slippage”) and
-better traction, furthermore it increases the precision of our turning on the
-spot, offering precise 90, 180 and 360 degree turns.
+On the robot side, we have another feature in store, which is very nearly
+finished, is interweaving two rubber bands through each tank track. This
+gives our robot more speed (by reducing ``slippage'') and better traction,
+furthermore it increases the precision of our turning on the spot, offering
+precise 90, 180 and 360 degree turns.
+
+We have also considered the addition of a light sensor to detect the presence of
+the ball. This would help us in deciding when to kick.
 
 \newpage
 
