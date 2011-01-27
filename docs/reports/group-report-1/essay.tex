@@ -108,11 +108,11 @@ After this was completed we moved on to programming ``real'' code for the
 robot instead of the demos we had been running up until now. We set up a basic
 protocol for the robot and the computer to communicate with. Our first major
 problem was that some of the motor control commands block the running thread.
-This meant that commands were being stopped in the command streams and the other
-unrelated commands cannot be run. To fix this we implemented a command loop
+This meant that commands in the command stream were being blocked and the other
+unrelated commands could not be run. To fix this we implemented a command loop
 pattern running in a different thread to handle the commands. This threw up
 some initial concurrency issues but these were soon fixed and we could continue
-working with the engineering team to implement the new features. Magdelena sent
+working with the engineering team to implement new features. Magdelena then sent
 us a patch that allowed the robot to react to the newly fitted sensors and move
 away from any dangers or obstacles.
 
@@ -168,7 +168,7 @@ while being sturdy and light.
 \subsection{Movement}
 
 Our initial design involved two wheels at the front connected to individual
-motors and using one small wheel at the back to handle turning. The result
+motors and one small wheel at the back to handle turning. The result
 of this was a robot that could move quickly while at the same time turning
 smoothly. We tried using four normal wheels with gears to speed up the movement.
 By connecting two motors to the front wheels and using gears alongside the
@@ -176,8 +176,8 @@ Lego Technic beams to connect the back wheels. This design gives decent speed
 but the problem with this design is the robot cannot turn sideways smoothly as
 the wheels jump off the pitch while turning. Our final design uses tank tracks
 along the sides of the robot. This is by far the fastest moving and turning of
-all other designs. However, there is a slight problem as the robot slips while
-moving, because the tracks have insufficient friction.
+all our designs. However, there is a slight problem as the robot slips while
+moving, because the tracks have insufficient grip.
 
 \subsection{Kicker}
 
