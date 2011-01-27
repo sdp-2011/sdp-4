@@ -34,7 +34,6 @@ public class Communicator
 			LCD.drawString("Connection Open", 0, 0);
 			dataOut = connection.openDataOutputStream();
 			dataIn = connection.openDataInputStream();
-
 			while (keepReceiving)
 			{
 				try
