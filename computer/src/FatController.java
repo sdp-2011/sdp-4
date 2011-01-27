@@ -22,7 +22,6 @@ public class FatController
 			System.out.println("FAILED");
 			e.printStackTrace();
 		}
-
 		dataOut = new DataOutputStream(nxtComm.getOutputStream());
 		dataIn = new DataInputStream(nxtComm.getInputStream());
 	}
@@ -57,14 +56,12 @@ public class FatController
 	{
 		//calls finish on robot
 		sendCommand(99, 0);
-
 		try
 		{
 			dataIn.close();
 			dataOut.close();
 			nxtComm.close();
 		}
-
 		catch (IOException e)
 		{
 			e.printStackTrace();
@@ -80,7 +77,6 @@ public class FatController
 			dataOut.writeInt(argument);
 			dataOut.flush();
 		}
-
 		catch (IOException e)
 		{
 			e.printStackTrace();
