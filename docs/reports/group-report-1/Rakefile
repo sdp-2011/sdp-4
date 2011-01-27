@@ -1,0 +1,59 @@
+require 'rake/clean'
+
+CLEAN.include(['*.aux', '*.log', '*.out', '*.pyg'])
+CLOBBER.include('*.pdf')
+
+NAME = "essay"
+PDF_NAME = "#{NAME}.pdf"
+TEX_NAME = "#{NAME}.tex"
+TEX_EXEC = "xelatex"
+
+task :default => [:build]
+
+desc "Build the document"
+task :build do
+  2.times do
+    `#{TEX_EXEC} -shell-escape #{TEX_NAME} 2> /dev/null` 
+  end
+  `rake clean`
+end
+
+desc "Check the document for common errors"
+task :check => [:check_illusion, :check_passive, :check_weasel]
+
+task :wordcount do
+  sh "perl checkers/texcount.pl #{TEX_NAME}"
+end
+
+task :check_illusion do
+  sh "perl checkers/illusion.pl #{TEX_NAME}"
+end
+
+task :check_passive do
+  puts "sh checkers/passive.sh #{TEX_NAME}"
+  `checkers/passive.sh #{TEX_NAME}`
+end
+
+task :check_weasel do
+  puts "sh checkers/weasel.sh #{TEX_NAME}"
+  `sh checkers/weasel.sh #{TEX_NAME}`
+end
+
+desc "Create a new essay"
+task :init do
+  cp "templates/essay.tex", "essay.tex"
+end
+
+desc "Build the document without ignoring stderr"
+task :syntax do
+  `#{TEX_EXEC} #{TEX_NAME}` 
+end
+
+desc "Show the document"
+task :view => [PDF_NAME] do
+  ["open", "okular", "kpdf", "acroread"].find do |viewer|
+    `#{viewer} #{PDF_NAME}`
+  end or
+  puts "Unable to find any pdf viewer."
+end
+
