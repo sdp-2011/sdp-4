@@ -85,11 +85,10 @@ public class Marvin
 	 * @see Communicator
 	 * @see Robot
 	 */
-	public void start() {
-
+	public void start()
+	{
 		// UI Setup
 		LCD.drawString("Sensors: ACTIVE", 0, 7);
-
 		while (true)
 		{
 			checkButtons();
@@ -121,7 +120,6 @@ public class Marvin
 		{
 			shutdown();
 		}
-
 		// If the left arrow is pressed then the robot should stop reacting
 		// to its sensors. This allows the robot to be moved and tested
 		// without it spinning up it's tracks because the sensors have been
@@ -129,10 +127,8 @@ public class Marvin
 		if (Button.LEFT.isPressed())
 		{
 			sensorsActive = !sensorsActive;
-
 			StringBuffer message = new StringBuffer("Sensors:");
 			message.append(sensorsActive ? "ACTIVE  " : "INACTIVE");
-
 			LCD.drawString(message.toString(), 0, 7);
 		}
 	}
@@ -151,10 +147,8 @@ public class Marvin
 			int[] command = communicator.getCommand();
 			int instruction = command[0];
 			int argument = command[1];
-
 			LCD.drawInt(instruction, 0, 4);
 			LCD.drawInt(argument, 0, 5);
-
 			// What should we do?
 			if (instruction == Instruction.FORWARD.getValue())
 			{
@@ -170,7 +164,7 @@ public class Marvin
 			}
 			else if (instruction == Instruction.FINISH.getValue())
 			{
-				shutdown();	
+				shutdown();
 			}
 			else if (instruction == Instruction.BESERK.getValue())
 			{
@@ -195,7 +189,7 @@ public class Marvin
 	}
 
 	/**
-	 * Check any sensors for input this loop iteration. This method will 
+	 * Check any sensors for input this loop iteration. This method will
 	 * block if sensors aren't actually connected.
 	 */
 	private void checkSensors()
@@ -209,10 +203,9 @@ public class Marvin
 			{
 				robot.drive(-10);
 			}
-
 			// If the (back) ultrasonic sensors are triggered then the
 			// robot should drive a short distance forwards.
-			if (ultrasonicSensor.getDistance() < 10) 
+			if (ultrasonicSensor.getDistance() < 10)
 			{
 				robot.drive(10);
 			}

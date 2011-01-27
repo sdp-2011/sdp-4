@@ -25,7 +25,6 @@ public class Robot
 	public Robot()
 	{
 		pilot = new TachoPilot(WHEEL_DIAMETER, TRACK_WIDTH, LEFT_MOTOR, RIGHT_MOTOR, true);
-
 		Motor.A.setSpeed(900);
 		Motor.B.setSpeed(900);
 		Motor.C.setSpeed(900);
@@ -39,7 +38,7 @@ public class Robot
 	public void drive(float distance)
 	{
 		this.drive(distance, true);
-	}	
+	}
 
 	public void drive(float distance, boolean instant)
 	{
@@ -84,35 +83,35 @@ public class Robot
 	{
 		try
 		{
-			playNote(392,500);
-			playNote(392,200);
-			playNote(440,500);
-			playNote(392,500);
-			playNote(523,500);
-			playNote(493,500);
+			playNote(392, 500);
+			playNote(392, 200);
+			playNote(440, 500);
+			playNote(392, 500);
+			playNote(523, 500);
+			playNote(493, 500);
 			Thread.sleep(500);
-			playNote(392,500);
-			playNote(392,200);
-			playNote(440,500);
-			playNote(392,200);
-			playNote(587,500);
-			playNote(523,500);
+			playNote(392, 500);
+			playNote(392, 200);
+			playNote(440, 500);
+			playNote(392, 200);
+			playNote(587, 500);
+			playNote(523, 500);
 			Thread.sleep(500);
-			playNote(392,500);
-			playNote(392,200);
-			playNote(784,500);
-			playNote(659,500);
-			playNote(523,200);
-			playNote(523,200);
-			playNote(493,500);
-			playNote(440,500);
+			playNote(392, 500);
+			playNote(392, 200);
+			playNote(784, 500);
+			playNote(659, 500);
+			playNote(523, 200);
+			playNote(523, 200);
+			playNote(493, 500);
+			playNote(440, 500);
 			Thread.sleep(500);
-			playNote(698,500);
-			playNote(698,500);
-			playNote(659,500);
-			playNote(523,500);
-			playNote(587,500);
-			playNote(523,500);
+			playNote(698, 500);
+			playNote(698, 500);
+			playNote(659, 500);
+			playNote(523, 500);
+			playNote(587, 500);
+			playNote(523, 500);
 		}
 		catch (InterruptedException e) {}
 	}
