@@ -17,3 +17,6 @@ local.properties
 # CDT-specific
 .cproject
 
+# OS Specific
+.DS_Store
+
