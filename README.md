@@ -1,6 +1,6 @@
 # System Design Project
 
-*Team 4*
+*Team 4 -- Castle Crashers*
 
 ## Members
 
