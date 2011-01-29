@@ -63,8 +63,15 @@ public class Robot
 
 	public void shoot()
 	{
-		SHOOT_MOTOR.rotate(SHOOT_ANGLE);
-		SHOOT_MOTOR.rotate(-SHOOT_ANGLE);
+		try {
+			SHOOT_MOTOR.backward();
+			Thread.sleep(150);
+			SHOOT_MOTOR.forward();
+			Thread.sleep(170);
+			SHOOT_MOTOR.stop();
+		} catch(Exception e) {
+			Log.e("Interrupted Thread!");
+		}
 	}
 
 	public void left(int degrees)
