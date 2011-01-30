@@ -25,9 +25,11 @@ public class FatController
 			System.out.println("FAILED");
 			e.printStackTrace();
 		}
+
 		dataOut = new DataOutputStream(nxtComm.getOutputStream());
 		dataIn = new DataInputStream(nxtComm.getInputStream());
 		robotStatus = new LinkedList<Integer>();
+		new Thread(new StatusReciever()).start();
 	}
 
 	public void drivef(int distance)
