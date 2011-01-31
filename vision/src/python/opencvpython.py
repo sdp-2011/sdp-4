@@ -28,25 +28,25 @@ def findObject(img, colour):
     mask = cv.CreateMat(size[1], size[0], cv.CV_8UC1)
     maskSize = cv.GetSize(mask)
     if (colour == "RED"):
-	redLower = cv.Scalar(0.00 * 256, 0.50 * 256, 0.50 * 256)
-	redUpper = cv.Scalar(0.05 * 256, 1.00 * 256, 1.00 * 256)
-	cv.InRangeS(hsv, redLower, redUpper, mask)
-	cv.NamedWindow("Red:",cv.CV_WINDOW_AUTOSIZE)
-	cv.ShowImage("Red:",mask)
+		redLower = cv.Scalar(0.00 * 256, 0.50 * 256, 0.50 * 256)
+		redUpper = cv.Scalar(0.05 * 256, 1.00 * 256, 1.00 * 256)
+		cv.InRangeS(hsv, redLower, redUpper, mask)
+		cv.NamedWindow("Red:",cv.CV_WINDOW_AUTOSIZE)
+		cv.ShowImage("Red:",mask)
 
     elif (colour == "BLUE"):
     	blueLower = cv.Scalar(0.35 * 256, 0.30 * 256, 0.30 * 256)
-	blueUpper = cv.Scalar(0.80 * 256, 1.00 * 256, 1.00 * 256)
-	cv.InRangeS(hsv, blueLower, blueUpper, mask)
-	cv.NamedWindow("Blue:",cv.CV_WINDOW_AUTOSIZE)
-	cv.ShowImage("Blue:",mask)
+		blueUpper = cv.Scalar(0.80 * 256, 1.00 * 256, 1.00 * 256)
+		cv.InRangeS(hsv, blueLower, blueUpper, mask)
+		cv.NamedWindow("Blue:",cv.CV_WINDOW_AUTOSIZE)
+		cv.ShowImage("Blue:",mask)
 
     elif (colour == "YELLOW"):
-	yellowLower = cv.Scalar(0.10 * 256, 0.45 * 256, 0.50 * 256)
-	yellowUpper = cv.Scalar(0.20 * 256, 1.00 * 256, 1.00 * 256)
-	cv.InRangeS(hsv, yellowLower, yellowUpper, mask)
-	cv.NamedWindow("Yellow:",cv.CV_WINDOW_AUTOSIZE)
-	cv.ShowImage("Yellow:",mask)
+		yellowLower = cv.Scalar(0.10 * 256, 0.45 * 256, 0.50 * 256)
+		yellowUpper = cv.Scalar(0.20 * 256, 1.00 * 256, 1.00 * 256)
+		cv.InRangeS(hsv, yellowLower, yellowUpper, mask)
+		cv.NamedWindow("Yellow:",cv.CV_WINDOW_AUTOSIZE)
+		cv.ShowImage("Yellow:",mask)
 
     # Count white pixels to make sure program doesn't crash if it finds nothing
     if (cv.CountNonZero(mask) < 3):
@@ -74,17 +74,17 @@ def findObject(img, colour):
     return (0, 0, 0, 0)
 
 
-def main():
-    '''
-    Continually grabs new frame from camera and looks for each object.
-    
-    '''
 
-    cv.NamedWindow("Original:", cv.CV_WINDOW_AUTOSIZE)
-    cv.NamedWindow("Processed:", cv.CV_WINDOW_AUTOSIZE)
-    cam = cv.CaptureFromCAM(0)
+'''
+Continually grabs new frame from camera and looks for each object.
 
-    while (True):
+'''
+
+cv.NamedWindow("Original:", cv.CV_WINDOW_AUTOSIZE)
+cv.NamedWindow("Processed:", cv.CV_WINDOW_AUTOSIZE)
+cam = cv.CaptureFromCAM(0)
+
+while (True):
 	image = cv.QueryFrame(cam)
 	cropRect = (75, 80, 554, 340)
 	roi = cv.SetImageROI(image, cropRect)
@@ -95,24 +95,17 @@ def main():
 	blueRect = findObject(image, "BLUE")
 	yellowRect = findObject(image, "YELLOW")
 
-	ballTL = (ballRect[0], ballRect[1])
-	ballBR = (ballRect[0] + ballRect[2], ballRect[1] + ballRect[3])
-
-	blueTL = (blueRect[0], blueRect[1])
-	blueBR = (blueRect[0] + blueRect[2], blueRect[1] + blueRect[3])
-
-	yellowTL = (yellowRect[0], yellowRect[1])
-	yellowBR = (yellowRect[0] + yellowRect[2], yellowRect[1] + yellowRect[3])
-
-	cv.Rectangle(processed, ballTL, ballBR, cv.RGB(255, 0, 0), 1, 8, 0)
-	cv.Rectangle(processed, blueTL, blueBR, cv.RGB(0, 0, 255), 1, 8, 0)
-	cv.Rectangle(processed, yellowTL, yellowBR, cv.RGB(255, 255, 0), 1, 8, 0)
+	cv.Rectangle(processed, (ballRect[0], ballRect[1]), 
+			(ballRect[0] + ballRect[2], ballRect[1] + ballRect[3]), 
+			cv.RGB(255, 0, 0), 1, 8, 0)
+	cv.Rectangle(processed, (blueRect[0], blueRect[1]), 
+			(blueRect[0] + blueRect[2], blueRect[1] + blueRect[3]), 
+			cv.RGB(0, 0, 255), 1, 8, 0)
+	cv.Rectangle(processed, (yellowRect[0], yellowRect[1]), 
+			(yellowRect[0] + yellowRect[2], yellowRect[1] + yellowRect[3]), 
+			cv.RGB(255, 255, 0), 1, 8, 0)
 
 	cv.ShowImage("Original:", orig)
 	cv.ShowImage("Processed:", processed)
 
 	cv.WaitKey(30)
-
-
-if __name__ == "__main__":
-	main()
