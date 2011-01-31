@@ -1,11 +1,14 @@
 import lejos.pc.comm.*;
 import java.io.*;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class FatController
 {
 	private NXTComm nxtComm;
 	private DataInputStream dataIn;
 	private DataOutputStream dataOut;
+	private Queue<Integer> robotStatus;
 
 	public FatController()
 	{
@@ -22,8 +25,11 @@ public class FatController
 			System.out.println("FAILED");
 			e.printStackTrace();
 		}
+
 		dataOut = new DataOutputStream(nxtComm.getOutputStream());
 		dataIn = new DataInputStream(nxtComm.getInputStream());
+		robotStatus = new LinkedList<Integer>();
+		new Thread(new StatusReciever()).start();
 	}
 
 	public void drivef(int distance)
@@ -80,6 +86,35 @@ public class FatController
 		catch (IOException e)
 		{
 			e.printStackTrace();
+		}
+	}
+
+	public int getStatus()
+	{
+		return robotStatus.remove();
+	}
+
+	public boolean hasStaus()
+	{
+		return !robotStatus.isEmpty();
+	}
+
+	private class StatusReciever implements Runnable
+	{
+		public void run()
+		{
+			while (true)
+			{
+				try
+				{
+					robotStatus.add(dataIn.readInt());
+				}
+
+				catch (IOException e)
+				{
+					System.out.println("Something has gone wrong");
+				}
+			}
 		}
 	}
 }
