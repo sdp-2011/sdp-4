@@ -29,7 +29,6 @@ public class Robot
 		Motor.A.setSpeed(900);
 		Motor.B.setSpeed(900);
 		Motor.C.setSpeed(900);
-
 		kicker = new Thread(new ShootThread());
 	}
 
@@ -136,13 +135,16 @@ public class Robot
 	{
 		public void run()
 		{
-			try {
+			try
+			{
 				SHOOT_MOTOR.backward();
 				Thread.sleep(150);
 				SHOOT_MOTOR.forward();
 				Thread.sleep(170);
 				SHOOT_MOTOR.stop();
-			} catch(Exception e) {
+			}
+			catch (Exception e)
+			{
 				Log.e("Interrupted Thread!");
 			}
 		}

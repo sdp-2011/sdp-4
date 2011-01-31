@@ -32,13 +32,13 @@ public class Marvin
 	 */
 	public enum Instruction
 	{
-		FORWARD  (0),
-		BACKWARD (1),
-		SHOOT    (2),
-		BESERK   (3),
-		LEFT     (4),
-		RIGHT    (5),
-		FINISH   (99);
+		FORWARD(0),
+		BACKWARD(1),
+		SHOOT(2),
+		BESERK(3),
+		LEFT(4),
+		RIGHT(5),
+		FINISH(99);
 
 		private int value;
 
