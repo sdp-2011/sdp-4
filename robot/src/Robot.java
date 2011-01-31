@@ -67,7 +67,13 @@ public class Robot
 	public void shoot()
 	{
 		kicker.start();
-		kicker.join();
+		try
+		{
+			kicker.join();
+		}
+		catch (InterruptedException e)
+		{
+		}
 		kicker = new Thread(new ShootThread());
 	}
 
