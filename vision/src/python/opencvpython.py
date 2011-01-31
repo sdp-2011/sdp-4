@@ -85,9 +85,9 @@ def main():
 	orig = cv.CloneImage(image)
 	processed = cv.CloneImage(orig)
 
-	ballRect = process(image, "RED")
-	blueRect = process(image, "BLUE")
-	yellowRect = process(image, "YELLOW")
+	ballRect = findObject(image, "RED")
+	blueRect = findObject(image, "BLUE")
+	yellowRect = findObject(image, "YELLOW")
 
 	ballTL = (ballRect[0], ballRect[1])
 	ballBR = (ballRect[0] + ballRect[2], ballRect[1] + ballRect[3])
