@@ -28,12 +28,11 @@ public class Communicator
 
 	public void sendStatus(int val)
 	{
-		try 
+		try
 		{
 			dataOut.writeInt(val);
 			dataOut.flush();
 		}
-
 		catch (IOException e)
 		{
 			Log.e("Status cannot be sent");
