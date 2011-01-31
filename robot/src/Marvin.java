@@ -7,8 +7,8 @@ import java.io.*;
  *
  * Operation Instructions:
  *
- *   Escape Button - Exit program.
- *   Left button   - Toggle sensors.
+ *	 Escape Button - Exit program.
+ *	 Left button   - Toggle sensors.
  */
 public class Marvin
 {
@@ -20,7 +20,7 @@ public class Marvin
 	TouchSensor leftTouchSensor = new TouchSensor(SensorPort.S1);
 	TouchSensor rightTouchSensor = new TouchSensor(SensorPort.S2);
 	UltrasonicSensor ultrasonicSensor = new UltrasonicSensor(SensorPort.S3);
-        RCXLightSensor lightSensor = new RCXLightSensor(SensorPort.S4);
+	LightSensor lightSensor = new LightSensor(SensorPort.S4);
 
 
 	// Fields
@@ -36,11 +36,11 @@ public class Marvin
 	{
 		FORWARD  (0),
 		BACKWARD (1),
-		SHOOT    (2),
-		BESERK   (3),
-		LEFT     (4),
-		RIGHT    (5),
-		FINISH   (99);
+		SHOOT	 (2),
+		BESERK	 (3),
+		LEFT	 (4),
+		RIGHT	 (5),
+		FINISH	 (99);
 
 		private int value;
 
@@ -133,7 +133,7 @@ public class Marvin
 			sensorsActive = !sensorsActive;
 
 			StringBuffer message = new StringBuffer("Sensors:");
-			message.append(sensorsActive ? "ACTIVE  " : "INACTIVE");
+			message.append(sensorsActive ? "ACTIVE	" : "INACTIVE");
 
 			LCD.drawString(message.toString(), 0, 7);
 		}
@@ -206,10 +206,10 @@ public class Marvin
 		if (sensorsActive)
 		{
 			// reads the amount of light reflected for the light sensor 
-                        //and prints out the value on the NXT screen
-                        System.out.println(lightSensor.readValue());
+			//and prints out the value on the NXT screen
+			System.out.println(lightSensor.readValue());
 
-                        // If one of the (front) touch sensors are pressed then the
+			// If one of the (front) touch sensors are pressed then the
 			// robot should drive a short distance backwards.
 			if ((leftTouchSensor.isPressed()) || (rightTouchSensor.isPressed()))
 			{
