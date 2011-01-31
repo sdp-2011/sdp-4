@@ -20,6 +20,8 @@ public class Marvin
 	TouchSensor leftTouchSensor = new TouchSensor(SensorPort.S1);
 	TouchSensor rightTouchSensor = new TouchSensor(SensorPort.S2);
 	UltrasonicSensor ultrasonicSensor = new UltrasonicSensor(SensorPort.S3);
+        RCXLightSensor lightSensor = new RCXLightSensor(SensorPort.S4);
+
 
 	// Fields
 	boolean sensorsActive = true;
@@ -203,7 +205,11 @@ public class Marvin
 		// Check Sensors
 		if (sensorsActive)
 		{
-			// If one of the (front) touch sensors are pressed then the
+			// reads the amount of light reflected for the light sensor 
+                        //and prints out the value on the NXT screen
+                        System.out.println(lightSensor.readValue());
+
+                        // If one of the (front) touch sensors are pressed then the
 			// robot should drive a short distance backwards.
 			if ((leftTouchSensor.isPressed()) || (rightTouchSensor.isPressed()))
 			{
