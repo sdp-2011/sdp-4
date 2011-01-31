@@ -21,6 +21,7 @@ public class Robot
 	private float TRACK_WIDTH = 13.0f;
 
 	private Pilot pilot;
+	private Thread kicker;
 
 	public Robot()
 	{
@@ -28,6 +29,8 @@ public class Robot
 		Motor.A.setSpeed(900);
 		Motor.B.setSpeed(900);
 		Motor.C.setSpeed(900);
+
+		kicker = new Thread(new ShootThread());
 	}
 
 	public boolean isMoving()
@@ -63,15 +66,7 @@ public class Robot
 
 	public void shoot()
 	{
-		try {
-			SHOOT_MOTOR.backward();
-			Thread.sleep(150);
-			SHOOT_MOTOR.forward();
-			Thread.sleep(170);
-			SHOOT_MOTOR.stop();
-		} catch(Exception e) {
-			Log.e("Interrupted Thread!");
-		}
+		kicker.start();
 	}
 
 	public void left(int degrees)
@@ -127,5 +122,21 @@ public class Robot
 	{
 		Sound.playTone(frequency, length);
 		Thread.sleep(length);
+	}
+
+	private class ShootThread implements Runnable
+	{
+		public void run()
+		{
+			try {
+				SHOOT_MOTOR.backward();
+				Thread.sleep(150);
+				SHOOT_MOTOR.forward();
+				Thread.sleep(170);
+				SHOOT_MOTOR.stop();
+			} catch(Exception e) {
+				Log.e("Interrupted Thread!");
+			}
+		}
 	}
 }
