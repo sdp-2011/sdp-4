@@ -31,16 +31,22 @@ def findObject(img, colour):
 	redLower = cv.Scalar(0.00 * 256, 0.50 * 256, 0.50 * 256)
 	redUpper = cv.Scalar(0.05 * 256, 1.00 * 256, 1.00 * 256)
 	cv.InRangeS(hsv, redLower, redUpper, mask)
+	cv.NamedWindow("Red:",cv.CV_WINDOW_AUTOSIZE)
+	cv.ShowImage("Red:",mask)
 
     elif (colour == "BLUE"):
-    	blueLower = cv.Scalar(0.30 * 256, 0.30 * 256, 0.30 * 256)
+    	blueLower = cv.Scalar(0.35 * 256, 0.30 * 256, 0.30 * 256)
 	blueUpper = cv.Scalar(0.80 * 256, 1.00 * 256, 1.00 * 256)
 	cv.InRangeS(hsv, blueLower, blueUpper, mask)
+	cv.NamedWindow("Blue:",cv.CV_WINDOW_AUTOSIZE)
+	cv.ShowImage("Blue:",mask)
 
     elif (colour == "YELLOW"):
 	yellowLower = cv.Scalar(0.10 * 256, 0.45 * 256, 0.50 * 256)
 	yellowUpper = cv.Scalar(0.20 * 256, 1.00 * 256, 1.00 * 256)
 	cv.InRangeS(hsv, yellowLower, yellowUpper, mask)
+	cv.NamedWindow("Yellow:",cv.CV_WINDOW_AUTOSIZE)
+	cv.ShowImage("Yellow:",mask)
 
     # Count white pixels to make sure program doesn't crash if it finds nothing
     if (cv.CountNonZero(mask) < 3):
