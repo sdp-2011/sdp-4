@@ -18,11 +18,25 @@ public class Communicator
 	{
 		commands = new Queue();
 		new Thread(new CommandReciever()).start();
+		dataOut = connection.openDataOutputStream();
 	}
 
 	public int[] getCommand()
 	{
 		return (int[]) commands.pop();
+	}
+
+	public void sendStatus(int val)
+	{
+		try
+		{
+			dataOut.writeInt(val);
+			dataOut.flush();
+		}
+		catch (IOException e)
+		{
+			Log.e("Status cannot be sent");
+		}
 	}
 
 	private class CommandReciever implements Runnable
@@ -32,7 +46,6 @@ public class Communicator
 			LCD.drawString("No Connection...", 0, 0);
 			connection = Bluetooth.waitForConnection();
 			LCD.drawString("Connection Open", 0, 0);
-			dataOut = connection.openDataOutputStream();
 			dataIn = connection.openDataInputStream();
 			while (keepReceiving)
 			{
