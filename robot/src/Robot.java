@@ -67,6 +67,8 @@ public class Robot
 	public void shoot()
 	{
 		kicker.start();
+		kicker.join();
+		kicker = new Thread(new ShootThread());
 	}
 
 	public void left(int degrees)
