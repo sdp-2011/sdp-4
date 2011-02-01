@@ -1,14 +1,19 @@
 package uk.ac.ed.inf.sdp.group4;
 
+// Generate Services Code
+option py_generic_services = true;
+option java_generic_services = true;
+
+
 message WorldObject {
   message Position {
-	required int32 x = 1 [packed=true];
-	required int32 y = 2 [packed=true];
+	required int32 x = 1;
+	required int32 y = 2;
   }
 
   message Vector {
-	required int32 direction = 1 [packed=true];
-	optional float velocity = 2 [packed=true];
+	required int32 direction = 1;
+	optional float velocity = 2;
   }
 
   required Position position = 1;
