@@ -1,4 +1,5 @@
 import cv
+import math
 
 
 def findObject(img, colour):
@@ -72,6 +73,14 @@ def findObject(img, colour):
 	    return rect
 
     return (0, 0, 0, 0)
+    
+
+def euclidDistance(pt1,pt2):
+'''
+Calculates the Euclidean distance between two CvPoints
+
+'''
+	return math.sqrt((pt1[0] - pt2[0])^2 + (pt1[1] - pt2[1])^2)
 
 
 
