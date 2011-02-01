@@ -1,10 +1,5 @@
 package uk.ac.ed.inf.sdp.group4;
 
-// Generate Services Code
-option py_generic_services = true;
-option java_generic_services = true;
-
-
 message WorldObject {
   message Position {
 	required int32 x = 1;
@@ -31,8 +26,4 @@ message WorldStateResponse {
 
 message WorldStateRequest {
   required uint64 last_timestamp = 1;
-}
-
-service WorldStateService {
-  rpc GetWorldState(WorldStateRequest) returns (WorldStateResponse);
 }
