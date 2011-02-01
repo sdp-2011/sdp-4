@@ -360,51 +360,50 @@ public final class Worldstate {
       // @@protoc_insertion_point(class_scope:uk.ac.ed.inf.sdp.group4.WorldObject.Position)
     }
     
-    public static final class Vector extends
+    public static final class Velocity extends
         com.google.protobuf.GeneratedMessage {
-      // Use Vector.newBuilder() to construct.
-      private Vector() {
+      // Use Velocity.newBuilder() to construct.
+      private Velocity() {
         initFields();
       }
-      private Vector(boolean noInit) {}
+      private Velocity(boolean noInit) {}
       
-      private static final Vector defaultInstance;
-      public static Vector getDefaultInstance() {
+      private static final Velocity defaultInstance;
+      public static Velocity getDefaultInstance() {
         return defaultInstance;
       }
       
-      public Vector getDefaultInstanceForType() {
+      public Velocity getDefaultInstanceForType() {
         return defaultInstance;
       }
       
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return uk.ac.ed.inf.sdp.group4.Worldstate.internal_static_uk_ac_ed_inf_sdp_group4_WorldObject_Vector_descriptor;
+        return uk.ac.ed.inf.sdp.group4.Worldstate.internal_static_uk_ac_ed_inf_sdp_group4_WorldObject_Velocity_descriptor;
       }
       
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return uk.ac.ed.inf.sdp.group4.Worldstate.internal_static_uk_ac_ed_inf_sdp_group4_WorldObject_Vector_fieldAccessorTable;
+        return uk.ac.ed.inf.sdp.group4.Worldstate.internal_static_uk_ac_ed_inf_sdp_group4_WorldObject_Velocity_fieldAccessorTable;
       }
       
-      // required int32 direction = 1;
+      // optional int32 direction = 1;
       public static final int DIRECTION_FIELD_NUMBER = 1;
       private boolean hasDirection;
       private int direction_ = 0;
       public boolean hasDirection() { return hasDirection; }
       public int getDirection() { return direction_; }
       
-      // optional float velocity = 2;
-      public static final int VELOCITY_FIELD_NUMBER = 2;
-      private boolean hasVelocity;
-      private float velocity_ = 0F;
-      public boolean hasVelocity() { return hasVelocity; }
-      public float getVelocity() { return velocity_; }
+      // optional float magnitude = 2;
+      public static final int MAGNITUDE_FIELD_NUMBER = 2;
+      private boolean hasMagnitude;
+      private float magnitude_ = 0F;
+      public boolean hasMagnitude() { return hasMagnitude; }
+      public float getMagnitude() { return magnitude_; }
       
       private void initFields() {
       }
       public final boolean isInitialized() {
-        if (!hasDirection) return false;
         return true;
       }
       
@@ -414,8 +413,8 @@ public final class Worldstate {
         if (hasDirection()) {
           output.writeInt32(1, getDirection());
         }
-        if (hasVelocity()) {
-          output.writeFloat(2, getVelocity());
+        if (hasMagnitude()) {
+          output.writeFloat(2, getMagnitude());
         }
         getUnknownFields().writeTo(output);
       }
@@ -430,50 +429,50 @@ public final class Worldstate {
           size += com.google.protobuf.CodedOutputStream
             .computeInt32Size(1, getDirection());
         }
-        if (hasVelocity()) {
+        if (hasMagnitude()) {
           size += com.google.protobuf.CodedOutputStream
-            .computeFloatSize(2, getVelocity());
+            .computeFloatSize(2, getMagnitude());
         }
         size += getUnknownFields().getSerializedSize();
         memoizedSerializedSize = size;
         return size;
       }
       
-      public static uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Vector parseFrom(
+      public static uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Velocity parseFrom(
           com.google.protobuf.ByteString data)
           throws com.google.protobuf.InvalidProtocolBufferException {
         return newBuilder().mergeFrom(data).buildParsed();
       }
-      public static uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Vector parseFrom(
+      public static uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Velocity parseFrom(
           com.google.protobuf.ByteString data,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
         return newBuilder().mergeFrom(data, extensionRegistry)
                  .buildParsed();
       }
-      public static uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Vector parseFrom(byte[] data)
+      public static uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Velocity parseFrom(byte[] data)
           throws com.google.protobuf.InvalidProtocolBufferException {
         return newBuilder().mergeFrom(data).buildParsed();
       }
-      public static uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Vector parseFrom(
+      public static uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Velocity parseFrom(
           byte[] data,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
         return newBuilder().mergeFrom(data, extensionRegistry)
                  .buildParsed();
       }
-      public static uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Vector parseFrom(java.io.InputStream input)
+      public static uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Velocity parseFrom(java.io.InputStream input)
           throws java.io.IOException {
         return newBuilder().mergeFrom(input).buildParsed();
       }
-      public static uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Vector parseFrom(
+      public static uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Velocity parseFrom(
           java.io.InputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
         return newBuilder().mergeFrom(input, extensionRegistry)
                  .buildParsed();
       }
-      public static uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Vector parseDelimitedFrom(java.io.InputStream input)
+      public static uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Velocity parseDelimitedFrom(java.io.InputStream input)
           throws java.io.IOException {
         Builder builder = newBuilder();
         if (builder.mergeDelimitedFrom(input)) {
@@ -482,7 +481,7 @@ public final class Worldstate {
           return null;
         }
       }
-      public static uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Vector parseDelimitedFrom(
+      public static uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Velocity parseDelimitedFrom(
           java.io.InputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
@@ -493,12 +492,12 @@ public final class Worldstate {
           return null;
         }
       }
-      public static uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Vector parseFrom(
+      public static uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Velocity parseFrom(
           com.google.protobuf.CodedInputStream input)
           throws java.io.IOException {
         return newBuilder().mergeFrom(input).buildParsed();
       }
-      public static uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Vector parseFrom(
+      public static uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Velocity parseFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
@@ -508,25 +507,25 @@ public final class Worldstate {
       
       public static Builder newBuilder() { return Builder.create(); }
       public Builder newBuilderForType() { return newBuilder(); }
-      public static Builder newBuilder(uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Vector prototype) {
+      public static Builder newBuilder(uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Velocity prototype) {
         return newBuilder().mergeFrom(prototype);
       }
       public Builder toBuilder() { return newBuilder(this); }
       
       public static final class Builder extends
           com.google.protobuf.GeneratedMessage.Builder<Builder> {
-        private uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Vector result;
+        private uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Velocity result;
         
-        // Construct using uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Vector.newBuilder()
+        // Construct using uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Velocity.newBuilder()
         private Builder() {}
         
         private static Builder create() {
           Builder builder = new Builder();
-          builder.result = new uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Vector();
+          builder.result = new uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Velocity();
           return builder;
         }
         
-        protected uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Vector internalGetResult() {
+        protected uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Velocity internalGetResult() {
           return result;
         }
         
@@ -535,7 +534,7 @@ public final class Worldstate {
             throw new IllegalStateException(
               "Cannot call clear() after build().");
           }
-          result = new uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Vector();
+          result = new uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Velocity();
           return this;
         }
         
@@ -545,24 +544,24 @@ public final class Worldstate {
         
         public com.google.protobuf.Descriptors.Descriptor
             getDescriptorForType() {
-          return uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Vector.getDescriptor();
+          return uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Velocity.getDescriptor();
         }
         
-        public uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Vector getDefaultInstanceForType() {
-          return uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Vector.getDefaultInstance();
+        public uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Velocity getDefaultInstanceForType() {
+          return uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Velocity.getDefaultInstance();
         }
         
         public boolean isInitialized() {
           return result.isInitialized();
         }
-        public uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Vector build() {
+        public uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Velocity build() {
           if (result != null && !isInitialized()) {
             throw newUninitializedMessageException(result);
           }
           return buildPartial();
         }
         
-        private uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Vector buildParsed()
+        private uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Velocity buildParsed()
             throws com.google.protobuf.InvalidProtocolBufferException {
           if (!isInitialized()) {
             throw newUninitializedMessageException(
@@ -571,32 +570,32 @@ public final class Worldstate {
           return buildPartial();
         }
         
-        public uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Vector buildPartial() {
+        public uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Velocity buildPartial() {
           if (result == null) {
             throw new IllegalStateException(
               "build() has already been called on this Builder.");
           }
-          uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Vector returnMe = result;
+          uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Velocity returnMe = result;
           result = null;
           return returnMe;
         }
         
         public Builder mergeFrom(com.google.protobuf.Message other) {
-          if (other instanceof uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Vector) {
-            return mergeFrom((uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Vector)other);
+          if (other instanceof uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Velocity) {
+            return mergeFrom((uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Velocity)other);
           } else {
             super.mergeFrom(other);
             return this;
           }
         }
         
-        public Builder mergeFrom(uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Vector other) {
-          if (other == uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Vector.getDefaultInstance()) return this;
+        public Builder mergeFrom(uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Velocity other) {
+          if (other == uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Velocity.getDefaultInstance()) return this;
           if (other.hasDirection()) {
             setDirection(other.getDirection());
           }
-          if (other.hasVelocity()) {
-            setVelocity(other.getVelocity());
+          if (other.hasMagnitude()) {
+            setMagnitude(other.getMagnitude());
           }
           this.mergeUnknownFields(other.getUnknownFields());
           return this;
@@ -628,7 +627,7 @@ public final class Worldstate {
                 break;
               }
               case 21: {
-                setVelocity(input.readFloat());
+                setMagnitude(input.readFloat());
                 break;
               }
             }
@@ -636,7 +635,7 @@ public final class Worldstate {
         }
         
         
-        // required int32 direction = 1;
+        // optional int32 direction = 1;
         public boolean hasDirection() {
           return result.hasDirection();
         }
@@ -654,34 +653,34 @@ public final class Worldstate {
           return this;
         }
         
-        // optional float velocity = 2;
-        public boolean hasVelocity() {
-          return result.hasVelocity();
+        // optional float magnitude = 2;
+        public boolean hasMagnitude() {
+          return result.hasMagnitude();
         }
-        public float getVelocity() {
-          return result.getVelocity();
+        public float getMagnitude() {
+          return result.getMagnitude();
         }
-        public Builder setVelocity(float value) {
-          result.hasVelocity = true;
-          result.velocity_ = value;
+        public Builder setMagnitude(float value) {
+          result.hasMagnitude = true;
+          result.magnitude_ = value;
           return this;
         }
-        public Builder clearVelocity() {
-          result.hasVelocity = false;
-          result.velocity_ = 0F;
+        public Builder clearMagnitude() {
+          result.hasMagnitude = false;
+          result.magnitude_ = 0F;
           return this;
         }
         
-        // @@protoc_insertion_point(builder_scope:uk.ac.ed.inf.sdp.group4.WorldObject.Vector)
+        // @@protoc_insertion_point(builder_scope:uk.ac.ed.inf.sdp.group4.WorldObject.Velocity)
       }
       
       static {
-        defaultInstance = new Vector(true);
+        defaultInstance = new Velocity(true);
         uk.ac.ed.inf.sdp.group4.Worldstate.internalForceInit();
         defaultInstance.initFields();
       }
       
-      // @@protoc_insertion_point(class_scope:uk.ac.ed.inf.sdp.group4.WorldObject.Vector)
+      // @@protoc_insertion_point(class_scope:uk.ac.ed.inf.sdp.group4.WorldObject.Velocity)
     }
     
     // required .uk.ac.ed.inf.sdp.group4.WorldObject.Position position = 1;
@@ -691,23 +690,28 @@ public final class Worldstate {
     public boolean hasPosition() { return hasPosition; }
     public uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Position getPosition() { return position_; }
     
-    // optional .uk.ac.ed.inf.sdp.group4.WorldObject.Vector vector = 2;
-    public static final int VECTOR_FIELD_NUMBER = 2;
-    private boolean hasVector;
-    private uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Vector vector_;
-    public boolean hasVector() { return hasVector; }
-    public uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Vector getVector() { return vector_; }
+    // required .uk.ac.ed.inf.sdp.group4.WorldObject.Velocity velocity = 2;
+    public static final int VELOCITY_FIELD_NUMBER = 2;
+    private boolean hasVelocity;
+    private uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Velocity velocity_;
+    public boolean hasVelocity() { return hasVelocity; }
+    public uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Velocity getVelocity() { return velocity_; }
+    
+    // optional int32 rotation = 3;
+    public static final int ROTATION_FIELD_NUMBER = 3;
+    private boolean hasRotation;
+    private int rotation_ = 0;
+    public boolean hasRotation() { return hasRotation; }
+    public int getRotation() { return rotation_; }
     
     private void initFields() {
       position_ = uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Position.getDefaultInstance();
-      vector_ = uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Vector.getDefaultInstance();
+      velocity_ = uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Velocity.getDefaultInstance();
     }
     public final boolean isInitialized() {
       if (!hasPosition) return false;
+      if (!hasVelocity) return false;
       if (!getPosition().isInitialized()) return false;
-      if (hasVector()) {
-        if (!getVector().isInitialized()) return false;
-      }
       return true;
     }
     
@@ -717,8 +721,11 @@ public final class Worldstate {
       if (hasPosition()) {
         output.writeMessage(1, getPosition());
       }
-      if (hasVector()) {
-        output.writeMessage(2, getVector());
+      if (hasVelocity()) {
+        output.writeMessage(2, getVelocity());
+      }
+      if (hasRotation()) {
+        output.writeInt32(3, getRotation());
       }
       getUnknownFields().writeTo(output);
     }
@@ -733,9 +740,13 @@ public final class Worldstate {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(1, getPosition());
       }
-      if (hasVector()) {
+      if (hasVelocity()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, getVector());
+          .computeMessageSize(2, getVelocity());
+      }
+      if (hasRotation()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(3, getRotation());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -898,8 +909,11 @@ public final class Worldstate {
         if (other.hasPosition()) {
           mergePosition(other.getPosition());
         }
-        if (other.hasVector()) {
-          mergeVector(other.getVector());
+        if (other.hasVelocity()) {
+          mergeVelocity(other.getVelocity());
+        }
+        if (other.hasRotation()) {
+          setRotation(other.getRotation());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -936,12 +950,16 @@ public final class Worldstate {
               break;
             }
             case 18: {
-              uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Vector.Builder subBuilder = uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Vector.newBuilder();
-              if (hasVector()) {
-                subBuilder.mergeFrom(getVector());
+              uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Velocity.Builder subBuilder = uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Velocity.newBuilder();
+              if (hasVelocity()) {
+                subBuilder.mergeFrom(getVelocity());
               }
               input.readMessage(subBuilder, extensionRegistry);
-              setVector(subBuilder.buildPartial());
+              setVelocity(subBuilder.buildPartial());
+              break;
+            }
+            case 24: {
+              setRotation(input.readInt32());
               break;
             }
           }
@@ -986,40 +1004,58 @@ public final class Worldstate {
         return this;
       }
       
-      // optional .uk.ac.ed.inf.sdp.group4.WorldObject.Vector vector = 2;
-      public boolean hasVector() {
-        return result.hasVector();
+      // required .uk.ac.ed.inf.sdp.group4.WorldObject.Velocity velocity = 2;
+      public boolean hasVelocity() {
+        return result.hasVelocity();
       }
-      public uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Vector getVector() {
-        return result.getVector();
+      public uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Velocity getVelocity() {
+        return result.getVelocity();
       }
-      public Builder setVector(uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Vector value) {
+      public Builder setVelocity(uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Velocity value) {
         if (value == null) {
           throw new NullPointerException();
         }
-        result.hasVector = true;
-        result.vector_ = value;
+        result.hasVelocity = true;
+        result.velocity_ = value;
         return this;
       }
-      public Builder setVector(uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Vector.Builder builderForValue) {
-        result.hasVector = true;
-        result.vector_ = builderForValue.build();
+      public Builder setVelocity(uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Velocity.Builder builderForValue) {
+        result.hasVelocity = true;
+        result.velocity_ = builderForValue.build();
         return this;
       }
-      public Builder mergeVector(uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Vector value) {
-        if (result.hasVector() &&
-            result.vector_ != uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Vector.getDefaultInstance()) {
-          result.vector_ =
-            uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Vector.newBuilder(result.vector_).mergeFrom(value).buildPartial();
+      public Builder mergeVelocity(uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Velocity value) {
+        if (result.hasVelocity() &&
+            result.velocity_ != uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Velocity.getDefaultInstance()) {
+          result.velocity_ =
+            uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Velocity.newBuilder(result.velocity_).mergeFrom(value).buildPartial();
         } else {
-          result.vector_ = value;
+          result.velocity_ = value;
         }
-        result.hasVector = true;
+        result.hasVelocity = true;
         return this;
       }
-      public Builder clearVector() {
-        result.hasVector = false;
-        result.vector_ = uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Vector.getDefaultInstance();
+      public Builder clearVelocity() {
+        result.hasVelocity = false;
+        result.velocity_ = uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Velocity.getDefaultInstance();
+        return this;
+      }
+      
+      // optional int32 rotation = 3;
+      public boolean hasRotation() {
+        return result.hasRotation();
+      }
+      public int getRotation() {
+        return result.getRotation();
+      }
+      public Builder setRotation(int value) {
+        result.hasRotation = true;
+        result.rotation_ = value;
+        return this;
+      }
+      public Builder clearRotation() {
+        result.hasRotation = false;
+        result.rotation_ = 0;
         return this;
       }
       
@@ -1846,227 +1882,6 @@ public final class Worldstate {
     // @@protoc_insertion_point(class_scope:uk.ac.ed.inf.sdp.group4.WorldStateRequest)
   }
   
-  public static abstract class WorldStateService
-      implements com.google.protobuf.Service {
-    protected WorldStateService() {}
-    
-    public interface Interface {
-      public abstract void getWorldState(
-          com.google.protobuf.RpcController controller,
-          uk.ac.ed.inf.sdp.group4.Worldstate.WorldStateRequest request,
-          com.google.protobuf.RpcCallback<uk.ac.ed.inf.sdp.group4.Worldstate.WorldStateResponse> done);
-      
-    }
-    
-    public static com.google.protobuf.Service newReflectiveService(
-        final Interface impl) {
-      return new WorldStateService() {
-        @Override
-        public  void getWorldState(
-            com.google.protobuf.RpcController controller,
-            uk.ac.ed.inf.sdp.group4.Worldstate.WorldStateRequest request,
-            com.google.protobuf.RpcCallback<uk.ac.ed.inf.sdp.group4.Worldstate.WorldStateResponse> done) {
-          impl.getWorldState(controller, request, done);
-        }
-        
-      };
-    }
-    
-    public static com.google.protobuf.BlockingService
-        newReflectiveBlockingService(final BlockingInterface impl) {
-      return new com.google.protobuf.BlockingService() {
-        public final com.google.protobuf.Descriptors.ServiceDescriptor
-            getDescriptorForType() {
-          return getDescriptor();
-        }
-        
-        public final com.google.protobuf.Message callBlockingMethod(
-            com.google.protobuf.Descriptors.MethodDescriptor method,
-            com.google.protobuf.RpcController controller,
-            com.google.protobuf.Message request)
-            throws com.google.protobuf.ServiceException {
-          if (method.getService() != getDescriptor()) {
-            throw new java.lang.IllegalArgumentException(
-              "Service.callBlockingMethod() given method descriptor for " +
-              "wrong service type.");
-          }
-          switch(method.getIndex()) {
-            case 0:
-              return impl.getWorldState(controller, (uk.ac.ed.inf.sdp.group4.Worldstate.WorldStateRequest)request);
-            default:
-              throw new java.lang.AssertionError("Can't get here.");
-          }
-        }
-        
-        public final com.google.protobuf.Message
-            getRequestPrototype(
-            com.google.protobuf.Descriptors.MethodDescriptor method) {
-          if (method.getService() != getDescriptor()) {
-            throw new java.lang.IllegalArgumentException(
-              "Service.getRequestPrototype() given method " +
-              "descriptor for wrong service type.");
-          }
-          switch(method.getIndex()) {
-            case 0:
-              return uk.ac.ed.inf.sdp.group4.Worldstate.WorldStateRequest.getDefaultInstance();
-            default:
-              throw new java.lang.AssertionError("Can't get here.");
-          }
-        }
-        
-        public final com.google.protobuf.Message
-            getResponsePrototype(
-            com.google.protobuf.Descriptors.MethodDescriptor method) {
-          if (method.getService() != getDescriptor()) {
-            throw new java.lang.IllegalArgumentException(
-              "Service.getResponsePrototype() given method " +
-              "descriptor for wrong service type.");
-          }
-          switch(method.getIndex()) {
-            case 0:
-              return uk.ac.ed.inf.sdp.group4.Worldstate.WorldStateResponse.getDefaultInstance();
-            default:
-              throw new java.lang.AssertionError("Can't get here.");
-          }
-        }
-        
-      };
-    }
-    
-    public abstract void getWorldState(
-        com.google.protobuf.RpcController controller,
-        uk.ac.ed.inf.sdp.group4.Worldstate.WorldStateRequest request,
-        com.google.protobuf.RpcCallback<uk.ac.ed.inf.sdp.group4.Worldstate.WorldStateResponse> done);
-    
-    public static final
-        com.google.protobuf.Descriptors.ServiceDescriptor
-        getDescriptor() {
-      return uk.ac.ed.inf.sdp.group4.Worldstate.getDescriptor().getServices().get(0);
-    }
-    public final com.google.protobuf.Descriptors.ServiceDescriptor
-        getDescriptorForType() {
-      return getDescriptor();
-    }
-    
-    public final void callMethod(
-        com.google.protobuf.Descriptors.MethodDescriptor method,
-        com.google.protobuf.RpcController controller,
-        com.google.protobuf.Message request,
-        com.google.protobuf.RpcCallback<
-          com.google.protobuf.Message> done) {
-      if (method.getService() != getDescriptor()) {
-        throw new java.lang.IllegalArgumentException(
-          "Service.callMethod() given method descriptor for wrong " +
-          "service type.");
-      }
-      switch(method.getIndex()) {
-        case 0:
-          this.getWorldState(controller, (uk.ac.ed.inf.sdp.group4.Worldstate.WorldStateRequest)request,
-            com.google.protobuf.RpcUtil.<uk.ac.ed.inf.sdp.group4.Worldstate.WorldStateResponse>specializeCallback(
-              done));
-          return;
-        default:
-          throw new java.lang.AssertionError("Can't get here.");
-      }
-    }
-    
-    public final com.google.protobuf.Message
-        getRequestPrototype(
-        com.google.protobuf.Descriptors.MethodDescriptor method) {
-      if (method.getService() != getDescriptor()) {
-        throw new java.lang.IllegalArgumentException(
-          "Service.getRequestPrototype() given method " +
-          "descriptor for wrong service type.");
-      }
-      switch(method.getIndex()) {
-        case 0:
-          return uk.ac.ed.inf.sdp.group4.Worldstate.WorldStateRequest.getDefaultInstance();
-        default:
-          throw new java.lang.AssertionError("Can't get here.");
-      }
-    }
-    
-    public final com.google.protobuf.Message
-        getResponsePrototype(
-        com.google.protobuf.Descriptors.MethodDescriptor method) {
-      if (method.getService() != getDescriptor()) {
-        throw new java.lang.IllegalArgumentException(
-          "Service.getResponsePrototype() given method " +
-          "descriptor for wrong service type.");
-      }
-      switch(method.getIndex()) {
-        case 0:
-          return uk.ac.ed.inf.sdp.group4.Worldstate.WorldStateResponse.getDefaultInstance();
-        default:
-          throw new java.lang.AssertionError("Can't get here.");
-      }
-    }
-    
-    public static Stub newStub(
-        com.google.protobuf.RpcChannel channel) {
-      return new Stub(channel);
-    }
-    
-    public static final class Stub extends uk.ac.ed.inf.sdp.group4.Worldstate.WorldStateService implements Interface {
-      private Stub(com.google.protobuf.RpcChannel channel) {
-        this.channel = channel;
-      }
-      
-      private final com.google.protobuf.RpcChannel channel;
-      
-      public com.google.protobuf.RpcChannel getChannel() {
-        return channel;
-      }
-      
-      public  void getWorldState(
-          com.google.protobuf.RpcController controller,
-          uk.ac.ed.inf.sdp.group4.Worldstate.WorldStateRequest request,
-          com.google.protobuf.RpcCallback<uk.ac.ed.inf.sdp.group4.Worldstate.WorldStateResponse> done) {
-        channel.callMethod(
-          getDescriptor().getMethods().get(0),
-          controller,
-          request,
-          uk.ac.ed.inf.sdp.group4.Worldstate.WorldStateResponse.getDefaultInstance(),
-          com.google.protobuf.RpcUtil.generalizeCallback(
-            done,
-            uk.ac.ed.inf.sdp.group4.Worldstate.WorldStateResponse.class,
-            uk.ac.ed.inf.sdp.group4.Worldstate.WorldStateResponse.getDefaultInstance()));
-      }
-    }
-    
-    public static BlockingInterface newBlockingStub(
-        com.google.protobuf.BlockingRpcChannel channel) {
-      return new BlockingStub(channel);
-    }
-    
-    public interface BlockingInterface {
-      public uk.ac.ed.inf.sdp.group4.Worldstate.WorldStateResponse getWorldState(
-          com.google.protobuf.RpcController controller,
-          uk.ac.ed.inf.sdp.group4.Worldstate.WorldStateRequest request)
-          throws com.google.protobuf.ServiceException;
-    }
-    
-    private static final class BlockingStub implements BlockingInterface {
-      private BlockingStub(com.google.protobuf.BlockingRpcChannel channel) {
-        this.channel = channel;
-      }
-      
-      private final com.google.protobuf.BlockingRpcChannel channel;
-      
-      public uk.ac.ed.inf.sdp.group4.Worldstate.WorldStateResponse getWorldState(
-          com.google.protobuf.RpcController controller,
-          uk.ac.ed.inf.sdp.group4.Worldstate.WorldStateRequest request)
-          throws com.google.protobuf.ServiceException {
-        return (uk.ac.ed.inf.sdp.group4.Worldstate.WorldStateResponse) channel.callBlockingMethod(
-          getDescriptor().getMethods().get(0),
-          controller,
-          request,
-          uk.ac.ed.inf.sdp.group4.Worldstate.WorldStateResponse.getDefaultInstance());
-      }
-      
-    }
-  }
-  
   private static com.google.protobuf.Descriptors.Descriptor
     internal_static_uk_ac_ed_inf_sdp_group4_WorldObject_descriptor;
   private static
@@ -2078,10 +1893,10 @@ public final class Worldstate {
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_uk_ac_ed_inf_sdp_group4_WorldObject_Position_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_uk_ac_ed_inf_sdp_group4_WorldObject_Vector_descriptor;
+    internal_static_uk_ac_ed_inf_sdp_group4_WorldObject_Velocity_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_uk_ac_ed_inf_sdp_group4_WorldObject_Vector_fieldAccessorTable;
+      internal_static_uk_ac_ed_inf_sdp_group4_WorldObject_Velocity_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
     internal_static_uk_ac_ed_inf_sdp_group4_WorldStateResponse_descriptor;
   private static
@@ -2102,22 +1917,19 @@ public final class Worldstate {
   static {
     java.lang.String[] descriptorData = {
       "\n\020worldstate.proto\022\027uk.ac.ed.inf.sdp.gro" +
-      "up4\"\334\001\n\013WorldObject\022?\n\010position\030\001 \002(\0132-." +
+      "up4\"\365\001\n\013WorldObject\022?\n\010position\030\001 \002(\0132-." +
       "uk.ac.ed.inf.sdp.group4.WorldObject.Posi" +
-      "tion\022;\n\006vector\030\002 \001(\0132+.uk.ac.ed.inf.sdp." +
-      "group4.WorldObject.Vector\032 \n\010Position\022\t\n" +
-      "\001x\030\001 \002(\005\022\t\n\001y\030\002 \002(\005\032-\n\006Vector\022\021\n\tdirecti" +
-      "on\030\001 \002(\005\022\020\n\010velocity\030\002 \001(\002\"\326\001\n\022WorldStat" +
-      "eResponse\022\017\n\007changed\030\001 \002(\010\022\021\n\ttimestamp\030" +
-      "\002 \002(\004\0222\n\004ball\030\003 \001(\0132$.uk.ac.ed.inf.sdp.g" +
-      "roup4.WorldObject\0222\n\004blue\030\004 \001(\0132$.uk.ac.",
-      "ed.inf.sdp.group4.WorldObject\0224\n\006yellow\030" +
-      "\005 \001(\0132$.uk.ac.ed.inf.sdp.group4.WorldObj" +
-      "ect\"+\n\021WorldStateRequest\022\026\n\016last_timesta" +
-      "mp\030\001 \002(\0042}\n\021WorldStateService\022h\n\rGetWorl" +
-      "dState\022*.uk.ac.ed.inf.sdp.group4.WorldSt" +
-      "ateRequest\032+.uk.ac.ed.inf.sdp.group4.Wor" +
-      "ldStateResponseB\006\210\001\001\220\001\001"
+      "tion\022?\n\010velocity\030\002 \002(\0132-.uk.ac.ed.inf.sd" +
+      "p.group4.WorldObject.Velocity\022\020\n\010rotatio" +
+      "n\030\003 \001(\005\032 \n\010Position\022\t\n\001x\030\001 \002(\005\022\t\n\001y\030\002 \002(" +
+      "\005\0320\n\010Velocity\022\021\n\tdirection\030\001 \001(\005\022\021\n\tmagn" +
+      "itude\030\002 \001(\002\"\326\001\n\022WorldStateResponse\022\017\n\007ch" +
+      "anged\030\001 \002(\010\022\021\n\ttimestamp\030\002 \002(\004\0222\n\004ball\030\003" +
+      " \001(\0132$.uk.ac.ed.inf.sdp.group4.WorldObje",
+      "ct\0222\n\004blue\030\004 \001(\0132$.uk.ac.ed.inf.sdp.grou" +
+      "p4.WorldObject\0224\n\006yellow\030\005 \001(\0132$.uk.ac.e" +
+      "d.inf.sdp.group4.WorldObject\"+\n\021WorldSta" +
+      "teRequest\022\026\n\016last_timestamp\030\001 \002(\004"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -2129,7 +1941,7 @@ public final class Worldstate {
           internal_static_uk_ac_ed_inf_sdp_group4_WorldObject_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_uk_ac_ed_inf_sdp_group4_WorldObject_descriptor,
-              new java.lang.String[] { "Position", "Vector", },
+              new java.lang.String[] { "Position", "Velocity", "Rotation", },
               uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.class,
               uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Builder.class);
           internal_static_uk_ac_ed_inf_sdp_group4_WorldObject_Position_descriptor =
@@ -2140,14 +1952,14 @@ public final class Worldstate {
               new java.lang.String[] { "X", "Y", },
               uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Position.class,
               uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Position.Builder.class);
-          internal_static_uk_ac_ed_inf_sdp_group4_WorldObject_Vector_descriptor =
+          internal_static_uk_ac_ed_inf_sdp_group4_WorldObject_Velocity_descriptor =
             internal_static_uk_ac_ed_inf_sdp_group4_WorldObject_descriptor.getNestedTypes().get(1);
-          internal_static_uk_ac_ed_inf_sdp_group4_WorldObject_Vector_fieldAccessorTable = new
+          internal_static_uk_ac_ed_inf_sdp_group4_WorldObject_Velocity_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_uk_ac_ed_inf_sdp_group4_WorldObject_Vector_descriptor,
-              new java.lang.String[] { "Direction", "Velocity", },
-              uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Vector.class,
-              uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Vector.Builder.class);
+              internal_static_uk_ac_ed_inf_sdp_group4_WorldObject_Velocity_descriptor,
+              new java.lang.String[] { "Direction", "Magnitude", },
+              uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Velocity.class,
+              uk.ac.ed.inf.sdp.group4.Worldstate.WorldObject.Velocity.Builder.class);
           internal_static_uk_ac_ed_inf_sdp_group4_WorldStateResponse_descriptor =
             getDescriptor().getMessageTypes().get(1);
           internal_static_uk_ac_ed_inf_sdp_group4_WorldStateResponse_fieldAccessorTable = new
