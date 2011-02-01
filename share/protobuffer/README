@@ -1,0 +1,9 @@
+Python:
+
+python main.py
+
+Java:
+
+javac -d . -cp protobuf-java-2.3.0.jar Worldstate.java Main.java
+
+java -cp .:protobuf-java-2.3.0.jar Main uk.ac.ed.inf.sdp.group4.Worldstate$WorldStateRequest uk.ac.ed.inf.sdp.group4.Worldstate$WorldStateResponse
