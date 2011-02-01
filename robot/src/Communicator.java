@@ -7,18 +7,19 @@ import lejos.nxt.comm.*;
 public class Communicator
 {
 	public static Queue commands;
+	public static int status;
 
 	private static BTConnection connection;
 	private static DataOutputStream dataOut;
 	private static DataInputStream dataIn;
 
 	private static boolean keepReceiving = true;
+	private static boolean sendLock = false;
 
 	public Communicator()
 	{
 		commands = new Queue();
 		new Thread(new CommandReciever()).start();
-		dataOut = connection.openDataOutputStream();
 	}
 
 	public int[] getCommand()
@@ -28,15 +29,8 @@ public class Communicator
 
 	public void sendStatus(int val)
 	{
-		try
-		{
-			dataOut.writeInt(val);
-			dataOut.flush();
-		}
-		catch (IOException e)
-		{
-			Log.e("Status cannot be sent");
-		}
+		status = val;
+		new Thread(new StatusSender()).start();
 	}
 
 	private class CommandReciever implements Runnable
@@ -47,6 +41,8 @@ public class Communicator
 			connection = Bluetooth.waitForConnection();
 			LCD.drawString("Connection Open", 0, 0);
 			dataIn = connection.openDataInputStream();
+			dataOut = connection.openDataOutputStream();
+
 			while (keepReceiving)
 			{
 				try
@@ -64,6 +60,32 @@ public class Communicator
 					keepReceiving = false;
 				}
 			}
+		}
+	}
+
+	private class StatusSender implements Runnable
+	{
+		public void run()
+		{
+			while (sendLock)
+			{
+				//block
+			}
+
+			sendLock = true;
+
+			try
+			{
+				dataOut.writeInt(status);
+				dataOut.flush();
+			}
+
+			catch (IOException e)
+			{
+				Log.e("Status cannot be sent");
+			}
+
+			sendLock = false;
 		}
 	}
 }

@@ -1,6 +1,6 @@
 
 public class Match {
-
+	/*
 	// The pitch grid
 	private Pitch pitch = new Pitch();
 	
@@ -29,5 +29,5 @@ public class Match {
 		Match test = new Match();
 	}
 	
-	
-}
+	*/
+}	
