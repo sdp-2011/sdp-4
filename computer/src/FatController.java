@@ -25,7 +25,6 @@ public class FatController
 			System.out.println("FAILED");
 			e.printStackTrace();
 		}
-
 		dataOut = new DataOutputStream(nxtComm.getOutputStream());
 		dataIn = new DataInputStream(nxtComm.getInputStream());
 		robotStatus = new LinkedList<Integer>();
@@ -109,7 +108,6 @@ public class FatController
 				{
 					robotStatus.add(dataIn.readInt());
 				}
-
 				catch (IOException e)
 				{
 					System.out.println("Something has gone wrong");
