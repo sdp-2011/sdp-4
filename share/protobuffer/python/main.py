@@ -7,18 +7,20 @@ env.timestamp = 1234567890
 
 env.ball.position.x = 100
 env.ball.position.y = 200
-env.ball.vector.direction = 328
-env.ball.vector.velocity = 45.1
+env.ball.velocity.direction = 328
+env.ball.velocity.magnitude = 45.1
 
 env.yellow.position.x = 100
 env.yellow.position.y = 200
-env.yellow.vector.direction = 328
-env.yellow.vector.velocity = 45.1
+env.yellow.velocity.direction = 328
+env.yellow.velocity.magnitude = 45.1
+env.yellow.rotation = 23
 
 env.blue.position.x = 100
 env.blue.position.y = 200
-env.blue.vector.direction = 328
-env.blue.vector.velocity = 45.1
+env.blue.velocity.direction = 328
+env.blue.velocity.magnitude = 45.1
+env.blue.rotation = 23
 
 import signal, os
 
