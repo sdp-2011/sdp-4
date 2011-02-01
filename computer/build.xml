@@ -4,7 +4,7 @@
 
   	<target name="build" description="compile PC samples">
     	<mkdir dir="classes"/>
-    	<javac srcdir="." destdir="classes" fork="yes" optimize="on" debug="on" source="1.5" target="1.5" includeantruntime="false">
+    	<javac srcdir="src" destdir="classes" fork="yes" optimize="on" debug="on" source="1.5" target="1.5" includeantruntime="false">
 			<classpath location="${nxj.home}/projects/pccomms/lib/pccomm.jar"/>
 			<classpath location="${nxj.home}/projects/pccomms/3rdparty/bluecove.jar"/>
 			<classpath location="${nxj.home}/projects/pctools/lib/pctools.jar"/>
