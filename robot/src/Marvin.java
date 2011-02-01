@@ -88,7 +88,7 @@ public class Marvin
 	public void start()
 	{
 		// UI Setup
-		LCD.drawString("Sensors: ACTIVE", 0, 7);
+		Log.sensorsActive(true);
 		while (true)
 		{
 			checkButtons();
@@ -127,9 +127,7 @@ public class Marvin
 		if (Button.LEFT.isPressed())
 		{
 			sensorsActive = !sensorsActive;
-			StringBuffer message = new StringBuffer("Sensors:");
-			message.append(sensorsActive ? "ACTIVE  " : "INACTIVE");
-			LCD.drawString(message.toString(), 0, 7);
+			Log.sensorsActive(sensorsActive);
 		}
 	}
 
@@ -147,8 +145,6 @@ public class Marvin
 			int[] command = communicator.getCommand();
 			int instruction = command[0];
 			int argument = command[1];
-			LCD.drawInt(instruction, 0, 4);
-			LCD.drawInt(argument, 0, 5);
 			// What should we do?
 			if (instruction == Instruction.FORWARD.getValue())
 			{
