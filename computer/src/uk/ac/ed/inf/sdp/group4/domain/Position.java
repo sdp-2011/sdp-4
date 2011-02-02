@@ -5,6 +5,12 @@ class Position
 	private int x;
 	private int y;
 
+	public Position(int x, int y)
+	{
+		setX(x);
+		setY(y);
+	}
+
 	public void setX(int x)
 	{
 		this.x = x;

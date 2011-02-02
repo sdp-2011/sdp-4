@@ -6,7 +6,7 @@ class WorldState
 	private Robot blue;
 	private Robot yellow;
 
-	public WorldState(WorldStateResponse)
+	public WorldState(WorldStateResponse response)
 	{
 
 	}
