@@ -1,3 +1,7 @@
+Proto:
+
+protoc -I=. --python_out=python --java_out=java worldstate.proto
+
 Python:
 
 python main.py
