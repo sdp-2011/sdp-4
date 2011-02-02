@@ -12,8 +12,6 @@ import javax.swing.JFrame;
 
 
 public class Launcher {
-
-	static Pitch pitch = new Pitch();
 	
 	final int SCALE = 3;
 	final int PADDING = 5*SCALE;
@@ -31,15 +29,55 @@ public class Launcher {
 	Image iconB;
 	Image iconY;
 
+	private JFrame frame;
+
 	
 	public static void main(String[] args) {
 		
 		new Launcher();
-		
 	}
 
-	Launcher() {
+	public Launcher()
+	{
+	
+        loadContent();
+		setup();
 
+        Boolean test = true;
+
+        while (test)
+		{
+	     	update(50);
+			
+			try
+			{
+				Thread.sleep(40);
+			}
+			catch (InterruptedException e)
+			{
+				System.out.println("ARGGGHHH");
+			}
+        }	
+	}	
+
+	public void loadContent()
+	{
+		try
+		{
+			iconB = ImageIO.read(new File("rB.png"));
+			iconY = ImageIO.read(new File("rY.png"));
+		} 
+		catch(IOException ex) 
+		{
+			System.out.println("You've forgotten an image");
+		}
+	}
+
+	public void setup()
+	{
+		Pitch pitch = new Pitch();
+
+		//initialise locations
 		rB.setxLoc(PADDING);
 		rB.setyLoc(pitch.getWIDTH()*SCALE/2 + PADDING - rB.getWIDTH()*SCALE/2);
 		
@@ -47,34 +85,38 @@ public class Launcher {
 		rY.setyLoc(pitch.getWIDTH()*SCALE/2 + PADDING - rY.getWIDTH()*SCALE/2);
 		rY.setAngle(rY.getAngle()+180);
 		
-		JFrame frame = new JFrame();
-		
-		frame.getContentPane().add(new Situation());
-		
-        int frameWidth = pitch.getLENGTH()*SCALE + 2*PADDING + 4*SCALE;
-        int frameHeight = pitch.getWIDTH()*SCALE + 2*PADDING + 35*SCALE;
-        frame.setSize(frameWidth, frameHeight);
+		//set up display
+		frame = new JFrame();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(pitch.getLENGTH()*SCALE + 2*PADDING + 4*SCALE,
+			pitch.getWIDTH()*SCALE + 2*PADDING + 35*SCALE);
         frame.setVisible(true);
-        
-        Boolean test = true;
-        while (test){
-	        try {
-				Thread.sleep(1000/FPS);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			rB.setxLoc(rB.getxLoc() + rB.SPEED/FPS);
-			
-			frame.getContentPane().add(new Situation());
-	        frame.setVisible(true);
-	        
-	        if(rB.getxLoc()>500){ test = false; }
-        }
+		frame.getContentPane().add(new Situation(pitch));
 	}
+
+	public void update(int time)
+	{
+		if (time > 	40)
+		{
+			rB.setxLoc(rB.getxLoc() + rB.SPEED/FPS);
+			draw();
+		}
+	}
+
+	public void draw()
+	{
+		frame.getContentPane().repaint();
+	}
+		
 	
-	class Situation extends JComponent {
+	private class Situation extends JComponent {
+
+		private Pitch pitch;
+
+		public Situation(Pitch pitch)
+		{
+			this.pitch = pitch;
+		}
 	
 		public void paint(Graphics g) {
 			
@@ -83,7 +125,7 @@ public class Launcher {
 			g2d.fill(new Rectangle2D.Double(0, 0, pitch.getLENGTH()*SCALE + 2*PADDING, pitch.getWIDTH()*SCALE + 2*PADDING));
 			
 			g2d.setPaint(Color.red);
-			g2d.fill(new Rectangle2D.Double(0, pitch.getGPOS()*SCALE + PADDING, pitch.getLENGTH()*SCALE + 2*PADDING, pitch.getGLENGTH()*SCALE));
+			g2d.fill(new Rectangle2D.Double(0, pitch.getGPOS()*SCALE + PADDING, pitch.getLENGTH()*SCALE + 2*PADDING, 					pitch.getGLENGTH()*SCALE));
 			
 			g2d.setPaint(Color.getHSBColor(0.3f, 1, 0.392f));
 			g2d.fill(new Rectangle2D.Double(PADDING, PADDING, pitch.getLENGTH()*SCALE, pitch.getWIDTH()*SCALE));
@@ -91,14 +133,6 @@ public class Launcher {
 			g2d.setPaint(Color.BLUE);
 			g2d.fill(new Rectangle2D.Double(rB.getxLoc(), rB.getyLoc(), rB.getLENGTH()*SCALE, rB.getWIDTH()*SCALE));
 			g2d.fill(new Rectangle2D.Double(rY.getxLoc(), rY.getyLoc(), rY.getLENGTH()*SCALE, rY.getWIDTH()*SCALE));
-			
-			try {
-				iconB = ImageIO.read(new File("rB.png"));
-				iconY = ImageIO.read(new File("rY.png"));
-				
-			} catch(IOException ex) {
-				System.out.println("You've forgotten an image");
-			}
 			
 			Graphics2D gRB = (Graphics2D) g;
 			Graphics2D gRY = (Graphics2D) g;
