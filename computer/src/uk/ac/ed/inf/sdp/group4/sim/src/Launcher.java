@@ -43,6 +43,8 @@ public class Launcher {
         loadContent();
 		setup();
 
+
+		//this section just a test at the moment
         Boolean test = true;
 
         while (test)
