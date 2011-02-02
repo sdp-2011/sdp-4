@@ -51,6 +51,13 @@ def findObject(img, colour):
 		cv.InRangeS(hsv, yellowLower, yellowUpper, mask)
 		cv.NamedWindow("Yellow:",cv.CV_WINDOW_AUTOSIZE)
 		cv.ShowImage("Yellow:",mask)
+	
+	elif (colour == "BLACK"):
+		blackLower = cv.Scalar(0.00 * 256, 0.00 * 256, 0.00 * 256)
+		blackUpper = cv.Scalar(1.00 * 256, 1.00 * 256, 0.10 * 256)
+		cv.InRangeS(hsv, yellowLower, yellowUpper, mask)
+		cv.NamedWindow("Yellow:",cv.CV_WINDOW_AUTOSIZE)
+		cv.ShowImage("Yellow:",mask)
 
     # Count white pixels to make sure program doesn't crash if it finds nothing
     if (cv.CountNonZero(mask) < 3):
