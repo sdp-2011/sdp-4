@@ -1,6 +1,6 @@
 package uk.ac.ed.inf.sdp.group4.domain;
 
-class Position
+public class Position
 {
 	private int x;
 	private int y;

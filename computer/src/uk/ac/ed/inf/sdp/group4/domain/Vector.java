@@ -1,11 +1,11 @@
 package uk.ac.ed.inf.sdp.group4.domain;
 
-class Vector
+public class Vector
 {
 	private int direction;
 	private float magnitude;
 
-	public Vector(int direction, float magnitude)
+	public Vector(int direction, float magnitude) throws InvalidAngleException
 	{
 		setDirection(direction);
 		setMagnitude(magnitude);

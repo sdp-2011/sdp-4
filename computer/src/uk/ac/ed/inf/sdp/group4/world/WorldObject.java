@@ -3,14 +3,14 @@ package uk.ac.ed.inf.sdp.group4.world;
 import uk.ac.ed.inf.sdp.group4.domain.Position;
 import uk.ac.ed.inf.sdp.group4.domain.Vector;
 
-abstract class WorldObject
+public abstract class WorldObject
 {
 	private Position position;
 	private Vector vector;
 
 	public void setPosition(int x, int y)
 	{
-		this.position = new Postition(x, y);
+		this.position = new Position(x, y);
 	}
 
 	public Position getPosition()

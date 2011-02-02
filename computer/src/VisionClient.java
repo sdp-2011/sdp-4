@@ -60,9 +60,12 @@ class VisionClient
 		{
 			System.err.println("Couldn't parse the response from the input stream");
 		}
+
 		// TODO: Turn into WorldState class and validate.
+		WorldState worldState = new WorldState(response);
+
 		// TODO: Set lastTimestamp
-		return response;
+		return worldState;
 	}
 
 	public String getHostname()
