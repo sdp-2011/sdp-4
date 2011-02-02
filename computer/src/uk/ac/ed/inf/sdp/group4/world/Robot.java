@@ -1,3 +1,5 @@
+package uk.ac.ed.inf.sdp.group4.world;
+
 import uk.ac.ed.inf.sdp.group4.domain.InvalidAngleException;
 import uk.ac.ed.inf.sdp.group4.world.WorldObject;
 

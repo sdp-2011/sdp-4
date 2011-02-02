@@ -2,6 +2,7 @@ package uk.ac.ed.inf.sdp.group4.world;
 
 import uk.ac.ed.inf.sdp.group4.domain.Position;
 import uk.ac.ed.inf.sdp.group4.domain.Vector;
+import uk.ac.ed.inf.sdp.group4.domain.InvalidAngleException;
 
 public abstract class WorldObject
 {
@@ -18,7 +19,7 @@ public abstract class WorldObject
 		return this.position;
 	}
 
-	public void setVector(int direction, float magnitude)
+	public void setVector(int direction, float magnitude) throws InvalidAngleException
 	{
 		this.vector = new Vector(direction, magnitude);
 	}
