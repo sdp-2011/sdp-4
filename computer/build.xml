@@ -2,12 +2,24 @@
 	<property environment="env" />
 	<property name="nxj.home" value="${env.NXJ_HOME}" />
 
-  	<target name="build" description="compile PC samples">
+	<property name="lib" value="lib" />
+	<property name="src" value="src" />
+	<property name="classes" value="classes" />
+
+	<path id="classpath">
+		<pathelement location="${classes}" />
+		<fileset dir="${lib}">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+
+  	<target name="build" description="Compile the project">
     	<mkdir dir="classes"/>
-    	<javac srcdir="." destdir="classes" fork="yes" optimize="on" debug="on" source="1.5" target="1.5" includeantruntime="false">
+		<javac srcdir="${src}" destdir="${classes}" fork="yes" optimize="on" debug="on" source="1.5" target="1.5" includeantruntime="false">
 			<classpath location="${nxj.home}/projects/pccomms/lib/pccomm.jar"/>
 			<classpath location="${nxj.home}/projects/pccomms/3rdparty/bluecove.jar"/>
 			<classpath location="${nxj.home}/projects/pctools/lib/pctools.jar"/>
+			<classpath refid="classpath" />
 		</javac>
   	</target>
 	
@@ -18,5 +30,14 @@
 				<include name="**/*.class"/>
 			</fileset>
 		</delete>
+	</target>
+
+	<target name="run" description="run the project" depends="build">
+		<java classname="Test">
+			<classpath location="${nxj.home}/projects/pccomms/lib/pccomm.jar"/>
+			<classpath location="${nxj.home}/projects/pccomms/3rdparty/bluecove.jar"/>
+			<classpath location="${nxj.home}/projects/pctools/lib/pctools.jar"/>
+			<classpath refid="classpath" />
+		</java>
 	</target>
 </project>
