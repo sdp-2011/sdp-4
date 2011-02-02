@@ -3,7 +3,7 @@ import java.io.*;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class FatController
+public class FatController extends Controller
 {
 	private NXTComm nxtComm;
 	private DataInputStream dataIn;
@@ -49,12 +49,10 @@ public class FatController
 		sendCommand(2, 0);
 	}
 
-	public void beserk(int beserk)
+	public void beserk(boolean val)
 	{
-		if (beserk < 2 && beserk >= 0)
-		{
-			sendCommand(3, beserk);
-		}
+		if (val) sendCommand(3, 1);
+		else sendCommand(3, 0);
 	}
 
 	public void finish()
