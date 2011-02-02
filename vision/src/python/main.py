@@ -21,28 +21,31 @@ while (True):
 	yellowCenter = findObject(image,"YELLOW")
 	yellowCenter = (int(yellowCenter[0]), int(yellowCenter[1]))
 	
-	blueImage = cv.CloneImage(orig)	
-	blueCropRect = (blueCenter[0] + 50, blueCenter[1] + 55, 50, 50)
-	cv.SetImageROI(blueImage, blueCropRect)
-	cv.NamedWindow("BlueBlack:",cv.CV_WINDOW_AUTOSIZE)
-	cv.ShowImage("BlueBlack:", blueImage)	
-	blueBlack = findObject(blueImage, "BLACK")
-	blueBlack = (int(blueBlack[0]) + blueCropRect[0], int(blueBlack[1]) + blueCropRect[1])	
-	
 	yellowImage = cv.CloneImage(orig)
 	yellowCropRect = (yellowCenter[0] + 50, yellowCenter[1] + 55, 50, 50)
 	cv.SetImageROI(yellowImage, yellowCropRect)
 	cv.NamedWindow("YellowBlack:",cv.CV_WINDOW_AUTOSIZE)
 	cv.ShowImage("YellowBlack:", yellowImage)
 	yellowBlack = findObject(yellowImage, "BLACK")
-	yellowBlack = (int(yellowBlack[0]) + yellowCropRect[0], int(yellowBlack[1]) + yellowCropRect[1])
+	yellowBlack = (int(yellowBlack[0]) + yellowCropRect[0] - 75, int(yellowBlack[1]) + yellowCropRect[1] - 80)
+	
+	blueImage = cv.CloneImage(orig)	
+	blueCropRect = (blueCenter[0] + 50, blueCenter[1] + 55, 50, 50)
+	cv.SetImageROI(blueImage, blueCropRect)
+	cv.NamedWindow("BlueBlack:",cv.CV_WINDOW_AUTOSIZE)
+	cv.ShowImage("BlueBlack:", blueImage)	
+	blueBlack = findObject(blueImage, "BLACK")
+	blueBlack = (int(blueBlack[0]) + blueCropRect[0] - 75, int(blueBlack[1]) + blueCropRect[1] - 80)		
 		
 	cv.Circle(processed, ballCenter, 2, cv.RGB(0,0,0),-1)	
 	cv.Circle(processed, blueCenter, 2, cv.RGB(0,0,0),-1)	
 	cv.Circle(processed, yellowCenter, 2, cv.RGB(0,0,0),-1)
 	
-	cv.Line(processed, (blueBlack[0] - 75, blueBlack[1] - 80), blueCenter, cv.RGB(255,0,0))
-	cv.Line(processed, (yellowBlack[0] - 75, yellowBlack[1] - 80) , yellowCenter, cv.RGB(0,255,0))
+	cv.Line(processed, blueBlack, blueCenter, cv.RGB(255,0,0))
+	cv.Line(processed, yellowBlack, yellowCenter, cv.RGB(0,255,0))
+	
+	print "Bearing of blue:", calculateBearing(blueBlack, blueCenter)
+	print "Bearing of yellow:", calculateBearing(yellowBlack, yellowCenter)
 	
 	cv.ShowImage("Original:", orig)
 	cv.ShowImage("Processed:", processed)
