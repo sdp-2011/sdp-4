@@ -1,10 +1,11 @@
+package uk.ac.ed.inf.sdp.group4.world;
 import java.io.*;
 import java.net.*;
 
 import uk.ac.ed.inf.sdp.group4.WorldStateCommunication.WorldStateRequest;
 import uk.ac.ed.inf.sdp.group4.WorldStateCommunication.WorldStateResponse;
 
-class VisionClient
+public class VisionClient
 {
 	// Default Connection Parameters
 	private static final String DEFAULT_HOSTNAME = "localhost";
@@ -62,7 +63,12 @@ class VisionClient
 		}
 
 		// TODO: Turn into WorldState class and validate.
-		WorldState worldState = new WorldState(response);
+		WorldState worldState = null;
+		try {
+			worldState = new WorldState(response);
+		} catch(BadWorldStateException e) {
+			System.err.println(e.getMessage());
+		}
 
 		// TODO: Set lastTimestamp
 		return worldState;

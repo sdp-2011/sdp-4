@@ -1,10 +1,12 @@
+package uk.ac.ed.inf.sdp.group4.world;
+
 import uk.ac.ed.inf.sdp.group4.WorldStateCommunication.WorldStateResponse;
 import uk.ac.ed.inf.sdp.group4.world.Ball;
 import uk.ac.ed.inf.sdp.group4.world.Robot;
 import uk.ac.ed.inf.sdp.group4.world.BadWorldStateException;
 import uk.ac.ed.inf.sdp.group4.domain.InvalidAngleException;
 
-class WorldState
+public class WorldState
 {
 	private Ball ball;
 	private Robot blue;
@@ -14,28 +16,51 @@ class WorldState
 	{
 		try
 		{
-			ball = new Ball(response.getBall().getPosition().getX(),
+			setBall(new Ball(response.getBall().getPosition().getX(),
 					response.getBall().getPosition().getY(),
 					response.getBall().getVelocity().getDirection(),
-					response.getBall().getVelocity().getMagnitude());
+					response.getBall().getVelocity().getMagnitude()));
 
-			blue = new Robot(response.getBlue().getPosition().getX(),
+			setBlue(new Robot(response.getBlue().getPosition().getX(),
 					response.getBlue().getPosition().getY(),
 					response.getBlue().getVelocity().getDirection(),
 					response.getBlue().getVelocity().getMagnitude(),
-					response.getBlue().getRotation());
+					response.getBlue().getRotation()));
 
-			yellow = new Robot(response.getYellow().getPosition().getX(),
+			setYellow(new Robot(response.getYellow().getPosition().getX(),
 					response.getYellow().getPosition().getY(),
 					response.getYellow().getVelocity().getDirection(),
 					response.getYellow().getVelocity().getMagnitude(),
-					response.getYellow().getRotation());
+					response.getYellow().getRotation()));
 
 		}
 		catch (InvalidAngleException iae)
 		{
 			throw new BadWorldStateException(iae.getMessage());
 		}
+	}
 
+	public void setBall(Ball ball) {
+		this.ball = ball;
+	}
+
+	public Ball getBall() {
+		return ball;
+	}
+
+	public void setBlue(Robot blue) {
+		this.blue = blue;
+	}
+
+	public Robot getBlue() {
+		return blue;
+	}
+
+	public void setYellow(Robot yellow) {
+		this.yellow = yellow;
+	}
+
+	public Robot getYellow() {
+		return yellow;
 	}
 }
