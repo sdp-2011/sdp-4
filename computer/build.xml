@@ -15,6 +15,9 @@
 		<fileset dir="${lib}">
 			<include name="**/*.jar"/>
 		</fileset>
+		<pathelement location="${nxj.home}/projects/pccomms/lib/pccomm.jar"/>
+		<pathelement location="${nxj.home}/projects/pccomms/3rdparty/bluecove.jar"/>
+		<pathelement location="${nxj.home}/projects/pctools/lib/pctools.jar"/>
 	</path>
 
 	<path id="classpath.test">
@@ -28,9 +31,6 @@
 	<target name="build" description="Compile the project">
 		<mkdir dir="classes"/>
 		<javac srcdir="${src}" destdir="${classes}" fork="yes" optimize="on" debug="on" source="1.5" target="1.5" includeantruntime="false">
-			<classpath location="${nxj.home}/projects/pccomms/lib/pccomm.jar"/>
-			<classpath location="${nxj.home}/projects/pccomms/3rdparty/bluecove.jar"/>
-			<classpath location="${nxj.home}/projects/pctools/lib/pctools.jar"/>
 			<classpath refid="classpath" />
 		</javac>
 	</target>
@@ -62,22 +62,14 @@
 		</junit>
 
 		<fail if="tests.failed">
-			*******************************************************
-			*******************************************************
 			One or more tests failed. Try again...
-			*******************************************************
-			*******************************************************
 		</fail>
-
 	</target>
-
 
 	<target name="run" description="run the project" depends="build">
 		<java classname="uk.ac.ed.inf.sdp.group4.Main">
-			<classpath location="${nxj.home}/projects/pccomms/lib/pccomm.jar"/>
-			<classpath location="${nxj.home}/projects/pccomms/3rdparty/bluecove.jar"/>
-			<classpath location="${nxj.home}/projects/pctools/lib/pctools.jar"/>
 			<classpath refid="classpath" />
+			<arg value="-d32" />
 		</java>
 	</target>
 </project>
