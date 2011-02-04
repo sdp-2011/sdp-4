@@ -52,12 +52,10 @@ public class FatController extends Controller
 		sendCommand(2, 0);
 	}
 
-	public void beserk(int beserk)
+	public void beserk(boolean val)
 	{
-		if (beserk == 0 || beserk == 1)
-		{
-			sendCommand(3, beserk);
-		}
+		if (val) sendCommand(3, 1);
+		else sendCommand(3, 0);
 	}
 
 	public void finish()
