@@ -5,6 +5,7 @@ import java.io.*;
 import uk.ac.ed.inf.sdp.group4.world.VisionClient;
 import uk.ac.ed.inf.sdp.group4.world.WorldState;
 import uk.ac.ed.inf.sdp.group4.controller.FatController;
+import uk.ac.ed.inf.sdp.group4.controller.ThinController;
 import uk.ac.ed.inf.sdp.group4.controller.Controller;
 import uk.ac.ed.inf.sdp.group4.strategy.Strategy;
 import uk.ac.ed.inf.sdp.group4.strategy.TrackBallStrategy;
@@ -37,14 +38,17 @@ public class Main
 		Strategy strategy = null;
 		switch (option)
 		{
-			case 0:
+			case 1:
 				controller = new FatController();
 				//strategy = KeyboardStrategy(controller);
 				break;
-			case 1:
+			case 2:
 				controller = new FatController();
 				strategy = new TrackBallStrategy(client, controller);
 				break;
+			case 3:
+				controller = new ThinController();
+				strategy = new TrackBallStrategy(client, controller);
 			default:
 				System.out.println("Goddammit. Give me a real number!");
 		}

@@ -64,6 +64,16 @@ public class FatController extends Controller
 		}
 	}
 
+	public void left(int angle)
+	{
+		sendCommand(4, angle);
+	}
+
+	public void right(int angle)
+	{
+		sendCommand(5, angle);
+	}
+
 	public void finish()
 	{
 		//calls finish on robot

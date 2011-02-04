@@ -25,5 +25,4 @@ public class Pitch
 	{
 		return GPOS;
 	}
-
 }
