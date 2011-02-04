@@ -1,4 +1,4 @@
-import uk.ac.ed.inf.sdp.group4.controller;
+package uk.ac.ed.inf.sdp.group4.controller;
 
 public class ThinController extends Controller
 {
