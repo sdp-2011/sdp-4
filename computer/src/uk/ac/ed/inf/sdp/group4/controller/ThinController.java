@@ -1,4 +1,6 @@
-public class ThinController
+import uk.ac.ed.inf.sdp.group4.controller;
+
+public class ThinController extends Controller
 {
 	public void drivef(int val)
 	{
