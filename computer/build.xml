@@ -33,13 +33,21 @@
 		<javac srcdir="${src}" destdir="${classes}" fork="yes" optimize="on" debug="on" source="1.5" target="1.5" includeantruntime="false">
 			<classpath refid="classpath" />
 		</javac>
+		<copy todir="${classes}/uk/ac/ed/inf/group4/sim">
+			<fileset dir=".">
+				<include name="**/*.png"/>
+				<include name="**/*.gif"/>
+			</fileset>
+		</copy>
 	</target>
 
 	<!-- deletes class files -->
 	<target name="clean" description="clean up all generated files">
 		<delete>
-			<fileset dir="."> 
+			<fileset dir="${classes}"> 
 				<include name="**/*.class"/>
+				<include name="**/*.png"/>
+				<include name="**/*.gif"/>
 			</fileset>
 		</delete>
 	</target>
@@ -64,12 +72,5 @@
 		<fail if="tests.failed">
 			One or more tests failed. Try again...
 		</fail>
-	</target>
-
-	<target name="run" description="run the project" depends="build">
-		<java classname="uk.ac.ed.inf.sdp.group4.Main">
-			<classpath refid="classpath" />
-			<arg value="-d32" />
-		</java>
 	</target>
 </project>
