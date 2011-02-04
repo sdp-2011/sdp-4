@@ -61,15 +61,16 @@ public class VisionClient
 		{
 			System.err.println("Couldn't parse the response from the input stream");
 		}
-
 		// TODO: Turn into WorldState class and validate.
 		WorldState worldState = null;
-		try {
+		try
+		{
 			worldState = new WorldState(response);
-		} catch(BadWorldStateException e) {
+		}
+		catch (BadWorldStateException e)
+		{
 			System.err.println(e.getMessage());
 		}
-
 		// TODO: Set lastTimestamp
 		return worldState;
 	}

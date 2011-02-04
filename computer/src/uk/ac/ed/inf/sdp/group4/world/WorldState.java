@@ -17,22 +17,19 @@ public class WorldState
 		try
 		{
 			setBall(new Ball(response.getBall().getPosition().getX(),
-					response.getBall().getPosition().getY(),
-					response.getBall().getVelocity().getDirection(),
-					response.getBall().getVelocity().getMagnitude()));
-
+			                 response.getBall().getPosition().getY(),
+			                 response.getBall().getVelocity().getDirection(),
+			                 response.getBall().getVelocity().getMagnitude()));
 			setBlue(new Robot(response.getBlue().getPosition().getX(),
-					response.getBlue().getPosition().getY(),
-					response.getBlue().getVelocity().getDirection(),
-					response.getBlue().getVelocity().getMagnitude(),
-					response.getBlue().getRotation()));
-
+			                  response.getBlue().getPosition().getY(),
+			                  response.getBlue().getVelocity().getDirection(),
+			                  response.getBlue().getVelocity().getMagnitude(),
+			                  response.getBlue().getRotation()));
 			setYellow(new Robot(response.getYellow().getPosition().getX(),
-					response.getYellow().getPosition().getY(),
-					response.getYellow().getVelocity().getDirection(),
-					response.getYellow().getVelocity().getMagnitude(),
-					response.getYellow().getRotation()));
-
+			                    response.getYellow().getPosition().getY(),
+			                    response.getYellow().getVelocity().getDirection(),
+			                    response.getYellow().getVelocity().getMagnitude(),
+			                    response.getYellow().getRotation()));
 		}
 		catch (InvalidAngleException iae)
 		{
@@ -40,27 +37,33 @@ public class WorldState
 		}
 	}
 
-	public void setBall(Ball ball) {
+	public void setBall(Ball ball)
+	{
 		this.ball = ball;
 	}
 
-	public Ball getBall() {
+	public Ball getBall()
+	{
 		return ball;
 	}
 
-	public void setBlue(Robot blue) {
+	public void setBlue(Robot blue)
+	{
 		this.blue = blue;
 	}
 
-	public Robot getBlue() {
+	public Robot getBlue()
+	{
 		return blue;
 	}
 
-	public void setYellow(Robot yellow) {
+	public void setYellow(Robot yellow)
+	{
 		this.yellow = yellow;
 	}
 
-	public Robot getYellow() {
+	public Robot getYellow()
+	{
 		return yellow;
 	}
 }

@@ -32,7 +32,7 @@ public class Vector
 	{
 		return this.direction;
 	}
-	
+
 	public float getMagnitude()
 	{
 		return this.magnitude;
