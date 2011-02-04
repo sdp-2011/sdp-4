@@ -22,6 +22,16 @@ public class ThinController extends Controller
 		//switch beserk on or off on the sim robot
 	}
 
+	public void left(int angle)
+	{
+		//turn the sim robot left
+	}
+
+	public void right(int angle)
+	{
+    	//turn the sim right
+	}
+
 	public void finish()
 	{
 		//tell sim robot to turn off
