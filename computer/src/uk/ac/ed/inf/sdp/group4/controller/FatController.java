@@ -1,10 +1,11 @@
 package uk.ac.ed.inf.sdp.group4.controller;
+
 import lejos.pc.comm.*;
 import java.io.*;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class FatController
+public class FatController extends Controller
 {
 	private NXTComm nxtComm;
 	private DataInputStream dataIn;
@@ -52,7 +53,7 @@ public class FatController
 
 	public void beserk(int beserk)
 	{
-		if (beserk < 2 && beserk >= 0)
+		if (beserk == 0 || beserk == 1)
 		{
 			sendCommand(3, beserk);
 		}
@@ -94,7 +95,7 @@ public class FatController
 		return robotStatus.remove();
 	}
 
-	public boolean hasStaus()
+	public boolean hasStatus()
 	{
 		return !robotStatus.isEmpty();
 	}
