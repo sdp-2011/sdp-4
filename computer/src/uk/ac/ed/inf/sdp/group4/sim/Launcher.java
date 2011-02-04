@@ -12,18 +12,19 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 
 
-public class Launcher {
-	
+public class Launcher
+{
+
 	final int SCALE = 3;
-	final int PADDING = 5*SCALE;
-	
+	final int PADDING = 5 * SCALE;
+
 	//FPS
 	final int FPS = 25;
-	
+
 	Ball ball = new Ball();
 	Robot rB = new Robot();
 	Robot rY = new Robot();
-	
+
 	int scoreB = 0;
 	int scoreY = 0;
 
@@ -32,26 +33,21 @@ public class Launcher {
 
 	private JFrame frame;
 
-	
-	public static void main(String[] args) {
-		
+
+	public static void main(String[] args)
+	{
 		new Launcher();
 	}
 
 	public Launcher()
 	{
-	
-        loadContent();
+		loadContent();
 		setup();
-
-
 		//this section just a test at the moment
-        Boolean test = true;
-
-        while (test)
+		Boolean test = true;
+		while (test)
 		{
-	     	update(50);
-			
+			update(50);
 			try
 			{
 				Thread.sleep(40);
@@ -60,8 +56,8 @@ public class Launcher {
 			{
 				System.out.println("ARGGGHHH");
 			}
-        }	
-	}	
+		}
+	}
 
 	public void loadContent()
 	{
@@ -69,8 +65,8 @@ public class Launcher {
 		{
 			iconB = ImageIO.read(new File("rB.png"));
 			iconY = ImageIO.read(new File("rY.png"));
-		} 
-		catch(IOException ex) 
+		}
+		catch (IOException ex)
 		{
 			System.out.println("You've forgotten an image");
 		}
@@ -79,21 +75,18 @@ public class Launcher {
 	public void setup()
 	{
 		Pitch pitch = new Pitch();
-
 		//initialise locations
 		rB.setxLoc(PADDING);
-		rB.setyLoc(pitch.getWIDTH()*SCALE/2 + PADDING - rB.getWIDTH()*SCALE/2);
-		
-		rY.setxLoc(pitch.getLENGTH()* SCALE + PADDING - rY.getLENGTH()*SCALE);
-		rY.setyLoc(pitch.getWIDTH()*SCALE/2 + PADDING - rY.getWIDTH()*SCALE/2);
-		rY.setAngle(rY.getAngle()+180);
-		
+		rB.setyLoc(pitch.getWIDTH() * SCALE / 2 + PADDING - rB.getWIDTH() * SCALE / 2);
+		rY.setxLoc(pitch.getLENGTH() * SCALE + PADDING - rY.getLENGTH() * SCALE);
+		rY.setyLoc(pitch.getWIDTH() * SCALE / 2 + PADDING - rY.getWIDTH() * SCALE / 2);
+		rY.setAngle(rY.getAngle() + 180);
 		//set up display
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(pitch.getLENGTH()*SCALE + 2*PADDING + 4*SCALE,
-			pitch.getWIDTH()*SCALE + 2*PADDING + 35*SCALE);
-        frame.setVisible(true);
+		frame.setSize(pitch.getLENGTH() * SCALE + 2 * PADDING + 4 * SCALE,
+		              pitch.getWIDTH() * SCALE + 2 * PADDING + 35 * SCALE);
+		frame.setVisible(true);
 		frame.getContentPane().add(new Situation(pitch));
 	}
 
@@ -101,7 +94,7 @@ public class Launcher {
 	{
 		if (time > 	40)
 		{
-			rB.setxLoc(rB.getxLoc() + rB.SPEED/FPS);
+			rB.setxLoc(rB.getxLoc() + rB.SPEED / FPS);
 			draw();
 		}
 	}
@@ -110,9 +103,10 @@ public class Launcher {
 	{
 		frame.getContentPane().repaint();
 	}
-		
-	
-	private class Situation extends JComponent {
+
+
+	private class Situation extends JComponent
+	{
 
 		private Pitch pitch;
 
@@ -120,44 +114,37 @@ public class Launcher {
 		{
 			this.pitch = pitch;
 		}
-	
-		public void paint(Graphics g) {
-			
+
+		public void paint(Graphics g)
+		{
 			Graphics2D g2d = (Graphics2D)g;
-			
-			g2d.fill(new Rectangle2D.Double(0, 0, pitch.getLENGTH()*SCALE + 2*PADDING, pitch.getWIDTH()*SCALE + 2*PADDING));
-			
+			g2d.fill(new Rectangle2D.Double(0, 0, pitch.getLENGTH() * SCALE + 2 * PADDING, pitch.getWIDTH() * SCALE + 2 * PADDING));
 			g2d.setPaint(Color.red);
-			g2d.fill(new Rectangle2D.Double(0, pitch.getGPOS()*SCALE + PADDING, pitch.getLENGTH()*SCALE + 2*PADDING, 					pitch.getGLENGTH()*SCALE));
-			
+			g2d.fill(new Rectangle2D.Double(0, pitch.getGPOS() * SCALE + PADDING, pitch.getLENGTH() * SCALE + 2 * PADDING, 					pitch.getGLENGTH() * SCALE));
 			g2d.setPaint(Color.getHSBColor(0.3f, 1, 0.392f));
-			g2d.fill(new Rectangle2D.Double(PADDING, PADDING, pitch.getLENGTH()*SCALE, pitch.getWIDTH()*SCALE));
-			
+			g2d.fill(new Rectangle2D.Double(PADDING, PADDING, pitch.getLENGTH() * SCALE, pitch.getWIDTH() * SCALE));
 			g2d.setPaint(Color.BLUE);
-			g2d.fill(new Rectangle2D.Double(rB.getxLoc(), rB.getyLoc(), rB.getLENGTH()*SCALE, rB.getWIDTH()*SCALE));
-			g2d.fill(new Rectangle2D.Double(rY.getxLoc(), rY.getyLoc(), rY.getLENGTH()*SCALE, rY.getWIDTH()*SCALE));
-			
+			g2d.fill(new Rectangle2D.Double(rB.getxLoc(), rB.getyLoc(), rB.getLENGTH() * SCALE, rB.getWIDTH() * SCALE));
+			g2d.fill(new Rectangle2D.Double(rY.getxLoc(), rY.getyLoc(), rY.getLENGTH() * SCALE, rY.getWIDTH() * SCALE));
 			Graphics2D gRB = (Graphics2D) g;
 			Graphics2D gRY = (Graphics2D) g;
-
-			g2d.rotate(-rB.getRadAngle(),rB.getxLoc(), rB.getyLoc());
+			g2d.rotate(-rB.getRadAngle(), rB.getxLoc(), rB.getyLoc());
 			g2d.drawImage(iconB,
-						 (int) (rB.getxLoc() - Math.sin(rB.getRadAngle())*rB.getWIDTH()*SCALE/2 - rB.getWIDTH()*SCALE/2), 
-						 (int) (rB.getyLoc()),
-						  rB.getWIDTH()*SCALE,
-						  rB.getLENGTH()*SCALE,
-						  null);
-			g2d.rotate( rB.getRadAngle(),rB.getxLoc(), rB.getyLoc());
-			
-			g2d.rotate(-rY.getRadAngle(),rY.getxLoc(),rY.getyLoc());
+			              (int)(rB.getxLoc() - Math.sin(rB.getRadAngle()) * rB.getWIDTH() * SCALE / 2 - rB.getWIDTH() * SCALE / 2),
+			              (int)(rB.getyLoc()),
+			              rB.getWIDTH() * SCALE,
+			              rB.getLENGTH() * SCALE,
+			              null);
+			g2d.rotate(rB.getRadAngle(), rB.getxLoc(), rB.getyLoc());
+			g2d.rotate(-rY.getRadAngle(), rY.getxLoc(), rY.getyLoc());
 			g2d.drawImage(iconY,
-						 (int) (rY.getxLoc() - Math.sin(rY.getRadAngle())*rY.getWIDTH()*SCALE/2 - rY.getWIDTH()*SCALE/2),
-						 (int)rY.getyLoc() - rY.getLENGTH()*SCALE,
-						  rY.getWIDTH()*SCALE, 
-						  rY.getLENGTH()*SCALE, 
-						  null);
-			g2d.rotate(rY.getRadAngle(),rY.getxLoc(),rY.getyLoc());
+			              (int)(rY.getxLoc() - Math.sin(rY.getRadAngle()) * rY.getWIDTH() * SCALE / 2 - rY.getWIDTH() * SCALE / 2),
+			              (int)rY.getyLoc() - rY.getLENGTH() * SCALE,
+			              rY.getWIDTH() * SCALE,
+			              rY.getLENGTH() * SCALE,
+			              null);
+			g2d.rotate(rY.getRadAngle(), rY.getxLoc(), rY.getyLoc());
 		}
-	}	
-	
+	}
+
 }
