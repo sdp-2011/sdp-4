@@ -5,6 +5,7 @@ from navigation import *
 
 cv.NamedWindow("Original:", cv.CV_WINDOW_AUTOSIZE)
 cv.NamedWindow("Processed:", cv.CV_WINDOW_AUTOSIZE)
+cv.NamedWindow("Box:", cv.CV_WINDOW_AUTOSIZE)
 cam = cv.CaptureFromCAM(0)
 
 while (True):

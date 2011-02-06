@@ -3,8 +3,11 @@ import math
 
 def drawRect(box2d, image):
 	boxPoints = cv.BoxPoints(box2d)
-
-	print boxPoints
+	cv.Line(image,
+		(int(boxPoints[0][0]), int(boxPoints[0][1])),
+		(int(boxPoints[1][0]), int(boxPoints[1][1])),
+		cv.CV_RGB(255,0,0))
+	cv.ShowImage("Box:", image)
 
 def findObject(img, colour):
 	'''
@@ -84,7 +87,7 @@ def findObject(img, colour):
 		M01 = cv.GetSpatialMoment(moments,0,1)
 		
 		minRect = cv.MinAreaRect2(contourLow, storage)
-		drawRect(minRect)
+		drawRect(minRect,img)
 		return(round(M10/M00),round(M01/M00))
 		
 	return (0, 0)
