@@ -9,6 +9,8 @@ import uk.ac.ed.inf.sdp.group4.strategy.RobotColour;
 
 public class WorldState
 {
+	private long timestamp;
+
 	private Ball ball;
 	private Robot blue;
 	private Robot yellow;
@@ -17,6 +19,7 @@ public class WorldState
 	{
 		try
 		{
+			setTimestamp(response.getTimestamp());
 			setBall(new Ball(response.getBall().getPosition().getX(),
 			                 response.getBall().getPosition().getY(),
 			                 response.getBall().getVelocity().getDirection(),
@@ -38,6 +41,16 @@ public class WorldState
 		{
 			throw new BadWorldStateException(iae.getMessage());
 		}
+	}
+
+	public void setTimestamp(long timestamp)
+	{
+		this.timestamp = timestamp;
+	}
+
+	public long getTimestamp()
+	{
+		return this.timestamp;
 	}
 
 	public void setBall(Ball ball)
