@@ -5,9 +5,9 @@ import uk.ac.ed.inf.sdp.group4.controller.Controller;
 
 public class TrackBallStrategy extends Strategy
 {
-	public TrackBallStrategy(VisionClient client, Controller controller)
+	public TrackBallStrategy(VisionClient client, Controller controller, RobotColour colour)
 	{
-		super(client, controller);
+		super(client, controller, colour);
 	}
 
 	public void runStrategy()
