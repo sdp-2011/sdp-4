@@ -28,7 +28,6 @@ public class Main
 		System.out.println("    | |___|  _ <  / ___ \\ ___) |  _  | |___|  _ < ___) |");
 		System.out.println("     \\____|_| \\_\\/_/   \\_\\____/|_| |_|_____|_| \\_\\____/");
 		System.out.println();
-		
 		System.out.println("  > 1. Blue");
 		System.out.println("  > 2. Yellow");
 		System.out.println("What colour are we?");
@@ -42,7 +41,6 @@ public class Main
 		{
 			colour = RobotColour.YELLOW;
 		}
-		
 		System.out.println("Menu:");
 		System.out.println("  > 1. Keyboard Control");
 		System.out.println("  > 2. Navigate to Ball");

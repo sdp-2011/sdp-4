@@ -29,7 +29,7 @@ public class ThinController extends Controller
 
 	public void right(int angle)
 	{
-    	//turn the sim right
+		//turn the sim right
 	}
 
 	public void finish()

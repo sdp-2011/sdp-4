@@ -5,6 +5,7 @@ import uk.ac.ed.inf.sdp.group4.world.Ball;
 import uk.ac.ed.inf.sdp.group4.world.Robot;
 import uk.ac.ed.inf.sdp.group4.world.BadWorldStateException;
 import uk.ac.ed.inf.sdp.group4.domain.InvalidAngleException;
+import uk.ac.ed.inf.sdp.group4.strategy.RobotColour;
 
 public class WorldState
 {
@@ -24,12 +25,14 @@ public class WorldState
 			                  response.getBlue().getPosition().getY(),
 			                  response.getBlue().getVelocity().getDirection(),
 			                  response.getBlue().getVelocity().getMagnitude(),
-			                  response.getBlue().getRotation()));
+			                  response.getBlue().getRotation(),
+			                  RobotColour.BLUE));
 			setYellow(new Robot(response.getYellow().getPosition().getX(),
 			                    response.getYellow().getPosition().getY(),
 			                    response.getYellow().getVelocity().getDirection(),
 			                    response.getYellow().getVelocity().getMagnitude(),
-			                    response.getYellow().getRotation()));
+			                    response.getYellow().getRotation(),
+			                    RobotColour.YELLOW));
 		}
 		catch (InvalidAngleException iae)
 		{
