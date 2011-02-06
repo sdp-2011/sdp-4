@@ -28,4 +28,24 @@ public abstract class WorldObject
 	{
 		return this.vector;
 	}
+
+	public void setX(int x)
+	{
+		getPosition().setX(x);
+	}
+
+	public int getX()
+	{
+		return getPosition().getX();
+	}
+
+	public void setY(int y)
+	{
+		getPosition().setY(y);
+	}
+
+	public int getY()
+	{
+		return getPosition().getY();
+	}
 }
