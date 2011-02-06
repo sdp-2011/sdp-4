@@ -30,4 +30,9 @@ public class Position
 	{
 		return this.y;
 	}
+
+	public Vector calcVectTo(Position dest) throws InvalidAngleException
+	{
+		return Vector.calcVect(this, dest);
+	}
 }

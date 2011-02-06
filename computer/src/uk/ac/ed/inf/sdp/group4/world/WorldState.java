@@ -15,6 +15,20 @@ public class WorldState
 	private Robot blue;
 	private Robot yellow;
 
+	public WorldState()
+	{
+		try
+		{
+			this.ball = new Ball(0, 0, 0, 0);
+			this.blue = new Robot(0, 0, 0, 0, 0, RobotColour.BLUE);
+			this.yellow = new Robot(0, 0, 0, 0, 0, RobotColour.YELLOW);
+		}
+		catch (InvalidAngleException e)
+		{
+			//log this
+		}
+	}
+
 	public WorldState(WorldStateResponse response) throws BadWorldStateException
 	{
 		try

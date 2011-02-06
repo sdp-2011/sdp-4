@@ -5,8 +5,8 @@ import uk.ac.ed.inf.sdp.group4.controller.Controller;
 
 public abstract class Strategy implements IStrategy
 {
-	private VisionClient client;
-	private Controller controller;
+	protected VisionClient client;
+	protected Controller controller;
 	private RobotColour ourColour;
 
 	public Strategy(VisionClient client, Controller controller, RobotColour ourColour)
@@ -47,3 +47,4 @@ public abstract class Strategy implements IStrategy
 		}
 	}
 }
+
