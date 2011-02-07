@@ -23,15 +23,6 @@ public class TrackBallStrategy extends Strategy
 	{
 		while (true)
 		{
-			try
-			{
-				Thread.sleep(3000);
-			}
-			catch (InterruptedException e)
-			{
-				
-			}
-			
 			refresh();
 			
 			Vector route = null;
@@ -58,6 +49,15 @@ public class TrackBallStrategy extends Strategy
 			}
 			
 			controller.drivef(10);
+
+			try
+			{
+				Thread.sleep(3000);
+			}
+			catch (InterruptedException e)
+			{
+				
+			}
 		}
 	}
 

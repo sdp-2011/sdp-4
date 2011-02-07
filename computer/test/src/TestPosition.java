@@ -1,16 +1,41 @@
+import static org.junit.Assert.*;
+import org.junit.Test;
+
 import uk.ac.ed.inf.sdp.group4.domain.Position;
+import uk.ac.ed.inf.sdp.group4.domain.Vector;
+import uk.ac.ed.inf.sdp.group4.domain.InvalidAngleException;
 
-class TestPosition
+public class TestPosition
 {
-	Position position;
-	
-	@Before
-	public void setUp()
+	@Test
+	public void testVectorBetween() throws InvalidAngleException
 	{
-		position = new Position(100, 400);
-
+		Position a = new Position(100, 300);
+		Position b = new Position(300, 300);
+		
+		Vector v = a.calcVectTo(b);
+		assertEquals(200 , v.getMagnitude(), 0);
+		assertEquals(90 , v.getDirection(), 0);
 	}
 
 	@Test
-	public void
+	public void testReverseVectorBetween() throws InvalidAngleException
+	{
+		Position a = new Position(100, 300);
+		Position b = new Position(300, 300);
+		
+		Vector v = b.calcVectTo(a);
+		assertEquals(200 , v.getMagnitude(), 0);
+		assertEquals(270 , v.getDirection(), 0);
+	}
+
+	@Test
+	public void testSameVectorBetween() throws InvalidAngleException
+	{
+		Position a = new Position(100, 300);
+		
+		Vector v = a.calcVectTo(a);
+		assertEquals(0 , v.getMagnitude(), 0);
+		assertEquals(0 , v.getDirection(), 0);
+	}
 }

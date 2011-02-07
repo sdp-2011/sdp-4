@@ -46,7 +46,7 @@ public class Vector
 		double mag = Math.sqrt((x*x) + (y*y));
 		double angle = Math.toDegrees(Math.atan2(y, x));
 
-		Vector v = new Vector(angle, mag);
+		Vector v = new Vector(angle+90, mag);
 		
 		return v;
 	}
