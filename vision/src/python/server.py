@@ -14,11 +14,13 @@ env.yellow.position.x = 100
 env.yellow.position.y = 200
 env.yellow.velocity.direction = 328
 env.yellow.velocity.magnitude = 45.1
+env.yellow.rotation = 328
 
 env.blue.position.x = 300
 env.blue.position.y = 12
 env.blue.velocity.direction = 328
 env.blue.velocity.magnitude = 0
+env.blue.rotation = 50
 
 import signal, os
 
