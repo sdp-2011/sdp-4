@@ -7,8 +7,19 @@ def drawRect(box2d, image):
 		(int(boxPoints[0][0]), int(boxPoints[0][1])),
 		(int(boxPoints[1][0]), int(boxPoints[1][1])),
 		cv.CV_RGB(255,0,0))
+	cv.Line(image,
+		(int(boxPoints[1][0]), int(boxPoints[1][1])),
+		(int(boxPoints[2][0]), int(boxPoints[2][1])),
+		cv.CV_RGB(255,0,0))
+	cv.Line(image,
+		(int(boxPoints[2][0]), int(boxPoints[2][1])),
+		(int(boxPoints[3][0]), int(boxPoints[3][1])),
+		cv.CV_RGB(255,0,0))
+	cv.Line(image,
+		(int(boxPoints[3][0]), int(boxPoints[3][1])),
+		(int(boxPoints[0][0]), int(boxPoints[0][1])),
+		cv.CV_RGB(255,0,0))
 	cv.ShowImage("Box:", image)
-
 def findObject(img, colour):
 	'''
 	Finds the objects in an image with given colour.
@@ -36,8 +47,8 @@ def findObject(img, colour):
 	mask = cv.CreateMat(size[1], size[0], cv.CV_8UC1)
 	maskSize = cv.GetSize(mask)
 	if (colour == "RED"):
-		redLower = cv.Scalar(0.00 * 256, 0.50 * 256, 0.50 * 256)
-		redUpper = cv.Scalar(0.05 * 256, 1.00 * 256, 1.00 * 256)
+		redLower = cv.Scalar(0.00 * 256, 0.50 * 256, 0.40 * 256)
+		redUpper = cv.Scalar(0.08 * 256, 1.00 * 256, 1.00 * 256)
 		cv.InRangeS(hsv, redLower, redUpper, mask)
 		cv.NamedWindow("Red:",cv.CV_WINDOW_AUTOSIZE)
 		cv.ShowImage("Red:",mask)
