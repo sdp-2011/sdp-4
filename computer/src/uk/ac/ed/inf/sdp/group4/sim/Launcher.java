@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import uk.ac.ed.inf.sdp.group4.world.Robot;
 import uk.ac.ed.inf.sdp.group4.world.Ball;
 import uk.ac.ed.inf.sdp.group4.world.WorldState;
+import uk.ac.ed.inf.sdp.group4.world.VisionClient;
 import uk.ac.ed.inf.sdp.group4.domain.InvalidAngleException;
 import uk.ac.ed.inf.sdp.group4.strategy.RobotColour;	
 
@@ -27,7 +28,7 @@ public class Launcher
 	//FPS
 	final int FPS = 25;
 
-	WorldState state;
+	VisionClient vision;
 	Robot blue;
 	Robot yellow;
 	Ball ball;
@@ -40,34 +41,19 @@ public class Launcher
 
 	private JFrame frame;
 
-
-	public static void main(String[] args)
+	public Launcher(VisionClient vision)
 	{
-		new Launcher();
-	}
-
-	public Launcher()
-	{
-		state = new WorldState();
+		this.vision  = vision;
 		loadContent();
 		setup();
-		//this section just a test at the moment
-		Boolean test = true;
-		while (test)
-		{
-			update(50);
-			try
-			{
-				Thread.sleep(40);
-			}
-			catch (InterruptedException e)
-			{
-				System.out.println("ARGGGHHH");
-			}
-		}
 	}
 
-	public void loadContent()
+	public void run()
+	{
+		
+	}
+
+	private void loadContent()
 	{
 		try
 		{
@@ -80,27 +66,9 @@ public class Launcher
 		}
 	}
 
-	public void setup()
+	private void setup()
 	{
 		Pitch pitch = new Pitch();
-		blue = state.getBlue();
-		yellow = state.getYellow();
-		ball = state.getBall();
-		//initialise locations
-		blue.setX(PADDING);
-		blue.setY(pitch.getWIDTH() * SCALE / 2 + PADDING - 18 * SCALE / 2);
-		yellow.setX(pitch.getLENGTH() * SCALE + PADDING - 20 * SCALE);
-		yellow.setY(pitch.getWIDTH() * SCALE / 2 + PADDING - 18 * SCALE / 2);
-	
-		try
-		{
-			yellow.setFacing(yellow.getFacing() + 180);
-		}
-		catch (InvalidAngleException e)
-		{
-			//log this
-		}
-
 		//set up display
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -110,16 +78,27 @@ public class Launcher
 		frame.getContentPane().add(new Situation(pitch));
 	}
 
-	public void update(int time)
+	private void refresh()
 	{
+		WorldState state = vision.getWorldState();
+		ball = state.getBall();
+		blue = state.getBlue();
+		yellow = state.getYellow();
+	}
+
+	private void update(int time)
+	{
+		refresh();
+
 		if (time > 	40)
 		{
+			
 			blue.setX(blue.getX() + 1);
 			draw();
 		}
 	}
 
-	public void draw()
+	private void draw()
 	{
 		frame.getContentPane().repaint();
 	}

@@ -10,6 +10,7 @@ import uk.ac.ed.inf.sdp.group4.controller.Controller;
 import uk.ac.ed.inf.sdp.group4.strategy.RobotColour;
 import uk.ac.ed.inf.sdp.group4.strategy.Strategy;
 import uk.ac.ed.inf.sdp.group4.strategy.TrackBallStrategy;
+import uk.ac.ed.inf.sdp.group4.sim.Launcher;
 
 public class Main
 {
@@ -63,6 +64,7 @@ public class Main
 			case 3:
 				controller = new ThinController();
 				strategy = new TrackBallStrategy(client, controller, colour);
+				Launcher launcher = new Launcher(client);
 			default:
 				System.out.println("Goddammit. Give me a real number!");
 		}
