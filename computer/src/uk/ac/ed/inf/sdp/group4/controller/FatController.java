@@ -1,9 +1,12 @@
+package uk.ac.ed.inf.sdp.group4.controller;
+
 import lejos.pc.comm.*;
+
 import java.io.*;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class FatController
+public class FatController extends Controller
 {
 	private NXTComm nxtComm;
 	private DataInputStream dataIn;
@@ -25,7 +28,6 @@ public class FatController
 			System.out.println("FAILED");
 			e.printStackTrace();
 		}
-
 		dataOut = new DataOutputStream(nxtComm.getOutputStream());
 		dataIn = new DataInputStream(nxtComm.getInputStream());
 		robotStatus = new LinkedList<Integer>();
@@ -50,12 +52,26 @@ public class FatController
 		sendCommand(2, 0);
 	}
 
-	public void beserk(int beserk)
+	public void beserk(boolean val)
 	{
-		if (beserk < 2 && beserk >= 0)
+		if (val)
 		{
-			sendCommand(3, beserk);
+			sendCommand(3, 1);
 		}
+		else
+		{
+			sendCommand(3, 0);
+		}
+	}
+
+	public void left(int angle)
+	{
+		if (angle > 3) sendCommand(4, angle);
+	}
+
+	public void right(int angle)
+	{
+		if (angle > 3) sendCommand(5, angle);
 	}
 
 	public void finish()
@@ -94,7 +110,7 @@ public class FatController
 		return robotStatus.remove();
 	}
 
-	public boolean hasStaus()
+	public boolean hasStatus()
 	{
 		return !robotStatus.isEmpty();
 	}
@@ -109,7 +125,6 @@ public class FatController
 				{
 					robotStatus.add(dataIn.readInt());
 				}
-
 				catch (IOException e)
 				{
 					System.out.println("Something has gone wrong");

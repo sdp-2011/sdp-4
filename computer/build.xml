@@ -2,21 +2,75 @@
 	<property environment="env" />
 	<property name="nxj.home" value="${env.NXJ_HOME}" />
 
-  	<target name="build" description="compile PC samples">
-    	<mkdir dir="classes"/>
-    	<javac srcdir="." destdir="classes" fork="yes" optimize="on" debug="on" source="1.5" target="1.5" includeantruntime="false">
-			<classpath location="${nxj.home}/projects/pccomms/lib/pccomm.jar"/>
-			<classpath location="${nxj.home}/projects/pccomms/3rdparty/bluecove.jar"/>
-			<classpath location="${nxj.home}/projects/pctools/lib/pctools.jar"/>
+	<property name="lib" value="lib" />
+	<property name="src" value="src" />
+	<property name="classes" value="classes" />
+
+	<property name="test" value="test" />
+	<property name="test.src" value="${test}/src" />
+	<property name="test.lib" value="${test}/lib" />
+
+	<path id="classpath">
+		<pathelement location="${classes}" />
+		<fileset dir="${lib}">
+			<include name="**/*.jar"/>
+		</fileset>
+		<pathelement location="${nxj.home}/projects/pccomms/lib/pccomm.jar"/>
+		<pathelement location="${nxj.home}/projects/pccomms/3rdparty/bluecove.jar"/>
+		<pathelement location="${nxj.home}/projects/pctools/lib/pctools.jar"/>
+	</path>
+
+	<path id="classpath.test">
+		<fileset dir="${test.lib}">
+			<include name="**/*.jar"/>
+		</fileset>
+		<pathelement location="${test.src}" />
+		<path refid="classpath" />
+	</path>
+
+	<target name="build" description="Compile the project">
+		<mkdir dir="classes"/>
+		<javac srcdir="${src}" destdir="${classes}" fork="yes" optimize="on" debug="on" source="1.5" target="1.5" includeantruntime="false">
+			<classpath refid="classpath" />
 		</javac>
-  	</target>
-	
+		<copy todir="${classes}/uk/ac/ed/inf/group4/sim">
+			<fileset dir=".">
+				<include name="**/*.png"/>
+				<include name="**/*.gif"/>
+			</fileset>
+		</copy>
+	</target>
+
 	<!-- deletes class files -->
 	<target name="clean" description="clean up all generated files">
 		<delete>
-			<fileset dir="."> 
+			<fileset dir="${classes}"> 
 				<include name="**/*.class"/>
+				<include name="**/*.png"/>
+				<include name="**/*.gif"/>
 			</fileset>
 		</delete>
+	</target>
+
+	<target name="test" depends="build">
+		<junit printsummary="on" 
+			fork="false" 
+			haltonfailure="false"
+			failureproperty="tests.failed"
+			showoutput="true">
+
+			<classpath refid="classpath.test" />
+			<formatter type="brief" usefile="false"/>
+
+			<batchtest>
+				<fileset dir="${test.src}">
+					<include name="**/*Test*.java"/>
+				</fileset>
+			</batchtest>
+		</junit>
+
+		<fail if="tests.failed">
+			One or more tests failed. Try again...
+		</fail>
 	</target>
 </project>

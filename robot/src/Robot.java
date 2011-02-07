@@ -78,12 +78,12 @@ public class Robot
 
 	public void left(int degrees)
 	{
-		pilot.rotate(-degrees, true);
+		pilot.rotate(-degrees, false);
 	}
 
 	public void right(int degrees)
 	{
-		pilot.rotate(degrees, true);
+		pilot.rotate(degrees, false);
 	}
 
 	// The code following this line is a complete travesty. I'm not even
