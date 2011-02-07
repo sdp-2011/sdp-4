@@ -23,6 +23,15 @@ public class TrackBallStrategy extends Strategy
 	{
 		while (true)
 		{
+			try
+			{
+				Thread.sleep(3000);
+			}
+			catch (InterruptedException e)
+			{
+				
+			}
+			
 			refresh();
 			
 			Vector route = null;
@@ -33,7 +42,7 @@ public class TrackBallStrategy extends Strategy
 			}
 			catch (InvalidAngleException e)
 			{
-				//log this sometime lol
+				System.out.println(e.getMessage());
 			}
 			
 			double robotMinusBall = robot.getFacing()- route.getDirection();

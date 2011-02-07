@@ -2,8 +2,9 @@ package uk.ac.ed.inf.sdp.group4.world;
 import java.io.*;
 import java.net.*;
 
-import uk.ac.ed.inf.sdp.group4.WorldStateCommunication.WorldStateRequest;
-import uk.ac.ed.inf.sdp.group4.WorldStateCommunication.WorldStateResponse;
+import uk.ac.ed.inf.sdp.group4.WorldStateCommunication.*;
+import uk.ac.ed.inf.sdp.group4.WorldStateCommunication.WorldStateRequest.*;
+import uk.ac.ed.inf.sdp.group4.WorldStateCommunication.WorldStateResponse.*;
 
 public class VisionClient
 {
@@ -71,6 +72,9 @@ public class VisionClient
 		{
 			System.err.println(e.getMessage());
 		}
+		
+		System.out.println(response.toString());
+		
 		// TODO: Set lastTimestamp
 		return worldState;
 	}
