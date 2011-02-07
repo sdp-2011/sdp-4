@@ -91,9 +91,7 @@ public class Launcher
 		refresh();
 
 		if (time > 	40)
-		{
-			
-			blue.setX(blue.getX() + 1);
+		{	
 			draw();
 		}
 	}
