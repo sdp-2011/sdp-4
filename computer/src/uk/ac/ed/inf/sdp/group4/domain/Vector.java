@@ -44,9 +44,8 @@ public class Vector
 		double y = dest.getY() - ini.getY();
 
 		double mag = Math.sqrt((x*x) + (y*y));
-		double angle = Math.atan(Math.toRadians(y/x));
-		System.out.println(mag);
-		System.out.println(angle);
+		double angle = Math.toDegrees(Math.atan2(y, x));
+
 		Vector v = new Vector(angle, mag);
 		
 		return v;
