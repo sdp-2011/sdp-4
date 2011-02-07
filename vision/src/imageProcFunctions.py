@@ -3,24 +3,24 @@ import math
 
 # Start ugly global value storage (fix this rubbish :( )
 redLowerH = 0.00 * 256
-redLowerS = 0.50 * 256
-redLowerV = 0.50 * 256
+redLowerS = 0.40 * 256
+redLowerV = 0.40 * 256
 
 redUpperH = 0.05 * 256
 redUpperS = 1.00 * 256
 redUpperV = 1.00 * 256
 
 blueLowerH = 0.30 * 256
-blueLowerS = 0.25 * 256
-blueLowerV = 0.25 * 256
+blueLowerS = 0.30 * 256
+blueLowerV = 0.50 * 256
 
 blueUpperH = 0.80 * 256
 blueUpperS = 1.00 * 256
 blueUpperV = 1.00 * 256
 
-yellowLowerH = 0.09 * 256
-yellowLowerS = 0.45 * 256
-yellowLowerV = 0.50 * 256
+yellowLowerH = 0.10 * 256
+yellowLowerS = 0.36 * 256
+yellowLowerV = 0.37 * 256
 
 yellowUpperH = 0.20 * 256
 yellowUpperS = 1.00 * 256
@@ -117,22 +117,19 @@ def findCircles(img):
 	edgeImage = cv.CreateImage(cv.GetSize(img), 8, 1)
 	cv.Copy(img, contourImage, None)
 	
-	storage2 = cv.CreateMat(1, 2, cv.CV_32FC3)
+	storage2 = cv.CreateMat(1, 300*300, cv.CV_32FC3)
 	
-	#cv.Canny(contourImage, edgeImage, 1, 3, 5)
-	
-	circles = cv.HoughCircles(contourImage, storage2, cv.CV_HOUGH_GRADIENT, 2, 1, 1, 1000)
-	
+	cv.Canny(contourImage, edgeImage, 1, 3, 5)
+	cv.Smooth(img, img, cv.CV_GAUSSIAN, 9, 9)
+	circles = cv.HoughCircles(edgeImage, storage2, cv.CV_HOUGH_GRADIENT, 2, 1)
+			
 	if circles != None:
 		print len(circles.hrange())
 		for circle in circles.hrange():
 			cv.Circle(img, (circle[0], circle[1]), circle[2], cv.CV_RGB(255,0,0), 1, 8, 0)
 			
-	tempImage = cv.CreateImage((size[0] * 4 ,size[1] * 4), 8, 1)
-	cv.Resize(img, tempImage)
-		
 	cv.NamedWindow("Circles:", cv.CV_WINDOW_AUTOSIZE)
-	cv.ShowImage("Circles:", tempImage)
+	cv.ShowImage("Circles:", edgeImage)
 	
 def findObject(img, colour):
 	'''
@@ -209,8 +206,10 @@ def findObject(img, colour):
 		
 		minRect = cv.MinAreaRect2(contourLow, storage)
 		
-		drawRect(minRect, img)
-		#findCircles(mask)
+		#drawRect(minRect, img)
+		tempImage = cv.CreateImage(size, 8, 1)
+		cv.CvtColor(img, tempImage, cv.CV_RGB2GRAY )
+		findCircles(tempImage)
 		
 		if M00 == 0:
 			M00 = 0.01
