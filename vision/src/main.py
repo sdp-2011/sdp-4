@@ -1,6 +1,7 @@
 import cv
 from imageProcFunctions import *
 from navigation import *
+from server import *
 
 
 cv.NamedWindow("Original:", cv.CV_WINDOW_AUTOSIZE)
@@ -73,8 +74,11 @@ cv.CreateTrackbar("H Upper:", "Processed:", 255, 255, onHUpperBkChange)
 cv.CreateTrackbar("S Upper:", "Processed:", 255, 255, onSUpperBkChange)
 cv.CreateTrackbar("V Upper:", "Processed:", 110, 255, onVUpperBkChange)
 
+Server().start()
+
 
 cam = cv.CaptureFromCAM(0)
+
 
 def findObject(img, colour, mods):
 	'''

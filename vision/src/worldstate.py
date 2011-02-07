@@ -45,7 +45,7 @@ class WorldState(object):
 
         lock.acquire()
 
-        # OH GOD, THE HUMANITY.
+        # OH GOD, THE HUGE MANATEE.
         response.ball.position.x = ball["position"]["x"]
         response.ball.position.y = ball["position"]["y"]
         response.ball.velocity.direction = ball["velocity"]["direction"]
