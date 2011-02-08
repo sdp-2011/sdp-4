@@ -44,7 +44,7 @@ public class Robot
 
 	public void drive(float distance, boolean instant)
 	{
-		pilot.travel(distance, instant);
+		pilot.travel((float)((10/14.5) * distance), instant);
 	}
 
 	public void stop()
