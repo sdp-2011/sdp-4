@@ -36,19 +36,19 @@ public class TrackBallStrategy extends Strategy
 				System.out.println(e.getMessage());
 			}
 			
-			double robotMinusBall = robot.getFacing()- route.getDirection();
-			double ballMinusRobot = route.getDirection() - robot.getFacing();
+			double angle = ((robot.getFacing()- route.getDirection()) + 360) % 360;
+			System.out.println("Angle: " + angle);
 
-			if (Math.abs(robotMinusBall) > Math.abs(ballMinusRobot))
+			if (angle > 10)
 			{
-					controller.right((int)ballMinusRobot);
+				System.out.println("Shiftin' " + angle);
+				controller.right((int)angle);
 			}
-			else 
-			{
-					controller.right((int)robotMinusBall);
+			else
+			{	
+				System.out.println("FULL STEAM AHEAD! " + angle);
+				controller.drivef(10);
 			}
-			
-			controller.drivef(10);
 
 			try
 			{

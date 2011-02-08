@@ -1,6 +1,7 @@
 import signal, os, threading
 import SocketServer
 import worldstate
+import worldstate_pb2
 
 class WorldStateRequestHandler(SocketServer.BaseRequestHandler):
     def setup(self):
@@ -10,7 +11,9 @@ class WorldStateRequestHandler(SocketServer.BaseRequestHandler):
         data = self.request.recv(1024)
         request = worldstate_pb2.WorldStateRequest()
         request.ParseFromString(data)
-        self.request.send(worldstate.WorldState.serialise())
+        print worldstate.WorldState.serialise()
+	self.request.send(worldstate.WorldState.serialise())
+	
 
     def finish(self):
         print self.client_address, 'disconnected!'

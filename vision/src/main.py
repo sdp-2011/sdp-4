@@ -2,7 +2,7 @@ import cv
 from imageProcFunctions import *
 from navigation import *
 from server import *
-
+from worldstate import *
 
 cv.NamedWindow("Original:", cv.CV_WINDOW_AUTOSIZE)
 cv.NamedWindow("Processed:", cv.CV_WINDOW_AUTOSIZE)
@@ -107,7 +107,6 @@ def findObject(img, colour, mods):
 	mask = cv.CreateMat(size[1], size[0], cv.CV_8UC1)
 	maskSize = cv.GetSize(mask)
 	if (colour == "RED"):
-		print mods[0]
 		redLower = cv.Scalar(mods[0]*256, mods[1]*256, mods[2]*256)
 		redUpper = cv.Scalar(mods[3]*256, mods[4]*256, mods[5]*256)
 		cv.InRangeS(hsv, redLower, redUpper, mask)		
@@ -205,8 +204,8 @@ while (True):
 	cv.Line(processed, blueBlack, blueCenter, cv.RGB(255,0,0))
 	cv.Line(processed, yellowBlack, yellowCenter, cv.RGB(0,255,0))
 	
-	print "Bearing of blue:", calculateBearing(blueBlack, blueCenter)
-	print "Bearing of yellow:", calculateBearing(yellowBlack, yellowCenter)
+	print "Bearing of blue:", (int(calculateBearing(blueBlack, blueCenter) + 90) + 360) % 360
+#	print "Bearing of yellow:", calculateBearing(yellowBlack, yellowCenter)
 	
 #	print mods
 
@@ -214,6 +213,14 @@ while (True):
 		
 	cv.ShowImage("Original:", orig)
 	cv.ShowImage("Processed:", processed)
+
+	WorldState.lock.acquire()
+	WorldState.ball["position"]["x"] = ballCenter[0]	
+	WorldState.ball["position"]["y"] = ballCenter[1]
+	WorldState.blue["position"]["x"] = blueCenter[0]
+	WorldState.blue["position"]["y"] = blueCenter[1]
+	WorldState.blue["rotation"] = (int(calculateBearing(blueBlack, blueCenter) + 90) + 360) % 360
+	WorldState.lock.release()	
 
 	cv.WaitKey(25)
 

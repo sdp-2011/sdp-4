@@ -71,6 +71,7 @@ public class FatController extends Controller
 
 	public void right(int angle)
 	{
+		System.out.println("turning right: " + angle);
 		if (angle > 3) sendCommand(5, angle);
 	}
 
