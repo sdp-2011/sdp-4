@@ -28,7 +28,7 @@ public class Launcher
 	//FPS
 	final int FPS = 25;
 
-	VisionClient vision;
+	WorldState state;
 	Robot blue;
 	Robot yellow;
 	Ball ball;
@@ -41,9 +41,9 @@ public class Launcher
 
 	private JFrame frame;
 
-	public Launcher(VisionClient vision)
+	public Launcher()
 	{
-		this.vision  = vision;
+		this.state = new WorldState();
 		loadContent();
 		setup();
 	}
@@ -78,18 +78,8 @@ public class Launcher
 		frame.getContentPane().add(new Situation(pitch));
 	}
 
-	private void refresh()
-	{
-		WorldState state = vision.getWorldState();
-		ball = state.getBall();
-		blue = state.getBlue();
-		yellow = state.getYellow();
-	}
-
 	private void update(int time)
 	{
-		refresh();
-
 		if (time > 	40)
 		{	
 			draw();
