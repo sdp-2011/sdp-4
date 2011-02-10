@@ -98,26 +98,25 @@ side of the contract in the protocol.
 \subsection{Vision}
 
 Our aims for the vision system included accurately tracking the position and
-orientation of each of the objects on the pitch. To achieve this we built on the
-progress of the vision system from the last milestone. Tracking the positions
-of the objects involved converting the input image from the camera to the hue
-saturation value (HSV) colour space and creating binary images by isolating the
-red ball, the yellow or blue crosses. The center of mass of the binary images
-can then be calculated and will give the correct position of each object. Our
-first attempt at calculating orientations was to isolate the black circles.
-Once they had been found, the circle center point and the center of mass of the
-object could be used in the following formula to determine the orientation of
-the robot:
-\begin{equation*}
-\mbox{orientation} = (\arctan2(\mbox{circleCenter}, \mbox{crossCenter}) \times \left(\frac{180}{\pi}\right) + 450) \mod 360
-\end{equation*}
-After several tests with the cross plates on the robots we
-decided that this method was not accurate enough. As the colour being searched
-for was black, it was too difficult to isolate from shadows and our own robot.
-This difficulty meant that the angle calculated would vary wildly and was often
-incorrect. To temporarily remedy the situation, the engineering team added two
-white blocks to the top of our robot which were much easier to isolate and were
-used to calculate the orientation using the same formula.
+orientation of each of the objects on the pitch at 18 frames per second. To
+achieve this we built on the progress of the vision system from the last
+milestone. Tracking the positions of the objects involved converting the
+input image from the camera to the hue saturation value (HSV) colour space
+and creating binary images by isolating the red ball, the yellow or blue
+crosses. The center of mass of the binary images can then be calculated and
+will give the correct position of each object. Our first attempt at calculating
+orientations was to isolate the black circles. Once they had been found, the
+circle center point and the center of mass of the object could be used in the
+following formula to determine the orientation of the robot: \begin{equation*}
+\mbox{orientation} = (\arctan2(\mbox{circleCenter}, \mbox{crossCenter}) \times
+\left(\frac{180}{\pi}\right) + 450) \mod 360 \end{equation*} After several tests
+with the cross plates on the robots we decided that this method was not accurate
+enough. As the colour being searched for was black, it was too difficult to
+isolate from shadows and our own robot. This difficulty meant that the angle
+calculated would vary wildly and was often incorrect. To temporarily remedy the
+situation, the engineering team added two white blocks to the top of our robot
+which were much easier to isolate and were used to calculate the orientation
+using the same formula.
 
 \subsection{Strategy}
 
@@ -208,7 +207,7 @@ levered system in order to augment it further.
 In order to develop the spinner we implemented used a different style of wheels.
 These new, larger wheels (Figure~\ref{fig:spinner}) provide much more friction,
 which increases the backspin placed on the ball. After numerous legality
-questions, we have had this spinner approved by Gary. The new spinner system
+questions, we have had this spinner approved by Garry. The new spinner system
 gives us much more control. The previous incarnation helped us to drive forward
 with the ball, while the new spinner lets us dribble, reverse, and even turn
 while in possession of the ball. Overall, our spinner works very well and should
@@ -258,14 +257,14 @@ of them and made progress towards all of them.\\
 
 \begin{tabular}{| l | l |}
   \hline
-  \textbf{Goal}                           & \textbf{Achieved?}                                \\
+  \textbf{Goal}                           & \textbf{Achieved?}                                  \\
   \hline
-  Integrate the distinct systems together & Yes, this is working perfectly.                   \\
-  Control the robot based on vision       & Yes, could do with some tweaking though.          \\
-  Simulator                               & No, but much of the work has been done.           \\
-  Create a fast robot                     & Sort of, more alternatives need to be considered. \\
-  Create a powerful kicker                & Yes. Slight improvements may be possible.         \\
-  Give the robot dribbling capacity       & Yes. The spinner is working well mechanically.    \\
+  Integrate the distinct systems together & Yes, this is working perfectly.                     \\
+  Control the robot based on vision       & Yes, could do with some tweaking though.            \\
+  Simulator                               & No, but much of the work has been done.             \\
+  Create a fast robot                     & Partially, more alternatives need to be considered. \\
+  Create a powerful kicker                & Yes. Slight improvements may be possible.           \\
+  Give the robot dribbling capacity       & Yes. The spinner is working well mechanically.      \\
   \hline
 \end{tabular}
 
