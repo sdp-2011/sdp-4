@@ -24,7 +24,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancyplain}
 \rhead{\textsc{\theauthor}}
-\lhead{\textsc{SDP Group Report - Milestone 1}}
+\lhead{\textsc{SDP Group Report - Milestone 2}}
 \setlength{\headheight}{14.5pt}
 
 % HEADINGS
@@ -87,62 +87,60 @@ the project as a whole. Since our system design specifies that the vision
 and the strategy are split up, the integration of these two systems are
 key to our success. Originally we were going to have the vision server and
 the client in the strategy communicate by sending JSON (Javascript Object
-Notation) that described the world state between them. This was not used
+Notation) to each other that described the world state. This was not used
 because it was unnecessarily difficult to create a protocol and make both
 sides use it properly. To combat this we decided to use Google Protocol
 Buffers\cite{protobuf}. This allowed us to create a protocol and then generate
-files that adhere to it. This allowed the vision and strategy systems to be
-developed in almost complete isolation, each knowing that the other would stick
-to its side of the contract in the protocol.
+files that adhere to it. Now the vision and strategy systems could be developed
+in almost complete isolation, each knowing that the other would stick to its
+side of the contract in the protocol.
 
 \subsection{Vision}
 
 Our aims for the vision system included accurately tracking the position and
-orientation of each of the objects visible on the pitch. Also making the
-positions and orientations available for use by the robot’s, independently
-running, control and strategy systems.To successfully achieve our first goal of
-tracking positions and orientations of objects we built on the progress of the
-vision system from the last milestone. Tracking the positions of the objects
-involved converting the input image from the camera to the hue saturation value
-(HSV) colour space and creating binary images by isolating the red ball, the
-yellow or blue crosses. The center of mass of the binary images can then be
-calculated and will give the correct position of each object. Our first attempt
-at calculating orientations was to isolate the black circles. Once they had been
-found, the circle center point and the center of mass of the object could be
-used in the following formula to determine the orientation of the robot:
+orientation of each of the objects on the pitch. To achieve this we built on the
+progress of the vision system from the last milestone. Tracking the positions
+of the objects involved converting the input image from the camera to the hue
+saturation value (HSV) colour space and creating binary images by isolating the
+red ball, the yellow or blue crosses. The center of mass of the binary images
+can then be calculated and will give the correct position of each object. Our
+first attempt at calculating orientations was to isolate the black circles.
+Once they had been found, the circle center point and the center of mass of the
+object could be used in the following formula to determine the orientation of
+the robot:
 \begin{equation*}
 \mbox{Orientation} = (\arctan2(\mbox{circleCenter}, \mbox{crossCenter}) \times \left(\frac{180}{\pi}\right) + 450) \mod 360
 \end{equation*}
-After several tests with the cross plates on the robots we decided that this
-method was not accurate enough. As the colour being searched for was black, it
-was too difficult to isolate from shadows and our own robot. This difficulty
-meant that the angle calculated would vary wildly and was often incorrect. To
-temporarily remedy the situation, the engineering team added two white blocks
-to the top of our robot which were much easier to isolate and were used to
-calculate the orientation using the same formula.
+After several tests with the cross plates on the robots we
+decided that this method was not accurate enough. As the colour being searched
+for was black, it was too difficult to isolate from shadows and our own robot.
+This difficulty meant that the angle calculated would vary wildly and was often
+incorrect. To temporarily remedy the situation, the engineering team added two
+white blocks to the top of our robot which were much easier to isolate and were
+used to calculate the orientation using the same formula.
 
 \subsection{Strategy}
 
 For this milestone we implemented a simple strategy for navigating to the ball
-which calculated a vector between our robot and the ball and drives along it.
-This allowed us to use our current control framework directly to turn the robot
-the required amount and then drive until it reached the ball. Additional work
-was done on a more advanced strategy that utilizes an A* search algorithm to
-calculate the best cost path to the ball. However, as this is a more complex
-implementation it wasn’t ready for the milestone so we opted to use our
-simpler strategy for the demonstrations.
+which calculated a vector between our robot and the ball and then drives along
+it. This allowed us to use our current control framework to turn the robot
+and then drive until it reached the ball. Additional work was done on a more
+advanced strategy that utilizes an A* search algorithm to calculate the best
+cost path to the ball. However, as this is a more complex implementation it
+wasn't ready for the milestone so we opted to use our simpler strategy for the
+demonstrations.
 
 The beginning of a strategy framework was added during the work for this
-milestone. It is the start of some work that makes strategy code easier to
-write and test. Multiple strategies can be compared against one another in
-the simulator and compared as to their effectiveness. Other benefits of using
-the framework is that new strategies are easy to test, tweak and maintain. In
-general the system increased modularity and will allow many people to work on
-improving strategies without stepping on each other’s toes.
+milestone. It makes strategy code easier to write and test. Multiple strategies
+can be compared against one another in the simulator and compared as to their
+effectiveness. Other benefits of using the framework is that new strategies are
+easy to test, tweak and maintain. In general the system increased modularity and
+will allow many people to work on improving strategies without stepping on each
+other's toes.
 
 \subsection{Simulator}
 
-It became clear that, with the amount of work we’d have to do on strategy,
+It became clear that, with the amount of work we'd have to do on strategy,
 we needed a way to test it. For this we started implementing a simulator. Our
 initial simulator was just a visual representation of the world state object
 used by the strategy component. To integrate it for testing the strategy we have
@@ -173,7 +171,7 @@ reassessed and now have a development and a master branch and merge features
 into develop. This is based on a popular archetypal git workflow. So far we
 only merge into development into master after a milestone. Another example of
 our development process is our use of tools such as Campfire\cite{campfire} -
-a persistant instant messaging web application. This allows us to remain in
+a persistent instant messaging web application. This allows us to remain in
 constant contact with the rest of our team while also providing a method for
 quick fire collaboration with others. Issues are entered into an issue tracker
 for the rest of the team to see and fix.
@@ -181,19 +179,19 @@ for the rest of the team to see and fix.
 \subsection{Future Plans}
 
 Our future plans include full simulator integration to add to an already
-expanding test suite. In addition to testing, other code quality improvements
-such as adding to our internal wiki and completing code documentation. The
-vision code will be improved to use a more reliable method of finding the
-angles of the robots. All of the remaining time will be taken up with writing
-strategies that allow us to complete the next objective and on to the first
-match.
+expanding test suite. In addition to testing, other improvements will
+include code quality such as adding to our internal wiki and completing code
+documentation. The vision code will be improved to use a more reliable method
+of finding the angles of the robots. All of the remaining time will be taken up
+with writing strategies that allow us to complete the next objective and on to
+the first match.
 
 \section{Engineering \& Construction}
 
 \subsection{Goals}
 
 Our goals are to produce a robot that drives fast, kicks hard, dribbles the ball
-efficiently, and performs off-the-wall kick. Additionally, trying to reduce the
+efficiently, and performs an off-the-wall kick. Additionally, trying to reduce the
 slippage of the tank tracks.
 
 \subsection{Achievements}
@@ -203,25 +201,24 @@ found that we had an average speed but had one of the most powerful kickers.
 We were also the only team to implement a spinner. We decided to focus on the
 kicker and spinner in order to give us maximal advantage.
 
-\subsection{Kicker}
+\subsection{Kicker \& Spinner}
 
 To improve the kicker we acquired a second NXT motor for the kicker (Figure
-\ref{fig:topview}). This provided us with much more power, allowing us to gear
+~\ref{fig:topview}). This provided us with much more power, allowing us to gear
 the kicker to increase speed. Previous gearing attempts had failed because we
 had insufficient torque. After experimenting with gearing the kicker up further
 we found a 5:3 gear ratio to be the most effective. This allows us to launch the
 ball \_\_\_ m. Overall, we are very happy with our kicker but are exploring a
 levered system in order to augment it further.
 
-\subsection{Spinner}
-
 In order to develop the spinner we implemented used a different style of wheels.
-These new, larger wheels (Figure \ref{fig:spinner}) provide much more friction,
-which increases the backspin placed on the ball. We have had this spinner
-approved by Garry. The new spinner system gives us much more control. The
-previous incarnation helped us to drive forward with the ball, while the new
-spinner lets us dribble, reverse, and even turn while in possession of the ball.
-Overall, our spinner works very well and should not need further development.
+These new, larger wheels (Figure~\ref{fig:spinner}) provide much more friction,
+which increases the backspin placed on the ball. After numerous legality
+questions, we have had this spinner approved by Gary. The new spinner system
+gives us much more control. The previous incarnation helped us to drive forward
+with the ball, while the new spinner lets us dribble, reverse, and even turn
+while in possession of the ball. Overall, our spinner works very well and should
+not need further development.
 
 \subsection{Future Plans}
 
@@ -256,6 +253,19 @@ the ball. This could help us in deciding when to kick.
 \appendix
 
 \section{Goals}
+
+Out of the goals that we set ourselves in the last report we have completed some
+of them and made progress towards all of them.
+
+\begin{tabular}{| l | l |}
+  \hline
+  \textbf{Goal}                           & \textbf{Achieved?}                       \\
+  \hline
+  Integrate the distinct systems together & Yes, this is working perfectly.          \\
+  Control the robot based on vision       & Yes, could do with some tweaking though. \\
+  Simulator                               & No, but much of the work has been done.  \\
+  \hline
+\end{tabular}
 
 \section{Photographs}
 
