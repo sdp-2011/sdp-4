@@ -82,11 +82,11 @@ the strategy enhanced.
 
 \subsection{Integration}
 
-System integration was going to be a key problem for this milestone and
-for the project as a whole. Since our system design specifies that the the
-vision and the strategy are split up, the integration of these two systems
-are key to our success. Originally we were going to have the vision server
-and the client in the strategy communicate by sending JSON (Javascript Object
+System integration was going to be a key problem for this milestone and for
+the project as a whole. Since our system design specifies that the vision
+and the strategy are split up, the integration of these two systems are
+key to our success. Originally we were going to have the vision server and
+the client in the strategy communicate by sending JSON (Javascript Object
 Notation) that described the world state between them. This was not used
 because it was unnecessarily difficult to create a protocol and make both
 sides use it properly. To combat this we decided to use Google Protocol
@@ -110,11 +110,9 @@ calculated and will give the correct position of each object. Our first attempt
 at calculating orientations was to isolate the black circles. Once they had been
 found, the circle center point and the center of mass of the object could be
 used in the following formula to determine the orientation of the robot:
-
 \begin{equation*}
 \mbox{Orientation} = (\arctan2(\mbox{circleCenter}, \mbox{crossCenter}) \times \left(\frac{180}{\pi}\right) + 450) \mod 360
 \end{equation*}
-
 After several tests with the cross plates on the robots we decided that this
 method was not accurate enough. As the colour being searched for was black, it
 was too difficult to isolate from shadows and our own robot. This difficulty
@@ -165,21 +163,30 @@ their high level goals.
 
 \subsection{Development Process}
 
-Since the beginning of the project we were eager to make sure that we didn't hold back development
-with inefficient processes and lack of communication. We have been using Git as 
-our version control system and its simple branch mechanism allows us to easily work on features
-without stepping on others toes. We initially had a work flow that consisted of a master branch and
-a branch for individual features but the code soon became too complex. We reassessed and now have
-a development and a master branch and merge features into develop. This is based on a popular archetypal 
-git work flow. So far we only merge into development into master after a milestone. Another example of 
-our development process is our use of tools such as Campfire - a persistant instant messaging web 
-application. This allows us to remain in constant contact with the rest of our team while also providing 
-a method for quick fire collaboration with others.
+Since the beginning of the project we were eager to make sure that we didn't
+hold back development with inefficient processes and lack of communication.
+We have been using Git\cite{git-scm} as our version control system and its
+simple branch mechanism allows us to easily work on features without stepping
+on others toes. We initially had a work flow that consisted of a master branch
+and a branch for individual features but the code soon became too complex. We
+reassessed and now have a development and a master branch and merge features
+into develop. This is based on a popular archetypal git workflow. So far we
+only merge into development into master after a milestone. Another example of
+our development process is our use of tools such as Campfire\cite{campfire} -
+a persistant instant messaging web application. This allows us to remain in
+constant contact with the rest of our team while also providing a method for
+quick fire collaboration with others. Issues are entered into an issue tracker
+for the rest of the team to see and fix.
 
 \subsection{Future Plans}
 
-Full simulator integration, more testing, documentation and cleanup, improved
-vision, STRATEGY,
+Our future plans include full simulator integration to add to an already
+expanding test suite. In addition to testing, other code quality improvements
+such as adding to our internal wiki and completing code documentation. The
+vision code will be improved to use a more reliable method of finding the
+angles of the robots. All of the remaining time will be taken up with writing
+strategies that allow us to complete the next objective and on to the first
+match.
 
 \section{Engineering \& Construction}
 
@@ -240,13 +247,16 @@ the ball. This could help us in deciding when to kick.
 	Git Source Control Management,
 	\url{http://git-scm.com}
 
-\bibitem{opencv}
-	OpenCV,
-	\url{http://opencv.willowgarage.com/wiki/}
+\bibitem{campfire}
+	Campfire,
+	\url{http://campfirenow.com/}
 
 \end{thebibliography}
 
 \appendix
+
+\section{Goals}
+
 \section{Photographs}
 
 \begin{figure}[h]
