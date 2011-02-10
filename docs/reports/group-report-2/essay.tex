@@ -82,18 +82,18 @@ the strategy enhanced.
 
 \subsection{Integration}
 
-System integration was going to be a key problem for this milestone and for
-the project as a whole. Since our system design specifies that the the vision
-and the strategy are split up, the integration of these two systems are key
-to our success. Originally we were going to have the vision server and the
-client in the strategy communicate by sending JSON (Javascript Object Notation)
-that described the world state between them. This was not used because it
-was unnecessarily difficult to create a protocol and make both sides use it
-properly. To combat this we decided to use Google Protocol Buffers. This allowed
-us to create a protocol and then generate files that adhere to it. This allowed
-the vision and strategy systems to be developed in almost complete isolation,
-each knowing that the other would stick to its side of the contract in the
-protocol.
+System integration was going to be a key problem for this milestone and
+for the project as a whole. Since our system design specifies that the the
+vision and the strategy are split up, the integration of these two systems
+are key to our success. Originally we were going to have the vision server
+and the client in the strategy communicate by sending JSON (Javascript Object
+Notation) that described the world state between them. This was not used
+because it was unnecessarily difficult to create a protocol and make both
+sides use it properly. To combat this we decided to use Google Protocol
+Buffers\cite{protobuf}. This allowed us to create a protocol and then generate
+files that adhere to it. This allowed the vision and strategy systems to be
+developed in almost complete isolation, each knowing that the other would stick
+to its side of the contract in the protocol.
 
 \subsection{Vision}
 
@@ -219,17 +219,13 @@ the ball. This could help us in deciding when to kick.
 \setcounter{section}{5}
 \begin{thebibliography}{9}
 
-\bibitem{lejos}
-	leJOS,
-	\url{http://lejos.sourceforge.net}
+\bibitem{protobuf}
+	Google Protocol Buffers,
+	\url{http://code.google.com/apis/protocolbuffers/}
 
 \bibitem{git-scm}
 	Git Source Control Management,
 	\url{http://git-scm.com}
-
-\bibitem{ant}
-	Apache Ant,
-	\url{http://ant.apache.org/}
 
 \bibitem{opencv}
 	OpenCV,
