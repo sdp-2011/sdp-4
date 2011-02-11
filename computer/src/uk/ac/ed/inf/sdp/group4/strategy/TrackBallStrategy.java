@@ -39,6 +39,11 @@ public class TrackBallStrategy extends Strategy
 			}
 
 			
+			/**
+			 * The variable angle can be anywhere from -180 to +180. If it is
+			 * positive then it means turn right and inversely if it is
+			 * negative then it means turn left.
+			 */
 			double angle = robotVector.angleTo(route);
 			boolean right = (angle < 0) ? false : true;
 
@@ -47,16 +52,10 @@ public class TrackBallStrategy extends Strategy
 			System.out.println("Ball is towards: " + route.getDirection());
 			System.out.println("Ball is at distance: " + route.getMagnitude());
 
-			if (route.getMagnitude() < 50)
-			{
-				System.out.println("Shoooooot! " + angle);
-				controller.shoot();
-			}
-
+			// If we are a long turning distance from the ball then we should
+			// turn towards it.
 			if (Math.abs(angle) > 10)
 			{
-				System.out.println("Shiftin' " + angle);
-
 				if (right)
 				{
 					controller.right((int)angle);
@@ -77,7 +76,16 @@ public class TrackBallStrategy extends Strategy
 			}
 			else
 			{	
-				System.out.println("FULL STEAM AHEAD! " + angle);
+				// If we're close to the ball then we should shoot.
+				if (route.getMagnitude() < 50)
+				{
+					controller.shoot();
+				}
+				
+				// If we're not close then we should drive towards it.
+				//
+				// The messy distance at the end of the line is required until we get
+				// accurate movement.
 				controller.drivef(Math.abs((int)route.getMagnitude()/2 - 20));
 				try
 				{
