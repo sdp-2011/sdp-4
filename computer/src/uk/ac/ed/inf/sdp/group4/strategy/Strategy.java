@@ -1,10 +1,15 @@
 package uk.ac.ed.inf.sdp.group4.strategy;
 
+import org.apache.log4j.Logger;
+
 import uk.ac.ed.inf.sdp.group4.world.VisionClient;
 import uk.ac.ed.inf.sdp.group4.controller.Controller;
 
 public abstract class Strategy implements IStrategy
 {
+	// Logging
+	protected static Logger log = Logger.getLogger(Strategy.class);
+
 	protected VisionClient client;
 	protected Controller controller;
 	private RobotColour ourColour;
