@@ -16,37 +16,37 @@ public class Main
 {
 	public static void main(String[] args) throws InterruptedException, IOException
 	{
-		// BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
-		// System.out.println("      ____    _    ____ _____ _     _____");
-		// System.out.println("     / ___|  / \\  / ___|_   _| |   | ____|");
-		// System.out.println("    | |     / _ \\ \\___ \\ | | | |   |  _|");
-		// System.out.println("    | |___ / ___ \\ ___) || | | |___| |___");
-		// System.out.println("     \\____/_/   \\_\\____/ |_| |_____|_____|");
-		// System.out.println();
-		// System.out.println("      ____ ____      _    ____  _   _ _____ ____  ____");
-		// System.out.println("     / ___|  _ \\    / \\  / ___|| | | | ____|  _ \\/ ___|");
-		// System.out.println("    | |   | |_) |  / _ \\ \\___ \\| |_| |  _| | |_) \\___ \\ ");
-		// System.out.println("    | |___|  _ <  / ___ \\ ___) |  _  | |___|  _ < ___) |");
-		// System.out.println("     \\____|_| \\_\\/_/   \\_\\____/|_| |_|_____|_| \\_\\____/");
-		// System.out.println();
-		// System.out.println("  > 1. Blue");
-		// System.out.println("  > 2. Yellow");
-		// System.out.println("What colour are we?");
-		// int colourChoice = Integer.parseInt(keyboard.readLine());
+		BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
+		System.out.println("      ____    _    ____ _____ _     _____");
+		System.out.println("     / ___|  / \\  / ___|_   _| |   | ____|");
+		System.out.println("    | |     / _ \\ \\___ \\ | | | |   |  _|");
+		System.out.println("    | |___ / ___ \\ ___) || | | |___| |___");
+		System.out.println("     \\____/_/   \\_\\____/ |_| |_____|_____|");
+		System.out.println();
+		System.out.println("      ____ ____      _    ____  _   _ _____ ____  ____");
+		System.out.println("     / ___|  _ \\    / \\  / ___|| | | | ____|  _ \\/ ___|");
+		System.out.println("    | |   | |_) |  / _ \\ \\___ \\| |_| |  _| | |_) \\___ \\ ");
+		System.out.println("    | |___|  _ <  / ___ \\ ___) |  _  | |___|  _ < ___) |");
+		System.out.println("     \\____|_| \\_\\/_/   \\_\\____/|_| |_|_____|_| \\_\\____/");
+		System.out.println();
+		System.out.println("  > 1. Blue");
+		System.out.println("  > 2. Yellow");
+		System.out.println("What colour are we?");
+		int colourChoice = Integer.parseInt(keyboard.readLine());
 		RobotColour colour;
-		// if (colourChoice == 1)
-		// {
+		if (colourChoice == 1)
+		{
 			colour = RobotColour.BLUE;
-		// }
-		// else
-		// {
-		// 	colour = RobotColour.YELLOW;
-		// }
-		// System.out.println("Menu:");
-		// System.out.println("  > 1. Keyboard Control");
-		// System.out.println("  > 2. Navigate to Ball");
-		// System.out.println("  > 3. Simulator");
-		// System.out.println("Where would you like to go today?");
+		}
+		else
+		{
+			colour = RobotColour.YELLOW;
+		}
+		System.out.println("Menu:");
+		System.out.println("  > 1. Keyboard Control");
+		System.out.println("  > 2. Navigate to Ball");
+		System.out.println("  > 3. Simulator");
+		System.out.println("Where would you like to go today?");
 		int option = 2; //Integer.parseInt(keyboard.readLine());
 		VisionClient client = new VisionClient();
 		Controller controller;
@@ -58,7 +58,7 @@ public class Main
 				//strategy = KeyboardStrategy(controller);
 				break;
 			case 2:
-				controller = new ThinController();
+				controller = new FatController();
 				strategy = new TrackBallStrategy(client, controller, colour);
 				break;
 			case 3:

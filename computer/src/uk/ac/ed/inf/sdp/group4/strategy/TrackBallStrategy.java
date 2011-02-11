@@ -23,41 +23,72 @@ public class TrackBallStrategy extends Strategy
 	{
 		while (true)
 		{
-			try
-			{
-				Thread.sleep(3000);
-			}
-			catch (InterruptedException e)
-			{
-				
-			}
-			
 			refresh();
 			
 			Vector route = null;
+			Vector robotVector = null;
 
 			try
 			{ 
 				route = robot.getPosition().calcVectTo(ball.getPosition());
+				robotVector = new Vector(robot.getFacing(), 0);
 			}
 			catch (InvalidAngleException e)
 			{
 				System.out.println(e.getMessage());
 			}
-			
-			double robotMinusBall = robot.getFacing()- route.getDirection();
-			double ballMinusRobot = route.getDirection() - robot.getFacing();
 
-			if (Math.abs(robotMinusBall) > Math.abs(ballMinusRobot))
-			{
-					controller.right((int)ballMinusRobot);
-			}
-			else 
-			{
-					controller.right((int)robotMinusBall);
-			}
 			
-			controller.drivef(10);
+			double angle = robotVector.angleTo(route);
+			boolean right = (angle < 0) ? false : true;
+
+			System.out.println();
+			System.out.println("Robot is facing: " + robot.getFacing());
+			System.out.println("Ball is towards: " + route.getDirection());
+			System.out.println("Ball is at distance: " + route.getMagnitude());
+
+			if (route.getMagnitude() < 50)
+			{
+				System.out.println("Shoooooot! " + angle);
+				controller.shoot();
+			}
+
+			if (Math.abs(angle) > 10)
+			{
+				System.out.println("Shiftin' " + angle);
+
+				if (right)
+				{
+					controller.right((int)angle);
+				}
+				else
+				{
+					controller.left((int)angle * -1);
+				}
+
+				try
+				{
+					Thread.sleep(3000);
+				}
+				catch (InterruptedException e)
+				{
+					
+				}
+			}
+			else
+			{	
+				System.out.println("FULL STEAM AHEAD! " + angle);
+				controller.drivef(Math.abs((int)route.getMagnitude()/2 - 20));
+				try
+				{
+					Thread.sleep(500);
+				}
+				catch (InterruptedException e)
+				{
+					
+				}
+			}
+
 		}
 	}
 

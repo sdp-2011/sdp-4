@@ -73,8 +73,6 @@ public class VisionClient
 			System.err.println(e.getMessage());
 		}
 		
-		System.out.println(response.toString());
-		
 		// TODO: Set lastTimestamp
 		return worldState;
 	}

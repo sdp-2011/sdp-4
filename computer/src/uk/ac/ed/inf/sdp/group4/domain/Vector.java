@@ -44,10 +44,24 @@ public class Vector
 		double y = dest.getY() - ini.getY();
 
 		double mag = Math.sqrt((x*x) + (y*y));
-		double angle = Math.toDegrees(Math.atan2(y, x));
+		double angle = (Math.toDegrees(Math.atan2(y, x)) + 450) % 360;
 
 		Vector v = new Vector(angle, mag);
 		
 		return v;
+	}
+
+	public double angleTo(Vector other)
+	{
+		double from = this.getDirection();
+		double to = other.getDirection();
+		double angle = to - from;
+
+		if (angle > 180)
+		{
+			angle = -1 * (angle - 180);
+		}
+
+		return angle;
 	}
 }
