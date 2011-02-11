@@ -138,7 +138,7 @@ public class Robot
 			try
 			{
 				SHOOT_MOTOR.forward();
-				Thread.sleep(30);
+				Thread.sleep(1);
 				SHOOT_MOTOR.backward();
 				Thread.sleep(150);
 				SHOOT_MOTOR.forward();

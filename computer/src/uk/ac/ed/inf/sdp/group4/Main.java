@@ -11,6 +11,7 @@ import uk.ac.ed.inf.sdp.group4.strategy.RobotColour;
 import uk.ac.ed.inf.sdp.group4.strategy.Strategy;
 import uk.ac.ed.inf.sdp.group4.strategy.TrackBallStrategy;
 import uk.ac.ed.inf.sdp.group4.sim.Launcher;
+import uk.ac.ed.inf.sdp.group4.strategy.KeyboardStrategy;
 
 public class Main
 {
@@ -55,7 +56,7 @@ public class Main
 		{
 			case 1:
 				controller = new FatController();
-				//strategy = KeyboardStrategy(controller);
+				strategy = new KeyboardStrategy(client, controller, colour);
 				break;
 			case 2:
 				controller = new FatController();
@@ -69,6 +70,7 @@ public class Main
 			default:
 				System.out.println("Goddammit. Give me a real number!");
 		}
+
 		strategy.runStrategy();
 	}
 }
