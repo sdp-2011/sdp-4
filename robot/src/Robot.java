@@ -138,11 +138,11 @@ public class Robot
 			try
 			{
 				SHOOT_MOTOR.forward();
-				Thread.sleep(30);
+				Thread.sleep(10);
 				SHOOT_MOTOR.backward();
-				Thread.sleep(150);
+				Thread.sleep(80);
 				SHOOT_MOTOR.forward();
-				Thread.sleep(200);
+				Thread.sleep(100);
 				SHOOT_MOTOR.stop();
 			}
 			catch (Exception e)
