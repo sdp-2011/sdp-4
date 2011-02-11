@@ -46,11 +46,15 @@ public class Launcher
 		this.state = state;
 		loadContent();
 		setup();
+		run();
 	}
 
 	public void run()
 	{
-		
+		while (true)
+		{
+			update(40);
+		}
 	}
 
 	private void loadContent()
@@ -76,6 +80,9 @@ public class Launcher
 		              pitch.getWIDTH() * SCALE + 2 * PADDING + 35 * SCALE);
 		frame.setVisible(true);
 		frame.getContentPane().add(new Situation(pitch));
+		blue = state.getBlue();
+		yellow = state.getYellow();
+		ball = state.getBall();
 	}
 
 	private void update(int time)
