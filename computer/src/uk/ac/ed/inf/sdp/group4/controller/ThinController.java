@@ -1,7 +1,16 @@
 package uk.ac.ed.inf.sdp.group4.controller;
 
+import uk.ac.ed.inf.sdp.group4.world.WorldState;
+
 public class ThinController extends Controller
 {
+	private WorldState state;
+	
+	public ThinController(WorldState state)
+	{
+		this.state = state;
+	}
+
 	public void drivef(int val)
 	{
 		System.out.println("Driving forward:" + val);

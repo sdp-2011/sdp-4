@@ -41,9 +41,9 @@ public class Launcher
 
 	private JFrame frame;
 
-	public Launcher()
+	public Launcher(WorldState state)
 	{
-		this.state = new WorldState();
+		this.state = state;
 		loadContent();
 		setup();
 	}

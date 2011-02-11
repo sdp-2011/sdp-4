@@ -62,9 +62,10 @@ public class Main
 				strategy = new TrackBallStrategy(client, controller, colour);
 				break;
 			case 3:
-				controller = new ThinController();
+				WorldState state = new WorldState();
+				controller = new ThinController(state);
 				strategy = new TrackBallStrategy(client, controller, colour);
-				Launcher launcher = new Launcher();
+				Launcher launcher = new Launcher(state);
 			default:
 				System.out.println("Goddammit. Give me a real number!");
 		}
