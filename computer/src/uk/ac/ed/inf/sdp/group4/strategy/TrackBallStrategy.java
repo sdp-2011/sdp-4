@@ -44,7 +44,7 @@ public class TrackBallStrategy extends Strategy
 			 * positive then it means turn right and inversely if it is
 			 * negative then it means turn left.
 			 */
-			double angle = robotVector.angleTo(route);
+			double angle = route.angleTo(robot.getFacing());
 			boolean right = (angle < 0) ? false : true;
 
 			System.out.println();

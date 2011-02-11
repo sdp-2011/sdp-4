@@ -51,10 +51,10 @@ public class Vector
 		return v;
 	}
 
-	public double angleTo(Vector other)
+	public double angleTo(double bearing)
 	{
 		double from = this.getDirection();
-		double to = other.getDirection();
+		double to = bearing;
 		double angle = to - from;
 
 		if (angle > 180)
