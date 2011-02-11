@@ -21,8 +21,12 @@ public class TrackBallStrategy extends Strategy
 
 	public void runStrategy()
 	{
+	
+
+
 		while (true)
 		{
+
 			refresh();
 			
 			Vector route = null;
@@ -32,6 +36,7 @@ public class TrackBallStrategy extends Strategy
 			{ 
 				route = robot.getPosition().calcVectTo(ball.getPosition());
 				robotVector = new Vector(robot.getFacing(), 0);
+
 			}
 			catch (InvalidAngleException e)
 			{
@@ -40,19 +45,103 @@ public class TrackBallStrategy extends Strategy
 
 			
 			double angle = robotVector.angleTo(route);
+
 			boolean right = (angle < 0) ? false : true;
 
-			System.out.println();
+			System.out.println("GO TOWARDS: " +  Double.toString(angle));
 			System.out.println("Robot is facing: " + robot.getFacing());
 			System.out.println("Ball is towards: " + route.getDirection());
 			System.out.println("Ball is at distance: " + route.getMagnitude());
+			System.out.println();
 
-			if (route.getMagnitude() < 50)
+			if (Math.abs(robotVector.getDirection() + 180 - route.getDirection()) < 20)
 			{
-				System.out.println("Shoooooot! " + angle);
-				controller.shoot();
+			
+				if (route.getMagnitude() < 30)
+				{
+
+					System.out.println("Shoooooot! " + angle);
+					controller.shoot();
+
+					try 
+					{
+						Thread.sleep(200);
+					} 
+					catch (InterruptedException e)
+					{
+						System.out.println("Uh oh, spaghettioh...");	
+					}
+
+				}
+				else if (route.getMagnitude() < 60)
+				{
+
+					System.out.println("Run em down!");							
+					controller.drivef(5);
+
+					try 
+					{
+						Thread.sleep(150);
+					} 
+					catch (InterruptedException e)
+					{
+						System.out.println("Uh oh, spaghettioh...");	
+					}
+
+				} 
+				else
+				{
+
+					System.out.println("Run em down!");							
+					controller.drivef(10);
+
+					try 
+					{
+						Thread.sleep(200);
+					} 
+					catch (InterruptedException e)
+					{
+						System.out.println("Uh oh, spaghettioh...");	
+					}
+
+				} 
+
+			}
+			else 
+			{ 
+
+				System.out.println("Turn ye fecker!");
+
+				int toturn;
+
+				if (angle >= 0)
+				{
+
+					System.out.println("Avast! Left be right!");
+					toturn = (int)(180 - angle);
+					controller.right(toturn);
+
+				} 
+				else 				
+				{
+					
+					System.out.println("Right me hearties!");
+					toturn = (int)(180 + angle);
+					controller.left(toturn);
+
+				}
+
+				try 
+				{
+					Thread.sleep(2000);
+				} 
+				catch (InterruptedException e)
+				{
+					System.out.println("Uh oh, spaghettioh...");	
+				}
 			}
 
+/*
 			if (Math.abs(angle) > 10)
 			{
 				System.out.println("Shiftin' " + angle);
@@ -81,14 +170,22 @@ public class TrackBallStrategy extends Strategy
 				controller.drivef(Math.abs((int)route.getMagnitude()/2 - 20));
 				try
 				{
+					while(
+					if (route.getMagnitude() < 50)
+					{
+						System.out.println("Shoooooot! " + angle);
+						controller.shoot();
+					}
+
 					Thread.sleep(500);
 				}
 				catch (InterruptedException e)
 				{
 					
 				}
+			
 			}
-
+			*/
 		}
 	}
 
