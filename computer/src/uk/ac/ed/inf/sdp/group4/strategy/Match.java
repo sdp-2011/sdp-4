@@ -29,9 +29,9 @@ public class Match
 		this.client = client;
 		this.controller = controller;
 		finder = new AStarPathFinder(pitch, 500);
-		while (playing == true)
+		while (playing)
 		{
-			while (ourRobot.hasBall() == false)
+			while (!ourRobot.hasBall())
 			{
 				path = finder.findPath(ourRobot, ourRobot.getPosX(), ourRobot.getPosY(), ball.getPosX(), ball.getPosY());
 			}
