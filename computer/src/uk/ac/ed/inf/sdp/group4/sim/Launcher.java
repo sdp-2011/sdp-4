@@ -32,6 +32,7 @@ public class Launcher
 	Robot blue;
 	Robot yellow;
 	Ball ball;
+	Component[] components;
 
 	int scoreB;
 	int scoreY;
@@ -83,12 +84,19 @@ public class Launcher
 		blue = state.getBlue();
 		yellow = state.getYellow();
 		ball = state.getBall();
+		components = new Component[1];
+		components[0] = new SimBot(blue);
 	}
 
 	private void update(int time)
 	{
 		if (time > 	40)
 		{	
+			for (int i = 0; i < components.length; i++)
+			{
+				components[i].update(time);
+			}
+
 			draw();
 		}
 	}
