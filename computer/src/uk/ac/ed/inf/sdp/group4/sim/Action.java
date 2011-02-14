@@ -2,15 +2,25 @@ package uk.ac.ed.inf.sdp.group4.sim;
 
 public class Action
 {
-	private String type;
+	private Type type;
 	private int argument;
 	private double completed;
+	
+	public enum Type
+	{
+		FORWARD, REVERSE, SHOOT, TURN
+	}
 
-	public Action(String type, int argument)
+	public Action(Type type, int argument)
 	{
 		this.type = type;
 		this.argument = argument;
 		this.completed = 0;
+	}
+
+	public Type getType()
+	{
+		return type;
 	}
 
 	public void addProgress(double progress)

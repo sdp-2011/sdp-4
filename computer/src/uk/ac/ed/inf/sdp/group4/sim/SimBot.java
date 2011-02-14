@@ -25,7 +25,7 @@ public class SimBot extends Component
 
 		else
 		{
-			if (current.equals("forward"))
+			if (current.getType() == Action.Type.FORWARD)
 			{
 				move(time);
 			}
@@ -58,5 +58,8 @@ public class SimBot extends Component
 
 	}
 
-	
+	public void shoot()
+	{
+
+	}
 }
