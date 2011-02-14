@@ -28,26 +28,12 @@ public class TrackBallStrategy extends Strategy
 			log.debug("Starting a new cycle...");
 			refresh();
 
-			Vector route = null;
-
-			try
-			{
-				route = robot.getPosition().calcVectTo(ball.getPosition());
-			}
-			catch (InvalidAngleException e)
-			{
-				log.error(e.getMessage());
-			}
-
-            log.debug("Robot is facing: " + robot.getFacing());
-			log.debug("Ball is towards: " + route.getDirection());
-			log.debug("Ball is at distance: " + route.getMagnitude());
-
 			/**
 			 * The variable angle can be anywhere from -180 to +180. If it is
 			 * positive then it means turn right and inversely if it is
 			 * negative then it means turn left.
 			 */
+			Vector route = getRoute();
 			double angle = route.angleTo(robot.getFacing());
 			boolean right = (angle >= 0);
 
@@ -113,5 +99,25 @@ public class TrackBallStrategy extends Strategy
 		}
 
 		ball = state.getBall();
+	}
+
+	private Vector getRoute()
+	{
+		Vector route = null;
+
+		try
+		{
+			route = robot.getPosition().calcVectTo(ball.getPosition());
+		}
+		catch (InvalidAngleException e)
+		{
+			log.error(e.getMessage());
+		}
+
+		log.debug("Robot is facing: " + robot.getFacing());
+		log.debug("Ball is towards: " + route.getDirection());
+		log.debug("Ball is at distance: " + route.getMagnitude());
+
+		return route;
 	}
 }
