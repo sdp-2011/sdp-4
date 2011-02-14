@@ -12,6 +12,8 @@ import uk.ac.ed.inf.sdp.group4.strategy.Strategy;
 import uk.ac.ed.inf.sdp.group4.strategy.TrackBallStrategy;
 import uk.ac.ed.inf.sdp.group4.sim.Launcher;
 import uk.ac.ed.inf.sdp.group4.strategy.KeyboardStrategy;
+import uk.ac.ed.inf.sdp.group4.sim.Component;
+import uk.ac.ed.inf.sdp.group4.sim.SimBot;
 
 public class Main
 {
@@ -63,10 +65,17 @@ public class Main
 				strategy = new TrackBallStrategy(client, controller, colour);
 				break;
 			case 3:
+				colour = RobotColour.BLUE;
 				WorldState state = new WorldState();
-				controller = new ThinController(state);
+
+				Component[] components = new Component[1];
+				SimBot bot = new SimBot(state.getBlue());
+				components[0] = bot;
+
+				controller = new ThinController(bot);
 				strategy = new TrackBallStrategy(client, controller, colour);
-				Launcher launcher = new Launcher(state);
+
+				Launcher launcher = new Launcher(state, components);
 			default:
 				System.out.println("Goddammit. Give me a real number!");
 		}

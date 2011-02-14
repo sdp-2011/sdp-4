@@ -2,20 +2,24 @@ package uk.ac.ed.inf.sdp.group4.controller;
 
 import uk.ac.ed.inf.sdp.group4.world.WorldState;
 import uk.ac.ed.inf.sdp.group4.domain.Vector;
+import uk.ac.ed.inf.sdp.group4.sim.SimBot;
+import uk.ac.ed.inf.sdp.group4.sim.Action;
 import java.lang.Math;
 
 public class ThinController extends Controller
 {
-	private WorldState state;
+	private SimBot bot;
 	
-	public ThinController(WorldState state)
+	public ThinController(SimBot bot)
 	{
-		this.state = state;
+		this.bot = bot;
 	}
 
 	public void drivef(int val)
 	{
 		System.out.println("Driving forward:" + val);
+		Action forward = new Action(Action.Type.FORWARD, val);
+		bot.newAction(forward);
 	}
 
 	public void driveb(int val)

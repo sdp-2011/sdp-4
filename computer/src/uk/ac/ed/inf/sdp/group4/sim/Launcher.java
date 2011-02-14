@@ -42,8 +42,9 @@ public class Launcher
 
 	private JFrame frame;
 
-	public Launcher(WorldState state)
+	public Launcher(WorldState state, Component[] components)
 	{
+		this.components = components;
 		this.state = state;
 		loadContent();
 		setup();
@@ -84,8 +85,6 @@ public class Launcher
 		blue = state.getBlue();
 		yellow = state.getYellow();
 		ball = state.getBall();
-		components = new Component[1];
-		components[0] = new SimBot(blue);
 	}
 
 	private void update(int time)
