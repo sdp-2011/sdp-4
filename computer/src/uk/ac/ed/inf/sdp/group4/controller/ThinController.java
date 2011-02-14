@@ -1,6 +1,8 @@
 package uk.ac.ed.inf.sdp.group4.controller;
 
 import uk.ac.ed.inf.sdp.group4.world.WorldState;
+import uk.ac.ed.inf.sdp.group4.domain.Vector;
+import java.lang.Math;
 
 public class ThinController extends Controller
 {
@@ -14,7 +16,6 @@ public class ThinController extends Controller
 	public void drivef(int val)
 	{
 		System.out.println("Driving forward:" + val);
-		//tell sim robot to drive forward val amount
 	}
 
 	public void driveb(int val)
