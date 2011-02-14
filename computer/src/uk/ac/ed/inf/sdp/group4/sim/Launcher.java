@@ -89,7 +89,7 @@ public class Launcher
 
 	private void update(int time)
 	{
-		if (time > 	40)
+		if (time >= 40)
 		{	
 			for (int i = 0; i < components.length; i++)
 			{

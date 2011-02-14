@@ -14,6 +14,7 @@ import uk.ac.ed.inf.sdp.group4.sim.Launcher;
 import uk.ac.ed.inf.sdp.group4.strategy.KeyboardStrategy;
 import uk.ac.ed.inf.sdp.group4.sim.Component;
 import uk.ac.ed.inf.sdp.group4.sim.SimBot;
+import uk.ac.ed.inf.sdp.group4.domain.Position;
 
 public class Main
 {
@@ -67,7 +68,7 @@ public class Main
 			case 3:
 				colour = RobotColour.BLUE;
 				WorldState state = new WorldState();
-
+				state.getBlue().setPosition(new Position(50, 12));
 				Component[] components = new Component[1];
 				SimBot bot = new SimBot(state.getBlue());
 				components[0] = bot;

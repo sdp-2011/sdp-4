@@ -18,16 +18,19 @@ public class SimBot extends Component
 
 	public void update(int time)
 	{
-		if (current.isDone())
+		if (current != null)
 		{
-			current = null;	
-		}
-
-		else
-		{
-			if (current.getType() == Action.Type.FORWARD)
+			if (current.isDone())
 			{
-				move(time);
+				current = null;	
+			}
+
+			else
+			{
+				if (current.getType() == Action.Type.FORWARD)
+				{
+					move(time);
+				}
 			}
 		}
 	}
