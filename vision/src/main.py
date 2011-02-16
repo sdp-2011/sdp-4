@@ -1,4 +1,5 @@
 import cv
+import time
 from imageProcFunctions import *
 from navigation import *
 from server import *
@@ -12,9 +13,8 @@ cv.NamedWindow("Red:",cv.CV_WINDOW_AUTOSIZE)
 cv.NamedWindow("Blue:",cv.CV_WINDOW_AUTOSIZE)
 cv.NamedWindow("Yellow:",cv.CV_WINDOW_AUTOSIZE)
 cv.NamedWindow("Black:",cv.CV_WINDOW_AUTOSIZE)
-cv.NamedWindow("Box:", cv.CV_WINDOW_AUTOSIZE)
 
-mods = [0.0, 0.4, 0.4, 0.05, 1.0, 1.0, 0.3, 0.3, 0.5, 0.8, 1.0, 1.0, 0.1, 0.36, 0.37, 0.2, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.45]
+mods = [0.0, 0.4, 0.4, 0.05, 1.0, 1.0, 0.3, 0.3, 0.5, 0.8, 1.0, 1.0, 0.1, 0.36, 0.37, 0.2, 1.0, 1.0, 0.0, 0.0, 0.8, 1.0, 0.16, 1.0]
 
 # Start ugly global value storage (fix this rubbish :( )
 
@@ -69,15 +69,18 @@ cv.CreateTrackbar("V Upper:", "Yellow:", 255, 255, onVUpperYChange)
 
 cv.CreateTrackbar("H Lower:", "Processed:", 0, 255, onHLowerBkChange)
 cv.CreateTrackbar("S Lower:", "Processed:", 0, 255, onSLowerBkChange)
-cv.CreateTrackbar("V Lower:", "Processed:", 0, 255, onVLowerBkChange)
+cv.CreateTrackbar("V Lower:", "Processed:", 237, 255, onVLowerBkChange)
 cv.CreateTrackbar("H Upper:", "Processed:", 255, 255, onHUpperBkChange)
-cv.CreateTrackbar("S Upper:", "Processed:", 255, 255, onSUpperBkChange)
-cv.CreateTrackbar("V Upper:", "Processed:", 110, 255, onVUpperBkChange)
+cv.CreateTrackbar("S Upper:", "Processed:", 40, 255, onSUpperBkChange)
+cv.CreateTrackbar("V Upper:", "Processed:", 255, 255, onVUpperBkChange)
 
 Server().start()
 
 
 cam = cv.CaptureFromCAM(0)
+
+def whitePoint(mask):
+	return cv.Avg(mask)
 
 
 def findObject(img, colour, mods):
@@ -127,7 +130,7 @@ def findObject(img, colour, mods):
 		blackUpper = cv.Scalar(mods[21]*256, mods[22]*256, mods[23]*256)
 		cv.InRangeS(hsv, blackLower, blackUpper, mask)
 		cv.ShowImage("Black:",mask)
-
+		
     # Count white pixels to make sure program doesn't crash if it finds nothing
 	if (cv.CountNonZero(mask) < 3):
 		return (0, 0)
@@ -144,33 +147,66 @@ def findObject(img, colour, mods):
 	cv.Copy(mask, contourImage, None)
 
 	storage = cv.CreateMemStorage()
+
 	contours = cv.FindContours(contourImage, storage, cv.CV_RETR_EXTERNAL, cv.CV_CHAIN_APPROX_SIMPLE)
 
 	if len(contours) > 1:
-		contourLow = cv.ApproxPoly(contours, storage, cv.CV_POLY_APPROX_DP)
 
-		moments = cv.Moments(contourLow, 1)
-		M00 = cv.GetSpatialMoment(moments,0,0)
-		M10 = cv.GetSpatialMoment(moments,1,0)
-		M01 = cv.GetSpatialMoment(moments,0,1)
-		
-		minRect = cv.MinAreaRect2(contourLow, storage)
-		
-		#drawRect(minRect, img)
-		#tempImage = cv.CreateImage(size, 8, 1)
-		#cv.CvtColor(img, tempImage, cv.CV_RGB2GRAY )
-		#findCircles(tempImage)
-		
-		if M00 == 0:
-			M00 = 0.01
-		
-		return(round(M10/M00),round(M01/M00))
+		if (colour == "BLACK"):
+			
+			x = 0
+			y = 0
+			
+			#for i in mask[0]:
+			#	x = x +i
+
+#			for j in mask[1]:
+##
+#				y = y + j
+
+								
+			print x
+			M00 = 0
+			M10 = 0
+			M01 = 0
+
+	#		contourLow = cv.ApproxPoly(contours, storage, cv.CV_POLY_APPROX_DP)
+			moments = cv.Moments(mask, 1)
+			M00 = M00 + cv.GetSpatialMoment(moments,0,0)
+			M10 = M10 + cv.GetSpatialMoment(moments,1,0)
+			M01 = M01 + cv.GetSpatialMoment(moments,0,1)
+
+			if M00 == 0:
+				M00 = 0.01
+
+			return(round(M10/M00),round(M01/M00))
+
+		else:
+			contourLow = cv.ApproxPoly(contours, storage, cv.CV_POLY_APPROX_DP)
+
+			moments = cv.Moments(contourLow, 1)
+			M00 = cv.GetSpatialMoment(moments,0,0)
+			M10 = cv.GetSpatialMoment(moments,1,0)
+			M01 = cv.GetSpatialMoment(moments,0,1)
+
+			#minRect = cv.MinAreaRect2(contourLow, storage)
+
+			#drawRect(minRect, img)
+			#tempImage = cv.CreateImage(size, 8, 1)
+			#cv.CvtColor(img, tempImage, cv.CV_RGB2GRAY )
+			#findCircles(tempImage)
+
+			if M00 == 0:
+				M00 = 0.01
+
+			return(round(M10/M00),round(M01/M00))
 		
 	return (0, 0)
 
 while (True):
+	start = time.time()
 	image = cv.QueryFrame(cam)
-	cropRect = (75, 80, 554, 340)
+	cropRect = (75, 80, 554, 325)
 	cv.SetImageROI(image, cropRect)
 	orig = cv.CloneImage(image)
 	processed = cv.CloneImage(orig)
@@ -183,14 +219,15 @@ while (True):
 	yellowCenter = (int(yellowCenter[0]), int(yellowCenter[1]))
 	
 	yellowImage = cv.CloneImage(orig)
-	yellowCropRect = (yellowCenter[0] + 50, yellowCenter[1] + 55, 50, 50)
+	yellowCropRect = (yellowCenter[0] + 45, yellowCenter[1] + 45, 65, 65)
 	cv.SetImageROI(yellowImage, yellowCropRect)
 	cv.ShowImage("YellowBlack:", yellowImage)
+
 	yellowBlack = findObject(yellowImage, "BLACK", mods)
 	yellowBlack = (int(yellowBlack[0]) + yellowCropRect[0] - 75, int(yellowBlack[1]) + yellowCropRect[1] - 80)
 	
 	blueImage = cv.CloneImage(orig)	
-	blueCropRect = (blueCenter[0] + 50, blueCenter[1] + 55, 50, 50)
+	blueCropRect = (blueCenter[0] + 45, blueCenter[1] + 45, 65, 65)
 	cv.SetImageROI(blueImage, blueCropRect)
 	cv.ShowImage("BlueBlack:", blueImage)	
 		
@@ -204,8 +241,8 @@ while (True):
 	cv.Line(processed, blueBlack, blueCenter, cv.RGB(255,0,0))
 	cv.Line(processed, yellowBlack, yellowCenter, cv.RGB(0,255,0))
 	
-	print "Bearing of blue:", (int(calculateBearing(blueBlack, blueCenter) + 90) + 360) % 360
-#	print "Bearing of yellow:", calculateBearing(yellowBlack, yellowCenter)
+#	print "Bearing of blue:", (int(calculateBearing(blueCenter,blueBlack) + 90) + 360) % 360
+#	print "Bearing of yellow:",  (int(calculateBearing(blueCenter,blueBlack) + 90) + 360) % 360
 	
 #	print mods
 
@@ -223,5 +260,7 @@ while (True):
 	WorldState.lock.release()	
 
 	cv.WaitKey(25)
+	now = time.time()
+	print 1/(now-start)
 
 
