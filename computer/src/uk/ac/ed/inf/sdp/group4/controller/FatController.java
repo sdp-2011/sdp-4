@@ -37,13 +37,13 @@ public class FatController extends Controller
 	public void drivef(int distance)
 	{
 		//calls drive on the robot
-		sendCommand(0, distance);
+		sendCommand(1, distance);
 	}
 
 	public void driveb(int distance)
 	{
 		//calls drive on the robot
-		sendCommand(1, distance);
+		sendCommand(0, distance);
 	}
 
 	public void shoot()

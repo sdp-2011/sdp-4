@@ -78,7 +78,7 @@ public class TrackBallStrategy extends Strategy
 			else
 			{	
 				System.out.println("FULL STEAM AHEAD! " + angle);
-				controller.drivef(Math.abs((int)route.getMagnitude()/2 - 20));
+				controller.drivef(Math.abs((int)route.getMagnitude()));
 				try
 				{
 					Thread.sleep(500);

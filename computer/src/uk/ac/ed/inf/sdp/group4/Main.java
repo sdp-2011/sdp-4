@@ -47,7 +47,7 @@ public class Main
 		System.out.println("  > 2. Navigate to Ball");
 		System.out.println("  > 3. Simulator");
 		System.out.println("Where would you like to go today?");
-		int option = 2; //Integer.parseInt(keyboard.readLine());
+		int option = Integer.parseInt(keyboard.readLine());
 		VisionClient client = new VisionClient();
 		Controller controller;
 		Strategy strategy = null;
