@@ -16,11 +16,11 @@ while (True):
 	orig = cv.CloneImage(image)
 	processed = cv.CloneImage(orig)
 
-	ballCenter = findObject(image,"RED", mods)
+	ballCenter = findObject(image,"RED")
 	ballCenter = (int(ballCenter[0]), int(ballCenter[1]))
-	blueCenter = findObject(image,"BLUE", mods)
+	blueCenter = findObject(image,"BLUE")
 	blueCenter = (int(blueCenter[0]), int(blueCenter[1]))
-	yellowCenter = findObject(image,"YELLOW", mods)
+	yellowCenter = findObject(image,"YELLOW")
 	yellowCenter = (int(yellowCenter[0]), int(yellowCenter[1]))
 	
 	yellowImage = cv.CloneImage(orig)
@@ -28,7 +28,7 @@ while (True):
 	cv.SetImageROI(yellowImage, yellowCropRect)
 	cv.ShowImage("YellowBlack:", yellowImage)
 
-	yellowBlack = findObject(yellowImage, "BLACK", mods)
+	yellowBlack = findObject(yellowImage, "BLACK")
 	yellowBlack = (int(yellowBlack[0]) + yellowCropRect[0] - 75, int(yellowBlack[1]) + yellowCropRect[1] - 80)
 	
 	blueImage = cv.CloneImage(orig)	
@@ -36,32 +36,43 @@ while (True):
 	cv.SetImageROI(blueImage, blueCropRect)
 	cv.ShowImage("BlueBlack:", blueImage)	
 		
-	blueWhite = findObject(blueImage, "BLACK", mods)
-	blueWhite = (int(blueWhite[0]) + blueCropRect[0] - 75, int(blueWhite[1]) + blueCropRect[1] - 80)		
-		
-	cv.Circle(processed, ballCenter, 2, cv.RGB(0,0,0),-1)	
-	cv.Circle(processed, blueCenter, 2, cv.RGB(0,0,0),-1)	
-	cv.Circle(processed, yellowCenter, 2, cv.RGB(0,0,0),-1)
+	blueWhite = findObject(blueImage, "BLACK")
+	blueWhite = (int(blueWhite[0]) + blueCropRect[0] - 75, int(blueWhite[1]) + blueCropRect[1] - 80)	
 	
-	cv.Line(processed, blueBlack, blueCenter, cv.RGB(255,0,0))
-	cv.Line(processed, yellowBlack, yellowCenter, cv.RGB(0,255,0))
+	center_points = (ballCenter, blueCenter, yellowCenter)
+	other_points = (blueWhite, yellowBlack)
+	draw_on_image(processed, center_points, other_points)
 	
-	print "Bearing of blue:", (int(calculateBearing(blueWhite,blueCenter) + 90) + 360) % 360
-	print "Bearing of yellow:",  (int(calculateBearing(blueWhite,blueCenter) + 90) + 360) % 360
+#	print "Bearing of blue:", (int(calculateBearing(blueWhite,blueCenter) + 90) + 360) % 360
+#	print "Bearing of yellow:",  (int(calculateBearing(blueWhite,blueCenter) + 90) + 360) % 360
 	
-	cv.ShowImage("Original:", orig)
-	cv.ShowImage("Processed:", processed)
-
-	WorldState.lock.acquire()
-	WorldState.ball["position"]["x"] = ballCenter[0]	
-	WorldState.ball["position"]["y"] = ballCenter[1]
-	WorldState.blue["position"]["x"] = blueCenter[0]
-	WorldState.blue["position"]["y"] = blueCenter[1]
-	WorldState.blue["rotation"] = (int(calculateBearing(blueBlack, blueCenter) + 90) + 360) % 360
-	WorldState.lock.release()	
+	update_worldstate(center_points, other_points)
 
 	cv.WaitKey(25)
 	now = time.time()
 	print 1/(now-start)
 
-
+def draw_on_image(image, center_points, other_points):
+	cv.Circle(image, center_points[0], 2, cv.RGB(0,0,0),-1)	
+	cv.Circle(image, center_points[1], 2, cv.RGB(0,0,0),-1)	
+	cv.Circle(image, center_points[2], 2, cv.RGB(0,0,0),-1)
+	
+	cv.Line(image, other_points[0], center_points[1], cv.RGB(255,0,0))
+	#cv.Line(image, yellowBlack, center_points[2], cv.RGB(0,255,0))
+		
+	cv.ShowImage("Original:", orig)
+	cv.ShowImage("Processed:", image)
+	
+def update_worldstate(center_points, other_points):
+	
+	WorldState.lock.acquire()
+	WorldState.ball["position"]["x"] = center_points[0][0]
+	WorldState.ball["position"]["y"] = center_points[0][1]
+	WorldState.blue["position"]["x"] = center_points[1][0]
+	WorldState.blue["position"]["y"] = center_points[1][1]
+	WorldState.blue["rotation"] = int(calculateBearing(other_points[0], center_points[1]))
+	WorldState.yellow["position"]["x"] = center_points[2][0]
+	WorldState.yellow["position"]["y"] = center_points[2][1]
+	WorldState.yellow["rotation"] = int(calculateBearing(other_points[1], center_points[2]))	
+	WorldState.lock.release()	
+	

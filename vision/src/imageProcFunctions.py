@@ -31,7 +31,7 @@ def onHUpperBkChange(position):	mods[21] = position/255.0
 def onSUpperBkChange(position): mods[22] = position/255.0
 def onVUpperBkChange(position):	mods[23] = position/255.0
 
-def findObject(img, colour, mods):
+def findObject(img, colour):
 	'''
 	Finds the objects in an image with given colour.
 

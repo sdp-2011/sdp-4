@@ -1,5 +1,4 @@
 import cv
-import time
 from imageProcFunctions import *
 from navigation import *
 from server import *
