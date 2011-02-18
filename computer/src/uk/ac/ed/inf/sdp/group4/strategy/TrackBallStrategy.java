@@ -50,14 +50,8 @@ public class TrackBallStrategy extends Strategy
 					controller.left((int)angle * -1);
 				}
 
-				try
-				{
-					Thread.sleep(3000);
-				}
-				catch (InterruptedException ignored)
-				{
-					
-				}
+				pause(3000);
+
 			}
 			else
 			{	
@@ -72,16 +66,20 @@ public class TrackBallStrategy extends Strategy
 				// The messy distance at the end of the line is required until we get
 				// accurate movement.
 				controller.drivef(Math.abs((int)route.getMagnitude()/2 - 20));
-				try
-				{
-					Thread.sleep(500);
-				}
-				catch (InterruptedException ignored)
-				{
-					
-				}
+				pause(500);
 			}
+		}
+	}
 
+	private void pause(int milliseconds)
+	{
+		try
+		{
+			Thread.sleep(milliseconds);
+		}
+		catch (InterruptedException ignored)
+		{
+			
 		}
 	}
 
