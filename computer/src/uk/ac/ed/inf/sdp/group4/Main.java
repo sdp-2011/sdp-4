@@ -16,41 +16,32 @@ public class Main
 {
 	public static void main(String[] args) throws InterruptedException, IOException
 	{
+		VisionClient client = new VisionClient();
+		Controller controller = null;
+		Strategy strategy = null;
+
+		// Display the team logo.
+		logo();
+
+		// Java IO. Worst IO.
 		BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
-		System.out.println("      ____    _    ____ _____ _     _____");
-		System.out.println("     / ___|  / \\  / ___|_   _| |   | ____|");
-		System.out.println("    | |     / _ \\ \\___ \\ | | | |   |  _|");
-		System.out.println("    | |___ / ___ \\ ___) || | | |___| |___");
-		System.out.println("     \\____/_/   \\_\\____/ |_| |_____|_____|");
-		System.out.println();
-		System.out.println("      ____ ____      _    ____  _   _ _____ ____  ____");
-		System.out.println("     / ___|  _ \\    / \\  / ___|| | | | ____|  _ \\/ ___|");
-		System.out.println("    | |   | |_) |  / _ \\ \\___ \\| |_| |  _| | |_) \\___ \\ ");
-		System.out.println("    | |___|  _ <  / ___ \\ ___) |  _  | |___|  _ < ___) |");
-		System.out.println("     \\____|_| \\_\\/_/   \\_\\____/|_| |_|_____|_| \\_\\____/");
-		System.out.println();
+		
+		// Which colour are we playing as?
 		System.out.println("  > 1. Blue");
 		System.out.println("  > 2. Yellow");
 		System.out.println("What colour are we?");
+
 		int colourChoice = Integer.parseInt(keyboard.readLine());
-		RobotColour colour;
-		if (colourChoice == 1)
-		{
-			colour = RobotColour.BLUE;
-		}
-		else
-		{
-			colour = RobotColour.YELLOW;
-		}
+		RobotColour colour = (colourChoice == 1) ? RobotColour.BLUE : RobotColour.YELLOW;
+
+		// What game would you like to play today?
+		// > GLOBAL THERMONUCLEAR WAR
 		System.out.println("Menu:");
 		System.out.println("  > 1. Keyboard Control");
 		System.out.println("  > 2. Navigate to Ball");
 		System.out.println("  > 3. Simulator");
 		System.out.println("Where would you like to go today?");
-		int option = 2; //Integer.parseInt(keyboard.readLine());
-		VisionClient client = new VisionClient();
-		Controller controller;
-		Strategy strategy = null;
+		int option = Integer.parseInt(keyboard.readLine());
 		switch (option)
 		{
 			case 1:
@@ -69,5 +60,21 @@ public class Main
 		}
 
 		strategy.runStrategy();
+	}
+
+	private static void logo()
+	{
+		System.out.println("      ____    _    ____ _____ _     _____");
+		System.out.println("     / ___|  / \\  / ___|_   _| |   | ____|");
+		System.out.println("    | |     / _ \\ \\___ \\ | | | |   |  _|");
+		System.out.println("    | |___ / ___ \\ ___) || | | |___| |___");
+		System.out.println("     \\____/_/   \\_\\____/ |_| |_____|_____|");
+		System.out.println();
+		System.out.println("      ____ ____      _    ____  _   _ _____ ____  ____");
+		System.out.println("     / ___|  _ \\    / \\  / ___|| | | | ____|  _ \\/ ___|");
+		System.out.println("    | |   | |_) |  / _ \\ \\___ \\| |_| |  _| | |_) \\___ \\ ");
+		System.out.println("    | |___|  _ <  / ___ \\ ___) |  _  | |___|  _ < ___) |");
+		System.out.println("     \\____|_| \\_\\/_/   \\_\\____/|_| |_|_____|_| \\_\\____/");
+		System.out.println();
 	}
 }
