@@ -19,8 +19,8 @@ public class Pitch implements TileBasedMap
 	public static int OURROBOT = 1;
 	public static int OTHERBOT = 2;
 	public static int BALL = 3;
-	public static int OURGOAL = 4;
-	public static int OTHERGOAL = 5;
+	public static int GOALA = 4;
+	public static int GOALB = 5;
 	public static int WALL = 6;
 
 	public Pitch()
@@ -76,7 +76,20 @@ public class Pitch implements TileBasedMap
 			return false;
 		}
 	}
-
+	
+	// Fills an area based from starting point x,y by the width and height given
+	
+	private void fillArea(int x, int y, int width, int height, int type) {
+		for (int xp=x;xp<x+width;xp++) {
+			for (int yp=y;yp<y+height;yp++) {
+				if ((type < 4) && (type != 0)){
+					units[xp][yp] = type;
+				}
+				else terrain[xp][yp] = type;
+			}
+		}
+	}
+	
 	public void pathFinderVisited(int x, int y)
 	{
 		visited[x][y] = true;
