@@ -7,6 +7,7 @@ import java.awt.Image;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.IOException;
+import java.lang.Runnable;
 
 import javax.imageio.ImageIO;
 import javax.swing.JComponent;
@@ -19,7 +20,7 @@ import uk.ac.ed.inf.sdp.group4.world.VisionClient;
 import uk.ac.ed.inf.sdp.group4.domain.InvalidAngleException;
 import uk.ac.ed.inf.sdp.group4.strategy.RobotColour;	
 
-public class Launcher
+public class Launcher implements Runnable
 {
 
 	final int SCALE = 3;
@@ -48,7 +49,6 @@ public class Launcher
 		this.state = state;
 		loadContent();
 		setup();
-		run();
 	}
 
 	public void run()
@@ -95,7 +95,6 @@ public class Launcher
 			{
 				components[i].update(time);
 			}
-
 			draw();
 		}
 	}

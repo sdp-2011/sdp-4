@@ -18,13 +18,12 @@ public class ThinController extends Controller
 	public void drivef(int val)
 	{
 		System.out.println("Driving forward:" + val);
-		Action forward = new Action(Action.Type.FORWARD, val);
-		bot.newAction(forward);
+		bot.newAction(new Action(Action.Type.FORWARD, val));
 	}
 
 	public void driveb(int val)
 	{
-		System.out.println("Driving forward:" + val);
+		System.out.println("Driving backwards:" + val);
 		//tell sim robot to drive backwards val amount
 	}
 
@@ -43,7 +42,7 @@ public class ThinController extends Controller
 	public void left(int angle)
 	{
 		System.out.println("Driving left:" + angle);
-		//turn the sim robot left
+		bot.newAction(new Action(Action.Type.TURN, angle));	
 	}
 
 	public void right(int angle)

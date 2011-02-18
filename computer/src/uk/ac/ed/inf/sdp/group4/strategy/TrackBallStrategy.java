@@ -14,10 +14,19 @@ public class TrackBallStrategy extends Strategy
 {
 	private Robot robot;
 	private Ball ball;
+	private WorldState state;
 
 	public TrackBallStrategy(VisionClient client, Controller controller, RobotColour colour)
 	{
 		super(client, controller, colour);
+	}
+
+	public TrackBallStrategy(Controller controller, WorldState state)
+	{
+		super(null, controller,  RobotColour.BLUE);
+		this.state = state;
+		this.robot = state.getBlue();
+		this.ball = state.getBall();
 	}
 
 	public void runStrategy()
@@ -104,17 +113,20 @@ public class TrackBallStrategy extends Strategy
 
 	private void refresh()
 	{
-		WorldState state = client.getWorldState();
-
-		if (ourColour() == RobotColour.BLUE)
+		if (state == null)
 		{
-			robot = state.getBlue();
-		}
-		else
-		{
-			robot = state.getYellow();
-		}
+			WorldState state = client.getWorldState();
 
-		ball = state.getBall();
+			if (ourColour() == RobotColour.BLUE)
+			{
+				robot = state.getBlue();
+			}
+			else
+			{
+				robot = state.getYellow();
+			}
+
+			ball = state.getBall();
+		}
 	}
 }

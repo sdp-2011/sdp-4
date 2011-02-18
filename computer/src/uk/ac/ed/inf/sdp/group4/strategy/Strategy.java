@@ -8,7 +8,7 @@ import uk.ac.ed.inf.sdp.group4.controller.Controller;
 public abstract class Strategy implements IStrategy
 {
 	// Logging
-	//protected static Logger log = Logger.getLogger(Strategy.class);
+	protected static Logger log = Logger.getLogger(Strategy.class);
 
 	protected VisionClient client;
 	protected Controller controller;
