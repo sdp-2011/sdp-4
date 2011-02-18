@@ -1,13 +1,28 @@
 package uk.ac.ed.inf.sdp.group4.controller;
 
+import org.apache.log4j.Logger;
+
 public abstract class Controller
 {
-	public abstract void drivef(int val);
-	public abstract void driveb(int val);
+	// Logger. Like a lumberjack but it prints stuff out.
+	protected static Logger log = Logger.getLogger(Controller.class);
+
+	// Drive Commands
+	public abstract void driveForward(int cm);
+	public abstract void driveBackward(int cm);
+	
+	// Turning Commands
+	public abstract void turn(double degrees);
+	public abstract void turnLeft(int degrees);
+	public abstract void turnRight(int degrees);
+
+	// Misc. Commands
 	public abstract void shoot();
-	public abstract void left(int angle);
-	public abstract void right(int angle);
 	public abstract void beserk(boolean val);
+
+	// End the program.
 	public abstract void finish();
-	public abstract void sendCommand(int command, int argument);
+
+	// All of the other commands use this.
+	protected abstract void sendCommand(int command, int argument);
 }

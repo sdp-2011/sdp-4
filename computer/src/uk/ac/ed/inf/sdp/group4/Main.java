@@ -2,6 +2,8 @@ package uk.ac.ed.inf.sdp.group4;
 
 import java.io.*;
 
+import org.apache.log4j.BasicConfigurator;
+
 import uk.ac.ed.inf.sdp.group4.world.VisionClient;
 import uk.ac.ed.inf.sdp.group4.world.WorldState;
 import uk.ac.ed.inf.sdp.group4.controller.FatController;
@@ -16,6 +18,10 @@ public class Main
 {
 	public static void main(String[] args) throws InterruptedException, IOException
 	{
+		// Setup the logger
+		BasicConfigurator.configure();	
+
+		// Building blocks of perfection.
 		VisionClient client = new VisionClient();
 		Controller controller = null;
 		Strategy strategy = null;
