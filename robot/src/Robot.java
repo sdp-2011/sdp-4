@@ -17,7 +17,7 @@ public class Robot
 	private Motor SHOOT_MOTOR = Motor.C;
 	private int SHOOT_ANGLE = 90;
 
-	private float WHEEL_DIAMETER = 3.0f * 2.4f;
+	private float WHEEL_DIAMETER = 7.5f;
 	private float TRACK_WIDTH = 13.0f;
 
 	private Pilot pilot;
@@ -26,9 +26,12 @@ public class Robot
 	public Robot()
 	{
 		pilot = new TachoPilot(WHEEL_DIAMETER, TRACK_WIDTH, LEFT_MOTOR, RIGHT_MOTOR, true);
+
+		// Set faster motor speeds.
 		Motor.A.setSpeed(900);
 		Motor.B.setSpeed(900);
 		Motor.C.setSpeed(900);
+
 		kicker = new Thread(new ShootThread());
 	}
 
@@ -44,7 +47,7 @@ public class Robot
 
 	public void drive(float distance, boolean instant)
 	{
-		pilot.travel((float)((10/14.5) * distance), instant);
+		pilot.travel((float)(distance), instant);
 	}
 
 	public void stop()
@@ -78,12 +81,12 @@ public class Robot
 
 	public void left(int degrees)
 	{
-		pilot.rotate((int)(-1.2 * degrees), false);
+		pilot.rotate((-1 * degrees), false);
 	}
 
 	public void right(int degrees)
 	{
-		pilot.rotate((int)(1.2 * degrees), false);
+		pilot.rotate(degrees, false);
 	}
 
 	// The code following this line is a complete travesty. I'm not even
