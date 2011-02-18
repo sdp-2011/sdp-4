@@ -44,7 +44,7 @@ public class Robot
 
 	public void drive(float distance, boolean instant)
 	{
-		pilot.travel(distance, instant);
+		pilot.travel((float)((10/14.5) * distance), instant);
 	}
 
 	public void stop()
@@ -78,12 +78,12 @@ public class Robot
 
 	public void left(int degrees)
 	{
-		pilot.rotate(-degrees, true);
+		pilot.rotate((int)(-1.2 * degrees), false);
 	}
 
 	public void right(int degrees)
 	{
-		pilot.rotate(degrees, true);
+		pilot.rotate((int)(1.2 * degrees), false);
 	}
 
 	// The code following this line is a complete travesty. I'm not even
@@ -137,10 +137,12 @@ public class Robot
 		{
 			try
 			{
+				SHOOT_MOTOR.forward();
+				Thread.sleep(1);
 				SHOOT_MOTOR.backward();
 				Thread.sleep(150);
 				SHOOT_MOTOR.forward();
-				Thread.sleep(170);
+				Thread.sleep(200);
 				SHOOT_MOTOR.stop();
 			}
 			catch (Exception e)

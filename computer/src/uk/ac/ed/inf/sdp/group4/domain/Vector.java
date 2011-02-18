@@ -2,16 +2,16 @@ package uk.ac.ed.inf.sdp.group4.domain;
 
 public class Vector
 {
-	private int direction;
-	private float magnitude;
+	private double direction;
+	private double magnitude;
 
-	public Vector(int direction, float magnitude) throws InvalidAngleException
+	public Vector(double direction, double magnitude) throws InvalidAngleException
 	{
 		setDirection(direction);
 		setMagnitude(magnitude);
 	}
 
-	public void setDirection(int direction) throws InvalidAngleException
+	public void setDirection(double direction) throws InvalidAngleException
 	{
 		if (direction < 0 || direction > 359)
 		{
@@ -23,18 +23,45 @@ public class Vector
 		}
 	}
 
-	public void setMagnitude(float magnitude)
+	public void setMagnitude(double magnitude)
 	{
 		this.magnitude = magnitude;
 	}
 
-	public int getDirection()
+	public double getDirection()
 	{
 		return this.direction;
 	}
 
-	public float getMagnitude()
+	public double getMagnitude()
 	{
 		return this.magnitude;
+	}
+
+	public static Vector calcVect(Position ini, Position dest) throws InvalidAngleException
+	{
+		double x = dest.getX() - ini.getX();
+		double y = dest.getY() - ini.getY();
+
+		double mag = Math.sqrt((x*x) + (y*y));
+		double angle = (Math.toDegrees(Math.atan2(y, x)) + 450) % 360;
+
+		Vector v = new Vector(angle, mag);
+		
+		return v;
+	}
+
+	public double angleTo(Vector other)
+	{
+		double from = this.getDirection();
+		double to = other.getDirection();
+		double angle = to - from;
+
+		if (angle > 180)
+		{
+			angle = -1 * (angle - 180);
+		}
+
+		return angle;
 	}
 }

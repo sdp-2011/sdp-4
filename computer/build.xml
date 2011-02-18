@@ -33,12 +33,12 @@
 		<javac srcdir="${src}" destdir="${classes}" fork="yes" optimize="on" debug="on" source="1.5" target="1.5" includeantruntime="false">
 			<classpath refid="classpath" />
 		</javac>
-		<copy todir="${classes}/uk/ac/ed/inf/group4/sim">
+		<!--<copy todir="${classes}/uk/ac/ed/inf/group4/sim">
 			<fileset dir=".">
 				<include name="**/*.png"/>
 				<include name="**/*.gif"/>
 			</fileset>
-		</copy>
+		</copy>-->
 	</target>
 
 	<!-- deletes class files -->
@@ -52,7 +52,7 @@
 		</delete>
 	</target>
 
-	<target name="test" depends="build">
+	<target name="test" depends="build,compile-test">
 		<junit printsummary="on" 
 			fork="false" 
 			haltonfailure="false"
@@ -64,7 +64,7 @@
 
 			<batchtest>
 				<fileset dir="${test.src}">
-					<include name="**/*Test*.java"/>
+					<include name="**/*Test*.class"/>
 				</fileset>
 			</batchtest>
 		</junit>
@@ -72,5 +72,11 @@
 		<fail if="tests.failed">
 			One or more tests failed. Try again...
 		</fail>
+	</target>
+
+	<target name="compile-test">
+		<javac srcdir="${test.src}" includeantruntime="false">
+			<classpath refid="classpath.test"/>
+		</javac>
 	</target>
 </project>

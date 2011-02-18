@@ -37,12 +37,11 @@ public class Communicator
 	{
 		public void run()
 		{
-			LCD.drawString("No Connection...", 0, 0);
+			Log.connectionOpen(false);
 			connection = Bluetooth.waitForConnection();
-			LCD.drawString("Connection Open", 0, 0);
+			Log.connectionOpen(true);
 			dataIn = connection.openDataInputStream();
 			dataOut = connection.openDataOutputStream();
-
 			while (keepReceiving)
 			{
 				try
@@ -51,12 +50,10 @@ public class Communicator
 					command[0] = dataIn.readInt();
 					command[1] = dataIn.readInt();
 					commands.push(command);
-					LCD.drawInt(command[0], 0, 1);
-					LCD.drawInt(command[1], 0, 2);
 				}
 				catch (IOException e)
 				{
-					LCD.drawString("Connection Done", 0, 0);
+					Log.connectionOpen(false);
 					keepReceiving = false;
 				}
 			}
@@ -71,20 +68,16 @@ public class Communicator
 			{
 				//block
 			}
-
 			sendLock = true;
-
 			try
 			{
 				dataOut.writeInt(status);
 				dataOut.flush();
 			}
-
 			catch (IOException e)
 			{
 				Log.e("Status cannot be sent");
 			}
-
 			sendLock = false;
 		}
 	}

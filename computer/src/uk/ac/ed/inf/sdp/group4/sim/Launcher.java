@@ -12,6 +12,11 @@ import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
+import uk.ac.ed.inf.sdp.group4.world.Robot;
+import uk.ac.ed.inf.sdp.group4.world.Ball;
+import uk.ac.ed.inf.sdp.group4.world.WorldState;
+import uk.ac.ed.inf.sdp.group4.domain.InvalidAngleException;
+import uk.ac.ed.inf.sdp.group4.strategy.RobotColour;	
 
 public class Launcher
 {
@@ -22,12 +27,13 @@ public class Launcher
 	//FPS
 	final int FPS = 25;
 
-	Ball ball = new Ball();
-	Robot rB = new Robot();
-	Robot rY = new Robot();
+	WorldState state;
+	Robot blue;
+	Robot yellow;
+	Ball ball;
 
-	int scoreB = 0;
-	int scoreY = 0;
+	int scoreB;
+	int scoreY;
 
 	Image iconB;
 	Image iconY;
@@ -42,6 +48,7 @@ public class Launcher
 
 	public Launcher()
 	{
+		state = new WorldState();
 		loadContent();
 		setup();
 		//this section just a test at the moment
@@ -64,8 +71,8 @@ public class Launcher
 	{
 		try
 		{
-			iconB = ImageIO.read(new File("rB.png"));
-			iconY = ImageIO.read(new File("rY.png"));
+			iconB = ImageIO.read(new File("blue.png"));
+			iconY = ImageIO.read(new File("yellow.png"));
 		}
 		catch (IOException ex)
 		{
@@ -76,12 +83,24 @@ public class Launcher
 	public void setup()
 	{
 		Pitch pitch = new Pitch();
+		blue = state.getBlue();
+		yellow = state.getYellow();
+		ball = state.getBall();
 		//initialise locations
-		rB.setxLoc(PADDING);
-		rB.setyLoc(pitch.getWIDTH() * SCALE / 2 + PADDING - rB.getWIDTH() * SCALE / 2);
-		rY.setxLoc(pitch.getLENGTH() * SCALE + PADDING - rY.getLENGTH() * SCALE);
-		rY.setyLoc(pitch.getWIDTH() * SCALE / 2 + PADDING - rY.getWIDTH() * SCALE / 2);
-		rY.setAngle(rY.getAngle() + 180);
+		blue.setX(PADDING);
+		blue.setY(pitch.getWIDTH() * SCALE / 2 + PADDING - 18 * SCALE / 2);
+		yellow.setX(pitch.getLENGTH() * SCALE + PADDING - 20 * SCALE);
+		yellow.setY(pitch.getWIDTH() * SCALE / 2 + PADDING - 18 * SCALE / 2);
+	
+		try
+		{
+			yellow.setFacing(yellow.getFacing() + 180);
+		}
+		catch (InvalidAngleException e)
+		{
+			//log this
+		}
+
 		//set up display
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -95,7 +114,7 @@ public class Launcher
 	{
 		if (time > 	40)
 		{
-			rB.setxLoc(rB.getxLoc() + rB.SPEED / FPS);
+			blue.setX(blue.getX() + 1);
 			draw();
 		}
 	}
@@ -118,33 +137,33 @@ public class Launcher
 
 		public void paint(Graphics g)
 		{
+			super.paintComponent(g);
 			Graphics2D g2d = (Graphics2D)g;
-			g2d.fill(new Rectangle2D.Double(0, 0, pitch.getLENGTH() * SCALE + 2 * PADDING, pitch.getWIDTH() * SCALE + 2 * PADDING));
+			g2d.fillRect(0, 0, pitch.getLENGTH() * SCALE + 2 * PADDING,
+				pitch.getWIDTH() * SCALE + 2 * PADDING);
 			g2d.setPaint(Color.red);
-			g2d.fill(new Rectangle2D.Double(0, pitch.getGPOS() * SCALE + PADDING, pitch.getLENGTH() * SCALE + 2 * PADDING, 					pitch.getGLENGTH() * SCALE));
+			g2d.fillRect(0, pitch.getGPOS() * SCALE + PADDING, pitch.getLENGTH() * SCALE + 2 * 								PADDING, pitch.getGLENGTH() * SCALE);
 			g2d.setPaint(Color.getHSBColor(0.3f, 1, 0.392f));
-			g2d.fill(new Rectangle2D.Double(PADDING, PADDING, pitch.getLENGTH() * SCALE, pitch.getWIDTH() * SCALE));
+			g2d.fillRect(PADDING, PADDING, pitch.getLENGTH() * SCALE, pitch.getWIDTH() * SCALE);
+
+			//draw blue robot
 			g2d.setPaint(Color.BLUE);
-			g2d.fill(new Rectangle2D.Double(rB.getxLoc(), rB.getyLoc(), rB.getLENGTH() * SCALE, rB.getWIDTH() * SCALE));
-			g2d.fill(new Rectangle2D.Double(rY.getxLoc(), rY.getyLoc(), rY.getLENGTH() * SCALE, rY.getWIDTH() * SCALE));
-			Graphics2D gRB = (Graphics2D) g;
-			Graphics2D gRY = (Graphics2D) g;
-			g2d.rotate(-rB.getRadAngle(), rB.getxLoc(), rB.getyLoc());
-			g2d.drawImage(iconB,
-			              (int)(rB.getxLoc() - Math.sin(rB.getRadAngle()) * rB.getWIDTH() * SCALE / 2 - rB.getWIDTH() * SCALE / 2),
-			              (int)(rB.getyLoc()),
-			              rB.getWIDTH() * SCALE,
-			              rB.getLENGTH() * SCALE,
-			              null);
-			g2d.rotate(rB.getRadAngle(), rB.getxLoc(), rB.getyLoc());
-			g2d.rotate(-rY.getRadAngle(), rY.getxLoc(), rY.getyLoc());
-			g2d.drawImage(iconY,
-			              (int)(rY.getxLoc() - Math.sin(rY.getRadAngle()) * rY.getWIDTH() * SCALE / 2 - rY.getWIDTH() * SCALE / 2),
-			              (int)rY.getyLoc() - rY.getLENGTH() * SCALE,
-			              rY.getWIDTH() * SCALE,
-			              rY.getLENGTH() * SCALE,
-			              null);
-			g2d.rotate(rY.getRadAngle(), rY.getxLoc(), rY.getyLoc());
+			g2d.fillRect(blue.getX(), blue.getY(), 20 * SCALE, 18 * SCALE);
+
+			//draw yellow robot
+			g2d.setPaint(Color.YELLOW);
+			g2d.fillRect(yellow.getX(), yellow.getY(), 20 * SCALE, 18 * SCALE);
+
+			g2d.rotate(blue.getRadFacing() * -1, blue.getX(), blue.getY());
+			g2d.drawImage(iconB, (int)(blue.getX() - Math.sin(blue.getRadFacing()) 
+				* 18 * SCALE / 2 - 18 * SCALE / 2), (int)(blue.getY()),
+			              18 * SCALE, 20 * SCALE, null);
+			g2d.rotate(blue.getRadFacing(), blue.getX(), blue.getY());
+			g2d.rotate(yellow.getRadFacing(), yellow.getY(), yellow.getY());
+			g2d.drawImage(iconY, (int)(yellow.getX() - Math.sin(yellow.getY()) * 18 * 
+					SCALE / 2 - 18 * SCALE / 2), (int)yellow.getY() - 20 * SCALE,
+			              18 * SCALE, 20 * SCALE, null);
+			g2d.rotate(yellow.getRadFacing(), yellow.getX(), yellow.getY());
 		}
 	}
 

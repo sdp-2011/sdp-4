@@ -30,4 +30,18 @@ public class Position
 	{
 		return this.y;
 	}
+
+	public boolean equals(Position other)
+	{
+		return (this.getX() == other.getX()) && (this.getY() == other.getY());
+	}
+
+	public Vector calcVectTo(Position dest) throws InvalidAngleException
+	{
+		if (this.equals(dest))
+		{
+			return new Vector(0, 0);
+		}
+		return Vector.calcVect(this, dest);
+	}
 }
