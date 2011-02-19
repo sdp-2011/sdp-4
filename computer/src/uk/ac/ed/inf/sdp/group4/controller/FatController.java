@@ -157,7 +157,8 @@ public class FatController extends Controller
 				}
 				catch (IOException e)
 				{
-					System.out.println("Something has gone wrong");
+					log.error("Something has gone wrong");
+					System.exit(1);
 				}
 			}
 		}
