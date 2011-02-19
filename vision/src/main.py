@@ -6,7 +6,32 @@ from server import *
 from worldstate import *
 from setup import *
 
+def draw_on_image(image, center_points, other_points):
+	cv.Circle(image, center_points[0], 2, cv.RGB(0,0,0),-1)	
+	cv.Circle(image, center_points[1], 2, cv.RGB(0,0,0),-1)	
+	cv.Circle(image, center_points[2], 2, cv.RGB(0,0,0),-1)
+	
+	cv.Line(image, other_points[0], center_points[1], cv.RGB(255,0,0))
+	#cv.Line(image, yellowBlack, center_points[2], cv.RGB(0,255,0))
+		
+	cv.ShowImage("Original:", orig)
+	cv.ShowImage("Processed:", image)
+	
+def update_worldstate(center_points, other_points):
+	
+	WorldState.lock.acquire()
+	WorldState.ball["position"]["x"] = center_points[0][0]
+	WorldState.ball["position"]["y"] = center_points[0][1]
+	WorldState.blue["position"]["x"] = center_points[1][0]
+	WorldState.blue["position"]["y"] = center_points[1][1]
+	WorldState.blue["rotation"] = int(calculateBearing(other_points[0], center_points[1]))
+	WorldState.yellow["position"]["x"] = center_points[2][0]
+	WorldState.yellow["position"]["y"] = center_points[2][1]
+	WorldState.yellow["rotation"] = int(calculateBearing(other_points[1], center_points[2]))	
+	WorldState.lock.release()
+
 setup_system()
+cam = cv.CaptureFromCAM(0)
 
 while (True):
 	start = time.time()
@@ -50,29 +75,5 @@ while (True):
 
 	cv.WaitKey(25)
 	now = time.time()
-	print 1/(now-start)
-
-def draw_on_image(image, center_points, other_points):
-	cv.Circle(image, center_points[0], 2, cv.RGB(0,0,0),-1)	
-	cv.Circle(image, center_points[1], 2, cv.RGB(0,0,0),-1)	
-	cv.Circle(image, center_points[2], 2, cv.RGB(0,0,0),-1)
-	
-	cv.Line(image, other_points[0], center_points[1], cv.RGB(255,0,0))
-	#cv.Line(image, yellowBlack, center_points[2], cv.RGB(0,255,0))
-		
-	cv.ShowImage("Original:", orig)
-	cv.ShowImage("Processed:", image)
-	
-def update_worldstate(center_points, other_points):
-	
-	WorldState.lock.acquire()
-	WorldState.ball["position"]["x"] = center_points[0][0]
-	WorldState.ball["position"]["y"] = center_points[0][1]
-	WorldState.blue["position"]["x"] = center_points[1][0]
-	WorldState.blue["position"]["y"] = center_points[1][1]
-	WorldState.blue["rotation"] = int(calculateBearing(other_points[0], center_points[1]))
-	WorldState.yellow["position"]["x"] = center_points[2][0]
-	WorldState.yellow["position"]["y"] = center_points[2][1]
-	WorldState.yellow["rotation"] = int(calculateBearing(other_points[1], center_points[2]))	
-	WorldState.lock.release()	
+	print 1/(now-start)	
 	

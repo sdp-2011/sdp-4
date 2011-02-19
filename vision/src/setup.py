@@ -9,7 +9,6 @@ def setup_system():
 	create_windows()
 	add_trackbars()	
 	Server().start()
-	cam = cv.CaptureFromCAM(0)
 	
 def create_windows():
 	cv.NamedWindow("Original:", cv.CV_WINDOW_AUTOSIZE)
