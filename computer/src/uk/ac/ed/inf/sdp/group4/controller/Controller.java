@@ -27,5 +27,5 @@ public abstract class Controller
 	public abstract void finish();
 
 	// All of the other commands use this.
-	protected abstract void sendCommand(int command, int argument);
+	public abstract void sendCommand(int command, int argument);
 }
