@@ -44,6 +44,7 @@ public class Marvin
 		STEER(3),
 		LEFT(4),
 		RIGHT(5),
+		STOP(6),
 		SETSPEED(97),
 		BESERK(98),
 		FINISH(99);
@@ -218,6 +219,10 @@ public class Marvin
 			else if (instruction == Instruction.SETSPEED.getValue())
 			{
 				robot.setSpeed(argument);
+			}
+			else if (instruction == Instruction.STOP.getValue())
+			{
+				robot.stop();
 			}
 		}
 	}

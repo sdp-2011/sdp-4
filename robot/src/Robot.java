@@ -80,12 +80,12 @@ public class Robot
 
 	public void left(int degrees)
 	{
-		pilot.rotate((-1 * degrees), false);
+		pilot.rotate(degrees, true);
 	}
 
 	public void right(int degrees)
 	{
-		pilot.rotate(degrees, false);
+		pilot.rotate((-1 * degrees), true);
 	}
 
 	public void steer(int turnRate)
@@ -149,12 +149,12 @@ public class Robot
 		{
 			try
 			{
-				SHOOT_MOTOR.forward();
-				Thread.sleep(1);
 				SHOOT_MOTOR.backward();
-				Thread.sleep(80);
+				Thread.sleep(40);
 				SHOOT_MOTOR.forward();
-				Thread.sleep(100);
+				Thread.sleep(130);
+				SHOOT_MOTOR.backward();
+				Thread.sleep(150);
 				SHOOT_MOTOR.stop();
 			}
 			catch (Exception e)

@@ -24,7 +24,7 @@ def update_worldstate(center_points, other_points):
 	WorldState.ball["position"]["y"] = center_points[0][1]
 	WorldState.blue["position"]["x"] = center_points[1][0]
 	WorldState.blue["position"]["y"] = center_points[1][1]
-	WorldState.blue["rotation"] = int(calculateBearing(other_points[0], center_points[1]))
+	WorldState.blue["rotation"] = (int(calculateBearing(other_points[0], center_points[1]))-180) % 360
 	WorldState.yellow["position"]["x"] = center_points[2][0]
 	WorldState.yellow["position"]["y"] = center_points[2][1]
 	WorldState.yellow["rotation"] = int(calculateBearing(other_points[1], center_points[2]))	
@@ -68,12 +68,10 @@ while (True):
 	other_points = (blueWhite, yellowBlack)
 	draw_on_image(processed, center_points, other_points)
 	
-#	print "Bearing of blue:", (int(calculateBearing(blueWhite,blueCenter) + 90) + 360) % 360
+	print "Bearing of blue:", (int(calculateBearing(other_points[0], center_points[1]))-180) % 360
 #	print "Bearing of yellow:",  (int(calculateBearing(blueWhite,blueCenter) + 90) + 360) % 360
 	
 	update_worldstate(center_points, other_points)
 
 	cv.WaitKey(25)
-	now = time.time()
-	print 1/(now-start)	
 	
