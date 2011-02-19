@@ -38,6 +38,10 @@ public class ThinController extends Controller
 		}
 	}
 
+	public void stop()
+	{
+	}
+
 	public void turnLeft(int angle)
 	{
 		System.out.println("Driving left:" + angle);
