@@ -23,13 +23,12 @@ public class Robot
 	private Pilot pilot;
 	private Thread kicker;
 
-	public Robot()
+	public Robot(boolean reversed)
 	{
-		pilot = new TachoPilot(WHEEL_DIAMETER, TRACK_WIDTH, LEFT_MOTOR, RIGHT_MOTOR, true);
+		pilot = new TachoPilot(WHEEL_DIAMETER, TRACK_WIDTH, LEFT_MOTOR, RIGHT_MOTOR, reversed);
 
 		// Set faster motor speeds.
-		Motor.A.setSpeed(900);
-		Motor.B.setSpeed(900);
+		pilot.setSpeed(900);
 		Motor.C.setSpeed(900);
 
 		kicker = new Thread(new ShootThread());
@@ -87,6 +86,16 @@ public class Robot
 	public void right(int degrees)
 	{
 		pilot.rotate(degrees, false);
+	}
+
+	public void steer(int turnRate)
+	{
+		pilot.steer(turnRate);
+	}
+
+	public void setSpeed(int degreesPerSecond)
+	{
+		pilot.setSpeed(degreesPerSecond);
 	}
 
 	// The code following this line is a complete travesty. I'm not even
