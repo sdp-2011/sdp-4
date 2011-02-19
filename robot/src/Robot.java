@@ -29,7 +29,7 @@ public class Robot
 
 		// Set faster motor speeds.
 		pilot.setSpeed(900);
-		Motor.C.setSpeed(1200);
+		Motor.C.setSpeed(900);
 
 		kicker = new Thread(new ShootThread());
 	}
@@ -150,7 +150,7 @@ public class Robot
 			try
 			{
 				SHOOT_MOTOR.backward();
-				Thread.sleep(1);
+				Thread.sleep(50);
 				SHOOT_MOTOR.forward();
 				Thread.sleep(150);
 				SHOOT_MOTOR.backward();
