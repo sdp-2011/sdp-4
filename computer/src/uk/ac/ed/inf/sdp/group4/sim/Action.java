@@ -8,7 +8,7 @@ public class Action
 	
 	public enum Type
 	{
-		FORWARD, REVERSE, SHOOT, TURN
+		FORWARD, REVERSE, SHOOT, LEFT, RIGHT
 	}
 
 	public Action(Type type, int argument)

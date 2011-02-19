@@ -10,7 +10,6 @@ public class SimBot extends Component
 {
 	private Robot robot;
 	private Action current;
-	private final double TURN_SPEED = 1;
 	private double x;
 	private double y;
 
@@ -36,7 +35,7 @@ public class SimBot extends Component
 				{
 					move(time);
 				}
-				else if (current.getType() == Action.Type.TURN)
+				else if (current.getType() == Action.Type.LEFT)
 				{
 					turnLeft(time);
 				}
@@ -49,41 +48,24 @@ public class SimBot extends Component
 		current = action;
 	}
 
-	private void move(int time)
+	private void moveF(int time)
 	{
-		Vector direction = robot.getVector();
-		direction.setMagnitude(8);		
-	
-		Position original = robot.getPosition();
 		
-		double speedX = (direction.getMagnitude() / (time / 1000.0)) * 
-			Math.cos(Math.toRadians(direction.getDirection()));
-		double speedY = (direction.getMagnitude() / (time / 1000.0)) * 
-			Math.sin(Math.toRadians(direction.getDirection()));
+	}
 
-		x = x + speedX;
-		y = y + speedY;
-		
-		robot.setX((int) x);
-		robot.setY((int) y);
+	private void moveB(int time)
+	{
 
-		current.addProgress(original.distance(robot.getPosition()));
 	}
 
 	private void turnLeft(int time)
 	{
-		Vector direction = robot.getVector();
-		double original = direction.getDirection();
+		
+	}
 
-		try
-		{
-			direction.setDirection(direction.getDirection() - (((360 / TURN_SPEED) / 1000) * time));
-		}
-		catch (InvalidAngleException e)
-		{
-			//
-		}
-		current.addProgress(direction.getDirection() - original);
+	private void turnRight(int time)
+	{
+
 	}
 
 	public void shoot()

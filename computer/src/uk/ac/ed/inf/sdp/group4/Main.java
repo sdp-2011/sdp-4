@@ -68,14 +68,12 @@ public class Main
 			case 3:
 				colour = RobotColour.BLUE;
 				WorldState state = new WorldState();
-				state.getBlue().setPosition(new Position(50, 170));
-				state.getYellow().setPosition(new Position(650, 170));
 				Component[] components = new Component[1];
 				SimBot bot = new SimBot(state.getBlue());
 				components[0] = bot;
 
 				controller = new ThinController(bot);
-				strategy = new TrackBallStrategy(controller, state);
+				strategy = new KeyboardStrategy(client, controller, colour);
 
 				Launcher launcher = new Launcher(state, components);
 				new Thread(launcher).start();
