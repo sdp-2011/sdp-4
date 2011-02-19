@@ -35,9 +35,21 @@ public class SimBot extends Component
 				{
 					moveF(time);
 				}
+				else if (current.getType() == Action.Type.REVERSE)
+				{
+					moveB(time);
+				}
 				else if (current.getType() == Action.Type.LEFT)
 				{
 					turnLeft(time);
+				}
+				else if (current.getType() == Action.Type.RIGHT)
+				{
+					turnRight(time);
+				}
+				else if (current.getType() == Action.Type.SHOOT)
+				{
+					shoot(time);
 				}
 			}
 		}
@@ -68,7 +80,7 @@ public class SimBot extends Component
 
 	}
 
-	public void shoot()
+	public void shoot(int time)
 	{
 
 	}

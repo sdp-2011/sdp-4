@@ -53,9 +53,17 @@ public class Launcher implements Runnable
 
 	public void run()
 	{
+		long t = System.currentTimeMillis();
+
 		while (true)
 		{
-			update(40);
+			long tplus = System.currentTimeMillis();
+
+			if ((tplus - t) >= 40)
+			{
+				update((int)(tplus - t));
+				t = tplus;
+			}
 		}
 	}
 
@@ -88,15 +96,12 @@ public class Launcher implements Runnable
 	}
 
 	private void update(int time)
-	{
-		if (time >= 40)
-		{	
-			for (int i = 0; i < components.length; i++)
-			{
-				components[i].update(time);
-			}
-			draw();
+	{	
+		for (int i = 0; i < components.length; i++)
+		{
+			components[i].update(time);
 		}
+		draw();
 	}
 
 	private void draw()
