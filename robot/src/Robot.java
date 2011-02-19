@@ -143,9 +143,9 @@ public class Robot
 				SHOOT_MOTOR.forward();
 				Thread.sleep(1);
 				SHOOT_MOTOR.backward();
-				Thread.sleep(150);
+				Thread.sleep(80);
 				SHOOT_MOTOR.forward();
-				Thread.sleep(200);
+				Thread.sleep(100);
 				SHOOT_MOTOR.stop();
 			}
 			catch (Exception e)

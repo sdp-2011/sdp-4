@@ -47,7 +47,9 @@ public class Main
 		System.out.println("  > 2. Navigate to Ball");
 		System.out.println("  > 3. Simulator");
 		System.out.println("Where would you like to go today?");
+
 		int option = Integer.parseInt(keyboard.readLine());
+
 		switch (option)
 		{
 			case 1:
@@ -61,6 +63,67 @@ public class Main
 			case 3:
 				controller = new ThinController();
 				strategy = new TrackBallStrategy(client, controller, colour);
+
+			case 4: 
+				controller = new FatController();
+				controller.drivef(50);
+				
+				try 
+				{
+					Thread.sleep(1000);
+				} 
+				catch (InterruptedException e)
+				{
+					System.out.println("Uh oh, spaghettioh...");	
+				}
+
+				controller.left(360);
+
+				try 
+				{
+					Thread.sleep(2000);
+				} 
+				catch (InterruptedException e)
+				{
+					System.out.println("Uh oh, spaghettioh...");	
+				}
+
+				controller.right(360);
+
+				try 
+				{
+					Thread.sleep(2000);
+				} 
+				catch (InterruptedException e)
+				{
+					System.out.println("Uh oh, spaghettioh...");	
+				}
+
+				controller.drivef(-50);
+
+				try 
+				{
+					Thread.sleep(2000);
+				} 
+				catch (InterruptedException e)
+				{
+					System.out.println("Uh oh, spaghettioh...");	
+				}
+
+				controller.left(10);
+
+				try 
+				{
+					Thread.sleep(1000);
+				} 
+				catch (InterruptedException e)
+				{
+					System.out.println("Uh oh, spaghettioh...");	
+				}				
+
+
+				break;		
+				
 			default:
 				System.out.println("Goddammit. Give me a real number!");
 		}
