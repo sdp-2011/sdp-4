@@ -33,7 +33,7 @@ public class SimBot extends Component
 			{
 				if (current.getType() == Action.Type.FORWARD)
 				{
-					move(time);
+					moveF(time);
 				}
 				else if (current.getType() == Action.Type.LEFT)
 				{

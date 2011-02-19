@@ -22,7 +22,12 @@ public class Marvin
 	UltrasonicSensor ultrasonicSensor = new UltrasonicSensor(SensorPort.S3);
 
 	// Fields
-	boolean sensorsActive = true;
+	private boolean sensorsActive = true;
+	
+	// Movement
+	private final boolean MOTORS_REVERSED = false;
+	private final int REACTION_DISTANCE = 10;
+	private final int ULTRASONIC_THRESHOLD = 10;
 
 	/**
 	 * Allows for a standard interface of instructions throughout the code.
@@ -145,14 +150,29 @@ public class Marvin
 			int[] command = communicator.getCommand();
 			int instruction = command[0];
 			int argument = command[1];
+
 			// What should we do?
 			if (instruction == Instruction.FORWARD.getValue())
 			{
-				robot.drive((float)argument);
+				if (REVERSED_MOTORS)
+				{
+					robot.drive((float)argument * -1);
+				}
+				else
+				{
+					robot.drive((float)argument);
+				}
 			}
 			else if (instruction == Instruction.BACKWARD.getValue())
 			{
-				robot.drive((float)argument * -1);
+				if (REVERSED_MOTORS)
+				{
+					robot.drive((float)argument);
+				}
+				else
+				{
+					robot.drive((float)argument * -1);
+				}
 			}
 			else if (instruction == Instruction.SHOOT.getValue())
 			{
@@ -164,22 +184,29 @@ public class Marvin
 			}
 			else if (instruction == Instruction.BESERK.getValue())
 			{
-				if (argument == 0)
-				{
-					sensorSwitch(true);
-				}
-				else
-				{
-					sensorSwitch(false);
-				}
+				sensorSwitch(!argument);
 			}
 			else if (instruction == Instruction.LEFT.getValue())
 			{
-				robot.left(argument);
+				if (REVERSED_MOTORS)
+				{
+					robot.right(argument);
+				}
+				else
+				{
+					robot.left(argument);
+				}
 			}
 			else if (instruction == Instruction.RIGHT.getValue())
 			{
-				robot.right(argument);
+				if (REVERSED_MOTORS)
+				{
+					robot.left(argument);
+				}
+				else
+				{
+					robot.right(argument);
+				}
 			}
 		}
 	}
@@ -197,13 +224,27 @@ public class Marvin
 			// robot should drive a short distance backwards.
 			if ((leftTouchSensor.isPressed()) || (rightTouchSensor.isPressed()))
 			{
-				robot.drive(-10);
+				if (REVERSED_MOTORS)
+				{
+					robot.drive(REACTION_DISTANCE);
+				}
+				else
+				{
+					robot.drive(-REACTION_DISTANCE);
+				}
 			}
 			// If the (back) ultrasonic sensors are triggered then the
 			// robot should drive a short distance forwards.
-			if (ultrasonicSensor.getDistance() < 10)
+			if (ultrasonicSensor.getDistance() < ULTRASONIC_THRESHOLD)
 			{
-				robot.drive(10);
+				if (REVERSED_MOTORS)
+				{
+					robot.drive(-REACTION_DISTANCE);
+				}
+				else
+				{
+					robot.drive(REACTION_DISTANCE);
+				}
 			}
 		}
 	}
