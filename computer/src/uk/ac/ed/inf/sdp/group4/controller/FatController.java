@@ -73,11 +73,11 @@ public class FatController extends Controller
 	{
 		if (angle >= 0)
 		{
-			turnRight((int)angle);
+			turnLeft((int)angle);
 		}
 		else
 		{
-			turnLeft((int)angle * -1);
+			turnRight((int)angle * -1);
 		}
 	}
 
@@ -103,6 +103,12 @@ public class FatController extends Controller
 	{
 		log.debug(String.format("Changing motor speed: %d degrees per second", motorSpeed));
 		sendCommand(97, motorSpeed);
+	}
+
+	public void stop()
+	{
+		log.debug("Stopping robot.");
+		sendCommand(6, 0);
 	}
 
 	public void finish()

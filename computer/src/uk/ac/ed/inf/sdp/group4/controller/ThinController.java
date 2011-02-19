@@ -50,6 +50,16 @@ public class ThinController extends Controller
 		//turn the sim right
 	}
 
+	public void setSpeed(int val)
+	{
+
+	}
+
+	public void steer(int val)
+	{
+
+	}
+
 	public void finish()
 	{
 		//tell sim robot to turn off

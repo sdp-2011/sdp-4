@@ -12,147 +12,142 @@ import uk.ac.ed.inf.sdp.group4.world.WorldState;
 
 public class TrackBallStrategy extends Strategy
 {
-    private Robot robot;
-    private Ball ball;
+	private Robot robot;
+	private Ball ball;
 
-    int goalNortX = 0;  //need to get real goal positions
-    int goalNorthY = 0;
-    int goalSouthX =0;
-    int goalSouthY =0;
+	Position westGoal = new Position(30, 162);
+	Position eastGoal = new Position(525, 162);
 
-    public TrackBallStrategy(VisionClient client, Controller controller, RobotColour colour)
-    {
-        super(client, controller, colour);
-    }
+	public TrackBallStrategy(VisionClient client, Controller controller, RobotColour colour)
+	{
+		super(client, controller, colour);
+	}
 
-    public void runStrategy()
-    {
-        log.debug("Starting strategy loop...");
-        while (true)
-        {
-            log.debug("Starting a new cycle...");
-            refresh();
+	public void runStrategy()
+	{
+		log.debug("Starting strategy loop...");
 
-            //Vector robotVector = null;
-            //Vector robotGoal = null;
+		while (true)
+		{
+			log.debug("Starting a new cycle...");
+			refresh();
 
-            //try
-            //{ 
-                //robotVector = new Vector(robot.getFacing(), 0);
-                //robotGoal = robot.getPosition().vectorTo(goalNorthX, goalNorthY);
-            //}
-            //catch (InvalidAngleException e)
-            //{
-                //log.error(e.getMessage());
-            //}
 
-            /**
-             * The variable angle can be anywhere from -180 to +180. If it is
-             * positive then it means turn right and inversely if it is
-             * negative then it means turn left.
-             */
-            Vector ballRoute = getBallRoute();
-            double ballAngle = ballRoute.angleTo(robot.getFacing());
-            //double goalAngle = robotVector.angleTo(robotGoal);
+			/**
+			 * The variable angle can be anywhere from -180 to +180. If it is
+			 * positive then it means turn right and inversely if it is
+			 * negative then it means turn left.
+			 */
+			Vector ballRoute = getBallRoute();
+			Vector goalRoute = getGoalRoute();
+			double ballAngle = ballRoute.angleTo(robot.getFacing());
+			double goalAngle = goalRoute.angleTo(robot.getFacing());
 
-            //log.debug("Goal is at distance: " + robotGoal.getMagnitude());
+			log.debug("Goal is at distance: " + goalRoute.getMagnitude());
 
-            // If we are a long turning distance from the ball then we should
-            // turn towards it.
-            if (Math.abs(ballAngle) > 10)
-            {
-                controller.turn(ballAngle);
-                pause(3000);
-            }
-            else
-            {   
-                // If we're close to the ball and the goal is close  then we should shoot.
-                if (ballRoute.getMagnitude() < 50) //&& robotGoal.getMagnitude() < 200)
-                {
-                    log.debug("Shooting - Distance to ball: " + ballRoute.getMagnitude());
-                    controller.shoot();
-                }
+			// If we are a long turning distance from the ball then we should
+			// turn towards it.
+			if (Math.abs(ballAngle) > 15)
+			{
+				controller.turn(ballAngle);
+				pause(1000);
+			}
+			else
+			{	
+				// If we're close to the ball and the goal is close then we should shoot.
+				if (ballRoute.getMagnitude() < 35 && goalRoute.getMagnitude() < 200 && Math.abs(goalAngle) < 20)
+				{
+					log.debug("Shooting - Distance to ball: " + ballRoute.getMagnitude());
+					controller.shoot();
+				}
 
-                // If we're close to the ball and the goal is far  then we should drive with a ball to the goal.
-                //if (route.getMagnitude() < 50 && robotGoal.getMagnitude() >= 200)
-                //{
+				// If we're close to the ball and the goal is far then we should drive with a ball to the goal.
+				if (ballRoute.getMagnitude() < 35 && goalRoute.getMagnitude() >= 200)
+				{
+					//System.out.println("Driving to the goal! " + angle2);
+					if (Math.abs(goalAngle) > 10)
+					{
+						controller.turn(goalAngle);
+						pause(1000);
+					}
+					else 
+					{
+						controller.driveForward((int)goalRoute.getMagnitude()/8);
+						pause(500);
+					}
+				} 
+				// If we're not close then we should drive towards it.
+				//
+				// The messy distance at the end of the line is required until we get
+				// accurate movement.
+				controller.stop();
+				controller.driveForward((int)ballRoute.getMagnitude()/8);
+				pause(1000);
+			}
+		}
+	}
 
-                    //System.out.println("Driving to the goal! " + angle2);
-                    //if (Math.abs(angle2) > 10)
-                    //{
-                        //System.out.println("Shiftin' " + angle2);
+	private void pause(int milliseconds)
+	{
+		try
+		{
+			Thread.sleep(milliseconds);
+		}
+		catch (InterruptedException ignored)
+		{
 
-                        //if (right2)
-                        //{
-                            //controller.right((int)angle2);
-                        //}
-                        //else
-                        //{
-                            //controller.left((int)angle2 * -1);
-                        //}
-                    //}
-                    //else 
-                    //{
-                        //System.out.println("drive! ");
-                        //controller.drivef(Math.abs((int)RobotGoal.getMagnitude()/2 - 20));
-                    //}
-                //}
+		}
+	}
 
-                // If we're not close then we should drive towards it.
-                //
-                // The messy distance at the end of the line is required until we get
-                // accurate movement.
-                controller.driveForward(Math.abs((int)ballRoute.getMagnitude()/2 - 15));
-                pause(500);
-            }
-        }
-    }
+	private void refresh()
+	{
+		WorldState state = client.getWorldState();
 
-    private void pause(int milliseconds)
-    {
-        try
-        {
-            Thread.sleep(milliseconds);
-        }
-        catch (InterruptedException ignored)
-        {
+		if (ourColour() == RobotColour.BLUE)
+		{
+			robot = state.getBlue();
+		}
+		else
+		{
+			robot = state.getYellow();
+		}
 
-        }
-    }
+		ball = state.getBall();
+	}
 
-    private void refresh()
-    {
-        WorldState state = client.getWorldState();
+	private Vector getGoalRoute()
+	{
+		Vector goalRoute = null;
 
-        if (ourColour() == RobotColour.BLUE)
-        {
-            robot = state.getBlue();
-        }
-        else
-        {
-            robot = state.getYellow();
-        }
+		try
+		{ 
+			 goalRoute = robot.getPosition().calcVectTo(eastGoal);
+		}
+		catch (InvalidAngleException e)
+		{
+			log.error(e.getMessage());
+		}
+		
+		return goalRoute;
+	}
 
-        ball = state.getBall();
-    }
+	private Vector getBallRoute()
+	{
+		Vector route = null;
 
-    private Vector getBallRoute()
-    {
-        Vector route = null;
+		try
+		{
+			route = robot.getPosition().calcVectTo(ball.getPosition());
+		}
+		catch (InvalidAngleException e)
+		{
+			log.error(e.getMessage());
+		}
 
-        try
-        {
-            route = robot.getPosition().calcVectTo(ball.getPosition());
-        }
-        catch (InvalidAngleException e)
-        {
-            log.error(e.getMessage());
-        }
+		log.debug("Robot is facing: " + robot.getFacing());
+		log.debug("Ball is towards: " + route.getDirection());
+		log.debug("Ball is at distance: " + route.getMagnitude());
 
-        log.debug("Robot is facing: " + robot.getFacing());
-        log.debug("Ball is towards: " + route.getDirection());
-        log.debug("Ball is at distance: " + route.getMagnitude());
-
-        return route;
-    }
+		return route;
+	}
 }

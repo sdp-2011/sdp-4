@@ -46,8 +46,11 @@ public class Main
 		System.out.println("  > 1. Keyboard Control");
 		System.out.println("  > 2. Navigate to Ball");
 		System.out.println("  > 3. Simulator");
+		System.out.println("  > 4. Test Movement");
 		System.out.println("Where would you like to go today?");
+
 		int option = Integer.parseInt(keyboard.readLine());
+
 		switch (option)
 		{
 			case 1:
@@ -61,6 +64,25 @@ public class Main
 			case 3:
 				controller = new ThinController();
 				strategy = new TrackBallStrategy(client, controller, colour);
+				break;		
+			case 4:
+				controller = new FatController();	
+				//controller.driveForward(50);
+				//Thread.sleep(3000);
+				//controller.driveBackward(50);
+				//Thread.sleep(3000);
+				controller.turn(360);
+				Thread.sleep(3000);
+				controller.turn(-360);
+				Thread.sleep(3000);
+				//controller.driveForward(50);
+				//Thread.sleep(3000);
+				//controller.driveBackward(50);
+				//Thread.sleep(3000);
+				controller.turn(60);
+				Thread.sleep(3000);
+				controller.turn(-60);
+				Thread.sleep(3000);
 			default:
 				System.out.println("Goddammit. Give me a real number!");
 		}
