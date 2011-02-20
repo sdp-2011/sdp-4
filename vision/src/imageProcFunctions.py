@@ -33,6 +33,7 @@ def find_object_descriptors(mask):
     M02 = cv.GetSpatialMoment(moments,0,2)
     M11 = cv.GetSpatialMoment(moments,1,1)
     
+    # Protect against division by 0    
     if M00 == 0:
         M00 = 0.01
     
@@ -54,8 +55,8 @@ def find_object(img, colour):
     Finds the objects in an image with given colour.
 
     Arguments:
-    img         -- the image to be processed
-    colour  -- the colour to look for (red, blue or yellow)
+    img          -- the image to be processed
+    colour	 -- the colour to look for (red, blue or yellow)
 
     Returns:
     Point representing object's centre of mass
