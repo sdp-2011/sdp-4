@@ -110,7 +110,7 @@ public class FatController extends Controller
 		}
 	}
 
-	protected void sendCommand(int command, int argument)
+	public void sendCommand(int command, int argument)
 	{
 		try
 		{
