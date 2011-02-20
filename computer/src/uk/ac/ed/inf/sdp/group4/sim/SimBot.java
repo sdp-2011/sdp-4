@@ -73,6 +73,8 @@ public class SimBot extends Component
 
 		x += speedX;
 		y += speedY;
+
+		current.addProgress(robot.getPosition().distance(new Position((int) x, (int) y)));
 	}
 
 	private void moveB(int time)
