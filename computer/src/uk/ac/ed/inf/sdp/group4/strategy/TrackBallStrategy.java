@@ -13,6 +13,7 @@ import uk.ac.ed.inf.sdp.group4.world.WorldState;
 public class TrackBallStrategy extends Strategy
 {
 	private Robot robot;
+	private Robot enemyRobot;
 	private Ball ball;
 
 	Position westGoal = new Position(30, 162);
@@ -23,96 +24,81 @@ public class TrackBallStrategy extends Strategy
 		super(client, controller, colour);
 	}
 
-	public void runStrategy()
+	@Override
+	public void tick()
 	{
-		log.debug("Starting strategy loop...");
+		log.debug("=================================================");
+		log.debug("Starting a new cycle...");
 
-		while (true)
+		// Get the world state.
+		refresh();
+
+		/**
+		 * The angle variables can be anywhere from -180 to +180.
+		 *
+		 * If it is positive then it means turn right and inversely if it is
+		 * negative then it means turn left.
+		 */
+		Vector ballRoute = getBallRoute();
+		double ballAngle = ballRoute.angleTo(robot.getFacing());
+
+		Vector goalRoute = getGoalRoute();
+		double goalAngle = goalRoute.angleTo(robot.getFacing());
+
+		// If we are a long turning distance from the ball then we should
+		// turn towards it.
+		if (Math.abs(ballAngle) > 15)
 		{
-			log.debug("Starting a new cycle...");
-			refresh();
-
-
-			/**
-			 * The variable angle can be anywhere from -180 to +180. If it is
-			 * positive then it means turn right and inversely if it is
-			 * negative then it means turn left.
-			 */
-			Vector ballRoute = getBallRoute();
-			Vector goalRoute = getGoalRoute();
-			double ballAngle = ballRoute.angleTo(robot.getFacing());
-			double goalAngle = goalRoute.angleTo(robot.getFacing());
-
-			log.debug("Goal is at distance: " + goalRoute.getMagnitude());
-
-			// If we are a long turning distance from the ball then we should
-			// turn towards it.
-			if (Math.abs(ballAngle) > 15)
+			controller.turn(ballAngle);
+			pause(1000);
+		}
+		else
+		{
+			// If we're close to the ball and the goal is close then we should shoot.
+			if (ballRoute.getMagnitude() < 30 && goalRoute.getMagnitude() < 200
+			        && Math.abs(goalAngle) < 20)
 			{
-				controller.turn(ballAngle);
-				pause(1000);
+				controller.shoot();
 			}
-			else
-			{	
-				// If we're close to the ball and the goal is close then we should shoot.
-				if (ballRoute.getMagnitude() < 35 && goalRoute.getMagnitude() < 200 && Math.abs(goalAngle) < 20)
+
+			// If we're close to the ball and the goal is far then we should
+			// drive with a ball to the goal.
+			if (ballRoute.getMagnitude() < 30 && goalRoute.getMagnitude() >= 200)
+			{
+				log.debug("Driving to the goal!");
+				if (Math.abs(goalAngle) > 15)
 				{
-					log.debug("Shooting - Distance to ball: " + ballRoute.getMagnitude());
-					controller.shoot();
+					controller.turn(goalAngle);
+					pause(1000);
 				}
-
-				// If we're close to the ball and the goal is far then we should drive with a ball to the goal.
-				if (ballRoute.getMagnitude() < 35 && goalRoute.getMagnitude() >= 200)
+				else
 				{
-					//System.out.println("Driving to the goal! " + angle2);
-					if (Math.abs(goalAngle) > 10)
-					{
-						controller.turn(goalAngle);
-						pause(1000);
-					}
-					else 
-					{
-						controller.driveForward((int)goalRoute.getMagnitude()/8);
-						pause(500);
-					}
-				} 
-				// If we're not close then we should drive towards it.
-				//
-				// The messy distance at the end of the line is required until we get
-				// accurate movement.
-				controller.stop();
-				controller.driveForward((int)ballRoute.getMagnitude()/8);
-				pause(1000);
+					controller.stop();
+					controller.driveForward((int)goalRoute.getMagnitude() / 8);
+					pause(1000);
+				}
 			}
+
+			// If we're not close then we should drive towards it.
+			//
+			// The messy distance at the end of the line is required until we get
+			// accurate movement.
+			controller.stop();
+			controller.driveForward((int)ballRoute.getMagnitude() / 8);
+			pause(1000);
 		}
 	}
 
-	private void pause(int milliseconds)
-	{
-		try
-		{
-			Thread.sleep(milliseconds);
-		}
-		catch (InterruptedException ignored)
-		{
-
-		}
-	}
 
 	private void refresh()
 	{
 		WorldState state = client.getWorldState();
 
-		if (ourColour() == RobotColour.BLUE)
-		{
-			robot = state.getBlue();
-		}
-		else
-		{
-			robot = state.getYellow();
-		}
-
+		robot = (ourColour() == RobotColour.BLUE) ? state.getBlue() : state.getYellow();
+		enemyRobot = (ourColour() == RobotColour.BLUE) ? state.getYellow() : state.getBlue();
 		ball = state.getBall();
+
+		log.debug("Robot is facing: " + robot.getFacing());
 	}
 
 	private Vector getGoalRoute()
@@ -120,14 +106,17 @@ public class TrackBallStrategy extends Strategy
 		Vector goalRoute = null;
 
 		try
-		{ 
-			 goalRoute = robot.getPosition().calcVectTo(eastGoal);
+		{
+			goalRoute = robot.getPosition().calcVectTo(eastGoal);
 		}
 		catch (InvalidAngleException e)
 		{
 			log.error(e.getMessage());
 		}
-		
+
+		log.debug("    Goal is towards: " + goalRoute.getDirection());
+		log.debug("Goal is at distance: " + goalRoute.getMagnitude());
+
 		return goalRoute;
 	}
 
@@ -144,8 +133,7 @@ public class TrackBallStrategy extends Strategy
 			log.error(e.getMessage());
 		}
 
-		log.debug("Robot is facing: " + robot.getFacing());
-		log.debug("Ball is towards: " + route.getDirection());
+		log.debug("    Ball is towards: " + route.getDirection());
 		log.debug("Ball is at distance: " + route.getMagnitude());
 
 		return route;

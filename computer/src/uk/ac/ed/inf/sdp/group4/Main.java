@@ -19,7 +19,7 @@ public class Main
 	public static void main(String[] args) throws InterruptedException, IOException
 	{
 		// Setup the logger
-		BasicConfigurator.configure();	
+		BasicConfigurator.configure();
 
 		// Building blocks of perfection.
 		VisionClient client = new VisionClient();
@@ -31,7 +31,7 @@ public class Main
 
 		// Java IO. Worst IO.
 		BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
-		
+
 		// Which colour are we playing as?
 		System.out.println("  > 1. Blue");
 		System.out.println("  > 2. Yellow");
@@ -64,9 +64,9 @@ public class Main
 			case 3:
 				controller = new ThinController();
 				strategy = new TrackBallStrategy(client, controller, colour);
-				break;		
+				break;
 			case 4:
-				controller = new FatController();	
+				controller = new FatController();
 				//controller.driveForward(50);
 				//Thread.sleep(3000);
 				//controller.driveBackward(50);

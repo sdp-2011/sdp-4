@@ -10,9 +10,10 @@ public abstract class Strategy implements IStrategy
 	// Logging
 	protected static Logger log = Logger.getLogger(Strategy.class);
 
+	// Attributes
 	protected VisionClient client;
 	protected Controller controller;
-	private RobotColour ourColour;
+	protected RobotColour ourColour;
 
 	public Strategy(VisionClient client, Controller controller, RobotColour ourColour)
 	{
@@ -23,7 +24,14 @@ public abstract class Strategy implements IStrategy
 
 	public void runStrategy()
 	{
+		log.debug("Starting strategy loop...");
+		while (true)
+		{
+			tick();
+		}
 	}
+
+	public abstract void tick();
 
 	public VisionClient getVisionClient()
 	{
@@ -49,6 +57,18 @@ public abstract class Strategy implements IStrategy
 		else
 		{
 			return RobotColour.BLUE;
+		}
+	}
+
+	protected void pause(int milliseconds)
+	{
+		try
+		{
+			Thread.sleep(milliseconds);
+		}
+		catch (InterruptedException ignored)
+		{
+
 		}
 	}
 }

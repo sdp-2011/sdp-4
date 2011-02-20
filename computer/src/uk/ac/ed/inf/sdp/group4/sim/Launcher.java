@@ -16,7 +16,7 @@ import uk.ac.ed.inf.sdp.group4.world.Robot;
 import uk.ac.ed.inf.sdp.group4.world.Ball;
 import uk.ac.ed.inf.sdp.group4.world.WorldState;
 import uk.ac.ed.inf.sdp.group4.domain.InvalidAngleException;
-import uk.ac.ed.inf.sdp.group4.strategy.RobotColour;	
+import uk.ac.ed.inf.sdp.group4.strategy.RobotColour;
 
 public class Launcher
 {
@@ -91,7 +91,7 @@ public class Launcher
 		blue.setY(pitch.getWIDTH() * SCALE / 2 + PADDING - 18 * SCALE / 2);
 		yellow.setX(pitch.getLENGTH() * SCALE + PADDING - 20 * SCALE);
 		yellow.setY(pitch.getWIDTH() * SCALE / 2 + PADDING - 18 * SCALE / 2);
-	
+
 		try
 		{
 			yellow.setFacing(yellow.getFacing() + 180);
@@ -140,7 +140,7 @@ public class Launcher
 			super.paintComponent(g);
 			Graphics2D g2d = (Graphics2D)g;
 			g2d.fillRect(0, 0, pitch.getLENGTH() * SCALE + 2 * PADDING,
-				pitch.getWIDTH() * SCALE + 2 * PADDING);
+			             pitch.getWIDTH() * SCALE + 2 * PADDING);
 			g2d.setPaint(Color.red);
 			g2d.fillRect(0, pitch.getGPOS() * SCALE + PADDING, pitch.getLENGTH() * SCALE + 2 * 								PADDING, pitch.getGLENGTH() * SCALE);
 			g2d.setPaint(Color.getHSBColor(0.3f, 1, 0.392f));
@@ -155,13 +155,13 @@ public class Launcher
 			g2d.fillRect(yellow.getX(), yellow.getY(), 20 * SCALE, 18 * SCALE);
 
 			g2d.rotate(blue.getRadFacing() * -1, blue.getX(), blue.getY());
-			g2d.drawImage(iconB, (int)(blue.getX() - Math.sin(blue.getRadFacing()) 
-				* 18 * SCALE / 2 - 18 * SCALE / 2), (int)(blue.getY()),
+			g2d.drawImage(iconB, (int)(blue.getX() - Math.sin(blue.getRadFacing())
+			                           * 18 * SCALE / 2 - 18 * SCALE / 2), (int)(blue.getY()),
 			              18 * SCALE, 20 * SCALE, null);
 			g2d.rotate(blue.getRadFacing(), blue.getX(), blue.getY());
 			g2d.rotate(yellow.getRadFacing(), yellow.getY(), yellow.getY());
-			g2d.drawImage(iconY, (int)(yellow.getX() - Math.sin(yellow.getY()) * 18 * 
-					SCALE / 2 - 18 * SCALE / 2), (int)yellow.getY() - 20 * SCALE,
+			g2d.drawImage(iconY, (int)(yellow.getX() - Math.sin(yellow.getY()) * 18 *
+			                           SCALE / 2 - 18 * SCALE / 2), (int)yellow.getY() - 20 * SCALE,
 			              18 * SCALE, 20 * SCALE, null);
 			g2d.rotate(yellow.getRadFacing(), yellow.getX(), yellow.getY());
 		}
