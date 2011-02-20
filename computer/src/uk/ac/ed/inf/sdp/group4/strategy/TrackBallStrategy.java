@@ -68,12 +68,14 @@ public class TrackBallStrategy extends Strategy
 				log.debug("Driving to the goal!");
 				if (Math.abs(goalAngle) > 15)
 				{
+					controller.setSpeed(100);
 					controller.turn(goalAngle);
 					pause(1000);
 				}
 				else
 				{
 					controller.stop();
+					controller.setSpeed(900);
 					controller.driveForward((int)goalRoute.getMagnitude() / 8);
 					pause(1000);
 				}
@@ -83,9 +85,17 @@ public class TrackBallStrategy extends Strategy
 			//
 			// The messy distance at the end of the line is required until we get
 			// accurate movement.
-			controller.stop();
-			controller.driveForward((int)ballRoute.getMagnitude() / 8);
-			pause(1000);
+			if (ballRoute.getMagnitude() > 40)
+			{
+				controller.stop();
+				controller.setSpeed(900);
+				controller.driveForward((int)ballRoute.getMagnitude() / 8);
+				pause(1000);
+			}
+			else
+			{
+				controller.setSpeed(100);
+			}
 		}
 	}
 
