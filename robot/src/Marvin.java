@@ -242,11 +242,11 @@ public class Marvin
 			{
 				if (MOTORS_REVERSED)
 				{
-					robot.drive(REACTION_DISTANCE);
+					robot.drive(REACTION_DISTANCE, false);
 				}
 				else
 				{
-					robot.drive(-REACTION_DISTANCE);
+					robot.drive(-REACTION_DISTANCE, false);
 				}
 			}
 			// If the (back) ultrasonic sensors are triggered then the
@@ -255,11 +255,11 @@ public class Marvin
 			{
 				if (MOTORS_REVERSED)
 				{
-					robot.drive(-REACTION_DISTANCE);
+					robot.drive(-REACTION_DISTANCE, false);
 				}
 				else
 				{
-					robot.drive(REACTION_DISTANCE);
+					robot.drive(REACTION_DISTANCE, false);
 				}
 			}
 		}
