@@ -51,7 +51,7 @@ while (True):
     update_worldstate(object_descriptors)
     
     end = time.time()
-    fps = 0.8 * (1/(end-start)) + 0.2 * last_time
-    print "FPS:", fps
+    fps = 0.7 * (1/(end-start)) + 0.3 * last_time
+    print "FPS:", int(fps)
     last_time = fps 
     cv.WaitKey(25)
