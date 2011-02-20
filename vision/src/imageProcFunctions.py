@@ -44,10 +44,10 @@ def find_object_descriptors(mask):
     mu11 = (M11/M00) - x_bar * y_bar
     error = math.sqrt(4 * (mu11**2) + (mu20 - mu02)**2)
 
-    orientation = math.atan2(2*mu11, mu20 - mu02 + error)
+    orientation = math.degrees(math.atan2(2*mu11, mu20 - mu02 + error))
     center_point = (int(x_bar), int(y_bar))
 
-    return (center_point, orientation) 
+    return [center_point, orientation] 
 
 def find_object(img, colour):
     '''
