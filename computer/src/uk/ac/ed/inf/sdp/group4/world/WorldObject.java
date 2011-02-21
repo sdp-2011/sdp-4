@@ -29,6 +29,11 @@ public abstract class WorldObject
 		return this.vector;
 	}
 
+	public void setPosition(Position pos)
+	{
+		this.position = pos;
+	}
+
 	public void setX(int x)
 	{
 		getPosition().setX(x);

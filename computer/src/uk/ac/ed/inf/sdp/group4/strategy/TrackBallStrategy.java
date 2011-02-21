@@ -16,6 +16,7 @@ public class TrackBallStrategy extends Strategy
 	private Robot robot;
 	private Robot enemyRobot;
 	private Ball ball;
+	private WorldState state;
 
 	Position westGoal = new Position(30, 162);
 	Position eastGoal = new Position(525, 162);
@@ -28,6 +29,12 @@ public class TrackBallStrategy extends Strategy
 	public TrackBallStrategy(IVisionClient client, Controller controller, RobotColour colour, boolean testing)
 	{
 		super(client, controller, colour, testing);
+	}
+
+	public TrackBallStrategy(Controller controller, WorldState state)
+	{
+		super(null, controller, RobotColour.BLUE, false);
+		this.state = state;
 	}
 
 	@Override
@@ -110,7 +117,10 @@ public class TrackBallStrategy extends Strategy
 
 	private void refresh()
 	{
-		WorldState state = client.getWorldState();
+		if (client != null)
+		{
+			WorldState state = client.getWorldState();
+		}
 
 		robot = (ourColour() == RobotColour.BLUE) ? state.getBlue() : state.getYellow();
 		enemyRobot = (ourColour() == RobotColour.BLUE) ? state.getYellow() : state.getBlue();
@@ -157,3 +167,4 @@ public class TrackBallStrategy extends Strategy
 		return route;
 	}
 }
+

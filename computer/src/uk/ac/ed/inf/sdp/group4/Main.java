@@ -12,7 +12,11 @@ import uk.ac.ed.inf.sdp.group4.controller.Controller;
 import uk.ac.ed.inf.sdp.group4.strategy.RobotColour;
 import uk.ac.ed.inf.sdp.group4.strategy.Strategy;
 import uk.ac.ed.inf.sdp.group4.strategy.TrackBallStrategy;
+import uk.ac.ed.inf.sdp.group4.sim.Launcher;
 import uk.ac.ed.inf.sdp.group4.strategy.KeyboardStrategy;
+import uk.ac.ed.inf.sdp.group4.sim.Component;
+import uk.ac.ed.inf.sdp.group4.sim.SimBot;
+import uk.ac.ed.inf.sdp.group4.domain.Position;
 
 public class Main
 {
@@ -62,18 +66,18 @@ public class Main
 				strategy = new TrackBallStrategy(client, controller, colour);
 				break;
 			case 3:
-				controller = new ThinController();
-				strategy = new TrackBallStrategy(client, controller, colour);
-				break;
-			case 4:
-				controller = new FatController();
-				//controller.driveForward(50);
-				//Thread.sleep(3000);
-				//controller.driveBackward(50);
-				//Thread.sleep(3000);
-				controller.turn(360);
-				Thread.sleep(3000);
-				controller.turn(-360);
+				colour = RobotColour.BLUE;
+				WorldState state = new WorldState();
+				state.getBall().setPosition(122, 60);
+				Component[] components = new Component[1];
+				SimBot bot = new SimBot(state.getBlue());
+				components[0] = bot;
+
+				controller = new ThinController(bot);
+				strategy = new TrackBallStrategy(controller, state);
+
+				Launcher launcher = new Launcher(state, components);
+				new Thread(launcher).start();
 				Thread.sleep(3000);
 				//controller.driveForward(50);
 				//Thread.sleep(3000);
