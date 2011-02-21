@@ -69,18 +69,6 @@ public class FatController extends Controller
 		}
 	}
 
-	public void turn(double angle)
-	{
-		if (angle >= 0)
-		{
-			turnLeft((int)angle);
-		}
-		else
-		{
-			turnRight((int)angle * -1);
-		}
-	}
-
 	public void turnLeft(int angle)
 	{
 		log.debug(String.format("Turning Left: %d degrees", angle));

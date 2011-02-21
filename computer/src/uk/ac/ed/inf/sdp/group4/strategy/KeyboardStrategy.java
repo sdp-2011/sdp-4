@@ -10,7 +10,7 @@ public class KeyboardStrategy extends Strategy
 
 	public KeyboardStrategy(VisionClient client, Controller controller, RobotColour colour)
 	{
-		super(client, controller, colour);
+		super(client, controller, colour, false);
 
 		keyboard = new BufferedReader(new InputStreamReader(System.in));
 	}

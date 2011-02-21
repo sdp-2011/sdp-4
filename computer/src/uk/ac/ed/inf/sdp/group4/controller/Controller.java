@@ -13,7 +13,18 @@ public abstract class Controller
 	public abstract void stop();
 
 	// Turning Commands
-	public abstract void turn(double degrees);
+	public void turn(double angle)
+	{
+		if (angle >= 0)
+		{
+			turnLeft((int)angle);
+		}
+		else
+		{
+			turnRight((int)angle * -1);
+		}
+	}
+
 	public abstract void turnLeft(int degrees);
 	public abstract void turnRight(int degrees);
 

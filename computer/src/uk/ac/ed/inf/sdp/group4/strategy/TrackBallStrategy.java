@@ -31,14 +31,14 @@ public class TrackBallStrategy extends Strategy
 		super(client, controller, colour, testing);
 	}
 
-	@Override
-	public void tick()
-		super(null, controller,  RobotColour.BLUE);
+	public TrackBallStrategy(Controller controller, WorldState state)
+	{
+		super(null, controller, RobotColour.BLUE, false);
 		this.state = state;
-		this.robot = state.getBlue();
-		this.ball = state.getBall();
 	}
 
+	@Override
+	public void tick()
 	{
 		log.debug("=================================================");
 		log.debug("Starting a new cycle...");
@@ -116,9 +116,10 @@ public class TrackBallStrategy extends Strategy
 
 	private void refresh()
 	{
-		if (state == null)
+		if (client != null)
 		{
-		WorldState state = client.getWorldState();
+			WorldState state = client.getWorldState();
+		}
 
 		robot = (ourColour() == RobotColour.BLUE) ? state.getBlue() : state.getYellow();
 		enemyRobot = (ourColour() == RobotColour.BLUE) ? state.getYellow() : state.getBlue();
@@ -165,3 +166,4 @@ public class TrackBallStrategy extends Strategy
 		return route;
 	}
 }
+

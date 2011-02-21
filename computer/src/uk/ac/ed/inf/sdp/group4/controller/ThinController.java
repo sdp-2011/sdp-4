@@ -38,30 +38,15 @@ public class ThinController extends Controller
 		System.out.println("BESERK:" + val);
 	}
 
-	public void turn(double angle)
-	{
-		if (angle >= 0)
-		{
-			turnRight((int)angle);
-
-		}
-		else
-		{
-			turnLeft((int)angle * -1);
-		}
-	}
-
 	public void turnRight(int angle)
 	{
-	}
-
-	public void turnLeft(int angle)
-	{
+		System.out.println("Turning right");
 		bot.newAction(new Action(Action.Type.RIGHT, angle));
 	}
 
 	public void turnLeft(int angle)
 	{
+		System.out.println("Turning left");
 		bot.newAction(new Action(Action.Type.LEFT, angle));
 	}
 
@@ -71,6 +56,11 @@ public class ThinController extends Controller
 	}
 
 	public void steer(int val)
+	{
+
+	}
+
+	public void stop()
 	{
 
 	}
