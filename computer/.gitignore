@@ -4,3 +4,7 @@
 # Project Specific
 bin
 classes
+
+# IntelliJ
+.idea
+*.iml

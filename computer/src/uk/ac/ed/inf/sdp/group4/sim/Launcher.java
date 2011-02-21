@@ -7,30 +7,37 @@ import java.awt.Image;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.IOException;
+import java.lang.Runnable;
 
 import javax.imageio.ImageIO;
-import javax.swing.JComponent;
+import javax.swing.JPanel;
 import javax.swing.JFrame;
 
+import uk.ac.ed.inf.sdp.group4.domain.Position;
 import uk.ac.ed.inf.sdp.group4.world.Robot;
 import uk.ac.ed.inf.sdp.group4.world.Ball;
 import uk.ac.ed.inf.sdp.group4.world.WorldState;
+import uk.ac.ed.inf.sdp.group4.world.VisionClient;
 import uk.ac.ed.inf.sdp.group4.domain.InvalidAngleException;
-import uk.ac.ed.inf.sdp.group4.strategy.RobotColour;	
+import uk.ac.ed.inf.sdp.group4.strategy.RobotColour;
 
-public class Launcher
+public class Launcher implements Runnable
 {
-
-	final int SCALE = 3;
-	final int PADDING = 5 * SCALE;
-
 	//FPS
 	final int FPS = 25;
+	final int WIDTH = 800;
+	final int HEIGHT = 500;
+	final int X_RATIO = WIDTH / 244;
+	final int Y_RATIO = HEIGHT / 122;
+	final int ROB_X = X_RATIO * 18;
+	final int ROB_Y = Y_RATIO * 20;
+	final int BALL_SIZE = X_RATIO * 5;
 
 	WorldState state;
 	Robot blue;
 	Robot yellow;
 	Ball ball;
+	Component[] components;
 
 	int scoreB;
 	int scoreY;
@@ -40,34 +47,31 @@ public class Launcher
 
 	private JFrame frame;
 
-
-	public static void main(String[] args)
+	public Launcher(WorldState state, Component[] components)
 	{
-		new Launcher();
-	}
-
-	public Launcher()
-	{
-		state = new WorldState();
+		this.components = components;
+		this.state = state;
 		loadContent();
 		setup();
-		//this section just a test at the moment
-		Boolean test = true;
-		while (test)
+	}
+
+	public void run()
+	{
+		long t = System.currentTimeMillis();
+
+		while (true)
 		{
-			update(50);
-			try
+			long tplus = System.currentTimeMillis();
+
+			if ((tplus - t) >= 40)
 			{
-				Thread.sleep(40);
-			}
-			catch (InterruptedException e)
-			{
-				System.out.println("ARGGGHHH");
+				update((int)(tplus - t));
+				t = tplus;
 			}
 		}
 	}
 
-	public void loadContent()
+	private void loadContent()
 	{
 		try
 		{
@@ -80,54 +84,37 @@ public class Launcher
 		}
 	}
 
-	public void setup()
+	private void setup()
 	{
 		Pitch pitch = new Pitch();
-		blue = state.getBlue();
-		yellow = state.getYellow();
-		ball = state.getBall();
-		//initialise locations
-		blue.setX(PADDING);
-		blue.setY(pitch.getWIDTH() * SCALE / 2 + PADDING - 18 * SCALE / 2);
-		yellow.setX(pitch.getLENGTH() * SCALE + PADDING - 20 * SCALE);
-		yellow.setY(pitch.getWIDTH() * SCALE / 2 + PADDING - 18 * SCALE / 2);
-	
-		try
-		{
-			yellow.setFacing(yellow.getFacing() + 180);
-		}
-		catch (InvalidAngleException e)
-		{
-			//log this
-		}
-
 		//set up display
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(pitch.getLENGTH() * SCALE + 2 * PADDING + 4 * SCALE,
-		              pitch.getWIDTH() * SCALE + 2 * PADDING + 35 * SCALE);
+		frame.setSize(WIDTH, HEIGHT);
 		frame.setVisible(true);
 		frame.getContentPane().add(new Situation(pitch));
+		blue = state.getBlue();
+		yellow = state.getYellow();
+		ball = state.getBall();
 	}
 
-	public void update(int time)
+	private void update(int time)
 	{
-		if (time > 	40)
+		for (int i = 0; i < components.length; i++)
 		{
-			blue.setX(blue.getX() + 1);
-			draw();
+			components[i].update(time);
 		}
+		draw();
 	}
 
-	public void draw()
+	private void draw()
 	{
 		frame.getContentPane().repaint();
 	}
 
 
-	private class Situation extends JComponent
+	private class Situation extends JPanel
 	{
-
 		private Pitch pitch;
 
 		public Situation(Pitch pitch)
@@ -135,35 +122,28 @@ public class Launcher
 			this.pitch = pitch;
 		}
 
-		public void paint(Graphics g)
+		public void paintComponent(Graphics g)
 		{
 			super.paintComponent(g);
-			Graphics2D g2d = (Graphics2D)g;
-			g2d.fillRect(0, 0, pitch.getLENGTH() * SCALE + 2 * PADDING,
-				pitch.getWIDTH() * SCALE + 2 * PADDING);
-			g2d.setPaint(Color.red);
-			g2d.fillRect(0, pitch.getGPOS() * SCALE + PADDING, pitch.getLENGTH() * SCALE + 2 * 								PADDING, pitch.getGLENGTH() * SCALE);
-			g2d.setPaint(Color.getHSBColor(0.3f, 1, 0.392f));
-			g2d.fillRect(PADDING, PADDING, pitch.getLENGTH() * SCALE, pitch.getWIDTH() * SCALE);
+			setBackground(Color.green);
 
-			//draw blue robot
-			g2d.setPaint(Color.BLUE);
-			g2d.fillRect(blue.getX(), blue.getY(), 20 * SCALE, 18 * SCALE);
+			//draw blue
+			g.setColor(Color.blue);
 
-			//draw yellow robot
-			g2d.setPaint(Color.YELLOW);
-			g2d.fillRect(yellow.getX(), yellow.getY(), 20 * SCALE, 18 * SCALE);
+			Position bPos = blue.getPosition();
+			g.fillRect(bPos.getX() * X_RATIO, bPos.getY() * Y_RATIO, ROB_Y, ROB_X);
 
-			g2d.rotate(blue.getRadFacing() * -1, blue.getX(), blue.getY());
-			g2d.drawImage(iconB, (int)(blue.getX() - Math.sin(blue.getRadFacing()) 
-				* 18 * SCALE / 2 - 18 * SCALE / 2), (int)(blue.getY()),
-			              18 * SCALE, 20 * SCALE, null);
-			g2d.rotate(blue.getRadFacing(), blue.getX(), blue.getY());
-			g2d.rotate(yellow.getRadFacing(), yellow.getY(), yellow.getY());
-			g2d.drawImage(iconY, (int)(yellow.getX() - Math.sin(yellow.getY()) * 18 * 
-					SCALE / 2 - 18 * SCALE / 2), (int)yellow.getY() - 20 * SCALE,
-			              18 * SCALE, 20 * SCALE, null);
-			g2d.rotate(yellow.getRadFacing(), yellow.getX(), yellow.getY());
+			//draw yellow
+			g.setColor(Color.yellow);
+
+			Position yPos = yellow.getPosition();
+			g.fillRect(yPos.getX() * X_RATIO, yPos.getY() * Y_RATIO, ROB_Y, ROB_X);
+
+			//draw ball
+			g.setColor(Color.red);
+
+			Position ballPos = ball.getPosition();
+			g.fillOval(ballPos.getX() * X_RATIO, ballPos.getY() * Y_RATIO, BALL_SIZE, BALL_SIZE);
 		}
 	}
 

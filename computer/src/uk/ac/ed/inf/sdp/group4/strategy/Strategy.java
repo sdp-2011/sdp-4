@@ -1,26 +1,43 @@
 package uk.ac.ed.inf.sdp.group4.strategy;
 
+import org.apache.log4j.Logger;
+
 import uk.ac.ed.inf.sdp.group4.world.VisionClient;
+import uk.ac.ed.inf.sdp.group4.world.IVisionClient;
 import uk.ac.ed.inf.sdp.group4.controller.Controller;
 
 public abstract class Strategy implements IStrategy
 {
-	protected VisionClient client;
-	protected Controller controller;
-	private RobotColour ourColour;
+	// Logging
+	protected static Logger log = Logger.getLogger(Strategy.class);
 
-	public Strategy(VisionClient client, Controller controller, RobotColour ourColour)
+	// Attributes
+	protected IVisionClient client;
+	protected Controller controller;
+	protected RobotColour ourColour;
+
+	boolean testing;
+
+	public Strategy(IVisionClient client, Controller controller, RobotColour ourColour, boolean testing)
 	{
 		this.client = client;
 		this.controller = controller;
 		this.ourColour = ourColour;
+		this.testing = testing;
 	}
 
 	public void runStrategy()
 	{
+		log.debug("Starting strategy loop...");
+		while (true)
+		{
+			tick();
+		}
 	}
 
-	public VisionClient getVisionClient()
+	public abstract void tick();
+
+	public IVisionClient getVisionClient()
 	{
 		return this.client;
 	}
@@ -44,6 +61,21 @@ public abstract class Strategy implements IStrategy
 		else
 		{
 			return RobotColour.BLUE;
+		}
+	}
+
+	protected void pause(int milliseconds)
+	{
+		if (!testing)
+		{
+			try
+			{
+				Thread.sleep(milliseconds);
+			}
+			catch (InterruptedException ignored)
+			{
+
+			}
 		}
 	}
 }

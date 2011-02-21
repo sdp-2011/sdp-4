@@ -4,4 +4,4 @@ public enum RobotColour
 {
 	BLUE,
 	YELLOW
-};
+}

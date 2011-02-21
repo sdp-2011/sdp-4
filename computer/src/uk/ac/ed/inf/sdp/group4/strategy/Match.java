@@ -31,6 +31,7 @@ public class Match
 		
 		this.client = client;
 		this.controller = controller;
+
 		pathfinder = new AStarPathFinder(pitch, 500);
 		trajectory = new TrajectoryFinder(pitch, ourRobot);
 		
@@ -58,6 +59,7 @@ public class Match
 			}
 			while (ourRobot.hasBall() == true){
 				// Goal-finding and scoring algorithm here
+
 			}
 		}
 	}
