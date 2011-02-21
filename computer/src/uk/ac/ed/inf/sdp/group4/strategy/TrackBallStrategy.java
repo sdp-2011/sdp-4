@@ -117,10 +117,7 @@ public class TrackBallStrategy extends Strategy
 
 	private void refresh()
 	{
-		if (client != null)
-		{
-			WorldState state = client.getWorldState();
-		}
+		WorldState state = client.getWorldState();
 
 		robot = (ourColour() == RobotColour.BLUE) ? state.getBlue() : state.getYellow();
 		enemyRobot = (ourColour() == RobotColour.BLUE) ? state.getYellow() : state.getBlue();
