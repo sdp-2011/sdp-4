@@ -1,5 +1,6 @@
 import cv
 import math
+from navigation import *
 
 mods = [0.0, 0.4, 0.4, 0.05, 1.0, 1.0, 0.3, 0.3, 0.5, 0.8, 1.0, 1.0, 0.1, 0.36, 0.37, 0.2, 1.0, 1.0]
 
@@ -23,6 +24,17 @@ def onVLowerYChange(position):  mods[14] = position/255.0
 def onHUpperYChange(position):  mods[15] = position/255.0
 def onSUpperYChange(position):  mods[16] = position/255.0
 def onVUpperYChange(position):  mods[17] = position/255.0
+
+def refine_orientation(orientation, center_point, mask):
+    if(center_point[0] > 25 and center_point[1] > 25):
+	crop_rect = (center_point[0] - 20, center_point[1] - 30, 40, 40)
+	image = cv.GetImage(mask)    
+	cv.SetImageROI(image, crop_rect)
+
+
+    cv.NamedWindow("Cropped Image 2", cv.CV_WINDOW_AUTOSIZE)
+    cv.ShowImage("Cropped Image 2", image)
+ 
 
 def find_object_descriptors(mask):
     moments = cv.Moments(mask, 1)
@@ -48,7 +60,32 @@ def find_object_descriptors(mask):
     orientation = math.degrees(math.atan2(2*mu11, mu20 - mu02 + error))
     center_point = (int(x_bar), int(y_bar))
 
-    return [center_point, orientation] 
+ #   other_orientation = orientation_test(mask, center_point, orientation)
+    
+    pewpew = refine_orientation(orientation, center_point, mask)
+    return [center_point, orientation]
+
+def orientation_test(mask, center_point, orientation):
+
+    cv.Circle(mask, center_point, 15, cv.RGB(0,0,0), -1)   
+    moments = cv.Moments(mask, 1)
+    M00 = cv.GetSpatialMoment(moments,0,0)
+    M10 = cv.GetSpatialMoment(moments,1,0)
+    M01 = cv.GetSpatialMoment(moments,0,1)
+
+     # Protect against division by 0    
+    if M00 == 0:
+        M00 = 0.01
+    
+    x_bar = (M10/M00)
+    y_bar = (M01/M00)
+     
+    print "New Orientation: ", int(calculateBearing(center_point, (x_bar, y_bar)))
+    cv.NamedWindow("Cropped Image", cv.CV_WINDOW_AUTOSIZE)
+    cv.ShowImage("Cropped Image", mask)
+
+    
+        
 
 def find_object(img, colour):
     '''
