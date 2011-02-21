@@ -8,6 +8,7 @@ import uk.ac.ed.inf.sdp.group4.domain.*;
 import uk.ac.ed.inf.sdp.group4.world.Ball;
 import uk.ac.ed.inf.sdp.group4.world.Robot;
 import uk.ac.ed.inf.sdp.group4.world.VisionClient;
+import uk.ac.ed.inf.sdp.group4.world.IVisionClient;
 import uk.ac.ed.inf.sdp.group4.world.WorldState;
 
 public class TrackBallStrategy extends Strategy
@@ -19,7 +20,7 @@ public class TrackBallStrategy extends Strategy
 	Position westGoal = new Position(30, 162);
 	Position eastGoal = new Position(525, 162);
 
-	public TrackBallStrategy(VisionClient client, Controller controller, RobotColour colour)
+	public TrackBallStrategy(IVisionClient client, Controller controller, RobotColour colour)
 	{
 		super(client, controller, colour);
 	}
@@ -55,15 +56,13 @@ public class TrackBallStrategy extends Strategy
 		else
 		{
 			// If we're close to the ball and the goal is close then we should shoot.
-			if (ballRoute.getMagnitude() < 30 && goalRoute.getMagnitude() < 200
-			        && Math.abs(goalAngle) < 20)
+			if (ballRoute.getMagnitude() < 30 && goalRoute.getMagnitude() < 200 && Math.abs(goalAngle) < 20)
 			{
 				controller.shoot();
 			}
-
 			// If we're close to the ball and the goal is far then we should
 			// drive with a ball to the goal.
-			if (ballRoute.getMagnitude() < 30 && goalRoute.getMagnitude() >= 200)
+			else if (ballRoute.getMagnitude() < 30 && goalRoute.getMagnitude() >= 200)
 			{
 				log.debug("Driving to the goal!");
 				if (Math.abs(goalAngle) > 15)
@@ -94,7 +93,7 @@ public class TrackBallStrategy extends Strategy
 			}
 			else
 			{
-				controller.setSpeed(100);
+				//controller.setSpeed(100);
 			}
 		}
 	}

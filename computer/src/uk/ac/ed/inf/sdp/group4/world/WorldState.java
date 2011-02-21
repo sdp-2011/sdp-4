@@ -57,6 +57,14 @@ public class WorldState
 		}
 	}
 
+	public WorldState(Ball ball, Robot blue, Robot yellow) throws BadWorldStateException
+	{
+		setTimestamp(0);
+		setBall(ball);
+		setBlue(blue);
+		setYellow(yellow);
+	}
+
 	public void setTimestamp(long timestamp)
 	{
 		this.timestamp = timestamp;

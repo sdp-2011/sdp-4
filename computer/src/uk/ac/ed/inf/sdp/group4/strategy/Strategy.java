@@ -3,6 +3,7 @@ package uk.ac.ed.inf.sdp.group4.strategy;
 import org.apache.log4j.Logger;
 
 import uk.ac.ed.inf.sdp.group4.world.VisionClient;
+import uk.ac.ed.inf.sdp.group4.world.IVisionClient;
 import uk.ac.ed.inf.sdp.group4.controller.Controller;
 
 public abstract class Strategy implements IStrategy
@@ -11,11 +12,11 @@ public abstract class Strategy implements IStrategy
 	protected static Logger log = Logger.getLogger(Strategy.class);
 
 	// Attributes
-	protected VisionClient client;
+	protected IVisionClient client;
 	protected Controller controller;
 	protected RobotColour ourColour;
 
-	public Strategy(VisionClient client, Controller controller, RobotColour ourColour)
+	public Strategy(IVisionClient client, Controller controller, RobotColour ourColour)
 	{
 		this.client = client;
 		this.controller = controller;
@@ -33,7 +34,7 @@ public abstract class Strategy implements IStrategy
 
 	public abstract void tick();
 
-	public VisionClient getVisionClient()
+	public IVisionClient getVisionClient()
 	{
 		return this.client;
 	}
