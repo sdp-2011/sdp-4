@@ -53,12 +53,26 @@ public class ThinController extends Controller
 
 	public void turnRight(int angle)
 	{
+	}
+
+	public void turnLeft(int angle)
+	{
 		bot.newAction(new Action(Action.Type.RIGHT, angle));
 	}
 
 	public void turnLeft(int angle)
 	{
 		bot.newAction(new Action(Action.Type.LEFT, angle));
+	}
+
+	public void setSpeed(int val)
+	{
+
+	}
+
+	public void steer(int val)
+	{
+
 	}
 
 	public void finish()

@@ -8,24 +8,44 @@
 
 	<property name="test" value="test" />
 	<property name="test.src" value="${test}/src" />
+	<property name="test.src.helper" value="${test.src}/helper" />
+	<property name="test.src.unit" value="${test.src}/unit" />
+	<property name="test.src.integration" value="${test.src}/integration" />
+
 	<property name="test.lib" value="${test}/lib" />
+
+	<property name="test.classes" value="${test}/classes" />
+	<property name="test.classes.helper" value="${test.classes}/helper" />
+	<property name="test.classes.unit" value="${test.classes}/unit" />
+	<property name="test.classes.integration" value="${test.classes}/integration" />
 
 	<path id="classpath">
 		<pathelement location="${classes}" />
 		<fileset dir="${lib}">
 			<include name="**/*.jar"/>
 		</fileset>
+
 		<pathelement location="${nxj.home}/projects/pccomms/lib/pccomm.jar"/>
 		<pathelement location="${nxj.home}/projects/pccomms/3rdparty/bluecove.jar"/>
 		<pathelement location="${nxj.home}/projects/pctools/lib/pctools.jar"/>
 	</path>
 
 	<path id="classpath.test">
+		<path refid="classpath" />
+		<pathelement location="${test.classes.helper}" />
 		<fileset dir="${test.lib}">
 			<include name="**/*.jar"/>
 		</fileset>
-		<pathelement location="${test.src}" />
-		<path refid="classpath" />
+	</path>
+
+	<path id="classpath.test.unit">
+		<path refid="classpath.test" />
+		<pathelement location="${test.classes.unit}" />
+	</path>
+
+	<path id="classpath.test.integration">
+		<path refid="classpath.test" />
+		<pathelement location="${test.classes.integration}" />
 	</path>
 
 	<target name="build" description="Compile the project">
@@ -33,12 +53,6 @@
 		<javac srcdir="${src}" destdir="${classes}" fork="yes" optimize="on" debug="on" source="1.5" target="1.5" includeantruntime="false">
 			<classpath refid="classpath" />
 		</javac>
-		<!--<copy todir="${classes}/uk/ac/ed/inf/group4/sim">
-			<fileset dir=".">
-				<include name="**/*.png"/>
-				<include name="**/*.gif"/>
-			</fileset>
-		</copy>-->
 	</target>
 
 	<!-- deletes class files -->
@@ -52,18 +66,27 @@
 		</delete>
 	</target>
 
-	<target name="test" depends="build,compile-test">
+	<target name="test" description="Run the tests" depends="compile-helper-test,test-unit,test-integration" />
+
+	<target name="compile-helper-test">
+		<mkdir dir="${test.classes.helper}" />
+		<javac srcdir="${test.src.helper}" destdir="${test.classes.helper}" includeantruntime="false">
+			<classpath refid="classpath.test"/>
+		</javac>
+	</target>
+
+	<target name="test-unit" depends="build,compile-unit-test">
 		<junit printsummary="on" 
 			fork="false" 
 			haltonfailure="false"
 			failureproperty="tests.failed"
 			showoutput="true">
 
-			<classpath refid="classpath.test" />
+			<classpath refid="classpath.test.unit" />
 			<formatter type="brief" usefile="false"/>
 
 			<batchtest>
-				<fileset dir="${test.src}">
+				<fileset dir="${test.classes.unit}">
 					<include name="**/*Test*.class"/>
 				</fileset>
 			</batchtest>
@@ -74,9 +97,39 @@
 		</fail>
 	</target>
 
-	<target name="compile-test">
-		<javac srcdir="${test.src}" includeantruntime="false">
-			<classpath refid="classpath.test"/>
+	<target name="compile-unit-test">
+		<mkdir dir="${test.classes.unit}" />
+		<javac srcdir="${test.src.unit}" destdir="${test.classes.unit}" includeantruntime="false">
+			<classpath refid="classpath.test.unit"/>
+		</javac>
+	</target>
+
+	<target name="test-integration" depends="build,compile-integration-test">
+		<junit printsummary="on" 
+			fork="false" 
+			haltonfailure="false"
+			failureproperty="tests.failed"
+			showoutput="true">
+
+			<classpath refid="classpath.test.integration" />
+			<formatter type="brief" usefile="false"/>
+
+			<batchtest>
+				<fileset dir="${test.classes.integration}">
+					<include name="**/*Test*.class"/>
+				</fileset>
+			</batchtest>
+		</junit>
+
+		<fail if="tests.failed">
+			One or more tests failed. Try again...
+		</fail>
+	</target>
+
+	<target name="compile-integration-test">
+		<mkdir dir="${test.classes.integration}" />
+		<javac srcdir="${test.src.integration}" destdir="${test.classes.integration}" includeantruntime="false">
+			<classpath refid="classpath.test.integration"/>
 		</javac>
 	</target>
 </project>

@@ -10,15 +10,19 @@ public abstract class Controller
 	// Drive Commands
 	public abstract void driveForward(int cm);
 	public abstract void driveBackward(int cm);
-	
+	public abstract void stop();
+
 	// Turning Commands
 	public abstract void turn(double degrees);
 	public abstract void turnLeft(int degrees);
 	public abstract void turnRight(int degrees);
 
+	public abstract void steer(int turnRate);
+
 	// Misc. Commands
 	public abstract void shoot();
 	public abstract void beserk(boolean val);
+	public abstract void setSpeed(int speed);
 
 	// End the program.
 	public abstract void finish();

@@ -23,13 +23,12 @@ public class Robot
 	private Pilot pilot;
 	private Thread kicker;
 
-	public Robot()
+	public Robot(boolean reversed)
 	{
-		pilot = new TachoPilot(WHEEL_DIAMETER, TRACK_WIDTH, LEFT_MOTOR, RIGHT_MOTOR, true);
+		pilot = new TachoPilot(WHEEL_DIAMETER, TRACK_WIDTH, LEFT_MOTOR, RIGHT_MOTOR, reversed);
 
 		// Set faster motor speeds.
-		Motor.A.setSpeed(900);
-		Motor.B.setSpeed(900);
+		pilot.setSpeed(900);
 		Motor.C.setSpeed(900);
 
 		kicker = new Thread(new ShootThread());
@@ -81,12 +80,22 @@ public class Robot
 
 	public void left(int degrees)
 	{
-		pilot.rotate((-1 * degrees), false);
+		pilot.rotate(degrees, true);
 	}
 
 	public void right(int degrees)
 	{
-		pilot.rotate(degrees, false);
+		pilot.rotate((-1 * degrees), true);
+	}
+
+	public void steer(int turnRate)
+	{
+		pilot.steer(turnRate);
+	}
+
+	public void setSpeed(int degreesPerSecond)
+	{
+		pilot.setSpeed(degreesPerSecond);
 	}
 
 	// The code following this line is a complete travesty. I'm not even
@@ -140,12 +149,12 @@ public class Robot
 		{
 			try
 			{
+				SHOOT_MOTOR.backward();
+				Thread.sleep(40);
 				SHOOT_MOTOR.forward();
-				Thread.sleep(1);
+				Thread.sleep(130);
 				SHOOT_MOTOR.backward();
 				Thread.sleep(150);
-				SHOOT_MOTOR.forward();
-				Thread.sleep(200);
 				SHOOT_MOTOR.stop();
 			}
 			catch (Exception e)

@@ -12,8 +12,13 @@ import java.io.*;
  */
 public class Marvin
 {
+	// Movement
+	private final int REACTION_DISTANCE = 10;
+	private final int ULTRASONIC_THRESHOLD = 10;
+	private final boolean MOTORS_REVERSED = false;
+
 	// Basic control and communication utility classes
-	Robot robot = new Robot();
+	Robot robot = new Robot(MOTORS_REVERSED);
 	Communicator communicator = new Communicator();
 
 	// Sensors
@@ -24,10 +29,6 @@ public class Marvin
 	// Fields
 	private boolean sensorsActive = true;
 	
-	// Movement
-	private final boolean MOTORS_REVERSED = false;
-	private final int REACTION_DISTANCE = 10;
-	private final int ULTRASONIC_THRESHOLD = 10;
 
 	/**
 	 * Allows for a standard interface of instructions throughout the code.
@@ -40,9 +41,12 @@ public class Marvin
 		FORWARD(0),
 		BACKWARD(1),
 		SHOOT(2),
-		BESERK(3),
+		STEER(3),
 		LEFT(4),
 		RIGHT(5),
+		STOP(6),
+		SETSPEED(97),
+		BESERK(98),
 		FINISH(99);
 
 		private int value;
@@ -154,7 +158,7 @@ public class Marvin
 			// What should we do?
 			if (instruction == Instruction.FORWARD.getValue())
 			{
-				if (REVERSED_MOTORS)
+				if (MOTORS_REVERSED)
 				{
 					robot.drive((float)argument * -1);
 				}
@@ -165,7 +169,7 @@ public class Marvin
 			}
 			else if (instruction == Instruction.BACKWARD.getValue())
 			{
-				if (REVERSED_MOTORS)
+				if (MOTORS_REVERSED)
 				{
 					robot.drive((float)argument);
 				}
@@ -184,11 +188,11 @@ public class Marvin
 			}
 			else if (instruction == Instruction.BESERK.getValue())
 			{
-				sensorSwitch(!argument);
+				sensorSwitch(argument != 0);
 			}
 			else if (instruction == Instruction.LEFT.getValue())
 			{
-				if (REVERSED_MOTORS)
+				if (MOTORS_REVERSED)
 				{
 					robot.right(argument);
 				}
@@ -199,7 +203,7 @@ public class Marvin
 			}
 			else if (instruction == Instruction.RIGHT.getValue())
 			{
-				if (REVERSED_MOTORS)
+				if (MOTORS_REVERSED)
 				{
 					robot.left(argument);
 				}
@@ -207,6 +211,18 @@ public class Marvin
 				{
 					robot.right(argument);
 				}
+			}
+			else if (instruction == Instruction.STEER.getValue())
+			{
+				robot.steer(argument);
+			}
+			else if (instruction == Instruction.SETSPEED.getValue())
+			{
+				robot.setSpeed(argument);
+			}
+			else if (instruction == Instruction.STOP.getValue())
+			{
+				robot.stop();
 			}
 		}
 	}
@@ -224,26 +240,26 @@ public class Marvin
 			// robot should drive a short distance backwards.
 			if ((leftTouchSensor.isPressed()) || (rightTouchSensor.isPressed()))
 			{
-				if (REVERSED_MOTORS)
+				if (MOTORS_REVERSED)
 				{
-					robot.drive(REACTION_DISTANCE);
+					robot.drive(REACTION_DISTANCE, false);
 				}
 				else
 				{
-					robot.drive(-REACTION_DISTANCE);
+					robot.drive(-REACTION_DISTANCE, false);
 				}
 			}
 			// If the (back) ultrasonic sensors are triggered then the
 			// robot should drive a short distance forwards.
 			if (ultrasonicSensor.getDistance() < ULTRASONIC_THRESHOLD)
 			{
-				if (REVERSED_MOTORS)
+				if (MOTORS_REVERSED)
 				{
-					robot.drive(-REACTION_DISTANCE);
+					robot.drive(-REACTION_DISTANCE, false);
 				}
 				else
 				{
-					robot.drive(REACTION_DISTANCE);
+					robot.drive(REACTION_DISTANCE, false);
 				}
 			}
 		}

@@ -43,7 +43,7 @@ public class Vector
 		double x = dest.getX() - ini.getX();
 		double y = dest.getY() - ini.getY();
 
-		double mag = Math.sqrt((x*x) + (y*y));
+		double mag = Math.sqrt((x * x) + (y * y));
 		double angle = (Math.toDegrees(Math.atan2(y, x)) + 450) % 360;
 
 		return new Vector(angle, mag);
@@ -52,7 +52,7 @@ public class Vector
 	public double angleTo(double bearing)
 	{
 		double from = this.getDirection();
-        double angle = bearing - from;
+		double angle = bearing - from;
 
 		if (angle > 180)
 		{

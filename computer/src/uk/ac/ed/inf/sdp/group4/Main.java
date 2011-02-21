@@ -23,7 +23,7 @@ public class Main
 	public static void main(String[] args) throws InterruptedException, IOException
 	{
 		// Setup the logger
-		BasicConfigurator.configure();	
+		BasicConfigurator.configure();
 
 		// Building blocks of perfection.
 		VisionClient client = new VisionClient();
@@ -35,7 +35,7 @@ public class Main
 
 		// Java IO. Worst IO.
 		BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
-		
+
 		// Which colour are we playing as?
 		System.out.println("  > 1. Blue");
 		System.out.println("  > 2. Yellow");
@@ -50,8 +50,11 @@ public class Main
 		System.out.println("  > 1. Keyboard Control");
 		System.out.println("  > 2. Navigate to Ball");
 		System.out.println("  > 3. Simulator");
+		System.out.println("  > 4. Test Movement");
 		System.out.println("Where would you like to go today?");
+
 		int option = Integer.parseInt(keyboard.readLine());
+
 		switch (option)
 		{
 			case 1:
@@ -75,11 +78,19 @@ public class Main
 
 				Launcher launcher = new Launcher(state, components);
 				new Thread(launcher).start();
+				Thread.sleep(3000);
+				//controller.driveForward(50);
+				//Thread.sleep(3000);
+				//controller.driveBackward(50);
+				//Thread.sleep(3000);
+				controller.turn(60);
+				Thread.sleep(3000);
+				controller.turn(-60);
+				Thread.sleep(3000);
 			default:
 				System.out.println("Goddammit. Give me a real number!");
 		}
-		
-		System.out.println("Running strategy");
+
 		strategy.runStrategy();
 	}
 

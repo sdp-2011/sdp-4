@@ -67,7 +67,7 @@ public class Pitch implements TileBasedMap
 			return true;
 		}
 		// Terrain other than clear pitch blocks our movement
-        return getTerrain(x, y) != 0;
+		return getTerrain(x, y) != 0;
 	}
 
 	public void pathFinderVisited(int x, int y)

@@ -19,7 +19,7 @@ import uk.ac.ed.inf.sdp.group4.world.Ball;
 import uk.ac.ed.inf.sdp.group4.world.WorldState;
 import uk.ac.ed.inf.sdp.group4.world.VisionClient;
 import uk.ac.ed.inf.sdp.group4.domain.InvalidAngleException;
-import uk.ac.ed.inf.sdp.group4.strategy.RobotColour;	
+import uk.ac.ed.inf.sdp.group4.strategy.RobotColour;
 
 public class Launcher implements Runnable
 {

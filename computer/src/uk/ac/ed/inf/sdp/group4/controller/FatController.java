@@ -60,12 +60,12 @@ public class FatController extends Controller
 		if (val)
 		{
 			log.debug("Beserk Mode: Enabled");
-			sendCommand(3, 1);
+			sendCommand(98, 1);
 		}
 		else
 		{
 			log.debug("Beserk Mode: Disabled");
-			sendCommand(3, 0);
+			sendCommand(98, 0);
 		}
 	}
 
@@ -73,11 +73,11 @@ public class FatController extends Controller
 	{
 		if (angle >= 0)
 		{
-			turnRight((int)angle);
+			turnLeft((int)angle);
 		}
 		else
 		{
-			turnLeft((int)angle * -1);
+			turnRight((int)angle * -1);
 		}
 	}
 
@@ -93,9 +93,26 @@ public class FatController extends Controller
 		sendCommand(5, angle);
 	}
 
+	public void steer(int angle)
+	{
+		log.debug(String.format("Steering: %d turn rate", angle));
+		sendCommand(3, angle);
+	}
+
+	public void setSpeed(int motorSpeed)
+	{
+		log.debug(String.format("Changing motor speed: %d degrees per second", motorSpeed));
+		sendCommand(97, motorSpeed);
+	}
+
+	public void stop()
+	{
+		log.debug("Stopping robot.");
+		sendCommand(6, 0);
+	}
+
 	public void finish()
 	{
-		//calls finish on robot
 		log.debug("Ending control of the robot...");
 		sendCommand(99, 0);
 		try
@@ -146,7 +163,8 @@ public class FatController extends Controller
 				}
 				catch (IOException e)
 				{
-					System.out.println("Something has gone wrong");
+					log.error("Something has gone wrong");
+					System.exit(1);
 				}
 			}
 		}
