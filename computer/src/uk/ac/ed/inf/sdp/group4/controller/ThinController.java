@@ -9,7 +9,7 @@ import java.lang.Math;
 public class ThinController extends Controller
 {
 	private SimBot bot;
-	
+
 	public ThinController(SimBot bot)
 	{
 		this.bot = bot;

@@ -26,7 +26,7 @@ public class SimBot extends Component
 		{
 			if (current.isDone())
 			{
-				current = null;	
+				current = null;
 			}
 
 			else
@@ -81,9 +81,9 @@ public class SimBot extends Component
 	private void turnLeft(int time)
 	{
 		Vector vector = robot.getVector();
-		
+
 		double angle = 0.36 * time;
-		
+
 		try
 		{
 			double direction = vector.getDirection();
@@ -105,14 +105,14 @@ public class SimBot extends Component
 		{
 			System.out.println("Invalid angle: left turn");
 		}
-		
+
 		current.addProgress(angle);
 	}
 
 	private void turnRight(int time)
 	{
 		Vector vector = robot.getVector();
-		
+
 		double angle = 0.36 * time;
 
 		try
@@ -136,7 +136,7 @@ public class SimBot extends Component
 		{
 			System.out.println("Invalid angle: right turn");
 		}
-		
+
 		current.addProgress(angle);
 	}
 

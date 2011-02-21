@@ -5,7 +5,7 @@ public class Action
 	private Type type;
 	private int argument;
 	private double completed;
-	
+
 	public enum Type
 	{
 		FORWARD, REVERSE, SHOOT, LEFT, RIGHT
@@ -34,7 +34,7 @@ public class Action
 		{
 			return true;
 		}
-			
+
 		return false;
 	}
 }

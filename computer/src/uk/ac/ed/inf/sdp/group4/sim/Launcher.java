@@ -99,7 +99,7 @@ public class Launcher implements Runnable
 	}
 
 	private void update(int time)
-	{	
+	{
 		for (int i = 0; i < components.length; i++)
 		{
 			components[i].update(time);
@@ -129,19 +129,19 @@ public class Launcher implements Runnable
 
 			//draw blue
 			g.setColor(Color.blue);
-			
+
 			Position bPos = blue.getPosition();
 			g.fillRect(bPos.getX() * X_RATIO, bPos.getY() * Y_RATIO, ROB_Y, ROB_X);
 
 			//draw yellow
 			g.setColor(Color.yellow);
-			
+
 			Position yPos = yellow.getPosition();
 			g.fillRect(yPos.getX() * X_RATIO, yPos.getY() * Y_RATIO, ROB_Y, ROB_X);
 
 			//draw ball
 			g.setColor(Color.red);
-			
+
 			Position ballPos = ball.getPosition();
 			g.fillOval(ballPos.getX() * X_RATIO, ballPos.getY() * Y_RATIO, BALL_SIZE, BALL_SIZE);
 		}

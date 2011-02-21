@@ -54,7 +54,7 @@ public class TestTrackBallStrategy
 
 		// A fake vision client to report this.
 		visionClient = new TestVisionClient(state);
-		
+
 		// Run an iteration
 		trackBallStrategy = new TrackBallStrategy(visionClient, testController, RobotColour.BLUE, true);
 		trackBallStrategy.tick();
@@ -74,7 +74,7 @@ public class TestTrackBallStrategy
 
 		// A fake vision client to report this.
 		visionClient = new TestVisionClient(state);
-		
+
 		// Run an iteration
 		trackBallStrategy = new TrackBallStrategy(visionClient, testController, RobotColour.BLUE, true);
 		trackBallStrategy.tick();
@@ -95,7 +95,7 @@ public class TestTrackBallStrategy
 
 		// A fake vision client to report this.
 		visionClient = new TestVisionClient(state);
-		
+
 		// Run an iteration
 		trackBallStrategy = new TrackBallStrategy(visionClient, testController, RobotColour.BLUE, true);
 		trackBallStrategy.tick();
@@ -116,7 +116,7 @@ public class TestTrackBallStrategy
 
 		// A fake vision client to report this.
 		visionClient = new TestVisionClient(state);
-		
+
 		// Run an iteration
 		trackBallStrategy = new TrackBallStrategy(visionClient, testController, RobotColour.BLUE, true);
 		trackBallStrategy.tick();
@@ -137,7 +137,7 @@ public class TestTrackBallStrategy
 
 		// A fake vision client to report this.
 		visionClient = new TestVisionClient(state);
-		
+
 		// Run an iteration
 		trackBallStrategy = new TrackBallStrategy(visionClient, testController, RobotColour.BLUE, true);
 		trackBallStrategy.tick();
@@ -148,7 +148,7 @@ public class TestTrackBallStrategy
 		// Slow down.
 		assertEquals(97, (int)testController.getInstructions().get(1)[0]);
 		assertEquals(100, (int)testController.getInstructions().get(1)[1]);
-		
+
 		// Go!
 		assertEquals(0, (int)testController.getInstructions().get(2)[0]);
 		assertEquals(5, (int)testController.getInstructions().get(2)[1]);
@@ -165,7 +165,7 @@ public class TestTrackBallStrategy
 
 		// A fake vision client to report this.
 		visionClient = new TestVisionClient(state);
-		
+
 		// Run an iteration
 		trackBallStrategy = new TrackBallStrategy(visionClient, testController, RobotColour.BLUE, true);
 		trackBallStrategy.tick();
@@ -193,11 +193,11 @@ public class TestTrackBallStrategy
 
 		// A fake vision client to report this.
 		visionClient = new TestVisionClient(state);
-		
+
 		// Run an iteration
 		trackBallStrategy = new TrackBallStrategy(visionClient, testController, RobotColour.BLUE, true);
 		trackBallStrategy.tick();
-		
+
 		// Stop what you're doing.
 		assertEquals(6, (int)testController.getInstructions().get(0)[0]);
 
