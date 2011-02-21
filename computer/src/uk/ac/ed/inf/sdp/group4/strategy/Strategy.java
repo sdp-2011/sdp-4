@@ -16,11 +16,14 @@ public abstract class Strategy implements IStrategy
 	protected Controller controller;
 	protected RobotColour ourColour;
 
-	public Strategy(IVisionClient client, Controller controller, RobotColour ourColour)
+	boolean testing;
+
+	public Strategy(IVisionClient client, Controller controller, RobotColour ourColour, boolean testing)
 	{
 		this.client = client;
 		this.controller = controller;
 		this.ourColour = ourColour;
+		this.testing = testing;
 	}
 
 	public void runStrategy()
@@ -63,13 +66,16 @@ public abstract class Strategy implements IStrategy
 
 	protected void pause(int milliseconds)
 	{
-		try
+		if (!testing)
 		{
-			Thread.sleep(milliseconds);
-		}
-		catch (InterruptedException ignored)
-		{
+			try
+			{
+				Thread.sleep(milliseconds);
+			}
+			catch (InterruptedException ignored)
+			{
 
+			}
 		}
 	}
 }
