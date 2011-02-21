@@ -1,14 +1,16 @@
+import java.util.ArrayList;
+
 import uk.ac.ed.inf.sdp.group4.controller.Controller;
 
 public class TestController extends Controller
 {
 	int command;
 	int argument;
+	ArrayList<Integer[]> instructions = new ArrayList<Integer[]>();
 
 	public void reset()
 	{
-		this.command = -1;
-		this.argument = -1;
+		instructions.clear();
 	}
 
 	public void driveForward(int distance)
@@ -82,18 +84,23 @@ public class TestController extends Controller
 
 	public void sendCommand(int command, int argument)
 	{
-		this.command = command;
-		this.argument = argument;
+		Integer[] instruction = new Integer[] {command, argument};
+		instructions.add(instruction);
 	}
 
 	public int getCommand()
 	{
-		return this.command;
+		return (int)this.instructions.get(0)[0];
 	}
 
 	public int getArgument()
 	{
-		return this.argument;
+		return (int)this.instructions.get(0)[1];
+	}
+
+	public ArrayList<Integer[]> getInstructions()
+	{
+		return this.instructions;
 	}
 }
 

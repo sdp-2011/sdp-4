@@ -56,7 +56,7 @@ public class TestTrackBallStrategy
 		visionClient = new TestVisionClient(state);
 		
 		// Run an iteration
-		trackBallStrategy = new TrackBallStrategy(visionClient, testController, RobotColour.BLUE);
+		trackBallStrategy = new TrackBallStrategy(visionClient, testController, RobotColour.BLUE, true);
 		trackBallStrategy.tick();
 
 		// Did we shoot?
@@ -76,7 +76,7 @@ public class TestTrackBallStrategy
 		visionClient = new TestVisionClient(state);
 		
 		// Run an iteration
-		trackBallStrategy = new TrackBallStrategy(visionClient, testController, RobotColour.BLUE);
+		trackBallStrategy = new TrackBallStrategy(visionClient, testController, RobotColour.BLUE, true);
 		trackBallStrategy.tick();
 
 		// Did we turn?
@@ -97,7 +97,7 @@ public class TestTrackBallStrategy
 		visionClient = new TestVisionClient(state);
 		
 		// Run an iteration
-		trackBallStrategy = new TrackBallStrategy(visionClient, testController, RobotColour.BLUE);
+		trackBallStrategy = new TrackBallStrategy(visionClient, testController, RobotColour.BLUE, true);
 		trackBallStrategy.tick();
 
 		// Did we turn?
@@ -106,11 +106,11 @@ public class TestTrackBallStrategy
 	}
 
 	@Test
-	public void testDriveForwards() throws InvalidAngleException, BadWorldStateException
+	public void testOneEighty() throws InvalidAngleException, BadWorldStateException
 	{
 		// Set up the world state.
 		Ball ball = new Ball(400, 160, 0, 0.0f);
-		Robot blue = new Robot(200, 160, 0, 0.0f, 90.0f, RobotColour.BLUE);
+		Robot blue = new Robot(320, 160, 0, 0.0f, 270.0f, RobotColour.BLUE);
 		Robot yellow = new Robot(0, 0, 0, 0.0f, 0.0f, RobotColour.YELLOW);
 		WorldState state = new WorldState(ball, blue, yellow);
 
@@ -118,12 +118,68 @@ public class TestTrackBallStrategy
 		visionClient = new TestVisionClient(state);
 		
 		// Run an iteration
-		trackBallStrategy = new TrackBallStrategy(visionClient, testController, RobotColour.BLUE);
+		trackBallStrategy = new TrackBallStrategy(visionClient, testController, RobotColour.BLUE, true);
 		trackBallStrategy.tick();
 
-		// Did we drive?
-		assertEquals(0, testController.getCommand());
-		assertEquals(25, testController.getArgument());
+		// Did we turn?
+		assertEquals(4, testController.getCommand());
+		assertEquals(180, testController.getArgument());
+	}
+
+	@Test
+	public void testDriveForwardsClose() throws InvalidAngleException, BadWorldStateException
+	{
+		// Set up the world state.
+		Ball ball = new Ball(400, 160, 0, 0.0f);
+		Robot blue = new Robot(360, 160, 0, 0.0f, 90.0f, RobotColour.BLUE);
+		Robot yellow = new Robot(0, 0, 0, 0.0f, 0.0f, RobotColour.YELLOW);
+		WorldState state = new WorldState(ball, blue, yellow);
+
+		// A fake vision client to report this.
+		visionClient = new TestVisionClient(state);
+		
+		// Run an iteration
+		trackBallStrategy = new TrackBallStrategy(visionClient, testController, RobotColour.BLUE, true);
+		trackBallStrategy.tick();
+
+		// Stop what you're doing.
+		assertEquals(6, (int)testController.getInstructions().get(0)[0]);
+
+		// Slow down.
+		assertEquals(97, (int)testController.getInstructions().get(1)[0]);
+		assertEquals(100, (int)testController.getInstructions().get(1)[1]);
+		
+		// Go!
+		assertEquals(0, (int)testController.getInstructions().get(2)[0]);
+		assertEquals(5, (int)testController.getInstructions().get(2)[1]);
+	}
+
+	@Test
+	public void testDriveForwardsFar() throws InvalidAngleException, BadWorldStateException
+	{
+		// Set up the world state.
+		Ball ball = new Ball(400, 160, 0, 0.0f);
+		Robot blue = new Robot(100, 160, 0, 0.0f, 90.0f, RobotColour.BLUE);
+		Robot yellow = new Robot(0, 0, 0, 0.0f, 0.0f, RobotColour.YELLOW);
+		WorldState state = new WorldState(ball, blue, yellow);
+
+		// A fake vision client to report this.
+		visionClient = new TestVisionClient(state);
+		
+		// Run an iteration
+		trackBallStrategy = new TrackBallStrategy(visionClient, testController, RobotColour.BLUE, true);
+		trackBallStrategy.tick();
+
+		// Stop what you're doing.
+		assertEquals(6, (int)testController.getInstructions().get(0)[0]);
+
+		// Sped up.
+		assertEquals(97, (int)testController.getInstructions().get(1)[0]);
+		assertEquals(900, (int)testController.getInstructions().get(1)[1]);
+
+		// Go forwards.
+		assertEquals(0, (int)testController.getInstructions().get(2)[0]);
+		assertEquals(37, (int)testController.getInstructions().get(2)[1]);
 	}
 }
 

@@ -23,7 +23,12 @@ public class TrackBallStrategy extends Strategy
 
 	public TrackBallStrategy(IVisionClient client, Controller controller, RobotColour colour)
 	{
-		super(client, controller, colour);
+		this(client, controller, colour, false);
+	}
+
+	public TrackBallStrategy(IVisionClient client, Controller controller, RobotColour colour, boolean testing)
+	{
+		super(client, controller, colour, testing);
 	}
 
 	@Override
@@ -81,7 +86,7 @@ public class TrackBallStrategy extends Strategy
 				else
 				{
 					controller.stop();
-					controller.setSpeed(900);
+					controller.setSpeed(300);
 					controller.driveForward((int)goalRoute.getMagnitude() / 8);
 					pause(1000);
 				}
@@ -100,7 +105,10 @@ public class TrackBallStrategy extends Strategy
 			}
 			else
 			{
-				//controller.setSpeed(100);
+				controller.stop();
+				controller.setSpeed(100);
+				controller.driveForward((int)ballRoute.getMagnitude() / 8);
+				pause(1300);
 			}
 		}
 	}
