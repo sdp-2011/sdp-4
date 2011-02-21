@@ -72,6 +72,7 @@ public class TrackBallStrategy extends Strategy
 				log.debug("Driving to the goal!");
 				if (Math.abs(goalAngle) > 15)
 				{
+					controller.stop();
 					controller.setSpeed(100);
 					controller.turn(goalAngle);
 					pause(1000);

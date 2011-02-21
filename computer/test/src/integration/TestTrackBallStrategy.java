@@ -173,13 +173,41 @@ public class TestTrackBallStrategy
 		// Stop what you're doing.
 		assertEquals(6, (int)testController.getInstructions().get(0)[0]);
 
-		// Sped up.
+		// Speed up.
 		assertEquals(97, (int)testController.getInstructions().get(1)[0]);
 		assertEquals(900, (int)testController.getInstructions().get(1)[1]);
 
 		// Go forwards.
 		assertEquals(0, (int)testController.getInstructions().get(2)[0]);
 		assertEquals(37, (int)testController.getInstructions().get(2)[1]);
+	}
+
+	@Test
+	public void testRefuseShot() throws InvalidAngleException, BadWorldStateException
+	{
+		// Set up the world state.
+		Ball ball = new Ball(200, 160, 0, 0.0f);
+		Robot blue = new Robot(220, 160, 0, 0.0f, 270.0f, RobotColour.BLUE);
+		Robot yellow = new Robot(0, 0, 0, 0.0f, 0.0f, RobotColour.YELLOW);
+		WorldState state = new WorldState(ball, blue, yellow);
+
+		// A fake vision client to report this.
+		visionClient = new TestVisionClient(state);
+		
+		// Run an iteration
+		trackBallStrategy = new TrackBallStrategy(visionClient, testController, RobotColour.BLUE, true);
+		trackBallStrategy.tick();
+		
+		// Stop what you're doing.
+		assertEquals(6, (int)testController.getInstructions().get(0)[0]);
+
+		// Slow down.
+		assertEquals(97, (int)testController.getInstructions().get(1)[0]);
+		assertEquals(100, (int)testController.getInstructions().get(1)[1]);
+
+		// Turn around.
+		assertEquals(4, (int)testController.getInstructions().get(2)[0]);
+		assertEquals(179, (int)testController.getInstructions().get(2)[1]);
 	}
 }
 
