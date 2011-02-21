@@ -34,11 +34,12 @@ public class SimBot extends Component
 				if (current.getType() == Action.Type.FORWARD)
 				{
 					robot.getVector().setMagnitude(40);
-					moveF(time);
+					move(time);
 				}
 				else if (current.getType() == Action.Type.REVERSE)
 				{
-					moveB(time);
+					robot.getVector().setMagnitude(-40);
+					move(time);
 				}
 				else if (current.getType() == Action.Type.LEFT)
 				{
@@ -63,7 +64,7 @@ public class SimBot extends Component
 		current = action;
 	}
 
-	private void moveF(int time)
+	private void move(int time)
 	{
 		Vector vector = robot.getVector();
 
@@ -75,11 +76,6 @@ public class SimBot extends Component
 		y += speedY;
 
 		current.addProgress(robot.getPosition().distance(new Position((int) x, (int) y)));
-	}
-
-	private void moveB(int time)
-	{
-
 	}
 
 	private void turnLeft(int time)
