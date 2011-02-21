@@ -25,6 +25,14 @@ def onHUpperYChange(position):  mods[15] = position/255.0
 def onSUpperYChange(position):  mods[16] = position/255.0
 def onVUpperYChange(position):  mods[17] = position/255.0
 
+
+def find_corners(mask):
+    eig_image = cv.CreateImage(cv.GetSize(mask), cv.IPL_DEPTH_32F, 1)
+    temp_image = cv.CreateImage(cv.GetSize(mask), cv.IPL_DEPTH_32F, 1)
+    corners = cv.GoodFeaturesToTrack(mask, eig_image, temp_image, 8, 0.1, 5)
+
+    print "Corners: ", corners
+
 def refine_orientation(orientation, center_point, mask):
     if(center_point[0] > 25 and center_point[1] > 25):
 	crop_rect = (center_point[0] - 20, center_point[1] - 30, 40, 40)
@@ -138,5 +146,7 @@ def find_object(img, colour):
     convKernel = cv.CreateStructuringElementEx(1, 1, 0, 0, cv.CV_SHAPE_ELLIPSE)
     cv.Erode(mask, mask, convKernel, 1)
     cv.Dilate(mask, mask, convKernel, 1)
+
+    find_corners(mask)
 
     return find_object_descriptors(mask)
