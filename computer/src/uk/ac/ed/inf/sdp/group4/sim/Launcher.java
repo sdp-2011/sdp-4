@@ -10,9 +10,10 @@ import java.io.IOException;
 import java.lang.Runnable;
 
 import javax.imageio.ImageIO;
-import javax.swing.JComponent;
+import javax.swing.JPanel;
 import javax.swing.JFrame;
 
+import uk.ac.ed.inf.sdp.group4.domain.Position;
 import uk.ac.ed.inf.sdp.group4.world.Robot;
 import uk.ac.ed.inf.sdp.group4.world.Ball;
 import uk.ac.ed.inf.sdp.group4.world.WorldState;
@@ -22,12 +23,15 @@ import uk.ac.ed.inf.sdp.group4.strategy.RobotColour;
 
 public class Launcher implements Runnable
 {
-
-	final int SCALE = 3;
-	final int PADDING = 5 * SCALE;
-
 	//FPS
 	final int FPS = 25;
+	final int WIDTH = 800;
+	final int HEIGHT = 500;
+	final int X_RATIO = WIDTH / 244;
+	final int Y_RATIO = HEIGHT / 122;
+	final int ROB_X = X_RATIO * 18;
+	final int ROB_Y = Y_RATIO * 20;
+	final int BALL_SIZE = X_RATIO * 5;
 
 	WorldState state;
 	Robot blue;
@@ -86,8 +90,7 @@ public class Launcher implements Runnable
 		//set up display
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(pitch.getLENGTH() * SCALE + 2 * PADDING + 4 * SCALE,
-		              pitch.getWIDTH() * SCALE + 2 * PADDING + 35 * SCALE);
+		frame.setSize(WIDTH, HEIGHT);
 		frame.setVisible(true);
 		frame.getContentPane().add(new Situation(pitch));
 		blue = state.getBlue();
@@ -110,9 +113,8 @@ public class Launcher implements Runnable
 	}
 
 
-	private class Situation extends JComponent
+	private class Situation extends JPanel
 	{
-
 		private Pitch pitch;
 
 		public Situation(Pitch pitch)
@@ -120,35 +122,28 @@ public class Launcher implements Runnable
 			this.pitch = pitch;
 		}
 
-		public void paint(Graphics g)
+		public void paintComponent(Graphics g)
 		{
 			super.paintComponent(g);
-			Graphics2D g2d = (Graphics2D)g;
-			g2d.fillRect(0, 0, pitch.getLENGTH() * SCALE + 2 * PADDING,
-				pitch.getWIDTH() * SCALE + 2 * PADDING);
-			g2d.setPaint(Color.red);
-			g2d.fillRect(0, pitch.getGPOS() * SCALE + PADDING, pitch.getLENGTH() * SCALE + 2 * 								PADDING, pitch.getGLENGTH() * SCALE);
-			g2d.setPaint(Color.getHSBColor(0.3f, 1, 0.392f));
-			g2d.fillRect(PADDING, PADDING, pitch.getLENGTH() * SCALE, pitch.getWIDTH() * SCALE);
+			setBackground(Color.green);
 
-			//draw blue robot
-			g2d.setPaint(Color.BLUE);
-			g2d.fillRect(blue.getX(), blue.getY(), 20 * SCALE, 18 * SCALE);
+			//draw blue
+			g.setColor(Color.blue);
+			
+			Position bPos = blue.getPosition();
+			g.fillRect(bPos.getX() * X_RATIO, bPos.getY() * Y_RATIO, ROB_Y, ROB_X);
 
-			//draw yellow robot
-			g2d.setPaint(Color.YELLOW);
-			g2d.fillRect(yellow.getX(), yellow.getY(), 20 * SCALE, 18 * SCALE);
+			//draw yellow
+			g.setColor(Color.yellow);
+			
+			Position yPos = yellow.getPosition();
+			g.fillRect(yPos.getX() * X_RATIO, yPos.getY() * Y_RATIO, ROB_Y, ROB_X);
 
-			g2d.rotate(blue.getRadFacing() * -1, blue.getX(), blue.getY());
-			g2d.drawImage(iconB, (int)(blue.getX() - Math.sin(blue.getRadFacing()) 
-				* 18 * SCALE / 2 - 18 * SCALE / 2), (int)(blue.getY()),
-			              18 * SCALE, 20 * SCALE, null);
-			g2d.rotate(blue.getRadFacing(), blue.getX(), blue.getY());
-			g2d.rotate(yellow.getRadFacing(), yellow.getY(), yellow.getY());
-			g2d.drawImage(iconY, (int)(yellow.getX() - Math.sin(yellow.getY()) * 18 * 
-					SCALE / 2 - 18 * SCALE / 2), (int)yellow.getY() - 20 * SCALE,
-			              18 * SCALE, 20 * SCALE, null);
-			g2d.rotate(yellow.getRadFacing(), yellow.getX(), yellow.getY());
+			//draw ball
+			g.setColor(Color.red);
+			
+			Position ballPos = ball.getPosition();
+			g.fillOval(ballPos.getX() * X_RATIO, ballPos.getY() * Y_RATIO, BALL_SIZE, BALL_SIZE);
 		}
 	}
 

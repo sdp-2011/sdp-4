@@ -80,12 +80,64 @@ public class SimBot extends Component
 
 	private void turnLeft(int time)
 	{
+		Vector vector = robot.getVector();
 		
+		double angle = 0.36 * time;
+		
+		try
+		{
+			double direction = vector.getDirection();
+
+			if ((direction - angle) < 0)
+			{
+				vector.setDirection(360 - (direction - angle));
+			}
+
+			else
+			{
+				vector.setDirection(direction - angle);
+			}
+
+			robot.setFacing(robot.getVector().getDirection());
+		}
+
+		catch (InvalidAngleException e)
+		{
+			System.out.println("Invalid angle: left turn");
+		}
+		
+		current.addProgress(angle);
 	}
 
 	private void turnRight(int time)
 	{
+		Vector vector = robot.getVector();
+		
+		double angle = 0.36 * time;
 
+		try
+		{
+			double direction = vector.getDirection();
+
+			if ((direction + angle) > 360)
+			{
+				vector.setDirection((direction + angle) - 360);
+			}
+
+			else
+			{
+				vector.setDirection(direction + angle);
+			}
+
+			robot.setFacing(robot.getVector().getDirection());
+		}
+
+		catch (InvalidAngleException e)
+		{
+			System.out.println("Invalid angle: right turn");
+		}
+		
+		current.addProgress(angle);
 	}
 
 	public void shoot(int time)
