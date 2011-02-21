@@ -40,18 +40,6 @@ public class TestController extends Controller
 		}
 	}
 
-	public void turn(double angle)
-	{
-		if (angle >= 0)
-		{
-			turnLeft((int)angle);
-		}
-		else
-		{
-			turnRight((int)angle * -1);
-		}
-	}
-
 	public void steer(int angle)
 	{
 		sendCommand(3, angle);
@@ -90,12 +78,12 @@ public class TestController extends Controller
 
 	public int getCommand()
 	{
-		return (int)this.instructions.get(0)[0];
+		return this.instructions.get(0)[0];
 	}
 
 	public int getArgument()
 	{
-		return (int)this.instructions.get(0)[1];
+		return this.instructions.get(0)[1];
 	}
 
 	public ArrayList<Integer[]> getInstructions()

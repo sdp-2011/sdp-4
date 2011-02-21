@@ -30,11 +30,6 @@ public class Action
 
 	public boolean isDone()
 	{
-		if (completed >= argument)
-		{
-			return true;
-		}
-
-		return false;
+        return completed >= argument;
 	}
 }

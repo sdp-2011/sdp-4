@@ -34,7 +34,6 @@ public class TrackBallStrategy extends Strategy
 	public TrackBallStrategy(Controller controller, WorldState state)
 	{
 		super(null, controller, RobotColour.BLUE, false);
-		this.state = state;
 	}
 
 	@Override
@@ -139,7 +138,7 @@ public class TrackBallStrategy extends Strategy
 			log.error(e.getMessage());
 		}
 
-		log.debug("    Goal is towards: " + goalRoute.getDirection());
+		log.debug("Goal is towards: " + goalRoute.getDirection());
 		log.debug("Goal is at distance: " + goalRoute.getMagnitude());
 
 		return goalRoute;
@@ -158,7 +157,7 @@ public class TrackBallStrategy extends Strategy
 			log.error(e.getMessage());
 		}
 
-		log.debug("    Ball is towards: " + route.getDirection());
+		log.debug("Ball is towards: " + route.getDirection());
 		log.debug("Ball is at distance: " + route.getMagnitude());
 
 		return route;
