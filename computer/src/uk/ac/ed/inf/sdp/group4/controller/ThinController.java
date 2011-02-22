@@ -84,5 +84,13 @@ public class ThinController extends Controller
 		{
 			shoot();
 		}
+		else if (command == 4)
+		{
+			turnLeft(argument);
+		}
+		else if (command == 5)
+		{
+			turnRight(argument);
+		}
 	}
 }

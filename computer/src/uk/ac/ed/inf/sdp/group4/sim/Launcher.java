@@ -26,11 +26,11 @@ public class Launcher implements Runnable
 	//FPS
 	final int FPS = 25;
 	final int WIDTH = 800;
-	final int HEIGHT = 500;
+	final int HEIGHT = 400;
 	final int X_RATIO = WIDTH / 244;
 	final int Y_RATIO = HEIGHT / 122;
-	final int ROB_X = X_RATIO * 18;
-	final int ROB_Y = Y_RATIO * 20;
+	final int ROB_X = X_RATIO * 20;
+	final int ROB_Y = Y_RATIO * 18;
 	final int BALL_SIZE = X_RATIO * 5;
 
 	WorldState state;
@@ -51,12 +51,13 @@ public class Launcher implements Runnable
 	{
 		this.components = components;
 		this.state = state;
-		loadContent();
-		setup();
 	}
 
 	public void run()
 	{
+		loadContent();
+		setup();
+
 		long t = System.currentTimeMillis();
 
 		while (true)
@@ -96,6 +97,8 @@ public class Launcher implements Runnable
 		blue = state.getBlue();
 		yellow = state.getYellow();
 		ball = state.getBall();
+
+		blue.setPosition(30, 60);
 	}
 
 	private void update(int time)
@@ -127,17 +130,22 @@ public class Launcher implements Runnable
 			super.paintComponent(g);
 			setBackground(Color.green);
 
+			int adjustX = ROB_X / 2;
+			int adjustY = ROB_Y / 2;
+
 			//draw blue
 			g.setColor(Color.blue);
 			
 			Position bPos = blue.getPosition();
-			g.fillRect(bPos.getX() * X_RATIO, bPos.getY() * Y_RATIO, ROB_Y, ROB_X);
+			g.fillRect(bPos.getX() * X_RATIO - adjustX, bPos.getY() * Y_RATIO - adjustY,
+				ROB_X, ROB_Y);
 
 			//draw yellow
 			g.setColor(Color.yellow);
 			
 			Position yPos = yellow.getPosition();
-			g.fillRect(yPos.getX() * X_RATIO, yPos.getY() * Y_RATIO, ROB_Y, ROB_X);
+			g.fillRect(yPos.getX() * X_RATIO - adjustX, yPos.getY() * Y_RATIO - adjustY,
+				 ROB_X, ROB_Y);
 
 			//draw ball
 			g.setColor(Color.red);

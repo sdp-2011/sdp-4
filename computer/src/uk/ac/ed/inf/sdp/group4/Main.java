@@ -75,18 +75,10 @@ public class Main
 
 				controller = new ThinController(bot);
 				strategy = new TrackBallStrategy(controller, state);
+				//strategy = new KeyboardStrategy(client, controller, RobotColour.BLUE);
 
 				Launcher launcher = new Launcher(state, components);
 				new Thread(launcher).start();
-				Thread.sleep(3000);
-				//controller.driveForward(50);
-				//Thread.sleep(3000);
-				//controller.driveBackward(50);
-				//Thread.sleep(3000);
-				controller.turn(60);
-				Thread.sleep(3000);
-				controller.turn(-60);
-				Thread.sleep(3000);
 			default:
 				System.out.println("Goddammit. Give me a real number!");
 		}

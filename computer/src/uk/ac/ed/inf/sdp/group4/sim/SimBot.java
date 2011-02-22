@@ -69,8 +69,8 @@ public class SimBot extends Component
 		Vector vector = robot.getVector();
 
 		double speed = (vector.getMagnitude() / 1000) * time;
-		double speedX = speed * Math.cos(Math.toRadians(vector.getDirection()));
-		double speedY = speed * Math.sin(Math.toRadians(vector.getDirection()));
+		double speedX = speed * Math.cos(Math.toRadians(vector.getDirection() - 90));
+		double speedY = speed * Math.sin(Math.toRadians(vector.getDirection() - 90));
 
 		x += speedX;
 		y += speedY;
@@ -81,63 +81,59 @@ public class SimBot extends Component
 	private void turnLeft(int time)
 	{
 		Vector vector = robot.getVector();
-		
+		double direction = vector.getDirection();
 		double angle = 0.36 * time;
-		
+
 		try
 		{
-			double direction = vector.getDirection();
-
-			if ((direction - angle) < 0)
-			{
-				vector.setDirection(360 - (direction - angle));
+			if (direction - angle < 0)
+			{		
+				vector.setDirection(360 - direction - angle);
+				robot.setFacing(360 - direction - angle);
 			}
 
 			else
 			{
 				vector.setDirection(direction - angle);
+				robot.setFacing(direction - angle);
 			}
-
-			robot.setFacing(robot.getVector().getDirection());
+		
+			current.addProgress(angle);
 		}
 
 		catch (InvalidAngleException e)
 		{
-			System.out.println("Invalid angle: left turn");
+			//
 		}
-		
-		current.addProgress(angle);
 	}
 
 	private void turnRight(int time)
 	{
 		Vector vector = robot.getVector();
-		
+		double direction = vector.getDirection();
 		double angle = 0.36 * time;
 
 		try
 		{
-			double direction = vector.getDirection();
-
-			if ((direction + angle) > 360)
+			if (direction + angle > 360)
 			{
-				vector.setDirection((direction + angle) - 360);
+				vector.setDirection(direction + angle - 360);
+				robot.setFacing(direction + angle - 360);
 			}
 
 			else
 			{
 				vector.setDirection(direction + angle);
+				robot.setFacing(direction + angle);
 			}
-
-			robot.setFacing(robot.getVector().getDirection());
+		
+			current.addProgress(angle);
 		}
 
 		catch (InvalidAngleException e)
 		{
-			System.out.println("Invalid angle: right turn");
+			//
 		}
-		
-		current.addProgress(angle);
 	}
 
 	public void shoot(int time)
