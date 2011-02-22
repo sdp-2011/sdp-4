@@ -1,7 +1,7 @@
 package uk.ac.ed.inf.sdp.group4.strategy;
 
 
-import uk.ac.ed.inf.sdp.group4.world.Robot;
+import uk.ac.ed.inf.sdp.group4.world.WorldObject;
 
 /**
  * A heuristic that uses the tile that is closest to the target
