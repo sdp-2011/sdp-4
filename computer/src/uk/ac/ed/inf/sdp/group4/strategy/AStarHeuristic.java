@@ -1,6 +1,6 @@
 package uk.ac.ed.inf.sdp.group4.strategy;
 
-import uk.ac.ed.inf.sdp.group4.world.Robot;
+import uk.ac.ed.inf.sdp.group4.world.WorldObject;
 
 /**
  * The description of a class providing a cost for a given tile based
