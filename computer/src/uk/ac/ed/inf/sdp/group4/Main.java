@@ -79,8 +79,8 @@ public class Main
 
 				controller = new ThinController(bot);
 				//strategy = new KeyboardStrategy(client, controller, RobotColour.BLUE);
-				//strategy = new TrackBallStrategy(client, controller, RobotColour.BLUE);
-				strategy = new Match(client, controller, RobotColour.BLUE, false);
+				strategy = new TrackBallStrategy(client, controller, RobotColour.BLUE);
+				//strategy = new Match(client, controller, RobotColour.BLUE, false);
 
 				Launcher launcher = new Launcher(state, components);
 				new Thread(launcher).start();
