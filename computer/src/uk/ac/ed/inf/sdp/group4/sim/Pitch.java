@@ -1,28 +1,40 @@
 package uk.ac.ed.inf.sdp.group4.sim;
 
-public class Pitch
+import uk.ac.ed.inf.sdp.group4.domain.Position;
+import uk.ac.ed.inf.sdp.group4.world.WorldObject;
+
+public class Pitch implements Runnable
 {
+	public Component[] components;
+	
+	public Pitch(Component[] components)
+	{
+		this.components = components;
+	}	
 
-	final int LENGTH = 244;
-	final int WIDTH = 122;
+	public void run()
+	{
+		while (true)
+		{
+			for (int i = 0; i < components.length; i++)
+			{
+				if (i == components.length - 1)
+				{
+					break;
+				}
 
-	final int GLENGTH = 60;
-	final int GPOS = (WIDTH - GLENGTH) / 2;
+				for(int c = i + 1; c < components.length; c++)
+				{
+					WorldObject one = components[i].getObject();
+					WorldObject two = components[c].getObject();
 
-	public int getLENGTH()
-	{
-		return LENGTH;
-	}
-	public int getWIDTH()
-	{
-		return WIDTH;
-	}
-	public int getGLENGTH()
-	{
-		return GLENGTH;
-	}
-	public int getGPOS()
-	{
-		return GPOS;
+					if (one.getPosition().distance(two.getPosition()) < (components[i].getRadius() 
+						+ components[c].getRadius()))
+					{
+						//collision
+					}
+				}
+			}
+		}
 	}
 }

@@ -57,6 +57,7 @@ public class Launcher implements Runnable
 	{
 		loadContent();
 		setup();
+		new Thread(new Pitch(components)).start();
 
 		long t = System.currentTimeMillis();
 
@@ -87,13 +88,12 @@ public class Launcher implements Runnable
 
 	private void setup()
 	{
-		Pitch pitch = new Pitch();
 		//set up display
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(WIDTH, HEIGHT);
 		frame.setVisible(true);
-		frame.getContentPane().add(new Situation(pitch));
+		frame.getContentPane().add(new Situation());
 		blue = state.getBlue();
 		yellow = state.getYellow();
 		ball = state.getBall();
@@ -118,13 +118,6 @@ public class Launcher implements Runnable
 
 	private class Situation extends JPanel
 	{
-		private Pitch pitch;
-
-		public Situation(Pitch pitch)
-		{
-			this.pitch = pitch;
-		}
-
 		public void paintComponent(Graphics g)
 		{
 			super.paintComponent(g);

@@ -19,6 +19,7 @@ import uk.ac.ed.inf.sdp.group4.strategy.Match;
 import uk.ac.ed.inf.sdp.group4.sim.FakeVision;
 import uk.ac.ed.inf.sdp.group4.sim.Component;
 import uk.ac.ed.inf.sdp.group4.sim.SimBot;
+import uk.ac.ed.inf.sdp.group4.sim.SimBall;
 import uk.ac.ed.inf.sdp.group4.domain.Position;
 
 public class Main
@@ -73,9 +74,11 @@ public class Main
 				WorldState state = new WorldState();
 				client = new FakeVision(state);
 				state.getBall().setPosition(122, 60);
-				Component[] components = new Component[1];
+				Component[] components = new Component[2];
 				SimBot bot = new SimBot(state.getBlue());
+				SimBall ball = new SimBall(state.getBall());
 				components[0] = bot;
+				components[1] = ball;
 
 				controller = new ThinController(bot);
 				//strategy = new KeyboardStrategy(client, controller, RobotColour.BLUE);

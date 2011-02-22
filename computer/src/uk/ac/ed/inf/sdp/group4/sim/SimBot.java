@@ -4,6 +4,7 @@ import uk.ac.ed.inf.sdp.group4.world.Robot;
 import uk.ac.ed.inf.sdp.group4.domain.Position;
 import uk.ac.ed.inf.sdp.group4.domain.Vector;
 import uk.ac.ed.inf.sdp.group4.domain.InvalidAngleException;
+import uk.ac.ed.inf.sdp.group4.world.WorldObject;
 import java.lang.Math;
 
 public class SimBot extends Component
@@ -12,12 +13,14 @@ public class SimBot extends Component
 	private Action current;
 	private double x;
 	private double y;
+	private double radius;
 
 	public SimBot(Robot robot)
 	{
 		this.robot = robot;
 		this.x = robot.getX();
 		this.y = robot.getY();
+		this.radius = 10;
 	}
 
 	public void update(int time)
@@ -139,5 +142,15 @@ public class SimBot extends Component
 	public void shoot(int time)
 	{
 
+	}
+
+	public double getRadius()
+	{	
+		return radius;
+	}
+
+	public WorldObject getObject()
+	{
+		return robot;
 	}
 }
