@@ -78,15 +78,18 @@ public class Main
 
 				Launcher launcher = new Launcher(state, components);
 				new Thread(launcher).start();
+				break;
+			case 4:
+				controller = new FatController();
+				controller.driveForward(50);
 				Thread.sleep(3000);
-				//controller.driveForward(50);
-				//Thread.sleep(3000);
-				//controller.driveBackward(50);
-				//Thread.sleep(3000);
-				controller.turn(60);
+				controller.driveBackward(50);
 				Thread.sleep(3000);
-				controller.turn(-60);
+				controller.turn(360);
 				Thread.sleep(3000);
+				controller.turn(-360);
+				Thread.sleep(3000);
+				System.exit(0);
 			default:
 				System.out.println("Goddammit. Give me a real number!");
 		}
