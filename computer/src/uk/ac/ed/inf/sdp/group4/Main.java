@@ -5,6 +5,7 @@ import java.io.*;
 import org.apache.log4j.BasicConfigurator;
 
 import uk.ac.ed.inf.sdp.group4.world.VisionClient;
+import uk.ac.ed.inf.sdp.group4.world.IVisionClient;
 import uk.ac.ed.inf.sdp.group4.world.WorldState;
 import uk.ac.ed.inf.sdp.group4.controller.FatController;
 import uk.ac.ed.inf.sdp.group4.controller.ThinController;
@@ -14,6 +15,8 @@ import uk.ac.ed.inf.sdp.group4.strategy.Strategy;
 import uk.ac.ed.inf.sdp.group4.strategy.TrackBallStrategy;
 import uk.ac.ed.inf.sdp.group4.sim.Launcher;
 import uk.ac.ed.inf.sdp.group4.strategy.KeyboardStrategy;
+import uk.ac.ed.inf.sdp.group4.strategy.Match;
+import uk.ac.ed.inf.sdp.group4.sim.FakeVision;
 import uk.ac.ed.inf.sdp.group4.sim.Component;
 import uk.ac.ed.inf.sdp.group4.sim.SimBot;
 import uk.ac.ed.inf.sdp.group4.domain.Position;
@@ -26,7 +29,7 @@ public class Main
 		BasicConfigurator.configure();
 
 		// Building blocks of perfection.
-		VisionClient client = new VisionClient();
+		IVisionClient client = new VisionClient();
 		Controller controller = null;
 		Strategy strategy = null;
 
@@ -68,14 +71,16 @@ public class Main
 			case 3:
 				colour = RobotColour.BLUE;
 				WorldState state = new WorldState();
+				client = new FakeVision(state);
 				state.getBall().setPosition(122, 60);
 				Component[] components = new Component[1];
 				SimBot bot = new SimBot(state.getBlue());
 				components[0] = bot;
 
 				controller = new ThinController(bot);
-				strategy = new TrackBallStrategy(controller, state);
 				//strategy = new KeyboardStrategy(client, controller, RobotColour.BLUE);
+				//strategy = new TrackBallStrategy(client, controller, RobotColour.BLUE);
+				strategy = new Match(client, controller, RobotColour.BLUE, false);
 
 				Launcher launcher = new Launcher(state, components);
 				new Thread(launcher).start();
