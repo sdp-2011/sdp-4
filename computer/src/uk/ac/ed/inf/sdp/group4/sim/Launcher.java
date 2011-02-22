@@ -31,7 +31,7 @@ public class Launcher implements Runnable
 	final int Y_RATIO = HEIGHT / 122;
 	final int ROB_X = X_RATIO * 20;
 	final int ROB_Y = Y_RATIO * 18;
-	final int BALL_SIZE = X_RATIO * 5;
+	final int BALL_SIZE = X_RATIO * 4;
 
 	WorldState state;
 	Robot blue;
@@ -137,21 +137,32 @@ public class Launcher implements Runnable
 			g.setColor(Color.blue);
 
 			Position bPos = blue.getPosition();
-			g.fillRect(bPos.getX() * X_RATIO - adjustX, bPos.getY() * Y_RATIO - adjustY,
+			g.fillOval(bPos.getX() * X_RATIO - adjustX, bPos.getY() * Y_RATIO - adjustY,
 				ROB_X, ROB_Y);
+
+			//draw Vector
+			g.setColor(Color.red);
+
+			double speedX = 10 * Math.cos(Math.toRadians(blue.getVector().getDirection() - 90));
+			double speedY = 10 * Math.sin(Math.toRadians(blue.getVector().getDirection() - 90));
+			double endX = (bPos.getX() * X_RATIO) + (speedX * X_RATIO);
+			double endY = (bPos.getY() * Y_RATIO) + (speedY * Y_RATIO);
+
+			g.drawLine(bPos.getX() * X_RATIO, bPos.getY() * Y_RATIO, (int) endX, (int) endY);
 
 			//draw yellow
 			g.setColor(Color.yellow);
 
 			Position yPos = yellow.getPosition();
-			g.fillRect(yPos.getX() * X_RATIO - adjustX, yPos.getY() * Y_RATIO - adjustY,
+			g.fillOval(yPos.getX() * X_RATIO - adjustX, yPos.getY() * Y_RATIO - adjustY,
 				 ROB_X, ROB_Y);
 
 			//draw ball
 			g.setColor(Color.red);
 
 			Position ballPos = ball.getPosition();
-			g.fillOval(ballPos.getX() * X_RATIO, ballPos.getY() * Y_RATIO, BALL_SIZE, BALL_SIZE);
+			g.fillOval(ballPos.getX() * X_RATIO - (4/2), ballPos.getY() * Y_RATIO - (4/2),
+				BALL_SIZE, BALL_SIZE);
 		}
 	}
 
