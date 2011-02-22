@@ -1,5 +1,7 @@
 package uk.ac.ed.inf.sdp.group4.strategy;
 
+import uk.ac.ed.inf.sdp.group4.world.Robot;
+
 /**
  * The description of a class providing a cost for a given tile based
  * on a target location and entity being moved. This heuristic controls
@@ -24,5 +26,5 @@ public interface AStarHeuristic
 	 * @param ty Teh y coordinate of the target location
 	 * @return The cost associated with the given tile
 	 */
-	public float getCost(TileBasedMap map, Mover mover, int x, int y, int tx, int ty);
+	public float getCost(TileBasedMap map, WorldObject robot, int x, int y, int tx, int ty);
 }
