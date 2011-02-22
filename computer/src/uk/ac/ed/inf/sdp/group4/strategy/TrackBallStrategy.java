@@ -61,6 +61,7 @@ public class TrackBallStrategy extends Strategy
 		// turn towards it.
 		if (Math.abs(ballAngle) > 15)
 		{
+			controller.setSpeed(300);
 			controller.turn(ballAngle);
 			pause(1000);
 		}

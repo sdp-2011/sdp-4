@@ -43,7 +43,12 @@ public class Match extends Strategy
 		
 		super(client, controller, robotColour, testing);
 	}
-	
+/*
+	public Match(Controller controller, WorldState state)
+	{
+		super(null, controller, RobotColour.BLUE, false);
+	}
+*/
 	public void tick(){
 		pathfinder = new AStarPathFinder(pitch, 5000);
 		//trajectory = new TrajectoryFinder(pitch, ourRobot);
