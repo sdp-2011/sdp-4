@@ -144,11 +144,11 @@ public class Launcher implements Runnable
 			g.drawLine(bPos.getX() * X_RATIO, bPos.getY() * Y_RATIO, (int) endX, (int) endY);
 
 			//draw yellow
-			g.setColor(Color.yellow);
+			/*g.setColor(Color.yellow);
 
 			Position yPos = yellow.getPosition();
 			g.fillOval(yPos.getX() * X_RATIO - adjustX, yPos.getY() * Y_RATIO - adjustY,
-				 ROB_X, ROB_Y);
+				 ROB_X, ROB_Y);*/
 
 			//draw ball
 			g.setColor(Color.red);

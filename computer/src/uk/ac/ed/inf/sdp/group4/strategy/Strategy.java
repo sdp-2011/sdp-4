@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import uk.ac.ed.inf.sdp.group4.world.VisionClient;
 import uk.ac.ed.inf.sdp.group4.world.IVisionClient;
 import uk.ac.ed.inf.sdp.group4.controller.Controller;
+import uk.ac.ed.inf.sdp.group4.domain.Position;
 
 public abstract class Strategy implements IStrategy
 {
@@ -17,6 +18,9 @@ public abstract class Strategy implements IStrategy
 	protected RobotColour ourColour;
 
 	boolean testing;
+
+	protected Position westGoal = new Position(30, 162);
+	protected Position eastGoal = new Position(525, 162);
 
 	public Strategy(IVisionClient client, Controller controller, RobotColour ourColour, boolean testing)
 	{
@@ -77,6 +81,12 @@ public abstract class Strategy implements IStrategy
 
 			}
 		}
+	}
+
+	public void setGoals(int wX, int wY, int eX, int eY)
+	{
+		eastGoal = new Position(eX, eY);
+		westGoal = new Position(wX, wY);
 	}
 }
 

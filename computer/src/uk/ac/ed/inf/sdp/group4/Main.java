@@ -86,6 +86,7 @@ public class Main
 				//strategy = new Match(client, controller, RobotColour.BLUE, false);
 
 				Launcher launcher = new Launcher(state, components);
+				strategy.setGoals(0, 60, 243, 60);
 				new Thread(launcher).start();
 				break;
 			case 4:

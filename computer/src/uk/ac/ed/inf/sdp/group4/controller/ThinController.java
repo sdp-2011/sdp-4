@@ -30,7 +30,7 @@ public class ThinController extends Controller
 	public void shoot()
 	{
 		System.out.println("Shooting!");
-		bot.newAction(new Action(Action.Type.SHOOT, 0));
+		bot.shoot(0);
 	}
 
 	public void beserk(boolean val)

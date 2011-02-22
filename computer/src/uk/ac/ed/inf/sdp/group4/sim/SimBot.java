@@ -10,10 +10,12 @@ import java.lang.Math;
 public class SimBot extends Component
 {
 	private Robot robot;
+	private SimBall ball;
 	private Action current;
 	private double x;
 	private double y;
 	private double radius;
+	private boolean isShooting;
 
 	public SimBot(Robot robot)
 	{
@@ -51,10 +53,6 @@ public class SimBot extends Component
 				else if (current.getType() == Action.Type.RIGHT)
 				{
 					turnRight(time);
-				}
-				else if (current.getType() == Action.Type.SHOOT)
-				{
-					shoot(time);
 				}
 			}
 		}
@@ -140,8 +138,26 @@ public class SimBot extends Component
 	}
 
 	public void shoot(int time)
-	{
+	{	
+		if (ball != null)
+		{
+			isShooting = true;
+			ball.lose();
+			Vector vector = ball.getObject().getVector();
+			vector.setMagnitude(70);
 
+			try
+			{
+				vector.setDirection(robot.getVector().getDirection());
+			}
+
+			catch (InvalidAngleException e)
+			{
+				//
+			}
+
+			lose();
+		}
 	}
 
 	public double getRadius()
@@ -152,5 +168,20 @@ public class SimBot extends Component
 	public WorldObject getObject()
 	{
 		return robot;
+	}
+
+	public void grab(SimBall ball)
+	{
+		this.ball = ball;
+	}
+
+	public void lose()
+	{
+		this.ball = null;
+	}
+
+	public boolean isShooting()
+	{
+		return isShooting;
 	}
 }

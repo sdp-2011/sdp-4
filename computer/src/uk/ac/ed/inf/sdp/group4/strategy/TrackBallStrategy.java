@@ -18,9 +18,6 @@ public class TrackBallStrategy extends Strategy
 	private Ball ball;
 	private WorldState state;
 
-	Position westGoal = new Position(30, 162);
-	Position eastGoal = new Position(525, 162);
-
 	public TrackBallStrategy(IVisionClient client, Controller controller, RobotColour colour)
 	{
 		this(client, controller, colour, false);

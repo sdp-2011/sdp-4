@@ -31,7 +31,18 @@ public class Pitch implements Runnable
 					if (one.getPosition().distance(two.getPosition()) < (components[i].getRadius() 
 						+ components[c].getRadius()))
 					{
-						//collision
+						if (components[i] instanceof SimBall)
+						{
+							SimBall ball = (SimBall) components[i];
+							SimBot bot = (SimBot) components[c];
+							if (!bot.isShooting()) ball.grab(bot);
+						}
+						else if (components[c] instanceof SimBall)
+						{
+							SimBall ball = (SimBall) components[c];
+							SimBot bot = (SimBot) components[i];
+							if (!bot.isShooting()) ball.grab(bot);
+						}
 					}
 				}
 			}
