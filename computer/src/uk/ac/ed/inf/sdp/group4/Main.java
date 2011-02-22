@@ -95,7 +95,7 @@ public class Main
 				break;
 			case 5:
 				controller = new FatController();
-				strategy = new Match(client, controller, colour);
+				strategy = new Match(client, controller, colour, false);
 				break;
 
 			default:
