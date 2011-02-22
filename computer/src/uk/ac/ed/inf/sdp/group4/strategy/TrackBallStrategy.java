@@ -57,36 +57,39 @@ public class TrackBallStrategy extends Strategy
 		Vector goalRoute = getGoalRoute();
 		double goalAngle = goalRoute.angleTo(robot.getFacing());
 
+		if(ball.getX() == 0 && ball.getY() == 0 && Math.abs(goalAngle) < 30)
+		{
+			controller.shoot();
+		}
+
 		// If we are a long turning distance from the ball then we should
 		// turn towards it.
 		if (Math.abs(ballAngle) > 15)
 		{
 			controller.setSpeed(300);
-			controller.turn(ballAngle);
+			controller.turn((int)(ballAngle*0.6));
 			pause(1000);
 		}
 		else
 		{
 			// If we're close to the ball and the goal is close then we should shoot.
-			if (ballRoute.getMagnitude() < 30 && goalRoute.getMagnitude() < 200 && Math.abs(goalAngle) < 20)
+			if (ballRoute.getMagnitude() < 40 && Math.abs(goalAngle) < 30)
 			{
 				controller.shoot();
 			}
 			// If we're close to the ball and the goal is far then we should
 			// drive with a ball to the goal.
-			else if (ballRoute.getMagnitude() < 30 && goalRoute.getMagnitude() >= 200)
+			else if (ballRoute.getMagnitude() < 25)
 			{
 				log.debug("Driving to the goal!");
 				if (Math.abs(goalAngle) > 15)
 				{
-					controller.stop();
-					controller.setSpeed(100);
+					controller.setSpeed(50);
 					controller.turn(goalAngle);
-					pause(1000);
+					pause(4000);
 				}
 				else
 				{
-					controller.stop();
 					controller.setSpeed(300);
 					controller.driveForward((int)goalRoute.getMagnitude() / 8);
 					pause(1000);
@@ -99,16 +102,20 @@ public class TrackBallStrategy extends Strategy
 			// accurate movement.
 			if (ballRoute.getMagnitude() > 40)
 			{
-				controller.stop();
-				controller.setSpeed(900);
-				controller.driveForward((int)ballRoute.getMagnitude() / 8);
+				controller.setSpeed(400);
+				controller.driveForward((int)ballRoute.getMagnitude() / 4);
 				pause(1000);
 			}
-			else
+			else if (ballRoute.getMagnitude() < 40)
 			{
-				controller.stop();
-				controller.setSpeed(100);
+				controller.setSpeed(50);
 				controller.driveForward((int)ballRoute.getMagnitude() / 8);
+				pause(1300);
+			}
+			else if (ballRoute.getMagnitude() < 30)
+			{
+				controller.setSpeed(50);
+				controller.driveForward((int)ballRoute.getMagnitude());
 				pause(1300);
 			}
 		}

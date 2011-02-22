@@ -13,7 +13,7 @@ public class Vector
 
 	public void setDirection(double direction) throws InvalidAngleException
 	{
-		if (direction < 0 || direction > 359)
+		if (direction < 0 || direction >= 360)
 		{
 			throw new InvalidAngleException(direction);
 		}
