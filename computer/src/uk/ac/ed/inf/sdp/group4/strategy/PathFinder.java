@@ -1,5 +1,6 @@
 package uk.ac.ed.inf.sdp.group4.strategy;
 
+import uk.ac.ed.inf.sdp.group4.world.WorldObject;
 
 /**
  * A description of an implementation that can find a path from one
@@ -27,5 +28,5 @@ public interface PathFinder
 	 * @param ty Teh y coordinate of the target location
 	 * @return The path found from start to end, or null if no path can be found.
 	 */
-	public Path findPath(Mover mover, int sx, int sy, int tx, int ty);
+	public Path findPath(WorldObject worldObject, int sx, int sy, int tx, int ty);
 }

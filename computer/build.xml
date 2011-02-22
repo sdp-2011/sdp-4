@@ -1,4 +1,4 @@
-<project name="Computer" default="build" basedir="."> 	
+<project name="SDP Group 4 - Strategy" default="build" basedir=".">
 	<property environment="env" />
 	<property name="nxj.home" value="${env.NXJ_HOME}" />
 

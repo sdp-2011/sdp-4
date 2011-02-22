@@ -26,7 +26,7 @@ public class SimBot extends Component
 		{
 			if (current.isDone())
 			{
-				current = null;	
+				current = null;
 			}
 
 			else

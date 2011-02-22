@@ -5,7 +5,7 @@ public class Action
 	private Type type;
 	private int argument;
 	private double completed;
-	
+
 	public enum Type
 	{
 		FORWARD, REVERSE, SHOOT, LEFT, RIGHT
@@ -30,11 +30,6 @@ public class Action
 
 	public boolean isDone()
 	{
-		if (completed >= argument)
-		{
-			return true;
-		}
-			
-		return false;
+        return completed >= argument;
 	}
 }

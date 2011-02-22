@@ -11,7 +11,7 @@ public class TestVector
 	public void testAngleRight() throws InvalidAngleException
 	{
 		Vector a = new Vector(0, 0);
-		double b= 90;
+		double b = 90;
 
 		double angle = a.angleTo(b);
 		assertEquals(90, angle, 0);
