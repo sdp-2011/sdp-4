@@ -25,7 +25,7 @@ import uk.ac.ed.inf.sdp.group4.strategy.RobotColour;
 public class Launcher implements Runnable
 {
 	//FPS
-	final int FPS = 25;
+	zfinal int FPS = 25;
 	final int WIDTH = 800;
 	final int HEIGHT = 400;
 	final int X_RATIO = WIDTH / 244;
@@ -130,8 +130,8 @@ public class Launcher implements Runnable
 			int adjustY = ROB_Y / 2;
 
 			g.setColor(Color.pink);
-			g.fillRect(0 * X_RATIO, 30 * Y_RATIO, 10 * X_RATIO, 60 * Y_RATIO);
-			g.fillRect(256 * X_RATIO, 30 * Y_RATIO, 10 * X_RATIO, 60 * Y_RATIO);
+			g.fillRect(0 * X_RATIO, 20 * Y_RATIO, 10 * X_RATIO, 80 * Y_RATIO);
+			g.fillRect(256 * X_RATIO, 20 * Y_RATIO, 10 * X_RATIO, 80 * Y_RATIO);
 
 			//draw blue
 			g.setColor(Color.blue);
