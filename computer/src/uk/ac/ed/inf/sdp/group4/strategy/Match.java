@@ -17,7 +17,7 @@ public class Match extends Strategy
 	RobotColour robotColour;
 	boolean testing;
 
-	public Pitch pitch = new Pitch(client, ourColour());
+	public Pitch pitch;
 	// Our pathfinders
 	private PathFinder pathfinder;
 	//private PathFinder trajectory;
@@ -26,9 +26,9 @@ public class Match extends Strategy
 	public Path path;
 
 	// Declarations for robots
-	private Robot ourRobot = pitch.ourRobot;
-	private Robot otherBot = pitch.theirRobot;
-	private Ball ball = pitch.ball;
+	private Robot ourRobot;
+	private Robot otherBot;
+	private Ball ball;
 	
 	// estimated goal positions
 	Position westGoal = new Position(30, 122);
@@ -42,6 +42,10 @@ public class Match extends Strategy
 	public Match(IVisionClient client, Controller controller, RobotColour robotColour, boolean testing){
 		
 		super(client, controller, robotColour, testing);
+		pitch = new Pitch(client, ourColour());
+		ourRobot = pitch.ourRobot;
+		otherBot = pitch.theirRobot;
+		ball = pitch.ball;
 	}
 /*
 	public Match(Controller controller, WorldState state)
