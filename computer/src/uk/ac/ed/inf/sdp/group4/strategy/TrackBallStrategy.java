@@ -18,6 +18,9 @@ public class TrackBallStrategy extends Strategy
 	private Ball ball;
 	private WorldState state;
 
+	Position westGoal = new Position(30, 162);
+	Position eastGoal = new Position(525, 162);
+
 	public TrackBallStrategy(IVisionClient client, Controller controller, RobotColour colour)
 	{
 		this(client, controller, colour, false);
@@ -70,16 +73,16 @@ public class TrackBallStrategy extends Strategy
 		else
 		{
 			// If we're close to the ball and the goal is close then we should shoot.
-			if (ballRoute.getMagnitude() < 40 && Math.abs(goalAngle) < 30 && goalRoute.getMagnitude() < 100)
+			if (ballRoute.getMagnitude() < 40 && Math.abs(goalAngle) < 30)
 			{
 				controller.shoot();
 			}
 			// If we're close to the ball and the goal is far then we should
 			// drive with a ball to the goal.
-			else if (ballRoute.getMagnitude() < 10)
+			else if (ballRoute.getMagnitude() < 25)
 			{
 				log.debug("Driving to the goal!");
-				if (Math.abs(goalAngle) > 5)
+				if (Math.abs(goalAngle) > 15)
 				{
 					controller.setSpeed(50);
 					controller.turn(goalAngle);
@@ -168,4 +171,5 @@ public class TrackBallStrategy extends Strategy
 		return route;
 	}
 }
+
 
