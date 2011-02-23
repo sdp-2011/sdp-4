@@ -46,24 +46,23 @@ def refine_orientation(orientation, center_point, mask):
 	cross2 = cv.LoadImageM("../images/cross.png", cv.CV_LOAD_IMAGE_UNCHANGED)
 	result = cv.CreateImage(result_size, cv.IPL_DEPTH_32F, 1)
 	
-	maximum = 0
+	down = False
+	if (orientation < 0)
+	    down = True
 		
-	if (orientation < 0):
-	    rotation_matrix = cv.GetRotationMatrix2D(center_point, orientation, 1)
-	    check1 = cv.CreateMat(40, 40, cv.CV_8UC1)
-	    cv.WarpAffine(cross, check1, rotation_matrix)
-	    cv.MatchTemplate(mask, check1, result, cv.CV_TM_CCORR)
-	    min_val_down, max_val_down, min_loc_down, max_loc_down = cv.MinMaxLoc(result) 
+	rotation_matrix = cv.GetRotationMatrix2D(center_point, orientation, 1)
+	check1 = cv.CreateMat(40, 40, cv.CV_8UC1)
+	cv.WarpAffine(cross, check1, rotation_matrix)
+	cv.MatchTemplate(mask, check1, result, cv.CV_TM_CCORR)
+	min_val_down, max_val_down, min_loc_down, max_loc_down = cv.MinMaxLoc(result) 
 		
-	    check2 = cv.CreateMat(40, 40, cv.CV_8UC1)
-	    rotation_matrix = cv.GetRotationMatrix2D(center_point, orientation + 180, 1)
-	    cv.WarpAffine(cross2, check2, rotation_matrix)
-	    cv.MatchTemplate(mask, check2, result, cv.CV_TM_CCORR)
-	    min_val_up, max_val_up, min_loc_up, max_loc_up = cv.MinMaxLoc(result)
+	check2 = cv.CreateMat(40, 40, cv.CV_8UC1)
+	rotation_matrix = cv.GetRotationMatrix2D(center_point, orientation + 180, 1)
+	cv.WarpAffine(cross2, check2, rotation_matrix)
+	cv.MatchTemplate(mask, check2, result, cv.CV_TM_CCORR)
+	min_val_up, max_val_up, min_loc_up, max_loc_up = cv.MinMaxLoc(result)
 
-	    if (max_val_down > max_val_up)
-		maximum = 1	
-
+	if ((max_val_down > max_val_up) and down)
 	    return orientation
 	else:
 	    return orientation + 180
