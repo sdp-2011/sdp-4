@@ -75,7 +75,8 @@ public class Main
 				colour = RobotColour.BLUE;
 				WorldState state = new WorldState();
 				client = new FakeVision(state);
-				state.getBall().setPosition(122, 60);
+				state.getBall().setPosition(150, 80);
+				state.getBlue().setPosition(20, 60);
 				Component[] components = new Component[2];
 				SimBot bot = new SimBot(state.getBlue());
 				SimBall ball = new SimBall(state.getBall());
