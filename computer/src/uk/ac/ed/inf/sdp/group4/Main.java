@@ -2,6 +2,8 @@ package uk.ac.ed.inf.sdp.group4;
 
 import java.io.*;
 
+import org.apache.log4j.BasicConfigurator;
+
 import uk.ac.ed.inf.sdp.group4.world.VisionClient;
 import uk.ac.ed.inf.sdp.group4.world.WorldState;
 import uk.ac.ed.inf.sdp.group4.controller.FatController;
@@ -10,13 +12,101 @@ import uk.ac.ed.inf.sdp.group4.controller.Controller;
 import uk.ac.ed.inf.sdp.group4.strategy.RobotColour;
 import uk.ac.ed.inf.sdp.group4.strategy.Strategy;
 import uk.ac.ed.inf.sdp.group4.strategy.TrackBallStrategy;
+import uk.ac.ed.inf.sdp.group4.strategy.Match;
+import uk.ac.ed.inf.sdp.group4.sim.Launcher;
 import uk.ac.ed.inf.sdp.group4.strategy.KeyboardStrategy;
+import uk.ac.ed.inf.sdp.group4.sim.Component;
+import uk.ac.ed.inf.sdp.group4.sim.SimBot;
+import uk.ac.ed.inf.sdp.group4.domain.Position;
 
 public class Main
 {
 	public static void main(String[] args) throws InterruptedException, IOException
 	{
+		// Setup the logger
+		BasicConfigurator.configure();
+
+		// Building blocks of perfection.
+		VisionClient client = new VisionClient();
+		Controller controller = null;
+		Strategy strategy = null;
+
+		// Display the team logo.
+		logo();
+
+		// Java IO. Worst IO.
 		BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
+
+		// Which colour are we playing as?
+		System.out.println("  > 1. Blue");
+		System.out.println("  > 2. Yellow");
+		System.out.println("What colour are we?");
+
+		int colourChoice = Integer.parseInt(keyboard.readLine());
+		RobotColour colour = (colourChoice == 1) ? RobotColour.BLUE : RobotColour.YELLOW;
+
+		// What game would you like to play today?
+		// > GLOBAL THERMONUCLEAR WAR
+		System.out.println("Menu:");
+		System.out.println("  > 1. Keyboard Control");
+		System.out.println("  > 2. Navigate to Ball");
+		System.out.println("  > 3. Simulator");
+		System.out.println("  > 4. Test Movement");
+		System.out.println("  > 5. Match");
+		System.out.println("Where would you like to go today?");
+
+		int option = Integer.parseInt(keyboard.readLine());
+
+		switch (option)
+		{
+			case 1:
+				controller = new FatController();
+				strategy = new KeyboardStrategy(client, controller, colour);
+				break;
+			case 2:
+				controller = new FatController();
+				strategy = new TrackBallStrategy(client, controller, colour);
+				break;
+			case 3:
+				colour = RobotColour.BLUE;
+				WorldState state = new WorldState();
+				state.getBall().setPosition(122, 60);
+				Component[] components = new Component[1];
+				SimBot bot = new SimBot(state.getBlue());
+				components[0] = bot;
+
+				controller = new ThinController(bot);
+				strategy = new TrackBallStrategy(controller, state);
+
+				Launcher launcher = new Launcher(state, components);
+				new Thread(launcher).start();
+				break;
+			case 4:
+				controller = new FatController();
+				controller.driveForward(50);
+				Thread.sleep(3000);
+				controller.driveBackward(50);
+				Thread.sleep(3000);
+				controller.turn(360);
+				Thread.sleep(3000);
+				controller.turn(-360);
+				Thread.sleep(3000);
+				System.exit(0);
+				break;
+			case 5:
+				controller = new FatController();
+				strategy = new Match(client, controller, colour, false);
+				break;
+
+			default:
+				System.out.println("Goddammit. Give me a real number!");
+		}
+
+		strategy.runStrategy();
+	}
+
+	private static void logo()
+	{
 		System.out.println("      ____    _    ____ _____ _     _____");
 		System.out.println("     / ___|  / \\  / ___|_   _| |   | ____|");
 		System.out.println("    | |     / _ \\ \\___ \\ | | | |   |  _|");
@@ -29,45 +119,5 @@ public class Main
 		System.out.println("    | |___|  _ <  / ___ \\ ___) |  _  | |___|  _ < ___) |");
 		System.out.println("     \\____|_| \\_\\/_/   \\_\\____/|_| |_|_____|_| \\_\\____/");
 		System.out.println();
-		System.out.println("  > 1. Blue");
-		System.out.println("  > 2. Yellow");
-		System.out.println("What colour are we?");
-		int colourChoice = Integer.parseInt(keyboard.readLine());
-		RobotColour colour;
-		if (colourChoice == 1)
-		{
-			colour = RobotColour.BLUE;
-		}
-		else
-		{
-			colour = RobotColour.YELLOW;
-		}
-		System.out.println("Menu:");
-		System.out.println("  > 1. Keyboard Control");
-		System.out.println("  > 2. Navigate to Ball");
-		System.out.println("  > 3. Simulator");
-		System.out.println("Where would you like to go today?");
-		int option = 2; //Integer.parseInt(keyboard.readLine());
-		VisionClient client = new VisionClient();
-		Controller controller;
-		Strategy strategy = null;
-		switch (option)
-		{
-			case 1:
-				controller = new FatController();
-				strategy = new KeyboardStrategy(client, controller, colour);
-				break;
-			case 2:
-				controller = new FatController();
-				strategy = new TrackBallStrategy(client, controller, colour);
-				break;
-			case 3:
-				controller = new ThinController();
-				strategy = new TrackBallStrategy(client, controller, colour);
-			default:
-				System.out.println("Goddammit. Give me a real number!");
-		}
-
-		strategy.runStrategy();
 	}
 }

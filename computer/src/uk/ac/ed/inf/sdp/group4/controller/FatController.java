@@ -17,38 +17,41 @@ public class FatController extends Controller
 	{
 		try
 		{
-			System.out.println("Attempting connection with robot...");
+			log.info("Attempting connection with robot...");
 			nxtComm = NXTCommFactory.createNXTComm(NXTCommFactory.BLUETOOTH);
 			NXTInfo nxtInfo = new NXTInfo(NXTCommFactory.BLUETOOTH, "WAR BASTARD", "00:16:53:0A:07:1D");
 			nxtComm.open(nxtInfo);
-			System.out.println("Connection achieved!");
+			log.info("Connection achieved!");
 		}
 		catch (NXTCommException e)
 		{
-			System.out.println("FAILED");
+			log.error("Failed to connect.");
 			e.printStackTrace();
 		}
+
+		// Create the IO streams
 		dataOut = new DataOutputStream(nxtComm.getOutputStream());
 		dataIn = new DataInputStream(nxtComm.getInputStream());
+
 		robotStatus = new LinkedList<Integer>();
 		new Thread(new StatusReciever()).start();
 	}
 
-	public void drivef(int distance)
+	public void driveForward(int distance)
 	{
-		//calls drive on the robot
+		log.debug(String.format("Driving forwards: %dcm", distance));
 		sendCommand(0, distance);
 	}
 
-	public void driveb(int distance)
+	public void driveBackward(int distance)
 	{
-		//calls drive on the robot
+		log.debug(String.format("Driving backwards: %dcm", distance));
 		sendCommand(1, distance);
 	}
 
 	public void shoot()
 	{
-		//calls shoot on the robot
+		log.debug("Shooting!");
 		sendCommand(2, 0);
 	}
 
@@ -56,29 +59,49 @@ public class FatController extends Controller
 	{
 		if (val)
 		{
-			sendCommand(3, 1);
+			log.debug("Beserk Mode: Enabled");
+			sendCommand(98, 1);
 		}
 		else
 		{
-			sendCommand(3, 0);
+			log.debug("Beserk Mode: Disabled");
+			sendCommand(98, 0);
 		}
 	}
 
-	public void left(int angle)
+	public void turnLeft(int angle)
 	{
-		System.out.println("turning left: " + angle);
+		log.debug(String.format("Turning Left: %d degrees", angle));
 		sendCommand(4, angle);
 	}
 
-	public void right(int angle)
+	public void turnRight(int angle)
 	{
-		System.out.println("turning right: " + angle);
+		log.debug(String.format("Turning Right: %d degrees", angle));
 		sendCommand(5, angle);
+	}
+
+	public void steer(int angle)
+	{
+		log.debug(String.format("Steering: %d turn rate", angle));
+		sendCommand(3, angle);
+	}
+
+	public void setSpeed(int motorSpeed)
+	{
+		log.debug(String.format("Changing motor speed: %d degrees per second", motorSpeed));
+		sendCommand(97, motorSpeed);
+	}
+
+	public void stop()
+	{
+		log.debug("Stopping robot.");
+		sendCommand(6, 0);
 	}
 
 	public void finish()
 	{
-		//calls finish on robot
+		log.debug("Ending control of the robot...");
 		sendCommand(99, 0);
 		try
 		{
@@ -92,7 +115,6 @@ public class FatController extends Controller
 		}
 	}
 
-	//change this back!!!!!!!
 	public void sendCommand(int command, int argument)
 	{
 		try
@@ -129,7 +151,8 @@ public class FatController extends Controller
 				}
 				catch (IOException e)
 				{
-					System.out.println("Something has gone wrong");
+					log.error("Something has gone wrong");
+					System.exit(1);
 				}
 			}
 		}
