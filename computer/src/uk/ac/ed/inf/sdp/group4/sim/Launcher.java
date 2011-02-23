@@ -25,7 +25,7 @@ import uk.ac.ed.inf.sdp.group4.strategy.RobotColour;
 public class Launcher implements Runnable
 {
 	//FPS
-	zfinal int FPS = 25;
+	final int FPS = 25;
 	final int WIDTH = 800;
 	final int HEIGHT = 400;
 	final int X_RATIO = WIDTH / 244;
