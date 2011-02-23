@@ -70,16 +70,16 @@ public class TrackBallStrategy extends Strategy
 		else
 		{
 			// If we're close to the ball and the goal is close then we should shoot.
-			if (ballRoute.getMagnitude() < 40 && Math.abs(goalAngle) < 30)
+			if (ballRoute.getMagnitude() < 40 && Math.abs(goalAngle) < 30 && goalRoute.getMagnitude() < 100)
 			{
 				controller.shoot();
 			}
 			// If we're close to the ball and the goal is far then we should
 			// drive with a ball to the goal.
-			else if (ballRoute.getMagnitude() < 25)
+			else if (ballRoute.getMagnitude() < 10)
 			{
 				log.debug("Driving to the goal!");
-				if (Math.abs(goalAngle) > 15)
+				if (Math.abs(goalAngle) > 5)
 				{
 					controller.setSpeed(50);
 					controller.turn(goalAngle);

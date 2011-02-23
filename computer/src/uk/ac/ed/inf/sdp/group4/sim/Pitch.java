@@ -14,8 +14,8 @@ public class Pitch implements Runnable
 
 	public void run()
 	{
-		while (true)
-		{
+		//while (true)
+		//{
 			for (int i = 0; i < components.length; i++)
 			{
 				if (i == components.length - 1)
@@ -46,6 +46,6 @@ public class Pitch implements Runnable
 					}
 				}
 			}
-		}
+		//}
 	}
 }

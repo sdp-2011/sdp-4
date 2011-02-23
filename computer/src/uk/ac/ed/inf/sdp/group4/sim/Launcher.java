@@ -12,6 +12,7 @@ import java.lang.Runnable;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 import uk.ac.ed.inf.sdp.group4.domain.Position;
 import uk.ac.ed.inf.sdp.group4.world.Robot;
@@ -33,6 +34,7 @@ public class Launcher implements Runnable
 	final int ROB_Y = Y_RATIO * 18;
 	final int BALL_SIZE = X_RATIO * 4;
 
+	Pitch pitch;
 	WorldState state;
 	Robot blue;
 	Robot yellow;
@@ -51,13 +53,13 @@ public class Launcher implements Runnable
 	{
 		this.components = components;
 		this.state = state;
+		this.pitch = new Pitch(components);
 	}
 
 	public void run()
 	{
 		loadContent();
 		setup();
-		new Thread(new Pitch(components)).start();
 
 		long t = System.currentTimeMillis();
 
@@ -107,6 +109,7 @@ public class Launcher implements Runnable
 		{
 			components[i].update(time);
 		}
+		pitch.run();
 		draw();
 	}
 
@@ -125,6 +128,10 @@ public class Launcher implements Runnable
 
 			int adjustX = ROB_X / 2;
 			int adjustY = ROB_Y / 2;
+
+			g.setColor(Color.pink);
+			g.fillRect(0 * X_RATIO, 30 * Y_RATIO, 10 * X_RATIO, 60 * Y_RATIO);
+			g.fillRect(256 * X_RATIO, 30 * Y_RATIO, 10 * X_RATIO, 60 * Y_RATIO);
 
 			//draw blue
 			g.setColor(Color.blue);
