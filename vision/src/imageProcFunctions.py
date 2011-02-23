@@ -26,22 +26,50 @@ def onSUpperYChange(position):  mods[16] = position/255.0
 def onVUpperYChange(position):  mods[17] = position/255.0
 
 
-def find_corners(mask):
-    eig_image = cv.CreateImage(cv.GetSize(mask), cv.IPL_DEPTH_32F, 1)
-    temp_image = cv.CreateImage(cv.GetSize(mask), cv.IPL_DEPTH_32F, 1)
-    corners = cv.GoodFeaturesToTrack(mask, eig_image, temp_image, 8, 0.1, 5)
+def calculate_COM(mask):
+    moments = cv.Moments(mask, 1)
+    M00 = cv.GetSpatialMoment(moments,0,0)
+    M10 = cv.GetSpatialMoment(moments,1,0)
+    M01 = cv.GetSpatialMoment(moments,0,1)
 
-    print "Corners: ", corners
+    return (int(M10/M00), int(M01/M00))
 
 def refine_orientation(orientation, center_point, mask):
     if(center_point[0] > 25 and center_point[1] > 25):
 	crop_rect = (center_point[0] - 20, center_point[1] - 30, 40, 40)
 	image = cv.GetImage(mask)    
 	cv.SetImageROI(image, crop_rect)
+    
+	center_point = calculate_COM(mask)
 
+	cross = cv.LoadImageM("../images/cross.png", cv.CV_LOAD_IMAGE_UNCHANGED)
+	cross2 = cv.LoadImageM("../images/cross.png", cv.CV_LOAD_IMAGE_UNCHANGED)
+	result = cv.CreateImage(result_size, cv.IPL_DEPTH_32F, 1)
+	
+	maximum = 0
+		
+	if (orientation < 0):
+	    rotation_matrix = cv.GetRotationMatrix2D(center_point, orientation, 1)
+	    check1 = cv.CreateMat(40, 40, cv.CV_8UC1)
+	    cv.WarpAffine(cross, check1, rotation_matrix)
+	    cv.MatchTemplate(mask, check1, result, cv.CV_TM_CCORR)
+	    min_val_down, max_val_down, min_loc_down, max_loc_down = cv.MinMaxLoc(result) 
+		
+	    check2 = cv.CreateMat(40, 40, cv.CV_8UC1)
+	    rotation_matrix = cv.GetRotationMatrix2D(center_point, orientation + 180, 1)
+	    cv.WarpAffine(cross2, check2, rotation_matrix)
+	    cv.MatchTemplate(mask, check2, result, cv.CV_TM_CCORR)
+	    min_val_up, max_val_up, min_loc_up, max_loc_up = cv.MinMaxLoc(result)
 
-    cv.NamedWindow("Cropped Image 2", cv.CV_WINDOW_AUTOSIZE)
-    cv.ShowImage("Cropped Image 2", image)
+	    if (max_val_down > max_val_up)
+		maximum = 1	
+
+	    return orientation
+	else:
+	    return orientation + 180
+
+  #  cv.NamedWindow("Cropped Image 2", cv.CV_WINDOW_AUTOSIZE)
+  #  cv.ShowImage("Cropped Image 2", image)
  
 
 def find_object_descriptors(mask):
@@ -67,33 +95,10 @@ def find_object_descriptors(mask):
 
     orientation = math.degrees(math.atan2(2*mu11, mu20 - mu02 + error))
     center_point = (int(x_bar), int(y_bar))
-
- #   other_orientation = orientation_test(mask, center_point, orientation)
     
     pewpew = refine_orientation(orientation, center_point, mask)
+
     return [center_point, orientation]
-
-def orientation_test(mask, center_point, orientation):
-
-    cv.Circle(mask, center_point, 15, cv.RGB(0,0,0), -1)   
-    moments = cv.Moments(mask, 1)
-    M00 = cv.GetSpatialMoment(moments,0,0)
-    M10 = cv.GetSpatialMoment(moments,1,0)
-    M01 = cv.GetSpatialMoment(moments,0,1)
-
-     # Protect against division by 0    
-    if M00 == 0:
-        M00 = 0.01
-    
-    x_bar = (M10/M00)
-    y_bar = (M01/M00)
-     
-    print "New Orientation: ", int(calculateBearing(center_point, (x_bar, y_bar)))
-    cv.NamedWindow("Cropped Image", cv.CV_WINDOW_AUTOSIZE)
-    cv.ShowImage("Cropped Image", mask)
-
-    
-        
 
 def find_object(img, colour):
     '''
