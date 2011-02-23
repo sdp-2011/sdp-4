@@ -47,7 +47,12 @@ public class Match extends Strategy
 		otherBot = pitch.theirRobot;
 		ball = pitch.ball;
 	}
-	
+/*
+	public Match(Controller controller, WorldState state)
+	{
+		super(null, controller, RobotColour.BLUE, false);
+	}
+*/
 	public void tick(){
 		pathfinder = new AStarPathFinder(pitch, 5000);
 		//trajectory = new TrajectoryFinder(pitch, ourRobot);

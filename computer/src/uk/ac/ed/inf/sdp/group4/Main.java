@@ -13,6 +13,7 @@ import uk.ac.ed.inf.sdp.group4.controller.Controller;
 import uk.ac.ed.inf.sdp.group4.strategy.RobotColour;
 import uk.ac.ed.inf.sdp.group4.strategy.Strategy;
 import uk.ac.ed.inf.sdp.group4.strategy.TrackBallStrategy;
+import uk.ac.ed.inf.sdp.group4.strategy.Match;
 import uk.ac.ed.inf.sdp.group4.sim.Launcher;
 import uk.ac.ed.inf.sdp.group4.strategy.KeyboardStrategy;
 import uk.ac.ed.inf.sdp.group4.strategy.Match;
@@ -55,6 +56,7 @@ public class Main
 		System.out.println("  > 2. Navigate to Ball");
 		System.out.println("  > 3. Simulator");
 		System.out.println("  > 4. Test Movement");
+		System.out.println("  > 5. Match");
 		System.out.println("Where would you like to go today?");
 
 		int option = Integer.parseInt(keyboard.readLine());
@@ -95,6 +97,12 @@ public class Main
 				controller.turn(-360);
 				Thread.sleep(3000);
 				System.exit(0);
+				break;
+			case 5:
+				controller = new FatController();
+				strategy = new Match(client, controller, colour, false);
+				break;
+
 			default:
 				System.out.println("Goddammit. Give me a real number!");
 		}
