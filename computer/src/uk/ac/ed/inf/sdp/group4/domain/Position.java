@@ -44,4 +44,12 @@ public class Position
 		}
 		return Vector.calcVect(this, dest);
 	}
+
+	public double distance(Position dest)
+	{
+		int partX = (dest.getX() - x);
+		int partY = (dest.getY() - y);
+
+		return Math.sqrt((partX * partX) + (partY * partY));
+	}
 }

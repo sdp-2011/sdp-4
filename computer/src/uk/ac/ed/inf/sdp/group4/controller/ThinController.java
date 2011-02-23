@@ -1,41 +1,68 @@
 package uk.ac.ed.inf.sdp.group4.controller;
 
+import uk.ac.ed.inf.sdp.group4.world.WorldState;
+import uk.ac.ed.inf.sdp.group4.domain.Vector;
+import uk.ac.ed.inf.sdp.group4.sim.SimBot;
+import uk.ac.ed.inf.sdp.group4.sim.Action;
+import java.lang.Math;
+
 public class ThinController extends Controller
 {
-	public void drivef(int val)
+	private SimBot bot;
+
+	public ThinController(SimBot bot)
 	{
-		System.out.println("Driving forward:" + val);
-		//tell sim robot to drive forward val amount
+		this.bot = bot;
 	}
 
-	public void driveb(int val)
+	public void driveForward(int val)
 	{
 		System.out.println("Driving forward:" + val);
-		//tell sim robot to drive backwards val amount
+		bot.newAction(new Action(Action.Type.FORWARD, val));
+	}
+
+	public void driveBackward(int val)
+	{
+		System.out.println("Driving backward:" + val);
+		bot.newAction(new Action(Action.Type.REVERSE, val));
 	}
 
 	public void shoot()
 	{
 		System.out.println("Shooting!");
-		//tell sim robot to kick
+		bot.shoot(0);
 	}
 
 	public void beserk(boolean val)
 	{
 		System.out.println("BESERK:" + val);
-		//switch beserk on or off on the sim robot
 	}
 
-	public void left(int angle)
+	public void turnRight(int angle)
 	{
-		System.out.println("Driving left:" + angle);
-		//turn the sim robot left
+		System.out.println("Turning right");
+		bot.newAction(new Action(Action.Type.RIGHT, angle));
 	}
 
-	public void right(int angle)
+	public void turnLeft(int angle)
 	{
-		System.out.println("Driving right:" + angle);
-		//turn the sim right
+		System.out.println("Turning left");
+		bot.newAction(new Action(Action.Type.LEFT, angle));
+	}
+
+	public void setSpeed(int val)
+	{
+
+	}
+
+	public void steer(int val)
+	{
+
+	}
+
+	public void stop()
+	{
+
 	}
 
 	public void finish()
@@ -45,6 +72,25 @@ public class ThinController extends Controller
 
 	public void sendCommand(int command, int argument)
 	{
-		//send command to sim robot
+		if (command == 0)
+		{
+			driveForward(argument);
+		}
+		else if (command == 1)
+		{
+			driveBackward(argument);
+		}
+		else if (command == 2)
+		{
+			shoot();
+		}
+		else if (command == 4)
+		{
+			turnLeft(argument);
+		}
+		else if (command == 5)
+		{
+			turnRight(argument);
+		}
 	}
 }

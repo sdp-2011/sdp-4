@@ -13,7 +13,7 @@ public class Vector
 
 	public void setDirection(double direction) throws InvalidAngleException
 	{
-		if (direction < 0 || direction > 359)
+		if (direction < 0 || direction >= 360)
 		{
 			throw new InvalidAngleException(direction);
 		}
@@ -43,19 +43,16 @@ public class Vector
 		double x = dest.getX() - ini.getX();
 		double y = dest.getY() - ini.getY();
 
-		double mag = Math.sqrt((x*x) + (y*y));
+		double mag = Math.sqrt((x * x) + (y * y));
 		double angle = (Math.toDegrees(Math.atan2(y, x)) + 450) % 360;
 
-		Vector v = new Vector(angle, mag);
-		
-		return v;
+		return new Vector(angle, mag);
 	}
 
-	public double angleTo(Vector other)
+	public double angleTo(double bearing)
 	{
 		double from = this.getDirection();
-		double to = other.getDirection();
-		double angle = to - from;
+		double angle = bearing - from;
 
 		if (angle > 180)
 		{

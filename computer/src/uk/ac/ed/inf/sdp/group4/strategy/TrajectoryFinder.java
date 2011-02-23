@@ -1,31 +1,33 @@
 package uk.ac.ed.inf.sdp.group4.strategy;
 
-import java.util.ArrayList;
+import uk.ac.ed.inf.sdp.group4.world.Robot;
+import uk.ac.ed.inf.sdp.group4.world.WorldObject;
+import uk.ac.ed.inf.sdp.group4.world.Ball;
 
-public class TrajectoryFinder implements PathFinder{
+import java.util.ArrayList;
+import uk.ac.ed.inf.sdp.group4.world.Robot;
+
+public class TrajectoryFinder{
 
 	private TileBasedMap map;
 	private Robot robot;
 	private ArrayList path = new ArrayList();
 	
-	public TrajectoryFinder(TileBasedMap map, Robot robot){
+	public TrajectoryFinder(TileBasedMap map, Robot robot, Ball ball){
 		this.map = map;
 		this.robot = robot;
 	}
 	
-	public Path findPath(Mover mover, int sx, int sy, int tx, int ty) {
-		if (robot.hasBall() == false){
-			return null;
-		}
-		else {
+	public Path findPath(WorldObject worldObject, int sx, int sy, int tx, int ty) {
 			Path path = new Path();
-			float direction = robot.getDirection();
+			double direction = robot.getFacing();
+			
 			return path;
-		}
+			
 	}
 
-	public boolean isValidLocation(Mover mover, int x, int y){
-		if (map.blocked(mover, x, y)){
+	public boolean isValidLocation(WorldObject worldObject, int x, int y){
+		if (map.blocked(robot, x, y)){
 			return false;
 		}
 		else return true;
