@@ -12,6 +12,7 @@ import java.lang.Runnable;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 import uk.ac.ed.inf.sdp.group4.domain.Position;
 import uk.ac.ed.inf.sdp.group4.world.Robot;
@@ -26,13 +27,14 @@ public class Launcher implements Runnable
 	//FPS
 	final int FPS = 25;
 	final int WIDTH = 800;
-	final int HEIGHT = 500;
+	final int HEIGHT = 400;
 	final int X_RATIO = WIDTH / 244;
 	final int Y_RATIO = HEIGHT / 122;
-	final int ROB_X = X_RATIO * 18;
-	final int ROB_Y = Y_RATIO * 20;
-	final int BALL_SIZE = X_RATIO * 5;
+	final int ROB_X = X_RATIO * 20;
+	final int ROB_Y = Y_RATIO * 18;
+	final int BALL_SIZE = X_RATIO * 4;
 
+	Pitch pitch;
 	WorldState state;
 	Robot blue;
 	Robot yellow;
@@ -51,12 +53,14 @@ public class Launcher implements Runnable
 	{
 		this.components = components;
 		this.state = state;
-		loadContent();
-		setup();
+		this.pitch = new Pitch(components);
 	}
 
 	public void run()
 	{
+		loadContent();
+		setup();
+
 		long t = System.currentTimeMillis();
 
 		while (true)
@@ -86,16 +90,17 @@ public class Launcher implements Runnable
 
 	private void setup()
 	{
-		Pitch pitch = new Pitch();
 		//set up display
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(WIDTH, HEIGHT);
 		frame.setVisible(true);
-		frame.getContentPane().add(new Situation(pitch));
+		frame.getContentPane().add(new Situation());
 		blue = state.getBlue();
 		yellow = state.getYellow();
 		ball = state.getBall();
+
+		blue.setPosition(30, 60);
 	}
 
 	private void update(int time)
@@ -104,6 +109,7 @@ public class Launcher implements Runnable
 		{
 			components[i].update(time);
 		}
+		pitch.run();
 		draw();
 	}
 
@@ -115,35 +121,48 @@ public class Launcher implements Runnable
 
 	private class Situation extends JPanel
 	{
-		private Pitch pitch;
-
-		public Situation(Pitch pitch)
-		{
-			this.pitch = pitch;
-		}
-
 		public void paintComponent(Graphics g)
 		{
 			super.paintComponent(g);
 			setBackground(Color.green);
 
+			int adjustX = ROB_X / 2;
+			int adjustY = ROB_Y / 2;
+
+			g.setColor(Color.pink);
+			g.fillRect(0 * X_RATIO, 20 * Y_RATIO, 10 * X_RATIO, 80 * Y_RATIO);
+			g.fillRect(256 * X_RATIO, 20 * Y_RATIO, 10 * X_RATIO, 80 * Y_RATIO);
+
 			//draw blue
 			g.setColor(Color.blue);
 
 			Position bPos = blue.getPosition();
-			g.fillRect(bPos.getX() * X_RATIO, bPos.getY() * Y_RATIO, ROB_Y, ROB_X);
+			g.fillOval(bPos.getX() * X_RATIO - adjustX, bPos.getY() * Y_RATIO - adjustY,
+				ROB_X, ROB_Y);
+
+			//draw Vector
+			g.setColor(Color.red);
+
+			double speedX = 10 * Math.cos(Math.toRadians(blue.getVector().getDirection() - 90));
+			double speedY = 10 * Math.sin(Math.toRadians(blue.getVector().getDirection() - 90));
+			double endX = (bPos.getX() * X_RATIO) + (speedX * X_RATIO);
+			double endY = (bPos.getY() * Y_RATIO) + (speedY * Y_RATIO);
+
+			g.drawLine(bPos.getX() * X_RATIO, bPos.getY() * Y_RATIO, (int) endX, (int) endY);
 
 			//draw yellow
-			g.setColor(Color.yellow);
+			/*g.setColor(Color.yellow);
 
 			Position yPos = yellow.getPosition();
-			g.fillRect(yPos.getX() * X_RATIO, yPos.getY() * Y_RATIO, ROB_Y, ROB_X);
+			g.fillOval(yPos.getX() * X_RATIO - adjustX, yPos.getY() * Y_RATIO - adjustY,
+				 ROB_X, ROB_Y);*/
 
 			//draw ball
 			g.setColor(Color.red);
 
 			Position ballPos = ball.getPosition();
-			g.fillOval(ballPos.getX() * X_RATIO, ballPos.getY() * Y_RATIO, BALL_SIZE, BALL_SIZE);
+			g.fillOval(ballPos.getX() * X_RATIO - (4/2), ballPos.getY() * Y_RATIO - (4/2),
+				BALL_SIZE, BALL_SIZE);
 		}
 	}
 

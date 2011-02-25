@@ -46,7 +46,12 @@ public class Match extends Strategy
 		pitch = new Pitch();
 		pathfinder = new AStarPathFinder(pitch, 5000);
 	}
-	
+/*
+	public Match(Controller controller, WorldState state)
+	{
+		super(null, controller, RobotColour.BLUE, false);
+	}
+*/
 	public void tick(){
 		pathfinder = new AStarPathFinder(pitch, 5000);
 		//trajectory = new TrajectoryFinder(pitch, ourRobot);

@@ -40,13 +40,13 @@ public class FatController extends Controller
 	public void driveForward(int distance)
 	{
 		log.debug(String.format("Driving forwards: %dcm", distance));
-		sendCommand(0, distance);
+		sendCommand(1, distance);
 	}
 
 	public void driveBackward(int distance)
 	{
 		log.debug(String.format("Driving backwards: %dcm", distance));
-		sendCommand(1, distance);
+		sendCommand(0, distance);
 	}
 
 	public void shoot()
