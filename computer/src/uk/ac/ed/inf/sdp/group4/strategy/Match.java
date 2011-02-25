@@ -8,6 +8,7 @@ import uk.ac.ed.inf.sdp.group4.strategy.Path.Step;
 import uk.ac.ed.inf.sdp.group4.world.IVisionClient;
 import uk.ac.ed.inf.sdp.group4.world.Robot;
 import uk.ac.ed.inf.sdp.group4.world.Ball;
+import uk.ac.ed.inf.sdp.group4.world.WorldState;
 
 
 public class Match extends Strategy
@@ -17,7 +18,7 @@ public class Match extends Strategy
 	RobotColour robotColour;
 	boolean testing;
 
-	public Pitch pitch = new Pitch(client, ourColour());
+	public Pitch pitch;
 	// Our pathfinders
 	private PathFinder pathfinder;
 	//private PathFinder trajectory;
@@ -26,9 +27,9 @@ public class Match extends Strategy
 	public Path path;
 
 	// Declarations for robots
-	private Robot ourRobot = pitch.ourRobot;
-	private Robot otherBot = pitch.theirRobot;
-	private Ball ball = pitch.ball;
+	private Robot ourRobot;
+	private Robot otherBot;
+	private Ball ball;
 	
 	// estimated goal positions
 	Position westGoal = new Position(30, 122);
@@ -42,118 +43,120 @@ public class Match extends Strategy
 	public Match(IVisionClient client, Controller controller, RobotColour robotColour, boolean testing){
 		
 		super(client, controller, robotColour, testing);
+		pitch = new Pitch();
+		pathfinder = new AStarPathFinder(pitch, 5000);
 	}
 	
 	public void tick(){
 		pathfinder = new AStarPathFinder(pitch, 5000);
 		//trajectory = new TrajectoryFinder(pitch, ourRobot);
-		
+		refresh();
 		log.debug("Starting tick");
-			pitch.repaint();
-			// These will probably be useful eventually
-			usToBall = (float)(Math.sqrt(Math.pow((ourRobot.getX() - ball.getX()), 2) + Math.pow((ourRobot.getY() - ball.getY()), 2)));
-			themToBall = (float)(Math.sqrt(Math.pow((otherBot.getX() - ball.getX()), 2) + Math.pow((ourRobot.getY() - ball.getY()), 2)));
-			usToThem = (float)(Math.sqrt(Math.pow((ourRobot.getX() - otherBot.getX()), 2) + Math.pow((ourRobot.getY() - otherBot.getY()), 2)));
+		pitch.repaint(otherBot.getPosition());
+		// These will probably be useful eventually
+		usToBall = (float)(Math.sqrt(Math.pow((ourRobot.getX() - ball.getX()), 2) + Math.pow((ourRobot.getY() - ball.getY()), 2)));
+		themToBall = (float)(Math.sqrt(Math.pow((otherBot.getX() - ball.getX()), 2) + Math.pow((ourRobot.getY() - ball.getY()), 2)));
+		usToThem = (float)(Math.sqrt(Math.pow((ourRobot.getX() - otherBot.getX()), 2) + Math.pow((ourRobot.getY() - otherBot.getY()), 2)));
 			
-			// Check if we have the ball
+		// Check if we have the ball
 			
-			try {
-				while (ourRobot.hasBall(ball) == false){
-					// Check if it's worth trying to get to the ball, using ratio of distance between us and opponent
-					if (((float) usToBall / themToBall) > 0){
-						path = pathfinder.findPath(ourRobot, ourRobot.getX(), ourRobot.getY(), ball.getX(), ball.getY());
+		try {
+			while (ourRobot.hasBall(ball) == false){
+				// Check if it's worth trying to get to the ball, using ratio of distance between us and opponent
+				if (((float) usToBall / themToBall) > 0){
+					path = pathfinder.findPath(ourRobot, ourRobot.getX(), ourRobot.getY(), ball.getX(), ball.getY());
+					if (path != null){
+						// follow path
+						log.debug("Moving to ball");
+						Step step = path.getStep(25);
+						Position stepPos = new Position (step.getX(), step.getY());
+						Position robotPos = new Position (ourRobot.getX(), ourRobot.getY());
+						Vector stepBot = Vector.calcVect(robotPos, stepPos);
+						double ang = stepBot.angleTo(ourRobot.getFacing());
+						if ((ang < 15) && (ang > -15)){
+							controller.setSpeed(150);
+							pause(100);
+						}
+						else {
+							controller.stop();
+							pause(100);
+							controller.turn(ang);
+							pause(100);
+							controller.setSpeed(150);
+							pause(100);
+						}
+						
+					}
+					else {
+						log.debug("Can't move to ball");
+						// can't get too ball, play defensively until we get it
+					}
+				}
+				else {
+					// Defensive play
+				}
+			}
+		} catch (InvalidAngleException e) {
+		log.error(e.getMessage());
+		}
+		try {
+			while (ourRobot.hasBall(ball) == true){
+				// Goal-finding and scoring algorithm here
+				log.debug("We has ball");
+				Vector botToGoal = Vector.calcVect(ourRobot.getPosition(), westGoal);
+				double ang = botToGoal.angleTo(ourRobot.getFacing());
+				// Can we shoot? If not move towards goal for better shot
+				if (ang < 15){
+					if (canShoot(ourRobot, ball) == true){
+						log.debug("Firing main cannon");
+						controller.shoot();
+						pause(100);
+						controller.stop();
+						pause(100);
+					}
+					else {
+						path = pathfinder.findPath(ourRobot, ourRobot.getX(), ourRobot.getY(), westGoal.getX(), westGoal.getY());
 						if (path != null){
 							// follow path
-							log.debug("Moving to ball");
+							log.debug("Moving to goal with ball");
 							Step step = path.getStep(25);
 							Position stepPos = new Position (step.getX(), step.getY());
 							Position robotPos = new Position (ourRobot.getX(), ourRobot.getY());
 							Vector stepBot = Vector.calcVect(robotPos, stepPos);
-							double ang = stepBot.angleTo(ourRobot.getFacing());
-							if ((ang < 15) && (ang > -15)){
+							double angTo = stepBot.angleTo(ourRobot.getFacing());
+							if ((angTo < 15) && (ang > -15)){
 								controller.setSpeed(150);
 								pause(100);
 							}
 							else {
 								controller.stop();
 								pause(100);
-								controller.turn(ang);
+								controller.turn(angTo);
 								pause(100);
 								controller.setSpeed(150);
 								pause(100);
 							}
-							
 						}
 						else {
-							log.debug("Can't move to ball");
-							// can't get too ball, play defensively until we get it
-						}
-					}
-					else {
-						// Defensive play
-					}
-				}
-			} catch (InvalidAngleException e) {
-				log.error(e.getMessage());
-			}
-			try {
-				while (ourRobot.hasBall(ball) == true){
-					// Goal-finding and scoring algorithm here
-					log.debug("We has ball");
-					Vector botToGoal = Vector.calcVect(ourRobot.getPosition(), westGoal);
-					double ang = botToGoal.angleTo(ourRobot.getFacing());
-					// Can we shoot? If not move towards goal for better shot
-					if (ang < 15){
-						if (canShoot(ourRobot, ball) == true){
-							log.debug("Firing main cannon");
-							controller.shoot();
-							pause(100);
+							log.debug("Can't move to goal :(");
 							controller.stop();
 							pause(100);
 						}
-						else {
-							path = pathfinder.findPath(ourRobot, ourRobot.getX(), ourRobot.getY(), westGoal.getX(), westGoal.getY());
-							if (path != null){
-								// follow path
-								log.debug("Moving to goal with ball");
-								Step step = path.getStep(25);
-								Position stepPos = new Position (step.getX(), step.getY());
-								Position robotPos = new Position (ourRobot.getX(), ourRobot.getY());
-								Vector stepBot = Vector.calcVect(robotPos, stepPos);
-								double angTo = stepBot.angleTo(ourRobot.getFacing());
-								if ((angTo < 15) && (ang > -15)){
-									controller.setSpeed(150);
-									pause(100);
-								}
-								else {
-									controller.stop();
-									pause(100);
-									controller.turn(angTo);
-									pause(100);
-									controller.setSpeed(150);
-									pause(100);
-								}
-							}
-							else {
-								log.debug("Can't move to goal :(");
-								controller.stop();
-								pause(100);
-							}
-						}
-					}
-					else {
-						log.debug("Turning and shooting");
-						controller.turn(ang);
-						pause(100);
-						controller.shoot();
-						pause(100);
-					
 					}
 				}
-			} catch (InvalidAngleException e) {
-				log.error(e.getMessage());
+				else {
+					log.debug("Turning and shooting");
+					controller.turn(ang);
+					pause(100);
+					controller.shoot();
+					pause(100);
+				
+				}
 			}
+		} catch (InvalidAngleException e) {
+			log.error(e.getMessage());
 		}
+	}	
 	
 	
 	// Checks if shot is blocked
@@ -170,6 +173,17 @@ public class Match extends Strategy
 		return blocked;
 		
 		
+	}
+	
+	private void refresh()
+	{
+		WorldState state = client.getWorldState();
+
+		ourRobot = (ourColour() == RobotColour.BLUE) ? state.getBlue() : state.getYellow();
+		otherBot = (ourColour() == RobotColour.BLUE) ? state.getYellow() : state.getBlue();
+		ball = state.getBall();
+
+		log.debug("Robot is facing: " + ourRobot.getFacing());
 	}
 
 }

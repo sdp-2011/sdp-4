@@ -1,20 +1,10 @@
 package uk.ac.ed.inf.sdp.group4.strategy;
 
-import uk.ac.ed.inf.sdp.group4.world.IVisionClient;
-import uk.ac.ed.inf.sdp.group4.world.Robot;
-import uk.ac.ed.inf.sdp.group4.world.Ball;
+import uk.ac.ed.inf.sdp.group4.domain.Position;
 import uk.ac.ed.inf.sdp.group4.world.WorldObject;
-import uk.ac.ed.inf.sdp.group4.world.WorldState;
 
 public class Pitch implements TileBasedMap
 {
-	IVisionClient client;
-	WorldState state;
-	Ball ball;
-	Robot ourRobot;
-	Robot theirRobot;
-	RobotColour colour;
-	long timestamp = 0;
 	// Height and width specifications
 	public static final int WIDTH = 475; // Needs to be changed to method finding width of vision feed
 	public static final int HEIGHT = 245; // As above
@@ -34,39 +24,25 @@ public class Pitch implements TileBasedMap
 	public static int GOALA = 4;
 	public static int GOALB = 5;
 	public static int WALL = 6;
+	
+	private Position oldPosition = null;
 
-	public Pitch(IVisionClient client, RobotColour colour)
+	public Pitch()
 	{
-		this.client = client;
-		this.colour = colour;
 		fillArea(0,0,245,30, WALL);
-		
-		repaint();
 	}
 	
-	public void repaint(){
-		clearUnits();
-		state = client.getWorldState();
-		if (state.getTimestamp() != timestamp)
-		{
-			ball = state.getBall();
-			units[ball.getX()][ball.getY()] = BALL;
-			if (colour.equals(RobotColour.YELLOW))
-			{
-				ourRobot = state.getYellow();
-				units[ourRobot.getX()][ourRobot.getY()] = OURS;
-				theirRobot = state.getBlue();
-				foeBlob();
+	public void repaint(Position position){
+		clearUnits(oldPosition);
+		int X = position.getX() + 25;
+		int Y = position.getY() + 25;
+		for (int xp=X;xp<X+50;xp++) {
+			for (int yp=Y;yp<Y+50;yp++) {
+				units[xp][yp] = THEIRS;
 			}
-			else {
-				ourRobot = state.getBlue();
-				units[ourRobot.getX()][ourRobot.getY()] = OURS;
-				theirRobot = state.getYellow();
-				foeBlob();
-			}
-			ball = state.getBall();
-			units[ball.getX()][ball.getY()] = BALL;
 		}
+		position = oldPosition;
+		
 	}
 	
 	protected void fillArea(int x, int y, int width, int height, int type) {
@@ -108,26 +84,17 @@ public class Pitch implements TileBasedMap
 		}
 	}
 	
-	public void clearUnits()
+	public void clearUnits(Position position)
 	{
-		for (int x = 0; x < getWidthInTiles(); x++)
-		{
-			for (int y = 0; y < getHeightInTiles(); y++)
-			{
-				units[x][y] = 0;
-			}
-		}
-	}
-	
-	public void foeBlob(){
-		int X = theirRobot.getX() + 25;
-		int Y = theirRobot.getY() + 25;
+		int X = position.getX() + 25;
+		int Y = position.getY() + 25;
 		for (int xp=X;xp<X+50;xp++) {
 			for (int yp=Y;yp<Y+50;yp++) {
-				units[xp][yp] = THEIRS;
+				units[xp][yp] = 0;
 			}
 		}
 	}
+
 	
 	public boolean blocked(WorldObject worldObject, int x, int y)
 	{
