@@ -25,8 +25,8 @@ import uk.ac.ed.inf.sdp.group4.controller.ThinController;
 
 public class Launcher implements Runnable
 {
-	private int X_RATIO;
-	private int Y_RATIO;
+	private double X_RATIO;
+	private double Y_RATIO;
 	private int ROB_X;
 	private int ROB_Y;
 	private int BALL_SIZE;
@@ -110,9 +110,9 @@ public class Launcher implements Runnable
 		
 		X_RATIO = frame.getSize().width / 244;
 		Y_RATIO = frame.getSize().height / 122;
-		ROB_X = X_RATIO * 20;
-		ROB_Y = Y_RATIO * 18;
-		BALL_SIZE = X_RATIO * 4;
+		ROB_X = (int) (X_RATIO * 20);
+		ROB_Y = (int) (Y_RATIO * 18);
+		BALL_SIZE = (int) (X_RATIO * 4);
 		draw();
 	}
 
@@ -133,14 +133,14 @@ public class Launcher implements Runnable
 			int adjustY = ROB_Y / 2;
 
 			g.setColor(Color.pink);
-			g.fillRect(0 * X_RATIO, 20 * Y_RATIO, 10 * X_RATIO, 80 * Y_RATIO);
-			g.fillRect(256 * X_RATIO, 20 * Y_RATIO, 10 * X_RATIO, 80 * Y_RATIO);
+			g.fillRect((int) (0 * X_RATIO), (int) (20 * Y_RATIO), (int) (10 * X_RATIO), (int) (80 * Y_RATIO));
+			g.fillRect((int) (256 * X_RATIO), (int) (20 * Y_RATIO), (int) (10 * X_RATIO), (int) (80 * Y_RATIO));
 
 			//draw blue
 			g.setColor(Color.blue);
 
 			Position bPos = blue.getPosition();
-			g.fillOval(bPos.getX() * X_RATIO - adjustX, bPos.getY() * Y_RATIO - adjustY,
+			g.fillOval((int) (bPos.getX() * X_RATIO - adjustX), (int) (bPos.getY() * Y_RATIO - adjustY),
 				ROB_X, ROB_Y);
 
 			//draw Vector
@@ -151,20 +151,20 @@ public class Launcher implements Runnable
 			double endX = (bPos.getX() * X_RATIO) + (speedX * X_RATIO);
 			double endY = (bPos.getY() * Y_RATIO) + (speedY * Y_RATIO);
 
-			g.drawLine(bPos.getX() * X_RATIO, bPos.getY() * Y_RATIO, (int) endX, (int) endY);
+			g.drawLine((int) (bPos.getX() * X_RATIO), (int) (bPos.getY() * Y_RATIO), (int) endX, (int) endY);
 
 			//draw yellow
 			g.setColor(Color.yellow);
 
 			Position yPos = yellow.getPosition();
-			g.fillOval(yPos.getX() * X_RATIO - adjustX, yPos.getY() * Y_RATIO - adjustY,
+			g.fillOval((int) (yPos.getX() * X_RATIO - adjustX), (int) (yPos.getY() * Y_RATIO - adjustY),
 				 ROB_X, ROB_Y);
 
 			//draw ball
 			g.setColor(Color.red);
 
 			Position ballPos = ball.getPosition();
-			g.fillOval(ballPos.getX() * X_RATIO - (4/2), ballPos.getY() * Y_RATIO - (4/2),
+			g.fillOval((int) (ballPos.getX() * X_RATIO - (4/2)), (int) (ballPos.getY() * Y_RATIO - (4/2)),
 				BALL_SIZE, BALL_SIZE);
 		}
 	}
