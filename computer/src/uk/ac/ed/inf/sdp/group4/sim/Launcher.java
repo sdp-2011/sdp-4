@@ -26,7 +26,6 @@ import uk.ac.ed.inf.sdp.group4.controller.ThinController;
 public class Launcher implements Runnable
 {
 	//FPS
-	final int FPS = 25;
 	final int WIDTH = 800;
 	final int HEIGHT = 400;
 	final int X_RATIO = WIDTH / 244;
@@ -82,6 +81,11 @@ public class Launcher implements Runnable
 		blue = state.getBlue();
 		yellow = state.getYellow();
 		ball = state.getBall();		
+
+		//set up positions
+		blue.setPosition(30, 60);
+		yellow.setPosition(210, 60);
+		ball.setPosition(120, 60);
 		
 		//set up components
 		components = new Component[3];
@@ -153,11 +157,11 @@ public class Launcher implements Runnable
 			g.drawLine(bPos.getX() * X_RATIO, bPos.getY() * Y_RATIO, (int) endX, (int) endY);
 
 			//draw yellow
-			/*g.setColor(Color.yellow);
+			g.setColor(Color.yellow);
 
 			Position yPos = yellow.getPosition();
 			g.fillOval(yPos.getX() * X_RATIO - adjustX, yPos.getY() * Y_RATIO - adjustY,
-				 ROB_X, ROB_Y);*/
+				 ROB_X, ROB_Y);
 
 			//draw ball
 			g.setColor(Color.red);
