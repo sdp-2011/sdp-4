@@ -21,6 +21,7 @@ import uk.ac.ed.inf.sdp.group4.world.WorldState;
 import uk.ac.ed.inf.sdp.group4.world.VisionClient;
 import uk.ac.ed.inf.sdp.group4.domain.InvalidAngleException;
 import uk.ac.ed.inf.sdp.group4.strategy.RobotColour;
+import uk.ac.ed.inf.sdp.group4.controller.ThinController;
 
 public class Launcher implements Runnable
 {
@@ -40,6 +41,8 @@ public class Launcher implements Runnable
 	Robot yellow;
 	Ball ball;
 	Component[] components;
+	ThinController controllerOne;
+	ThinController controllerTwo;
 
 	int scoreB;
 	int scoreY;
@@ -49,18 +52,16 @@ public class Launcher implements Runnable
 
 	private JFrame frame;
 
-	public Launcher(WorldState state, Component[] components)
+	public Launcher(WorldState state, ThinController controller)
 	{
 		this.components = components;
 		this.state = state;
 		this.pitch = new Pitch(components);
+		setup();
 	}
 
 	public void run()
 	{
-		loadContent();
-		setup();
-
 		long t = System.currentTimeMillis();
 
 		while (true)
@@ -75,32 +76,30 @@ public class Launcher implements Runnable
 		}
 	}
 
-	private void loadContent()
-	{
-		try
-		{
-			iconB = ImageIO.read(new File("blue.png"));
-			iconY = ImageIO.read(new File("yellow.png"));
-		}
-		catch (IOException ex)
-		{
-			System.out.println("You've forgotten an image");
-		}
-	}
-
 	private void setup()
 	{
+		//get state objects
+		blue = state.getBlue();
+		yellow = state.getYellow();
+		ball = state.getBall();		
+		
+		//set up components
+		components = new Component[3];
+		components[0] = new SimBot(blue);
+		components[1] = new SimBot(yellow);
+		components[2] = new SimBall(ball);
+
+		//setup controllers
+		controllerOne.setBot((SimBot) components[0]);
+		controllerTwo = new ThinController();
+		controllerTwo.setBot((SimBot) components[1]);
+
 		//set up display
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(WIDTH, HEIGHT);
 		frame.setVisible(true);
 		frame.getContentPane().add(new Situation());
-		blue = state.getBlue();
-		yellow = state.getYellow();
-		ball = state.getBall();
-
-		blue.setPosition(30, 60);
 	}
 
 	private void update(int time)

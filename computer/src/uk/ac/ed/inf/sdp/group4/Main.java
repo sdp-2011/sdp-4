@@ -76,20 +76,9 @@ public class Main
 				WorldState state = new WorldState();
 				client = new FakeVision(state);
 				//state.getBall().setPosition(150, 80);
-				state.getBall().setPosition(170, 40);
-				state.getBlue().setPosition(20, 60);
-				Component[] components = new Component[2];
-				SimBot bot = new SimBot(state.getBlue());
-				SimBall ball = new SimBall(state.getBall());
-				components[0] = bot;
-				components[1] = ball;
-
-				controller = new ThinController(bot);
-				//strategy = new KeyboardStrategy(client, controller, RobotColour.BLUE);
+				controller = new ThinController();
 				strategy = new TrackBallStrategy(client, controller, RobotColour.BLUE);
-				//strategy = new Match(client, controller, RobotColour.BLUE, false);
-
-				Launcher launcher = new Launcher(state, components);
+				Launcher launcher = new Launcher(state, (ThinController) controller);
 				strategy.setGoals(0, 60, 243, 60);
 				new Thread(launcher).start();
 				break;
