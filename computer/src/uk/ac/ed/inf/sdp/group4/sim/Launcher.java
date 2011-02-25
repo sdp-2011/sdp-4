@@ -56,7 +56,7 @@ public class Launcher implements Runnable
 	{
 		this.components = components;
 		this.state = state;
-		this.pitch = new Pitch(components);
+		this.controllerOne = controller;
 		setup();
 	}
 
@@ -93,6 +93,9 @@ public class Launcher implements Runnable
 		controllerOne.setBot((SimBot) components[0]);
 		controllerTwo = new ThinController();
 		controllerTwo.setBot((SimBot) components[1]);
+
+		//set up pitch
+		pitch = new Pitch(components);
 
 		//set up display
 		frame = new JFrame();
