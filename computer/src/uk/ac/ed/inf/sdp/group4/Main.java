@@ -75,7 +75,6 @@ public class Main
 				colour = RobotColour.BLUE;
 				WorldState state = new WorldState();
 				client = new FakeVision(state);
-				//state.getBall().setPosition(150, 80);
 				controller = new ThinController();
 				strategy = new TrackBallStrategy(client, controller, RobotColour.BLUE);
 				Launcher launcher = new Launcher(state, (ThinController) controller);

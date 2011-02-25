@@ -25,29 +25,20 @@ import uk.ac.ed.inf.sdp.group4.controller.ThinController;
 
 public class Launcher implements Runnable
 {
-	//FPS
-	final int WIDTH = 800;
-	final int HEIGHT = 400;
-	final int X_RATIO = WIDTH / 244;
-	final int Y_RATIO = HEIGHT / 122;
-	final int ROB_X = X_RATIO * 20;
-	final int ROB_Y = Y_RATIO * 18;
-	final int BALL_SIZE = X_RATIO * 4;
+	private int X_RATIO;
+	private int Y_RATIO;
+	private int ROB_X;
+	private int ROB_Y;
+	private int BALL_SIZE;
 
-	Pitch pitch;
-	WorldState state;
-	Robot blue;
-	Robot yellow;
-	Ball ball;
-	Component[] components;
-	ThinController controllerOne;
-	ThinController controllerTwo;
-
-	int scoreB;
-	int scoreY;
-
-	Image iconB;
-	Image iconY;
+	private Pitch pitch;
+	private WorldState state;
+	private Robot blue;
+	private Robot yellow;
+	private Ball ball;
+	private Component[] components;
+	private ThinController controllerOne;
+	private ThinController controllerTwo;
 
 	private JFrame frame;
 
@@ -104,7 +95,7 @@ public class Launcher implements Runnable
 		//set up display
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(WIDTH, HEIGHT);
+		frame.setSize(800, 400);
 		frame.setVisible(true);
 		frame.getContentPane().add(new Situation());
 	}
@@ -116,6 +107,12 @@ public class Launcher implements Runnable
 			components[i].update(time);
 		}
 		pitch.run();
+		
+		X_RATIO = frame.getSize().width / 244;
+		Y_RATIO = frame.getSize().height / 122;
+		ROB_X = X_RATIO * 20;
+		ROB_Y = Y_RATIO * 18;
+		BALL_SIZE = X_RATIO * 4;
 		draw();
 	}
 
