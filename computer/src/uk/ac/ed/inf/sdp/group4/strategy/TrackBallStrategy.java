@@ -2,7 +2,6 @@ package uk.ac.ed.inf.sdp.group4.strategy;
 
 import java.lang.Math.*;
 
-
 import uk.ac.ed.inf.sdp.group4.controller.Controller;
 import uk.ac.ed.inf.sdp.group4.domain.*;
 import uk.ac.ed.inf.sdp.group4.world.Ball;
