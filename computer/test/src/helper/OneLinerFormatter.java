@@ -121,7 +121,7 @@ public class OneLinerFormatter implements JUnitResultFormatter {
 		if (output == null) {
 			return; // Quick return - no output do nothing.
 		}
-		StringBuffer sb = new StringBuffer(StringUtils.LINE_SEP);
+		StringBuffer sb = new StringBuffer();
 		sb.append("----------------------------------------------------------");
 		sb.append(StringUtils.LINE_SEP);        
 		sb.append("Testsuite: ");
@@ -203,9 +203,18 @@ public class OneLinerFormatter implements JUnitResultFormatter {
 
 		Long l = testStarts.get(test);
 
+		String timeNow = ((System.currentTimeMillis() - l.longValue()) / 1000.0) + "] ";
+
 		output.write("Ran [");
-		output.write(((System.currentTimeMillis() - l.longValue()) / 1000.0) + "] ");
-		output.write(getTestName(test) + " ... " + (failed ? "\u001b[;31mFAILED\u001b[m" : "\u001b[;32mPASSED\u001b[m"));
+		output.write(timeNow);
+
+		StringBuffer sb = new StringBuffer();
+		for(int i=0; i < Math.abs(getTestName(test).length() - 45 + timeNow.length()); i++){
+			sb.append(" ");
+		}
+
+		output.write(String.format("%s%s%s", getTestName(test), sb.toString(),
+					(failed ? "\u001b[;31mFAILED\u001b[m" : "\u001b[;32mPASSED\u001b[m")));
 		output.write(StringUtils.LINE_SEP);
 		output.flush();
 	}
