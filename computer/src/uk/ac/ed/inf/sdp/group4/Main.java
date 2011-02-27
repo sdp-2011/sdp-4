@@ -96,7 +96,6 @@ public class Main
 			default:
 				System.out.println("Goddammit. Give me a real number!");
 		}
-
 		strategy.runStrategy();
 	}
 
