@@ -254,7 +254,7 @@ public class TestTrackBallStrategy
 		assertThat(testController.getArgument(1), is(179));
 	}
 
-	@Ignore // Not implemented yet
+	@Ignore("Need to merge William's branch first.")
 	@Test
 	public void testGoalKeeperBlock() throws InvalidAngleException, BadWorldStateException
 	{
