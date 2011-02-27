@@ -56,8 +56,10 @@ public class TrackBallStrategy extends Strategy
 		Vector goalRoute = getGoalRoute();
 		double goalAngle = goalRoute.angleTo(robot.getFacing());
 
-		if(ball.getX() == 0 && ball.getY() == 0 && Math.abs(goalAngle) < 30)
+
+		if(ball.isHidden() && Math.abs(goalAngle) < 30)
 		{
+			log.debug("Can't see the ball - Shooting!");
 			controller.shoot();
 		}
 
@@ -66,13 +68,13 @@ public class TrackBallStrategy extends Strategy
 		if (Math.abs(ballAngle) > 15)
 		{
 			controller.setSpeed(300);
-			controller.turn((int)(ballAngle*0.6));
+			controller.turn((int)(ballAngle));
 			pause(1000);
 		}
 		else
 		{
 			// If we're close to the ball and the goal is close then we should shoot.
-			if (ballRoute.getMagnitude() < 40 && Math.abs(goalAngle) < 30)
+			if (ballRoute.getMagnitude() <= 35 && Math.abs(goalAngle) < 30)
 			{
 				controller.shoot();
 			}
@@ -99,7 +101,7 @@ public class TrackBallStrategy extends Strategy
 			//
 			// The messy distance at the end of the line is required until we get
 			// accurate movement.
-			if (ballRoute.getMagnitude() > 40)
+			if (ballRoute.getMagnitude() >= 40)
 			{
 				controller.setSpeed(400);
 				controller.driveForward((int)ballRoute.getMagnitude() / 4);

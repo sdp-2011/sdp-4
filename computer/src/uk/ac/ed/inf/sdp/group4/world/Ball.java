@@ -9,4 +9,14 @@ public class Ball extends WorldObject
 		setPosition(x, y);
 		setVector(direction, speed);
 	}
+
+	public boolean isHidden()
+	{
+		return this.getX() == 0 && this.getY() == 0;
+	}
+
+	public boolean isVisible()
+	{
+		return !this.isHidden();
+	}
 }
