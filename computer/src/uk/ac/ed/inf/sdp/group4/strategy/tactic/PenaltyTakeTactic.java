@@ -8,10 +8,30 @@ public class PenaltyTakeTactic extends Tactic
 {
 	public PenaltyTakeTactic(Controller controller)
 	{
-		super(controller);
+		this(controller, false);
+	}
+
+	public PenaltyTakeTactic(Controller controller, boolean testing)
+	{
+		super(controller, testing);
 	}
 
 	public void tick(Robot ours, Robot enemy, Ball ball)
 	{
+		// Turn the opposite direction.
+		if(enemy.inTopHalf())
+		{
+			controller.turn(-15);
+		}
+		else
+		{
+			controller.turn(15);
+		}
+
+		// Wait for the turn to complete
+		pause(200);
+
+		// Shooot!
+		controller.shoot();
 	}
 }
