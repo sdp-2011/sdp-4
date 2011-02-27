@@ -16,6 +16,7 @@ public class PenaltyTakeTactic extends Tactic
 		super(controller, testing);
 	}
 
+	@Override
 	public void tick(Robot ours, Robot enemy, Ball ball)
 	{
 		// Turn the opposite direction.
