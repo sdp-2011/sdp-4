@@ -205,7 +205,7 @@ public class OneLinerFormatter implements JUnitResultFormatter {
 
 		output.write("Ran [");
 		output.write(((System.currentTimeMillis() - l.longValue()) / 1000.0) + "] ");
-		output.write(getTestName(test) + " ... " + (failed ? "FAILED" : "OK"));
+		output.write(getTestName(test) + " ... " + (failed ? "\u001b[;31mFAILED\u001b[m" : "\u001b[;32mPASSED\u001b[m"));
 		output.write(StringUtils.LINE_SEP);
 		output.flush();
 	}
