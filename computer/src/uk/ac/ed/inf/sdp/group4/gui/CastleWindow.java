@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 
 import uk.ac.ed.inf.sdp.group4.strategy.RobotColour;
 import uk.ac.ed.inf.sdp.group4.strategy.Strategy; 
+import uk.ac.ed.inf.sdp.group4.gui.popup.*;
 
 public class CastleWindow extends JFrame {
 
@@ -26,7 +27,9 @@ public class CastleWindow extends JFrame {
     }
 
 	private void simStartActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        
+		SimPop simPop = new SimPop(this);
+		simPop.setVisible(true);
     }
 
     private void matchStartActionPerformed(java.awt.event.ActionEvent evt) {
