@@ -50,7 +50,14 @@
 
 	<target name="build" description="Compile the project">
 		<mkdir dir="classes"/>
-		<javac srcdir="${src}" destdir="${classes}" fork="yes" optimize="on" debug="on" source="1.5" target="1.5" includeantruntime="false">
+		<javac srcdir="${src}"
+			destdir="${classes}"
+			fork="yes"
+			optimize="on"
+			debug="on"
+			source="1.5"
+			target="1.5"
+			includeantruntime="false">
 			<classpath refid="classpath" />
 
 			<compilerarg value="-Xlint"/>
@@ -84,10 +91,11 @@
 			fork="false"
 			haltonfailure="false"
 			failureproperty="tests.failed"
+			outputtoformatters="false"
 			showoutput="true">
 
 			<classpath refid="classpath.test.unit" />
-			<formatter type="brief" usefile="false"/>
+			<formatter classname="uk.ac.ed.inf.sdp.group4.test.OneLinerFormatter" usefile="false" />
 
 			<batchtest>
 				<fileset dir="${test.classes.unit}">
@@ -115,10 +123,11 @@
 			fork="false"
 			haltonfailure="false"
 			failureproperty="tests.failed"
+			outputtoformatters="false"
 			showoutput="true">
 
 			<classpath refid="classpath.test.integration" />
-			<formatter type="brief" usefile="false"/>
+			<formatter classname="uk.ac.ed.inf.sdp.group4.test.OneLinerFormatter" usefile="false" />
 
 			<batchtest>
 				<fileset dir="${test.classes.integration}">
@@ -134,7 +143,9 @@
 
 	<target name="compile-integration-test">
 		<mkdir dir="${test.classes.integration}" />
-		<javac srcdir="${test.src.integration}" destdir="${test.classes.integration}" includeantruntime="false">
+		<javac srcdir="${test.src.integration}"
+			destdir="${test.classes.integration}"
+			includeantruntime="false">
 			<classpath refid="classpath.test.integration"/>
 
 			<compilerarg value="-Xlint"/>
