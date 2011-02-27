@@ -6,6 +6,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JPanel;
 
+import uk.ac.ed.inf.sdp.group4.strategy.RobotColour;
+import uk.ac.ed.inf.sdp.group4.strategy.Strategy; 
+
 public class CastleWindow extends JFrame {
 
     private JButton endButton;
@@ -45,6 +48,36 @@ public class CastleWindow extends JFrame {
     private void endButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }
+
+	public void simulate(Strategy blueStrat, Strategy yellStrat)
+	{
+
+	}
+
+	public void connect(Strategy strat, RobotColour colour)
+	{
+
+	}
+
+	private void halfTime()
+	{
+
+	}
+
+	private void pause()
+	{
+
+	}
+
+	private void resume()
+	{
+
+	}
+
+	private void reset()
+	{
+
+	}
 
 	//This is just the netbeans generated layout
     @SuppressWarnings("unchecked")
