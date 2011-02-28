@@ -59,6 +59,29 @@ public class TrackBallStrategy extends Strategy
 
                 Vector enemyBallRoute = getEnemyBallRoute();
 
+                Vector enemyUsRoute = getEnemyUsRoute();
+                double enemyUsAngle = getEnemyUsRoute.angleTo(robot.getFacing());
+
+                if (enemyBallRoute.getMagnitude()< ballRoute.getMagnitude())
+                {
+                attackStrategy();
+                }
+                else
+                {
+                defenceStrategy();
+                }
+                }
+
+         public void defenceStrategy()
+         {
+         //drive to the opponent blocking mode
+                controller.setSpeed(300);
+                controller.turn((int)(enemyUsAngle));
+                pause(1000);
+                controller.setSpeed(400);
+                controller.driveForward((int)ballRoute.getMagnitude() / 2);
+                pause(1000);
+           }
 
           public void attackStrategy()
           {
@@ -193,6 +216,23 @@ public class TrackBallStrategy extends Strategy
 
                return route;
 
-          }
+        }
+        private Vector getEnemyUsRoute();
+        {
+              Vector route = null;
 
+             try
+             {
+                     route = robot.getPosition().calcVectTo(enemyRobot.getPosition());
+             }
+             catch (InvalidAngleException e)
+             {
+             log.error(e.getMessage());
+              }
+
+             log.debug("Enemy is towards: " + route.getDirection());
+             log.debug("Enemy is at distance: " + route.getMagnitude());
+
+             return route;
+         }
 }
