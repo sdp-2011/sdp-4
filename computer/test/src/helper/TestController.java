@@ -78,12 +78,22 @@ public class TestController extends Controller
 
 	public int getCommand()
 	{
-		return this.instructions.get(0)[0];
+		return this.getCommand(0);
+	}
+
+	public int getCommand(int index)
+	{
+		return this.instructions.get(index)[0];
 	}
 
 	public int getArgument()
 	{
-		return this.instructions.get(0)[1];
+		return this.getArgument(0);
+	}
+
+	public int getArgument(int index)
+	{
+		return this.instructions.get(index)[1];
 	}
 
 	public ArrayList<Integer[]> getInstructions()
