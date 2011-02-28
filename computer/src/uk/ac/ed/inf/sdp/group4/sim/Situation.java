@@ -11,10 +11,12 @@ import java.awt.Graphics;
 
 public class Situation extends JPanel
 {
-	JFrame frame;
-	Robot blue;
-	Robot yellow;
-	Ball ball;
+	private static final long serialVersionUID = 101;
+
+	private JFrame frame;
+	private Robot blue;
+	private Robot yellow;
+	private Ball ball;
 
 	public Situation(Robot blue, Robot yellow, Ball ball)
 	{

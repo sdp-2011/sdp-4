@@ -40,6 +40,7 @@ public class Simulator implements Runnable
 	{
 		this.blueStrat = blueStrat;
 		this.yellowStrat = yellowStrat;
+		this.animate = false;
 
 		setup(blueStrat, yellowStrat);
 	}

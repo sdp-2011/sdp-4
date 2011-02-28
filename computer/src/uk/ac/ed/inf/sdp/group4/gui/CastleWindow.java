@@ -8,9 +8,12 @@ import javax.swing.JPanel;
 
 import uk.ac.ed.inf.sdp.group4.strategy.RobotColour;
 import uk.ac.ed.inf.sdp.group4.strategy.Strategy; 
+import uk.ac.ed.inf.sdp.group4.sim.Simulator;
 import uk.ac.ed.inf.sdp.group4.gui.popup.*;
 
 public class CastleWindow extends JFrame {
+
+	private static final long serialVersionUID = 101;
 
     private JButton endButton;
     private JButton halfTime;
@@ -54,8 +57,10 @@ public class CastleWindow extends JFrame {
 
 	public void simulate(Strategy blueStrat, Strategy yellStrat)
 	{
-		//set up global state
-		//set up strategy -> controller -> simbot
+		Simulator sim = new Simulator(blueStrat, yellStrat);
+		JPanel panel = sim.makePanel();
+		//add panel to window
+		new Thread(sim).start();
 	}
 
 	public void connect(Strategy strat, RobotColour colour)
