@@ -5,6 +5,8 @@ import com.google.inject.name.Names;
 
 import uk.ac.ed.inf.sdp.group4.world.IVisionClient;
 import uk.ac.ed.inf.sdp.group4.world.VisionClient;
+import uk.ac.ed.inf.sdp.group4.world.VisionClientHostname;
+import uk.ac.ed.inf.sdp.group4.world.VisionClientPortNumber;
 
 public class MatchModule extends AbstractModule
 {
@@ -15,11 +17,11 @@ public class MatchModule extends AbstractModule
 		bind(IVisionClient.class).to(VisionClient.class);
 
 		bind(String.class)
-			.annotatedWith(Names.named("Vision Client Hostname"))
+			.annotatedWith(VisionClientHostname.class)
 			.toInstance("localhost");
 
 		bind(Integer.class)
-			.annotatedWith(Names.named("Vision Client Port Number"))
+			.annotatedWith(VisionClientPortNumber.class)
 			.toInstance(50008);
 	}
 }

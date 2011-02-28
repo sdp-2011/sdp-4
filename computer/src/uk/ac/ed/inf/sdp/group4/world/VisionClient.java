@@ -4,7 +4,6 @@ import java.io.*;
 import java.net.*;
 
 import com.google.inject.Inject;
-import com.google.inject.name.Named;
 
 import uk.ac.ed.inf.sdp.group4.WorldStateCommunication.*;
 import uk.ac.ed.inf.sdp.group4.WorldStateCommunication.WorldStateRequest.*;
@@ -20,8 +19,8 @@ public class VisionClient implements IVisionClient
 	private long lastTimestamp = 0;
 
 	@Inject
-	public VisionClient(@Named("Vision Client Hostname") String hostname,
-			@Named("Vision Client Port Number") int portNumber)
+	public VisionClient(@VisionClientHostname String hostname,
+			@VisionClientPortNumber int portNumber)
 	{
 		this.hostname = hostname;
 		this.portNumber = portNumber;
