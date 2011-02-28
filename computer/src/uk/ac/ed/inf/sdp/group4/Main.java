@@ -72,7 +72,11 @@ public class Main
 				strategy = new TrackBallStrategy(client, controller, colour);
 				break;
 			case 3:
-				//nothing yet
+				TrackBallStrategy strat1 = new TrackBallStrategy(null, null, null);
+				TrackBallStrategy strat2 = new TrackBallStrategy(null, null, null);
+				Launcher launcher = new Launcher(strat1, strat2);
+				new Thread(launcher).start();
+				break;
 			case 4:
 				controller = new FatController();
 				controller.driveForward(50);
@@ -88,7 +92,7 @@ public class Main
 			default:
 				System.out.println("Goddammit. Give me a real number!");
 		}
-		strategy.runStrategy();
+		//strategy.runStrategy();
 	}
 
 	private static void logo()
