@@ -51,6 +51,33 @@ public class Robot extends WorldObject
 	{
 		return this.colour;
 	}
+
+	public boolean inOwnHalf()
+	{
+		if (this.getColour().equals(RobotColour.BLUE))
+		{
+			return this.getX() < 280;
+		}
+		else
+		{
+			return this.getX() >= 280;
+		}
+	}
+
+	public boolean inEnemyHalf()
+	{
+		return !this.inOwnHalf();
+	}
+
+	public boolean inTopHalf()
+	{
+		return this.getY() < 162;
+	}
+
+	public boolean inBottomHalf()
+	{
+		return !this.inTopHalf();
+	}
 	
 	// Added for Andrew's strategy system
 	public boolean hasBall(Ball ball) throws InvalidAngleException
