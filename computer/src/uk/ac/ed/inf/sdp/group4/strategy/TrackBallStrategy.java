@@ -170,5 +170,24 @@ public class TrackBallStrategy extends Strategy
 
 		return route;
 	}
-}
+        
+        private Vector getEnemy-BallRoute()
+        {
+               Vector route = null;
 
+               try
+               {
+                       route = enemyRobot.getPosition().calcVectTo(ball.getPosition());
+               }       
+               catch (InvalidAngleException e)
+               {
+                        log.error(e.getMessage());
+               }
+
+               log.debug("Enemy's distance to the ball: " + route.getMagnitude());
+
+               return route;
+
+          }
+
+}
