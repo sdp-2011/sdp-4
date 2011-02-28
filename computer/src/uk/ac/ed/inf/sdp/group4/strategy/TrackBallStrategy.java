@@ -171,7 +171,7 @@ public class TrackBallStrategy extends Strategy
 		return route;
 	}
         
-        private Vector getEnemy-BallRoute()
+        private Vector getEnemyBallRoute()
         {
                Vector route = null;
 
