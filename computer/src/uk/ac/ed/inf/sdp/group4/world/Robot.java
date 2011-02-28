@@ -78,16 +78,20 @@ public class Robot extends WorldObject
 	{
 		return !this.inTopHalf();
 	}
-	
+
 	// Added for Andrew's strategy system
 	public boolean hasBall(Ball ball) throws InvalidAngleException
 	{
 		Vector ballToBot = Vector.calcVect(this.getPosition(), ball.getPosition());
 		double mag = ballToBot.getMagnitude();
 		double dir = ballToBot.angleTo(this.getFacing());
-		if ((mag < 30) && ((dir < 16) || (dir > -16))){
+		if ((mag < 30) && ((dir < 16) || (dir > -16)))
+		{
 			return true;
 		}
-		else return false;
+		else
+		{
+			return false;
+		}
 	}
 }

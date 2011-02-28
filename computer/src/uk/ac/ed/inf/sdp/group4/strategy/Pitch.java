@@ -39,12 +39,13 @@ public class Pitch implements TileBasedMap
 	{
 		this.client = client;
 		this.colour = colour;
-		fillArea(0,0,245,30, WALL);
-		
+		fillArea(0, 0, 245, 30, WALL);
+
 		repaint();
 	}
-	
-	public void repaint(){
+
+	public void repaint()
+	{
 		clearUnits();
 		state = client.getWorldState();
 		if (state.getTimestamp() != timestamp)
@@ -58,7 +59,8 @@ public class Pitch implements TileBasedMap
 				theirRobot = state.getBlue();
 				foeBlob();
 			}
-			else {
+			else
+			{
 				ourRobot = state.getBlue();
 				units[ourRobot.getX()][ourRobot.getY()] = OURS;
 				theirRobot = state.getYellow();
@@ -68,10 +70,13 @@ public class Pitch implements TileBasedMap
 			units[ball.getX()][ball.getY()] = BALL;
 		}
 	}
-	
-	protected void fillArea(int x, int y, int width, int height, int type) {
-		for (int xp=x;xp<x+width;xp++) {
-			for (int yp=y;yp<y+height;yp++) {
+
+	protected void fillArea(int x, int y, int width, int height, int type)
+	{
+		for (int xp = x; xp < x + width; xp++)
+		{
+			for (int yp = y; yp < y + height; yp++)
+			{
 				terrain[xp][yp] = type;
 			}
 		}
@@ -107,7 +112,7 @@ public class Pitch implements TileBasedMap
 			}
 		}
 	}
-	
+
 	public void clearUnits()
 	{
 		for (int x = 0; x < getWidthInTiles(); x++)
@@ -118,17 +123,20 @@ public class Pitch implements TileBasedMap
 			}
 		}
 	}
-	
-	public void foeBlob(){
+
+	public void foeBlob()
+	{
 		int X = theirRobot.getX() + 25;
 		int Y = theirRobot.getY() + 25;
-		for (int xp=X;xp<X+50;xp++) {
-			for (int yp=Y;yp<Y+50;yp++) {
+		for (int xp = X; xp < X + 50; xp++)
+		{
+			for (int yp = Y; yp < Y + 50; yp++)
+			{
 				units[xp][yp] = THEIRS;
 			}
 		}
 	}
-	
+
 	public boolean blocked(WorldObject worldObject, int x, int y)
 	{
 		// Other bot blocks our movement
@@ -139,9 +147,9 @@ public class Pitch implements TileBasedMap
 		// Terrain other than clear pitch blocks our movement
 		return getTerrain(x, y) != 0;
 	}
-	
+
 	// Fills an area based from starting point x,y by the width and height given
-	
+
 	public void pathFinderVisited(int x, int y)
 	{
 		visited[x][y] = true;

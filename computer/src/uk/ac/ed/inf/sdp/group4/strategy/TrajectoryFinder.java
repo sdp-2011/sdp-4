@@ -7,30 +7,38 @@ import uk.ac.ed.inf.sdp.group4.world.Ball;
 import java.util.ArrayList;
 import uk.ac.ed.inf.sdp.group4.world.Robot;
 
-public class TrajectoryFinder{
+public class TrajectoryFinder
+{
 
 	private TileBasedMap map;
 	private Robot robot;
 	private ArrayList path = new ArrayList();
-	
-	public TrajectoryFinder(TileBasedMap map, Robot robot, Ball ball){
+
+	public TrajectoryFinder(TileBasedMap map, Robot robot, Ball ball)
+	{
 		this.map = map;
 		this.robot = robot;
 	}
-	
-	public Path findPath(WorldObject worldObject, int sx, int sy, int tx, int ty) {
-			Path path = new Path();
-			double direction = robot.getFacing();
-			
-			return path;
-			
+
+	public Path findPath(WorldObject worldObject, int sx, int sy, int tx, int ty)
+	{
+		Path path = new Path();
+		double direction = robot.getFacing();
+
+		return path;
+
 	}
 
-	public boolean isValidLocation(WorldObject worldObject, int x, int y){
-		if (map.blocked(robot, x, y)){
+	public boolean isValidLocation(WorldObject worldObject, int x, int y)
+	{
+		if (map.blocked(robot, x, y))
+		{
 			return false;
 		}
-		else return true;
+		else
+		{
+			return true;
+		}
 	}
-	
+
 }

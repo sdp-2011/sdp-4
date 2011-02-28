@@ -61,14 +61,14 @@ public class TestVector
 		assertThat(a.getDirection(), is(359.5));
 	}
 
-	@Test(expected=InvalidAngleException.class)
+	@Test(expected = InvalidAngleException.class)
 	public void testExceptionBoundsLower() throws InvalidAngleException
 	{
 		Vector a = new Vector(0, 0);
 		a.setDirection(-1);
 	}
 
-	@Test(expected=InvalidAngleException.class)
+	@Test(expected = InvalidAngleException.class)
 	public void testExceptionBoundsUpper() throws InvalidAngleException
 	{
 		Vector a = new Vector(0, 0);

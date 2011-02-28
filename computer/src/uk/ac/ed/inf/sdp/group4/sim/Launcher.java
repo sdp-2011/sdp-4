@@ -138,7 +138,7 @@ public class Launcher implements Runnable
 
 			Position bPos = blue.getPosition();
 			g.fillOval(bPos.getX() * X_RATIO - adjustX, bPos.getY() * Y_RATIO - adjustY,
-				ROB_X, ROB_Y);
+			           ROB_X, ROB_Y);
 
 			//draw Vector
 			g.setColor(Color.red);
@@ -161,8 +161,8 @@ public class Launcher implements Runnable
 			g.setColor(Color.red);
 
 			Position ballPos = ball.getPosition();
-			g.fillOval(ballPos.getX() * X_RATIO - (4/2), ballPos.getY() * Y_RATIO - (4/2),
-				BALL_SIZE, BALL_SIZE);
+			g.fillOval(ballPos.getX() * X_RATIO - (4 / 2), ballPos.getY() * Y_RATIO - (4 / 2),
+			           BALL_SIZE, BALL_SIZE);
 		}
 	}
 

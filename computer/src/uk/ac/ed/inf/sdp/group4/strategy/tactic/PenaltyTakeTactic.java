@@ -20,7 +20,7 @@ public class PenaltyTakeTactic extends Tactic
 	public void tick(Robot ours, Robot enemy, Ball ball)
 	{
 		// Turn the opposite direction.
-		if(enemy.inTopHalf())
+		if (enemy.inTopHalf())
 		{
 			controller.turn(-15);
 		}
