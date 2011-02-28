@@ -41,6 +41,9 @@ public class Launcher implements Runnable
 
 	public Launcher(Strategy blueStrat, Strategy yellowStrat)
 	{
+		this.blueStrat = blueStrat;
+		this.yellowStrat = yellowStrat;
+
 		setup(blueStrat, yellowStrat);
 	}
 
