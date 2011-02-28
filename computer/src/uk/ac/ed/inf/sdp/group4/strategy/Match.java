@@ -94,6 +94,8 @@ public class Match extends Strategy
 					}
 					else {
 						log.debug("Can't move to ball");
+						controller.stop();
+						pause(100);
 						// can't get too ball, play defensively until we get it
 					}
 				}
