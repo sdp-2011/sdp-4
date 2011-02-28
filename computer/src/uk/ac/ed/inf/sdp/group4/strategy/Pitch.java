@@ -6,8 +6,8 @@ import uk.ac.ed.inf.sdp.group4.world.WorldObject;
 public class Pitch implements TileBasedMap
 {
 	// Height and width specifications
-	public static final int WIDTH = 475; // Needs to be changed to method finding width of vision feed
-	public static final int HEIGHT = 245; // As above
+	public static final int WIDTH = 640; // Needs to be changed to method finding width of vision feed
+	public static final int HEIGHT = 480; // As above
 
 	// Visited boolean for the pathfinder
 	private boolean visited[][] = new boolean [WIDTH][HEIGHT];
@@ -25,23 +25,14 @@ public class Pitch implements TileBasedMap
 	public static int GOALB = 5;
 	public static int WALL = 6;
 	
-	private Position oldPosition = null;
+	private Position enemyPos;
 
 	public Pitch()
 	{
-		fillArea(0,0,245,30, WALL);
 	}
 	
 	public void repaint(Position position){
-		clearUnits(oldPosition);
-		int X = position.getX() + 25;
-		int Y = position.getY() + 25;
-		for (int xp=X;xp<X+50;xp++) {
-			for (int yp=Y;yp<Y+50;yp++) {
-				units[xp][yp] = THEIRS;
-			}
-		}
-		position = oldPosition;
+		enemyPos = position;
 		
 	}
 	
@@ -84,10 +75,10 @@ public class Pitch implements TileBasedMap
 		}
 	}
 	
-	public void clearUnits(Position position)
+	public void clearUnits(Position position2)
 	{
-		int X = position.getX() + 25;
-		int Y = position.getY() + 25;
+		int X = position2.getX() + 25;
+		int Y = position2.getY() + 25;
 		for (int xp=X;xp<X+50;xp++) {
 			for (int yp=Y;yp<Y+50;yp++) {
 				units[xp][yp] = 0;
@@ -99,7 +90,8 @@ public class Pitch implements TileBasedMap
 	public boolean blocked(WorldObject worldObject, int x, int y)
 	{
 		// Other bot blocks our movement
-		if (getUnits(x, y) == 2)
+		Position pos = new Position(x,y);
+		if (pos.distance(enemyPos) < 10)
 		{
 			return true;
 		}
@@ -116,6 +108,10 @@ public class Pitch implements TileBasedMap
 
 	public float getCost(WorldObject worldObject, int sx, int sy, int tx, int ty)
 	{
+		Position pos = new Position(tx,ty);
+		if (pos.distance(enemyPos) <20){
+			return 2;
+		}
 		return 1;
 	}
 }
