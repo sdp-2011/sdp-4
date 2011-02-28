@@ -16,9 +16,8 @@ public class Situation extends JPanel
 	Robot yellow;
 	Ball ball;
 
-	public Situation(JFrame frame, Robot blue, Robot yellow, Ball ball)
+	public Situation(Robot blue, Robot yellow, Ball ball)
 	{
-		this.frame = frame;
 		this.blue = blue;
 		this.yellow = yellow;
 		this.ball = ball;
@@ -28,8 +27,8 @@ public class Situation extends JPanel
 	{
 		super.paintComponent(g);
 
-		double X_RATIO = frame.getSize().width / 244;
-		double Y_RATIO = frame.getSize().height / 122;
+		double X_RATIO = 244 / 244;
+		double Y_RATIO = 122 / 122;
 		int ROB_X = (int) (X_RATIO * 20);
 		int ROB_Y = (int) (Y_RATIO * 18);
 		int BALL_SIZE = (int) (X_RATIO * 4);

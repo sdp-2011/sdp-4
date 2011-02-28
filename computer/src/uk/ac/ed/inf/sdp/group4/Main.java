@@ -14,7 +14,7 @@ import uk.ac.ed.inf.sdp.group4.strategy.RobotColour;
 import uk.ac.ed.inf.sdp.group4.strategy.Strategy;
 import uk.ac.ed.inf.sdp.group4.strategy.TrackBallStrategy;
 import uk.ac.ed.inf.sdp.group4.strategy.Match;
-import uk.ac.ed.inf.sdp.group4.sim.Launcher;
+import uk.ac.ed.inf.sdp.group4.sim.Simulator;
 import uk.ac.ed.inf.sdp.group4.strategy.KeyboardStrategy;
 import uk.ac.ed.inf.sdp.group4.strategy.Match;
 import uk.ac.ed.inf.sdp.group4.sim.FakeVision;
@@ -74,8 +74,8 @@ public class Main
 			case 3:
 				TrackBallStrategy strat1 = new TrackBallStrategy(null, null, null);
 				TrackBallStrategy strat2 = new TrackBallStrategy(null, null, null);
-				Launcher launcher = new Launcher(strat1, strat2);
-				new Thread(launcher).start();
+				Simulator sim = new Simulator(strat1, strat2);
+				new Thread(sim).start();
 				break;
 			case 4:
 				controller = new FatController();
@@ -92,7 +92,7 @@ public class Main
 			default:
 				System.out.println("Goddammit. Give me a real number!");
 		}
-		//strategy.runStrategy();
+		strategy.runStrategy();
 	}
 
 	private static void logo()
