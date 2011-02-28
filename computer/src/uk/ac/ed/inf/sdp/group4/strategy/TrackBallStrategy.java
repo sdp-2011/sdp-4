@@ -59,6 +59,9 @@ public class TrackBallStrategy extends Strategy
 
                 Vector enemyBallRoute = getEnemyBallRoute();
 
+
+          public void attackStrategy()
+          {
 		if(ball.getX() == 0 && ball.getY() == 0 && Math.abs(goalAngle) < 30)
 		{
 			controller.shoot();
