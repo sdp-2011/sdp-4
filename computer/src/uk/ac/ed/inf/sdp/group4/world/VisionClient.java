@@ -12,10 +12,6 @@ import uk.ac.ed.inf.sdp.group4.WorldStateCommunication.WorldStateResponse.*;
 
 public class VisionClient implements IVisionClient
 {
-	// Default Connection Parameters
-	private static final String DEFAULT_HOSTNAME = "localhost";
-	private static final int DEFAULT_PORT = 50008;
-
 	// Connection Parameters
 	private String hostname;
 	private int portNumber;
