@@ -50,18 +50,14 @@
 
 	<target name="build" description="Compile the project">
 		<mkdir dir="classes"/>
-<<<<<<< HEAD
-		<javac srcdir="${src}" destdir="${classes}" fork="yes" optimize="on" debug="on" source="1.6" target="1.6" includeantruntime="false">
-=======
 		<javac srcdir="${src}"
 			destdir="${classes}"
 			fork="yes"
 			optimize="on"
 			debug="on"
-			source="1.5"
-			target="1.5"
+			source="1.6"
+			target="1.6"
 			includeantruntime="false">
->>>>>>> feature/penalty
 			<classpath refid="classpath" />
 
 			<compilerarg value="-Xlint"/>
