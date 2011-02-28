@@ -32,6 +32,7 @@ public abstract class Strategy implements IStrategy, Runnable
 
 	public void run()
 	{
+		System.out.println("Go");
 		runStrategy();
 	}
 

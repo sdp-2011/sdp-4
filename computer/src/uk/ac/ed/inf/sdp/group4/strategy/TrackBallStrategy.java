@@ -11,7 +11,7 @@ import uk.ac.ed.inf.sdp.group4.world.VisionClient;
 import uk.ac.ed.inf.sdp.group4.world.IVisionClient;
 import uk.ac.ed.inf.sdp.group4.world.WorldState;
 
-public class TrackBallStrategy extends Strategy
+public class TrackBallStrategy extends Strategy implements Runnable
 {
 	private Robot robot;
 	private Robot enemyRobot;
