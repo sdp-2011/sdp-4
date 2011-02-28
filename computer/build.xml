@@ -50,7 +50,7 @@
 
 	<target name="build" description="Compile the project">
 		<mkdir dir="classes"/>
-		<javac srcdir="${src}" destdir="${classes}" fork="yes" optimize="on" debug="on" source="1.5" target="1.5" includeantruntime="false">
+		<javac srcdir="${src}" destdir="${classes}" fork="yes" optimize="on" debug="on" source="1.6" target="1.6" includeantruntime="false">
 			<classpath refid="classpath" />
 		</javac>
 	</target>
