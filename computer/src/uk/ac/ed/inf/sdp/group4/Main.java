@@ -72,15 +72,7 @@ public class Main
 				strategy = new TrackBallStrategy(client, controller, colour);
 				break;
 			case 3:
-				colour = RobotColour.BLUE;
-				WorldState state = new WorldState();
-				client = new FakeVision(state);
-				controller = new ThinController();
-				strategy = new TrackBallStrategy(client, controller, RobotColour.BLUE);
-				Launcher launcher = new Launcher(state, (ThinController) controller);
-				strategy.setGoals(0, 60, 243, 60);
-				new Thread(launcher).start();
-				break;
+				//nothing yet
 			case 4:
 				controller = new FatController();
 				controller.driveForward(50);
