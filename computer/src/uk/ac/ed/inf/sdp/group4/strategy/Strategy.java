@@ -22,12 +22,16 @@ public abstract class Strategy implements IStrategy
 	protected Position westGoal = new Position(30, 162);
 	protected Position eastGoal = new Position(525, 162);
 
-	public Strategy(IVisionClient client, Controller controller, RobotColour ourColour, boolean testing)
+	public Strategy(IVisionClient client, Controller controller, @TestingFlag boolean testing)
 	{
 		this.client = client;
 		this.controller = controller;
-		this.ourColour = ourColour;
 		this.testing = testing;
+	}
+
+	public void setColour(RobotColour colour)
+	{
+		this.ourColour = colour;
 	}
 
 	public void runStrategy()

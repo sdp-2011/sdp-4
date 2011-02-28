@@ -2,6 +2,7 @@ package uk.ac.ed.inf.sdp.group4.strategy;
 
 import java.lang.Math.*;
 
+import com.google.inject.Inject;
 
 import uk.ac.ed.inf.sdp.group4.controller.Controller;
 import uk.ac.ed.inf.sdp.group4.domain.*;
@@ -21,19 +22,20 @@ public class TrackBallStrategy extends Strategy
 	Position westGoal = new Position(30, 162);
 	Position eastGoal = new Position(525, 162);
 
-	public TrackBallStrategy(IVisionClient client, Controller controller, RobotColour colour)
+	@Inject
+	public TrackBallStrategy(IVisionClient client, Controller controller)
 	{
-		this(client, controller, colour, false);
+		this(client, controller, false);
 	}
 
-	public TrackBallStrategy(IVisionClient client, Controller controller, RobotColour colour, boolean testing)
+	public TrackBallStrategy(IVisionClient client, Controller controller, boolean testing)
 	{
-		super(client, controller, colour, testing);
+		super(client, controller, testing);
 	}
 
 	public TrackBallStrategy(Controller controller, WorldState state)
 	{
-		super(null, controller, RobotColour.BLUE, false);
+		super(null, controller, false);
 	}
 
 	@Override

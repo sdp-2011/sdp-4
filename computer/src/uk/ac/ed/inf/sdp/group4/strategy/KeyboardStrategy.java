@@ -1,5 +1,7 @@
 package uk.ac.ed.inf.sdp.group4.strategy;
 
+import com.google.inject.Inject;
+
 import uk.ac.ed.inf.sdp.group4.world.IVisionClient;
 import uk.ac.ed.inf.sdp.group4.controller.Controller;
 import java.io.*;
@@ -8,10 +10,10 @@ public class KeyboardStrategy extends Strategy
 {
 	private BufferedReader keyboard;
 
-	public KeyboardStrategy(IVisionClient client, Controller controller, RobotColour colour)
+	@Inject
+	public KeyboardStrategy(IVisionClient client, Controller controller)
 	{
-		super(client, controller, colour, false);
-
+		super(client, controller, false);
 		keyboard = new BufferedReader(new InputStreamReader(System.in));
 	}
 

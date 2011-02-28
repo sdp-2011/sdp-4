@@ -23,11 +23,10 @@ public class Main
 		
 		// Jenkins! Bring me my injector!
 		Injector injector = Guice.createInjector(new MatchModule());
-
-		// Building blocks of perfection.
-		IVisionClient client = injector.getInstance(IVisionClient.class);
-		Controller controller = null;
 		Strategy strategy = null;
+		
+		// Get rid of this ASAP.
+		Controller controller;
 
 		// Display the team logo.
 		logo();
@@ -49,8 +48,7 @@ public class Main
 		System.out.println("  > 1. Keyboard Control");
 		System.out.println("  > 2. Navigate to Ball");
 		System.out.println("  > 3. Simulator");
-		System.out.println("  > 4. Test Movement");
-		System.out.println("  > 5. Match");
+		System.out.println("  > 4. Match");
 		System.out.println("Where would you like to go today?");
 
 		int option = Integer.parseInt(keyboard.readLine());
@@ -58,17 +56,15 @@ public class Main
 		switch (option)
 		{
 			case 1:
-				controller = new FatController();
-				strategy = new KeyboardStrategy(client, controller, colour);
+				strategy = injector.getInstance(KeyboardStrategy.class);
 				break;
 			case 2:
-				controller = new FatController();
-				strategy = new TrackBallStrategy(client, controller, colour);
+				strategy = injector.getInstance(TrackBallStrategy.class);
 				break;
 			case 3:
 				colour = RobotColour.BLUE;
 				WorldState state = new WorldState();
-				client = new FakeVision(state);
+				IVisionClient client = new FakeVision(state);
 				//state.getBall().setPosition(150, 80);
 				state.getBall().setPosition(170, 40);
 				state.getBlue().setPosition(20, 60);
@@ -88,21 +84,15 @@ public class Main
 				new Thread(launcher).start();
 				break;
 			case 4:
-				controller = new FatController();
-				controller.driveForward(50);
-				controller.turn(-360);
-				Thread.sleep(3000);
-				System.exit(0);
-				break;
-			case 5:
-				controller = new FatController();
-				strategy = new Match(client, controller, colour, false);
+				strategy = injector.getInstance(Match.class);
 				break;
 
 			default:
 				System.out.println("Goddammit. Give me a real number!");
+				System.exit(1);
 		}
 
+		strategy.setColour(colour);
 		strategy.runStrategy();
 	}
 
