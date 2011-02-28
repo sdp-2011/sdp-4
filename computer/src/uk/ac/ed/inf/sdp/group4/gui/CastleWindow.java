@@ -54,12 +54,13 @@ public class CastleWindow extends JFrame {
 
 	public void simulate(Strategy blueStrat, Strategy yellStrat)
 	{
-
+		//set up global state
+		//set up strategy -> controller -> simbot
 	}
 
 	public void connect(Strategy strat, RobotColour colour)
 	{
-
+		
 	}
 
 	private void halfTime()
