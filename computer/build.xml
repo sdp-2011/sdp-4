@@ -69,6 +69,8 @@
 		<delete dir="${classes}" />
 	</target>
 
+	<target name="rebuild" description="" depends="clean,test" />
+
 	<target name="test" description="Run the tests" depends="compile-helper-test,test-unit,test-integration" />
 
 	<target name="compile-helper-test">
