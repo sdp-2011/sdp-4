@@ -4,24 +4,15 @@ import java.io.*;
 
 import org.apache.log4j.BasicConfigurator;
 
-import uk.ac.ed.inf.sdp.group4.world.VisionClient;
-import uk.ac.ed.inf.sdp.group4.world.IVisionClient;
-import uk.ac.ed.inf.sdp.group4.world.WorldState;
-import uk.ac.ed.inf.sdp.group4.controller.FatController;
-import uk.ac.ed.inf.sdp.group4.controller.ThinController;
-import uk.ac.ed.inf.sdp.group4.controller.Controller;
-import uk.ac.ed.inf.sdp.group4.strategy.RobotColour;
-import uk.ac.ed.inf.sdp.group4.strategy.Strategy;
-import uk.ac.ed.inf.sdp.group4.strategy.TrackBallStrategy;
-import uk.ac.ed.inf.sdp.group4.strategy.Match;
-import uk.ac.ed.inf.sdp.group4.sim.Launcher;
-import uk.ac.ed.inf.sdp.group4.strategy.KeyboardStrategy;
-import uk.ac.ed.inf.sdp.group4.strategy.Match;
-import uk.ac.ed.inf.sdp.group4.sim.FakeVision;
-import uk.ac.ed.inf.sdp.group4.sim.Component;
-import uk.ac.ed.inf.sdp.group4.sim.SimBot;
-import uk.ac.ed.inf.sdp.group4.sim.SimBall;
-import uk.ac.ed.inf.sdp.group4.domain.Position;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+
+import uk.ac.ed.inf.sdp.group4.*;
+import uk.ac.ed.inf.sdp.group4.controller.*;
+import uk.ac.ed.inf.sdp.group4.domain.*;
+import uk.ac.ed.inf.sdp.group4.sim.*;
+import uk.ac.ed.inf.sdp.group4.strategy.*;
+import uk.ac.ed.inf.sdp.group4.world.*;
 
 public class Main
 {
@@ -29,9 +20,12 @@ public class Main
 	{
 		// Setup the logger
 		BasicConfigurator.configure();
+		
+		// Jenkins! Bring me my injector!
+		Injector injector = Guice.createInjector(new MatchModule());
 
 		// Building blocks of perfection.
-		IVisionClient client = new VisionClient();
+		IVisionClient client = injector.getInstance(IVisionClient.class);
 		Controller controller = null;
 		Strategy strategy = null;
 

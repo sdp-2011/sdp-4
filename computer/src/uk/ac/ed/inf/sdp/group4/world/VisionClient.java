@@ -3,6 +3,9 @@ package uk.ac.ed.inf.sdp.group4.world;
 import java.io.*;
 import java.net.*;
 
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
+
 import uk.ac.ed.inf.sdp.group4.WorldStateCommunication.*;
 import uk.ac.ed.inf.sdp.group4.WorldStateCommunication.WorldStateRequest.*;
 import uk.ac.ed.inf.sdp.group4.WorldStateCommunication.WorldStateResponse.*;
@@ -20,12 +23,9 @@ public class VisionClient implements IVisionClient
 	// Last Requested Timestamp
 	private long lastTimestamp = 0;
 
-	public VisionClient()
-	{
-		this(DEFAULT_HOSTNAME, DEFAULT_PORT);
-	}
-
-	public VisionClient(String hostname, int portNumber)
+	@Inject
+	public VisionClient(@Named("Vision Client Hostname") String hostname,
+			@Named("Vision Client Port Number") int portNumber)
 	{
 		this.hostname = hostname;
 		this.portNumber = portNumber;
