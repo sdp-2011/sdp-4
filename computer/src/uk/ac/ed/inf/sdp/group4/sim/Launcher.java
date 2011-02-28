@@ -21,6 +21,7 @@ import uk.ac.ed.inf.sdp.group4.world.WorldState;
 import uk.ac.ed.inf.sdp.group4.world.VisionClient;
 import uk.ac.ed.inf.sdp.group4.domain.InvalidAngleException;
 import uk.ac.ed.inf.sdp.group4.strategy.RobotColour;
+import uk.ac.ed.inf.sdp.group4.strategy.Strategy;
 import uk.ac.ed.inf.sdp.group4.controller.ThinController;
 
 public class Launcher implements Runnable
@@ -39,19 +40,21 @@ public class Launcher implements Runnable
 	private Component[] components;
 	private ThinController controllerOne;
 	private ThinController controllerTwo;
+	private Strategy blueStrat;
+	private Strategy yellowStrat;
 
 	private JFrame frame;
 
-	public Launcher(WorldState state, ThinController controller)
+	public Launcher(Strategy blueStrat, Strategy yellowStrat)
 	{
-		this.components = components;
-		this.state = state;
-		this.controllerOne = controller;
-		setup();
+		setup(blueStrat, yellowStrat);
 	}
 
 	public void run()
 	{
+		new Thread(blueStrat).start();
+		new Thread(yellowStrat).start();
+
 		long t = System.currentTimeMillis();
 
 		while (true)
@@ -66,8 +69,12 @@ public class Launcher implements Runnable
 		}
 	}
 
-	private void setup()
+	private void setup(Strategy blueStrat, Strategy yellowStrat)
 	{
+		//create world state
+		state = new WorldState();
+		FakeVision client = new FakeVision(state);
+
 		//get state objects
 		blue = state.getBlue();
 		yellow = state.getYellow();
@@ -88,6 +95,10 @@ public class Launcher implements Runnable
 		controllerOne.setBot((SimBot) components[0]);
 		controllerTwo = new ThinController();
 		controllerTwo.setBot((SimBot) components[1]);
+
+		//setup strategies
+		blueStrat.setup(client, controllerOne, RobotColour.BLUE, true);
+		yellowStrat.setup(client, controllerTwo, RobotColour.YELLOW, true);
 
 		//set up pitch
 		pitch = new Pitch(components);
