@@ -22,13 +22,13 @@ public class TrackBallStrategy extends Strategy
 	Position westGoal = new Position(30, 162);
 	Position eastGoal = new Position(525, 162);
 
-	@Inject
 	public TrackBallStrategy(IVisionClient client, Controller controller)
 	{
 		this(client, controller, false);
 	}
 
-	public TrackBallStrategy(IVisionClient client, Controller controller, boolean testing)
+	@Inject
+	public TrackBallStrategy(IVisionClient client, Controller controller, @TestingFlag Boolean testing)
 	{
 		super(client, controller, testing);
 	}
@@ -58,7 +58,6 @@ public class TrackBallStrategy extends Strategy
 
 		Vector goalRoute = getGoalRoute();
 		double goalAngle = goalRoute.angleTo(robot.getFacing());
-
 
 		if(ball.isHidden() && Math.abs(goalAngle) < 30)
 		{

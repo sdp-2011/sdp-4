@@ -93,4 +93,10 @@ public class ThinController extends Controller
 			turnRight(argument);
 		}
 	}
+
+	// Used for testing. I'm sorry - poor design.
+	public int getCommand() { return 0; }
+	public int getCommand(int index) { return 0; }
+	public int getArgument() { return 0; }
+	public int getArgument(int index) { return 0; }
 }

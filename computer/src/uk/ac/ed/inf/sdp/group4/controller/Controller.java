@@ -40,4 +40,10 @@ public abstract class Controller
 
 	// All of the other commands use this.
 	public abstract void sendCommand(int command, int argument);
+
+	// For Testing
+	public abstract int getCommand();
+	public abstract int getCommand(int index);
+	public abstract int getArgument();
+	public abstract int getArgument(int index);
 }

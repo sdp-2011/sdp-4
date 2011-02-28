@@ -31,6 +31,7 @@ public class VisionClient implements IVisionClient
 		Socket socket = getSocket();
 		DataInputStream input = null;
 		PrintStream output = null;
+
 		try
 		{
 			input = new DataInputStream(socket.getInputStream());
@@ -40,7 +41,9 @@ public class VisionClient implements IVisionClient
 		{
 			System.err.println("Couldn't create streams through socket");
 		}
+
 		WorldStateRequest request = createRequest();
+
 		try
 		{
 			request.writeTo(output);
@@ -49,7 +52,9 @@ public class VisionClient implements IVisionClient
 		{
 			System.err.println("Couldn't write to the output stream");
 		}
+
 		WorldStateResponse response = null;
+
 		try
 		{
 			response = WorldStateResponse.parseFrom(input);
@@ -58,6 +63,7 @@ public class VisionClient implements IVisionClient
 		{
 			System.err.println("Couldn't parse the response from the input stream");
 		}
+
 		// TODO: Turn into WorldState class and validate.
 		WorldState worldState = null;
 		try
