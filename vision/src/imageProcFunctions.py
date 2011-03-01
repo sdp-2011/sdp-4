@@ -42,8 +42,8 @@ def refine_orientation(orientation, center_point, mask):
     
 	center_point = calculate_COM(mask)
 
-	cross = cv.LoadImageM("../images/cross.png")
-	cross2 = cv.LoadImageM("../images/cross.png")
+	cross = cv.LoadImage("../images/cross.png")
+	cross2 = cv.LoadImage("../images/cross.png")
 	result = cv.CreateImage(result_size, cv.IPL_DEPTH_32F, 1)
 	
 	down = False
