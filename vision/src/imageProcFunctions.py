@@ -34,45 +34,6 @@ def calculate_COM(mask):
 
     return (int(M10/M00), int(M01/M00))
 
-def refine_orientation(orientation, center_point, mask):
-    if(center_point[0] > 25 and center_point[1] > 25):
-	crop_rect = (center_point[0] - 20, center_point[1] - 30, 40, 40)
-	image = cv.GetImage(mask)    
-	cv.SetImageROI(image, crop_rect)
-    
-	center_point = calculate_COM(mask)
-
-	cross = cv.LoadImage("../images/cross.png")
-	cross2 = cv.LoadImage("../images/cross.png")
-	result = cv.CreateImage(cv.GetSize(cross), cv.IPL_DEPTH_32F, 1)
-	
-	down = False
-	if (orientation < 0):
-	    down = True
-	
-	rotation_matrix = cv.CreateMat(2, 3, cv.CV_32FC1)	
-	cv.GetRotationMatrix2D(center_point, orientation, 1, rotation_matrix)
-	
-	check1 = cv.CreateMat(40, 40, cv.CV_8UC1)
-	cv.WarpAffine(cross, check1, rotation_matrix)
-	cv.MatchTemplate(mask, check1, result, cv.CV_TM_CCORR)
-	min_val_down, max_val_down, min_loc_down, max_loc_down = cv.MinMaxLoc(result) 
-		
-	check2 = cv.CreateMat(40, 40, cv.CV_8UC1)
-	cv.GetRotationMatrix2D(center_point, orientation + 180, 1,rotation_matrix)
-	cv.WarpAffine(cross2, check2, rotation_matrix)
-	cv.MatchTemplate(mask, check2, result, cv.CV_TM_CCORR)
-	min_val_up, max_val_up, min_loc_up, max_loc_up = cv.MinMaxLoc(result)
-
-	if ((max_val_down > max_val_up) and down):
-	    return orientation
-	else:
-	    return orientation + 180
-
-  #  cv.NamedWindow("Cropped Image 2", cv.CV_WINDOW_AUTOSIZE)
-  #  cv.ShowImage("Cropped Image 2", image)
- 
-
 def find_object_descriptors(mask):
     moments = cv.Moments(mask, 1)
     M00 = cv.GetSpatialMoment(moments,0,0)
@@ -92,13 +53,10 @@ def find_object_descriptors(mask):
     mu20 = (M20/M00) - x_bar**2
     mu02 = (M02/M00) - y_bar**2
     mu11 = (M11/M00) - x_bar * y_bar
-    error = math.sqrt(4 * (mu11**2) + (mu20 - mu02)**2)
 
-    orientation = math.degrees(math.atan2(2*mu11, mu20 - mu02 + error))
+    orientation = math.degrees(math.atan2(2*mu11, mu20 - mu02))
     center_point = (int(x_bar), int(y_bar))
     
-    #pewpew = refine_orientation(orientation, center_point, mask)
-
     return [center_point, orientation]
 
 def find_object(img, colour):
@@ -148,7 +106,7 @@ def find_object(img, colour):
             return [(0, 0),0]
 
     # Clean up the image to reduce anymore noise in the binary image
-    cv.Smooth(mask, mask, cv.CV_GAUSSIAN, 9, 9, 0, 0)
+    cv.Smooth(mask, mask, cv.CV_GAUSSIAN, 13, 13, 0, 0)
     convKernel = cv.CreateStructuringElementEx(1, 1, 0, 0, cv.CV_SHAPE_ELLIPSE)
     cv.Erode(mask, mask, convKernel, 1)
     cv.Dilate(mask, mask, convKernel, 1)

@@ -33,16 +33,20 @@ cam = cv.CaptureFromCAM(0)
 
 last_time = 0
 
+last_blue = 0
+last_yellow = 0
+
 while (True):
     
     start = time.time()
     image = cv.QueryFrame(cam)
-    cropRect = (75, 80, 554, 325)
+    cropRect = (75, 93, 554, 320)
     cv.SetImageROI(image, cropRect)
     orig = cv.CloneImage(image)
     processed = cv.CloneImage(orig)
-    
+
     object_descriptors = [find_object(image,"RED"), find_object(image,"BLUE"), find_object(image,"YELLOW")]
+     
     print "Blue orientation: ", object_descriptors[1][1]
     print "Yellow orientation:", object_descriptors[2][1]
     
