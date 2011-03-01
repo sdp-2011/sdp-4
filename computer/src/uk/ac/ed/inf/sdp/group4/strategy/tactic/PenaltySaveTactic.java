@@ -50,6 +50,10 @@ public class PenaltySaveTactic extends Tactic
 
 		while(distance < BALL_MOVE_THRESHOLD)
 		{
+			controller.driveForward(30);
+			pause(1000);
+			controller.driveBackward(40);
+			pause(1000);
 		}
 
 		// CHAAAAARGEEEEEEE
