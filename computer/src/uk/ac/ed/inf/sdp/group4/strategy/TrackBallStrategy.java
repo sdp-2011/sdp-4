@@ -97,7 +97,7 @@ public class TrackBallStrategy extends Strategy
 			}
 			// If we're close to the ball and the goal is far then we should
 			// drive with a ball to the goal.
-			else if (ballRoute.getMagnitude() < 25)
+			else if (ballRoute.getMagnitude() < 40)
 			{
 				log.debug("Driving to the goal!");
 				if (Math.abs(goalAngle) > 15)
