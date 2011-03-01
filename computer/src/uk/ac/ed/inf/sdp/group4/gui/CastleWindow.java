@@ -42,7 +42,8 @@ public class CastleWindow extends JFrame {
 
     private void matchStartActionPerformed(java.awt.event.ActionEvent evt) {
 
-        connect(new TrackBallStrategy(null, null, RobotColour.BLUE));
+        MatchPop matchPop = new MatchPop(this);
+		matchPop.setVisible(true);
     }
 
     private void halfTimeActionPerformed(java.awt.event.ActionEvent evt) {

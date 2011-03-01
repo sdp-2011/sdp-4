@@ -4,6 +4,10 @@ import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
+import uk.ac.ed.inf.sdp.group4.gui.CastleWindow;
+import uk.ac.ed.inf.sdp.group4.strategy.Strategy;
+import uk.ac.ed.inf.sdp.group4.strategy.TrackBallStrategy;
+import uk.ac.ed.inf.sdp.group4.strategy.RobotColour;
 
 public class MatchPop extends JFrame {
 
@@ -14,13 +18,26 @@ public class MatchPop extends JFrame {
     private JLabel jLabel1;
     private JLabel jLabel2;
     private JComboBox stratBox;
+	private CastleWindow window;
 
-    public MatchPop() {
+    public MatchPop(CastleWindow window) {
+
+		this.window = window;
         initComponents();
     }
 
 	private void connectButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        
+		Strategy strategy = null;
+
+		if (stratBox.getSelectedItem().equals("TrackBall"))
+		{
+			strategy = new TrackBallStrategy(null, null, 
+				(RobotColour) colourBox.getSelectedItem(), false);
+		}
+		
+		window.connect(strategy);
+		this.dispose();
     }
 
     private void stratBoxActionPerformed(java.awt.event.ActionEvent evt) {
@@ -42,14 +59,14 @@ public class MatchPop extends JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        stratBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        stratBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "TrackBall" }));
         stratBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 stratBoxActionPerformed(evt);
             }
         });
 
-        colourBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        colourBox.setModel(new javax.swing.DefaultComboBoxModel(new RobotColour[] { RobotColour.BLUE, RobotColour.YELLOW}));
         colourBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 colourBoxActionPerformed(evt);
