@@ -60,32 +60,22 @@ public class TrackBallStrategy extends Strategy
                 Vector enemyBallRoute = getEnemyBallRoute();
 
                 Vector enemyUsRoute = getEnemyUsRoute();
-                double enemyUsAngle = getEnemyUsRoute.angleTo(robot.getFacing());
+                double enemyUsAngle = enemyUsRoute.angleTo(robot.getFacing());
 
-                if (enemyBallRoute.getMagnitude()< ballRoute.getMagnitude())
+                if (enemyBallRoute.getMagnitude() < ballRoute.getMagnitude())
+				//use defence mode enemy is closer to the ball
                 {
-                attackStrategy();
-                }
-                else
-                {
-                defenceStrategy();
-                }
-                }
-
-         public void defenceStrategy()
-         {
-         //drive to the opponent blocking mode
                 controller.setSpeed(300);
                 controller.turn((int)(enemyUsAngle));
                 pause(1000);
                 controller.setSpeed(400);
                 controller.driveForward((int)ballRoute.getMagnitude() / 2);
                 pause(1000);
-           }
-
-          public void attackStrategy()
-          {
-		if(ball.getX() == 0 && ball.getY() == 0 && Math.abs(goalAngle) < 30)
+                }
+				else{
+				// use attack mode
+          
+                if(ball.getX() == 0 && ball.getY() == 0 && Math.abs(goalAngle) < 30)
 		{
 			controller.shoot();
 		}
@@ -147,6 +137,19 @@ public class TrackBallStrategy extends Strategy
 				pause(1300);
 			}
 		}
+
+                }
+                }
+
+         public void defenceStrategy(double enemyUsAngle)
+         {
+         //drive to the opponent blocking mode
+
+           }
+
+          public void attackStrategy()
+          {
+		
 	}
 
 
@@ -217,7 +220,7 @@ public class TrackBallStrategy extends Strategy
                return route;
 
         }
-        private Vector getEnemyUsRoute();
+        private Vector getEnemyUsRoute()
         {
               Vector route = null;
 

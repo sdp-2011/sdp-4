@@ -68,8 +68,8 @@ while (True):
 	other_points = (blueWhite, yellowBlack)
 	draw_on_image(processed, center_points, other_points)
 	
-	print "Bearing of blue:", (int(calculateBearing(other_points[0], center_points[1]))-180) % 360
-	print "Sod blue, red is at:", ballCenter[0], ballCenter[1]
+	print "Bearing of blue:", (int(calculateBearing(other_points[0], center_points[1]))-180) % 360, "\r"
+	print "Sod blue, red is at:", ballCenter[0], ballCenter[1], "\r"
 #	print "Bearing of yellow:",  (int(calculateBearing(blueWhite,blueCenter) + 90) + 360) % 360
 	
 	update_worldstate(center_points, other_points)
