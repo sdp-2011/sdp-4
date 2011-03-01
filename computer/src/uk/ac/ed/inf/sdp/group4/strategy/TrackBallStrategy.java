@@ -62,8 +62,8 @@ public class TrackBallStrategy extends Strategy
                 Vector enemyUsRoute = getEnemyUsRoute();
                 double enemyUsAngle = enemyUsRoute.angleTo(robot.getFacing());
 
-                if (enemyBallRoute.getMagnitude() < ballRoute.getMagnitude())
-				//use defence mode enemy is closer to the ball
+                if (enemyBallRoute.getMagnitude() - ballRoute.getMagnitude() > 100)
+				//use defence mode enemy is much closer to the ball 
                 {
                 controller.setSpeed(300);
                 controller.turn((int)(enemyUsAngle));
@@ -72,8 +72,8 @@ public class TrackBallStrategy extends Strategy
                 controller.driveForward((int)ballRoute.getMagnitude() / 2);
                 pause(1000);
                 }
-				else{
-				// use attack mode
+		else{
+		// use attack mode
           
                 //if(ball.getX() == 0 && ball.getY() == 0 && Math.abs(goalAngle) < 30)
 		//{
