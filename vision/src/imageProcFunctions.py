@@ -42,12 +42,12 @@ def refine_orientation(orientation, center_point, mask):
     
 	center_point = calculate_COM(mask)
 
-	cross = cv.LoadImageM("../images/cross.png", cv.CV_LOAD_IMAGE_UNCHANGED)
-	cross2 = cv.LoadImageM("../images/cross.png", cv.CV_LOAD_IMAGE_UNCHANGED)
+	cross = cv.LoadImageM("../images/cross.png")
+	cross2 = cv.LoadImageM("../images/cross.png")
 	result = cv.CreateImage(result_size, cv.IPL_DEPTH_32F, 1)
 	
 	down = False
-	if (orientation < 0)
+	if (orientation < 0):
 	    down = True
 		
 	rotation_matrix = cv.GetRotationMatrix2D(center_point, orientation, 1)
@@ -62,7 +62,7 @@ def refine_orientation(orientation, center_point, mask):
 	cv.MatchTemplate(mask, check2, result, cv.CV_TM_CCORR)
 	min_val_up, max_val_up, min_loc_up, max_loc_up = cv.MinMaxLoc(result)
 
-	if ((max_val_down > max_val_up) and down)
+	if ((max_val_down > max_val_up) and down):
 	    return orientation
 	else:
 	    return orientation + 180
@@ -150,7 +150,5 @@ def find_object(img, colour):
     convKernel = cv.CreateStructuringElementEx(1, 1, 0, 0, cv.CV_SHAPE_ELLIPSE)
     cv.Erode(mask, mask, convKernel, 1)
     cv.Dilate(mask, mask, convKernel, 1)
-
-    find_corners(mask)
 
     return find_object_descriptors(mask)
