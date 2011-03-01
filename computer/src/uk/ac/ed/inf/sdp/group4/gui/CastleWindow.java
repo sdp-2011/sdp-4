@@ -8,6 +8,9 @@ import javax.swing.JPanel;
 
 import uk.ac.ed.inf.sdp.group4.strategy.RobotColour;
 import uk.ac.ed.inf.sdp.group4.strategy.Strategy; 
+import uk.ac.ed.inf.sdp.group4.controller.FatController;
+import uk.ac.ed.inf.sdp.group4.world.IVisionClient;
+import uk.ac.ed.inf.sdp.group4.world.VisionClient;
 import uk.ac.ed.inf.sdp.group4.sim.Simulator;
 import uk.ac.ed.inf.sdp.group4.gui.popup.*;
 
@@ -24,6 +27,7 @@ public class CastleWindow extends JFrame {
     private JButton pauseButton;
     private JButton simStart;
     private JPanel situation;
+	private Strategy strategy;
 
     public CastleWindow() {
         initComponents();
@@ -63,19 +67,22 @@ public class CastleWindow extends JFrame {
 		new Thread(sim).start();
 	}
 
-	public void connect(Strategy strat, RobotColour colour)
+	public void connect(Strategy strat)
 	{
-		
+		IVisionClient client = new VisionClient();
+		strat.setup(client, new FatController(), strat.ourColour(), false);
+		strategy = strat;
+		new Thread(strat).start();
 	}
 
 	private void halfTime()
 	{
-
+		strategy.halfTime();
 	}
 
 	private void pause()
 	{
-
+		
 	}
 
 	private void resume()

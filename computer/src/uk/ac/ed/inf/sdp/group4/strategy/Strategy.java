@@ -101,5 +101,10 @@ public abstract class Strategy implements IStrategy, Runnable
 		this.ourColour = ourColour;
 		this.testing = testing;
 	}
+
+	public void halfTime()
+	{
+		ourColour = enemyColour();
+	}
 }
 
