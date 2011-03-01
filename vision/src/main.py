@@ -40,36 +40,6 @@ def whitePoint(mask):
 
 
 
-		if (colour == "BLACK"):
-			
-			x = 0
-			y = 0
-			
-			#for i in mask[0]:
-			#	x = x +i
-
-#			for j in mask[1]:
-##
-#				y = y + j
-
-								
-			print x
-			M00 = 0
-			M10 = 0
-			M01 = 0
-
-	#		contourLow = cv.ApproxPoly(contours, storage, cv.CV_POLY_APPROX_DP)
-			moments = cv.Moments(mask, 1)
-			M00 = M00 + cv.GetSpatialMoment(moments,0,0)
-			M10 = M10 + cv.GetSpatialMoment(moments,1,0)
-			M01 = M01 + cv.GetSpatialMoment(moments,0,1)
-
-			if M00 == 0:
-				M00 = 0.01
-
-			return(round(M10/M00),round(M01/M00))
-
-		else:
 while (True):
 	start = time.time()
 	image = cv.QueryFrame(cam)
