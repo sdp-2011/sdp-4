@@ -75,10 +75,10 @@ public class TrackBallStrategy extends Strategy
 				else{
 				// use attack mode
           
-                if(ball.getX() == 0 && ball.getY() == 0 && Math.abs(goalAngle) < 30)
-		{
-			controller.shoot();
-		}
+                //if(ball.getX() == 0 && ball.getY() == 0 && Math.abs(goalAngle) < 30)
+		//{
+		//	controller.shoot();
+		//}
 
 		// If we are a long turning distance from the ball then we should
 		// turn towards it.
