@@ -168,6 +168,14 @@ public class TrackBallStrategy extends Strategy
 
 		return route;
 	}
+
+	public void attack()
+	{
+	}
+
+	public void defend()
+	{
+	}
 }
 
 

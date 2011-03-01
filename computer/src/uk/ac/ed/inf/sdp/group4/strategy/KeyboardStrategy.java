@@ -30,4 +30,12 @@ public class KeyboardStrategy extends Strategy
 			System.out.println("IS THAT A NUMBER? NO! TRY AGAIN DUMBASS");
 		}
 	}
+
+	public void attack()
+	{
+	}
+
+	public void defend()
+	{
+	}
 }

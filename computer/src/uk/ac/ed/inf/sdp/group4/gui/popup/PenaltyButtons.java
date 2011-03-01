@@ -8,7 +8,7 @@ public class PenaltyButtons extends javax.swing.JFrame {
     /** Creates new form PenaltyButtons */
     public PenaltyButtons(Strategy strategy) {
 
-		this.startegy = strategy;
+		this.strategy = strategy;
         initComponents();
     }
 

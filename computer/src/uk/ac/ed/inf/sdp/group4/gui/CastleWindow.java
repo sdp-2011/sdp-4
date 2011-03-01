@@ -61,7 +61,7 @@ public class CastleWindow extends JFrame {
     private void modeButtonActionPerformed(java.awt.event.ActionEvent evt) {
         
 		PenaltyButtons pen = new PenaltyButtons(strategy);
-		penaltyButton.setVisible(true);
+		pen.setVisible(true);
     }
 
     private void endButtonActionPerformed(java.awt.event.ActionEvent evt) {
