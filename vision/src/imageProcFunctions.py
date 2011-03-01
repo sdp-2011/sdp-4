@@ -44,20 +44,22 @@ def refine_orientation(orientation, center_point, mask):
 
 	cross = cv.LoadImage("../images/cross.png")
 	cross2 = cv.LoadImage("../images/cross.png")
-	result = cv.CreateImage(result_size, cv.IPL_DEPTH_32F, 1)
+	result = cv.CreateImage(cv.GetSize(cross), cv.IPL_DEPTH_32F, 1)
 	
 	down = False
 	if (orientation < 0):
 	    down = True
-		
-	rotation_matrix = cv.GetRotationMatrix2D(center_point, orientation, 1)
+	
+	rotation_matrix = cv.CreateMat(2, 3, cv.CV_32FC1)	
+	cv.GetRotationMatrix2D(center_point, orientation, 1, rotation_matrix)
+	
 	check1 = cv.CreateMat(40, 40, cv.CV_8UC1)
 	cv.WarpAffine(cross, check1, rotation_matrix)
 	cv.MatchTemplate(mask, check1, result, cv.CV_TM_CCORR)
 	min_val_down, max_val_down, min_loc_down, max_loc_down = cv.MinMaxLoc(result) 
 		
 	check2 = cv.CreateMat(40, 40, cv.CV_8UC1)
-	rotation_matrix = cv.GetRotationMatrix2D(center_point, orientation + 180, 1)
+	cv.GetRotationMatrix2D(center_point, orientation + 180, 1,rotation_matrix)
 	cv.WarpAffine(cross2, check2, rotation_matrix)
 	cv.MatchTemplate(mask, check2, result, cv.CV_TM_CCORR)
 	min_val_up, max_val_up, min_loc_up, max_loc_up = cv.MinMaxLoc(result)
