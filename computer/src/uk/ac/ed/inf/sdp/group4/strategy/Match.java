@@ -77,21 +77,21 @@ public class Match extends Strategy
 						double ang = stepBot.angleTo(ourRobot.getFacing());
 						if ((ang < 15) && (ang > -15)){
 							log.debug("Full steam ahead");
-							controller.driveForward(1);
+							controller.driveBackward(10);
 							pause(1000);
 						}
 						else {
 							log.debug("Turning " + ang);
-							controller.turn(ang);
+							controller.turn((int) (ang * 0.6));
 							pause(1000);
-							controller.driveForward(1);
+							controller.driveBackward(10);
 							pause(1000);
 						}
 						
 					}
 					else {
 						log.debug("Can't move to ball");
-						controller.driveBackward(5);
+						controller.driveForward(5);
 						pause(1000);
 						// can't get too ball, play defensively until we get it
 					}
