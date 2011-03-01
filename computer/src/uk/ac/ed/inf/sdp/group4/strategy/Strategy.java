@@ -22,6 +22,11 @@ public abstract class Strategy implements IStrategy, Runnable
 	protected Position westGoal = new Position(30, 162);
 	protected Position eastGoal = new Position(525, 162);
 
+	public enum Strategies
+	{
+		TRACKBALL
+	}
+
 	public Strategy(IVisionClient client, Controller controller, RobotColour ourColour, boolean testing)
 	{
 		this.client = client;
@@ -110,6 +115,18 @@ public abstract class Strategy implements IStrategy, Runnable
 	public void stop()
 	{
 
+	}
+
+	public static Strategy makeStrat(Strategies strat)
+	{
+		Strategy strategy = null;
+
+		if (strat == Strategies.TRACKBALL)
+		{
+			strategy = new TrackBallStrategy(null, null, null);
+		}
+
+		return strategy;
 	}
 }
 

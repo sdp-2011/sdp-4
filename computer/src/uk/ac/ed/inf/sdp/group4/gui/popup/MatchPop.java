@@ -27,16 +27,9 @@ public class MatchPop extends JFrame {
     }
 
 	private void connectButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        
-		Strategy strategy = null;
-
-		if (stratBox.getSelectedItem().equals("TrackBall"))
-		{
-			strategy = new TrackBallStrategy(null, null, 
-				(RobotColour) colourBox.getSelectedItem(), false);
-		}
 		
-		window.connect(strategy);
+		window.connect((Strategy.Strategies) stratBox.getSelectedItem(),
+			(RobotColour) colourBox.getSelectedItem());
 		this.dispose();
     }
 
@@ -59,7 +52,8 @@ public class MatchPop extends JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        stratBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "TrackBall" }));
+        stratBox.setModel(new javax.swing.DefaultComboBoxModel(new Strategy.Strategies[] { 
+			Strategy.Strategies.TRACKBALL }));
         stratBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 stratBoxActionPerformed(evt);

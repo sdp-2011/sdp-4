@@ -7,7 +7,7 @@ import javax.swing.JTextArea;
 import javax.swing.JPanel;
 
 import uk.ac.ed.inf.sdp.group4.strategy.RobotColour;
-import uk.ac.ed.inf.sdp.group4.strategy.Strategy; 
+import uk.ac.ed.inf.sdp.group4.strategy.Strategy;
 import uk.ac.ed.inf.sdp.group4.strategy.TrackBallStrategy;
 import uk.ac.ed.inf.sdp.group4.controller.FatController;
 import uk.ac.ed.inf.sdp.group4.world.IVisionClient;
@@ -31,6 +31,7 @@ public class CastleWindow extends JFrame {
     private JPanel situation;
 	private Strategy strategy;
 	private Controller controller;
+	private IVisionClient client;
 
     public CastleWindow() {
         initComponents();
@@ -75,13 +76,13 @@ public class CastleWindow extends JFrame {
 		running();
 	}
 
-	public void connect(Strategy strat)
+	public void connect(Strategy.Strategies strat, RobotColour colour)
 	{
-		IVisionClient client = new VisionClient();
+		client = new VisionClient();
 		controller = new FatController();
-		strat.setup(client, controller, strat.ourColour(), false);
-		strategy = strat;
-		new Thread(strat).start();
+		strategy = Strategy.makeStrat(strat);
+		strategy.setup(client, controller, colour, false);
+		new Thread(strategy).start();
 
 		running();
 	}
@@ -106,11 +107,14 @@ public class CastleWindow extends JFrame {
 
 	}
 
-	private void changeMode(Strategy strat)
+	private void changeMode(Strategy.Strategies strat)
 	{
 		strategy.stop();
-		strategy = strat;
-		new Thread(strat).start();
+		RobotColour colour = strategy.ourColour();
+
+		strategy = Strategy.makeStrat(strat);
+		strategy.setup(client, controller, colour, false);
+		new Thread(strategy).start();
 	}
 
 	private void running()
