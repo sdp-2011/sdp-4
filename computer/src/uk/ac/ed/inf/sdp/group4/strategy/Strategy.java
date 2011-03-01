@@ -22,6 +22,8 @@ public abstract class Strategy implements IStrategy, Runnable
 	protected Position westGoal = new Position(30, 162);
 	protected Position eastGoal = new Position(525, 162);
 
+	boolean keepRunning;
+
 	public enum Strategies
 	{
 		TRACKBALL
@@ -33,6 +35,7 @@ public abstract class Strategy implements IStrategy, Runnable
 		this.controller = controller;
 		this.ourColour = ourColour;
 		this.testing = testing;
+		this.keepRunning = true;
 	}
 
 	public void run()
@@ -43,7 +46,7 @@ public abstract class Strategy implements IStrategy, Runnable
 	public void runStrategy()
 	{
 		log.debug("Starting strategy loop...");
-		while (true)
+		while (keepRunning)
 		{
 			tick();
 		}
@@ -114,7 +117,7 @@ public abstract class Strategy implements IStrategy, Runnable
 
 	public void stop()
 	{
-
+		keepRunning = false;
 	}
 
 	public static Strategy makeStrat(Strategies strat)

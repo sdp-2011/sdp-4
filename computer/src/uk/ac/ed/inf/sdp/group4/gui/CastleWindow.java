@@ -59,7 +59,9 @@ public class CastleWindow extends JFrame {
     }
 
     private void modeButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        
+		ModePop modePop = new ModePop(this);
+		modePop.setVisible(true);
     }
 
     private void endButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -107,7 +109,7 @@ public class CastleWindow extends JFrame {
 
 	}
 
-	private void changeMode(Strategy.Strategies strat)
+	public void changeMode(Strategy.Strategies strat)
 	{
 		strategy.stop();
 		RobotColour colour = strategy.ourColour();
