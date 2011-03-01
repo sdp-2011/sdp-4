@@ -63,10 +63,10 @@ public class SimBall extends Component
 
 	public double getRadius()
 	{
-		return radius;	
+		return radius;
 	}
 
-	public WorldObject getObject()	
+	public WorldObject getObject()
 	{
 		return ball;
 	}

@@ -88,7 +88,7 @@ public class SimBot extends Component
 		try
 		{
 			if (direction - angle < 0)
-			{		
+			{
 				vector.setDirection(360 - direction - angle);
 				robot.setFacing(360 - direction - angle);
 			}
@@ -98,7 +98,7 @@ public class SimBot extends Component
 				vector.setDirection(direction - angle);
 				robot.setFacing(direction - angle);
 			}
-		
+
 			current.addProgress(angle);
 		}
 
@@ -127,7 +127,7 @@ public class SimBot extends Component
 				vector.setDirection(direction + angle);
 				robot.setFacing(direction + angle);
 			}
-		
+
 			current.addProgress(angle);
 		}
 
@@ -138,7 +138,7 @@ public class SimBot extends Component
 	}
 
 	public void shoot(int time)
-	{	
+	{
 		if (ball != null)
 		{
 			isShooting = true;
@@ -161,7 +161,7 @@ public class SimBot extends Component
 	}
 
 	public double getRadius()
-	{	
+	{
 		return radius;
 	}
 
