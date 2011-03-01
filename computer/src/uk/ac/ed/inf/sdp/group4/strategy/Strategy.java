@@ -106,5 +106,10 @@ public abstract class Strategy implements IStrategy, Runnable
 	{
 		ourColour = enemyColour();
 	}
+
+	public void stop()
+	{
+
+	}
 }
 

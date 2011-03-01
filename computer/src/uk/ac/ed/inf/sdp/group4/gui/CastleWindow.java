@@ -14,6 +14,7 @@ import uk.ac.ed.inf.sdp.group4.world.IVisionClient;
 import uk.ac.ed.inf.sdp.group4.world.VisionClient;
 import uk.ac.ed.inf.sdp.group4.sim.Simulator;
 import uk.ac.ed.inf.sdp.group4.gui.popup.*;
+import uk.ac.ed.inf.sdp.group4.controller.Controller;
 
 public class CastleWindow extends JFrame {
 
@@ -29,6 +30,7 @@ public class CastleWindow extends JFrame {
     private JButton simStart;
     private JPanel situation;
 	private Strategy strategy;
+	private Controller controller;
 
     public CastleWindow() {
         initComponents();
@@ -76,7 +78,8 @@ public class CastleWindow extends JFrame {
 	public void connect(Strategy strat)
 	{
 		IVisionClient client = new VisionClient();
-		strat.setup(client, new FatController(), strat.ourColour(), false);
+		controller = new FatController();
+		strat.setup(client, controller, strat.ourColour(), false);
 		strategy = strat;
 		new Thread(strat).start();
 
@@ -101,6 +104,13 @@ public class CastleWindow extends JFrame {
 	private void reset()
 	{
 
+	}
+
+	private void changeMode(Strategy strat)
+	{
+		strategy.stop();
+		strategy = strat;
+		new Thread(strat).start();
 	}
 
 	private void running()
