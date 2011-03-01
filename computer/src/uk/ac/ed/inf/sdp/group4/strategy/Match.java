@@ -73,7 +73,7 @@ public class Match extends Strategy
 			while (ourRobot.hasBall(ball) == false)
 			{
 				// Check if it's worth trying to get to the ball, using ratio of distance between us and opponent
-				if (((float) usToBall / themToBall) > 0)
+				if ((usToBall / themToBall) > 0)
 				{
 					path = pathfinder.findPath(ourRobot, ourRobot.getX(), ourRobot.getY(), ball.getX(), ball.getY());
 					if (path != null)
