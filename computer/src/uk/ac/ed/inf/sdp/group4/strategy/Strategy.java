@@ -19,14 +19,21 @@ public abstract class Strategy implements IStrategy, Runnable
 
 	boolean testing;
 
-	protected Position westGoal = new Position(30, 162);
-	protected Position eastGoal = new Position(525, 162);
+	private Position westGoal = new Position(30, 162);
+	private Position eastGoal = new Position(525, 162);
+	protected Position currentGoal;
 
 	boolean keepRunning;
 
 	public enum Strategies
 	{
 		TRACKBALL
+	}
+
+	public enum Goals
+	{
+		EAST,
+		WEST
 	}
 
 	public Strategy(IVisionClient client, Controller controller, RobotColour ourColour, boolean testing)
@@ -36,6 +43,7 @@ public abstract class Strategy implements IStrategy, Runnable
 		this.ourColour = ourColour;
 		this.testing = testing;
 		this.keepRunning = true;
+		this.currentGoal = eastGoal;
 	}
 
 	public void run()
@@ -112,7 +120,14 @@ public abstract class Strategy implements IStrategy, Runnable
 
 	public void halfTime()
 	{
-		ourColour = enemyColour();
+		if (currentGoal.equals(eastGoal))
+		{
+			currentGoal = westGoal;
+		}
+		else
+		{
+			currentGoal = eastGoal;
+		}
 	}
 
 	public void stop()
@@ -131,5 +146,8 @@ public abstract class Strategy implements IStrategy, Runnable
 
 		return strategy;
 	}
+
+	public abstract void attack();
+	public abstract void defend();
 }
 

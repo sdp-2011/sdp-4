@@ -60,8 +60,8 @@ public class CastleWindow extends JFrame {
 
     private void modeButtonActionPerformed(java.awt.event.ActionEvent evt) {
         
-		ModePop modePop = new ModePop(this);
-		modePop.setVisible(true);
+		PenaltyButtons pen = new PenaltyButtons(strategy);
+		penaltyButton.setVisible(true);
     }
 
     private void endButtonActionPerformed(java.awt.event.ActionEvent evt) {
