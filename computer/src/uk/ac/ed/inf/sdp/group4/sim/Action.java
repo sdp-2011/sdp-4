@@ -30,6 +30,6 @@ public class Action
 
 	public boolean isDone()
 	{
-        return completed >= argument;
+		return completed >= argument;
 	}
 }

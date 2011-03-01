@@ -22,7 +22,8 @@ public abstract class Tactic implements ITactic
 		this.testing = testing;
 	}
 
-	public void setController(Controller controller) {
+	public void setController(Controller controller)
+	{
 		this.controller = controller;
 	}
 

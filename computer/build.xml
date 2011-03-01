@@ -66,14 +66,10 @@
 
 	<!-- deletes class files -->
 	<target name="clean" description="clean up all generated files">
-		<delete>
-			<fileset dir="${classes}">
-				<include name="**/*.class"/>
-				<include name="**/*.png"/>
-				<include name="**/*.gif"/>
-			</fileset>
-		</delete>
+		<delete dir="${classes}" />
 	</target>
+
+	<target name="rebuild" description="" depends="clean,test" />
 
 	<target name="test" description="Run the tests" depends="compile-helper-test,test-unit,test-integration" />
 

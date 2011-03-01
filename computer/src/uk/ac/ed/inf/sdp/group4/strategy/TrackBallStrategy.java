@@ -54,7 +54,7 @@ public class TrackBallStrategy extends Strategy
 		double goalAngle = goalRoute.angleTo(robot.getFacing());
 
 
-		if(ball.isHidden() && Math.abs(goalAngle) < 30)
+		if (ball.isHidden() && Math.abs(goalAngle) < 30)
 		{
 			log.debug("Can't see the ball - Shooting!");
 			controller.shoot();
