@@ -54,11 +54,9 @@ while (True):
 	yellowCropRect = (yellowCenter[0] - 15, yellowCenter[1] + 45, 74, 74)
 	cv.SetImageROI(yellowImage, yellowCropRect)
 	cv.ShowImage("YellowBlack:", yellowImage)
-	cv.Rectangle(processed, (yellowCropRect[0],yellowCropRect[1]), (yellowCropRect[0] + yellowCropRect[2], blueCropRect[1] + blueCropRect[3]), cv.RGB(255,0,0))
 	
 	blueImage = cv.CloneImage(orig)	
 	blueCropRect = (blueCenter[0] - 10, blueCenter[1] + 45, 66, 66)
-	cv.Rectangle(processed, (blueCropRect[0],blueCropRect[1]), (blueCropRect[0] + blueCropRect[2], blueCropRect[1] + blueCropRect[3]), cv.RGB(255,0,0))
 	cv.SetImageROI(blueImage, blueCropRect)
 	cv.ShowImage("BlueBlack:", blueImage)	
 		
@@ -66,7 +64,7 @@ while (True):
 	blueWhite = (int(blueWhite[0]) + blueCropRect[0] - 22, int(blueWhite[1]) + blueCropRect[1] - 72)	
 	
 	yellowBlack = findObject(yellowImage, "BLACK")
-	yellowBlack = (int(yellowBlack[0]) + yellowCropRect[0] - 22, int(yellowBlack[1]) + yellowCropRect[1] - 75)
+	yellowBlack = (int(yellowBlack[0]) + yellowCropRect[0] - 22, int(yellowBlack[1]) + yellowCropRect[1] - 78)
 	
 	center_points = (ballCenter, blueCenter, yellowCenter)
 	other_points = (blueWhite, yellowBlack)
