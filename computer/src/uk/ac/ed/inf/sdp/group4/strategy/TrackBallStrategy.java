@@ -12,161 +12,175 @@ import uk.ac.ed.inf.sdp.group4.world.WorldState;
 
 public class TrackBallStrategy extends Strategy
 {
-	private Robot robot;
-	private Robot enemyRobot;
-	private Ball ball;
-	private WorldState state;
+    private Robot robot;
+    private Robot enemyRobot;
+    private Ball ball;
+    private WorldState state;
 
-	public TrackBallStrategy(IVisionClient client, Controller controller, RobotColour colour)
-	{
-		this(client, controller, colour, false);
-	}
+    public TrackBallStrategy(IVisionClient client, Controller controller, RobotColour colour)
+    {
+        this(client, controller, colour, false);
+    }
 
-	public TrackBallStrategy(IVisionClient client, Controller controller, RobotColour colour, boolean testing)
-	{
-		super(client, controller, colour, testing);
-	}
+    public TrackBallStrategy(IVisionClient client, Controller controller, RobotColour colour, boolean testing)
+    {
+        super(client, controller, colour, testing);
+    }
 
-	public TrackBallStrategy(Controller controller, WorldState state)
-	{
-		super(null, controller, RobotColour.BLUE, false);
-	}
+    public TrackBallStrategy(Controller controller, WorldState state)
+    {
+        super(null, controller, RobotColour.BLUE, false);
+    }
 
-	@Override
-	public void tick()
-	{
-		log.debug("=================================================");
-		log.debug("Starting a new cycle...");
+    @Override
+    public void tick()
+    {
+        log.debug("=================================================");
+        log.debug("Starting a new cycle...");
 
-		// Get the world state.
-		refresh();
+        // Get the world state.
+        refresh();
 
-		/**
-		 * The angle variables can be anywhere from -180 to +180.
-		 *
-		 * If it is positive then it means turn right and inversely if it is
-		 * negative then it means turn left.
-		 */
-		Vector ballRoute = getBallRoute();
-		double ballAngle = ballRoute.angleTo(robot.getFacing());
+        /**
+         * The angle variables can be anywhere from -180 to +180.
+         *
+         * If it is positive then it means turn right and inversely if it is
+         * negative then it means turn left.
+         */
+        Vector ballRoute = getBallRoute();
+        double ballAngle = ballRoute.angleTo(robot.getFacing());
 
-		Vector goalRoute = getGoalRoute();
-		double goalAngle = goalRoute.angleTo(robot.getFacing());
+        Vector goalRoute = getGoalRoute();
+        double goalAngle = goalRoute.angleTo(robot.getFacing());
 
+        if (ball.isHidden() && Math.abs(goalAngle) < 30)
+        {
+            log.debug("Can't see the ball - Shooting!");
+            controller.shoot();
+        }
 
-		if (ball.isHidden() && Math.abs(goalAngle) < 30)
-		{
-			log.debug("Can't see the ball - Shooting!");
-			controller.shoot();
-		}
+        Vector enemyBallRoute = getEnemyBallRoute();
 
-		// If we are a long turning distance from the ball then we should
-		// turn towards it.
-		if (Math.abs(ballAngle) > 15)
-		{
-			controller.setSpeed(300);
-			controller.turn((int)(ballAngle));
-			pause(1000);
-		}
-		else
-		{
-			// If we're close to the ball and the goal is close then we should shoot.
-			if (ballRoute.getMagnitude() <= 35 && Math.abs(goalAngle) < 30)
-			{
-				controller.shoot();
-			}
-			// If we're close to the ball and the goal is far then we should
-			// drive with a ball to the goal.
-			else if (ballRoute.getMagnitude() < 25)
-			{
-				log.debug("Driving to the goal!");
-				if (Math.abs(goalAngle) > 15)
-				{
-					controller.setSpeed(50);
-					controller.turn(goalAngle);
-					pause(4000);
-				}
-				else
-				{
-					controller.setSpeed(300);
-					controller.driveForward((int)goalRoute.getMagnitude() / 8);
-					pause(1000);
-				}
-			}
+        Vector enemyUsRoute = getEnemyUsRoute();
+        double enemyUsAngle = enemyUsRoute.angleTo(robot.getFacing());
 
-			// If we're not close then we should drive towards it.
-			//
-			// The messy distance at the end of the line is required until we get
-			// accurate movement.
-			if (ballRoute.getMagnitude() >= 40)
-			{
-				controller.setSpeed(400);
-				controller.driveForward((int)ballRoute.getMagnitude() / 4);
-				pause(1000);
-			}
-			else if (ballRoute.getMagnitude() < 40)
-			{
-				controller.setSpeed(50);
-				controller.driveForward((int)ballRoute.getMagnitude() / 8);
-				pause(1300);
-			}
-			else if (ballRoute.getMagnitude() < 30)
-			{
-				controller.setSpeed(50);
-				controller.driveForward((int)ballRoute.getMagnitude());
-				pause(1300);
-			}
-		}
-	}
+        if (enemyBallRoute.getMagnitude() - ballRoute.getMagnitude() > 100)
+            //use defence mode enemy is much closer to the ball 
+        {
+            controller.setSpeed(300);
+            controller.turn((int)(enemyUsAngle));
+            pause(1000);
+            controller.setSpeed(400);
+            controller.driveForward((int)ballRoute.getMagnitude() / 2);
+            pause(1000);
+        }
 
+        // If we are a long turning distance from the ball then we should
+        // turn towards it.
+        if (Math.abs(ballAngle) > 15)
+        {
+            controller.setSpeed(300);
+            controller.turn((int)(ballAngle));
+            pause(1000);
+        }
+        else
+        {
+            // If we're close to the ball and the goal is close then we should shoot.
+            if (ballRoute.getMagnitude() <= 35 && Math.abs(goalAngle) < 30)
+            {
+                controller.shoot();
+            }
+            // If we're close to the ball and the goal is far then we should
+            // drive with a ball to the goal.
+            else if (ballRoute.getMagnitude() < 40)
+            {
+                log.debug("Driving to the goal!");
+                if (Math.abs(goalAngle) > 15)
+                {
+                    controller.setSpeed(50);
+                    controller.turn(goalAngle);
+                    pause(4000);
+                }
+                else
+                {
+                    controller.setSpeed(300);
+                    controller.driveForward((int)goalRoute.getMagnitude() / 8);
+                    pause(1000);
+                }
+            }
 
-	private void refresh()
-	{
-		WorldState state = client.getWorldState();
+            // If we're not close then we should drive towards it.
+            //
+            // The messy distance at the end of the line is required until we get
+            // accurate movement.
+            if (ballRoute.getMagnitude() >= 40)
+            {
+                controller.setSpeed(400);
+                controller.driveForward((int)ballRoute.getMagnitude() / 4);
+                pause(1000);
+            }
+            else if (ballRoute.getMagnitude() < 40)
+            {
+                controller.setSpeed(50);
+                controller.driveForward((int)ballRoute.getMagnitude() / 8);
+                pause(1300);
+            }
+            else if (ballRoute.getMagnitude() < 30)
+            {
+                controller.setSpeed(50);
+                controller.driveForward((int)ballRoute.getMagnitude());
+                pause(1300);
+            }
+        }
+    }
 
-		robot = (ourColour() == RobotColour.BLUE) ? state.getBlue() : state.getYellow();
-		enemyRobot = (ourColour() == RobotColour.BLUE) ? state.getYellow() : state.getBlue();
-		ball = state.getBall();
+    private void refresh()
+    {
+        WorldState state = client.getWorldState();
 
-		log.debug("Robot is facing: " + robot.getFacing());
-	}
+        robot = (ourColour() == RobotColour.BLUE) ? state.getBlue() : state.getYellow();
+        enemyRobot = (ourColour() == RobotColour.BLUE) ? state.getYellow() : state.getBlue();
+        ball = state.getBall();
 
-	private Vector getGoalRoute()
-	{
-		Vector goalRoute = null;
+        log.debug("Robot is facing: " + robot.getFacing());
+    }
 
-		try
-		{
+    private Vector getGoalRoute()
+    {
+        Vector goalRoute = null;
+
+        try
+        {
 			goalRoute = robot.getPosition().calcVectTo(currentGoal);
-		}
-		catch (InvalidAngleException e)
-		{
-			log.error(e.getMessage());
-		}
+        }
+        catch (InvalidAngleException e)
+        {
+            log.error(e.getMessage());
+        }
 
-		log.debug("Goal is towards: " + goalRoute.getDirection());
-		log.debug("Goal is at distance: " + goalRoute.getMagnitude());
+        log.debug("Goal is towards: " + goalRoute.getDirection());
+        log.debug("Goal is at distance: " + goalRoute.getMagnitude());
 
-		return goalRoute;
-	}
+        return goalRoute;
+    }
 
-	private Vector getBallRoute()
-	{
-		Vector route = null;
+    private Vector getBallRoute()
+    {
+        Vector route = null;
 
-		try
-		{
-			route = robot.getPosition().calcVectTo(ball.getPosition());
-		}
-		catch (InvalidAngleException e)
-		{
-			log.error(e.getMessage());
-		}
+        try
+        {
+            route = robot.getPosition().calcVectTo(ball.getPosition());
+        }
+        catch (InvalidAngleException e)
+        {
+            log.error(e.getMessage());
+        }
 
-		log.debug("Ball is towards: " + route.getDirection());
-		log.debug("Ball is at distance: " + route.getMagnitude());
+        log.debug("Ball is towards: " + route.getDirection());
+        log.debug("Ball is at distance: " + route.getMagnitude());
 
-		return route;
+        return route;
 	}
 
 	public void attack()
@@ -175,7 +189,42 @@ public class TrackBallStrategy extends Strategy
 
 	public void defend()
 	{
+    }
+        
+	private Vector getEnemyBallRoute()
+	{
+		Vector route = null;
+
+		try
+		{
+			route = enemyRobot.getPosition().calcVectTo(ball.getPosition());
+		}       
+		catch (InvalidAngleException e)
+		{
+			log.error(e.getMessage());
+		}
+
+		log.debug("Enemy's distance to the ball: " + route.getMagnitude());
+
+		return route;
 	}
+
+	private Vector getEnemyUsRoute()
+	{
+		Vector route = null;
+
+		try
+		{
+			route = robot.getPosition().calcVectTo(enemyRobot.getPosition());
+		}
+		catch (InvalidAngleException e)
+		{
+			log.error(e.getMessage());
+		}
+
+		log.debug("Enemy is towards: " + route.getDirection());
+		log.debug("Enemy is at distance: " + route.getMagnitude());
+
+		return route;
+	 }
 }
-
-
