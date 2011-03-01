@@ -68,6 +68,8 @@ public class CastleWindow extends JFrame {
 		JPanel panel = sim.makePanel();
 		//add panel to window
 		new Thread(sim).start();
+
+		running();
 	}
 
 	public void connect(Strategy strat)
@@ -76,6 +78,8 @@ public class CastleWindow extends JFrame {
 		strat.setup(client, new FatController(), strat.ourColour(), false);
 		strategy = strat;
 		new Thread(strat).start();
+
+		running();
 	}
 
 	private void halfTime()
@@ -96,6 +100,14 @@ public class CastleWindow extends JFrame {
 	private void reset()
 	{
 
+	}
+
+	private void running()
+	{
+		endButton.setVisible(true);
+		halfTime.setVisible(true);
+		pauseButton.setVisible(true);
+		modeButton.setVisible(true);
 	}
 
 	//This is just the netbeans generated layout
@@ -216,6 +228,11 @@ public class CastleWindow extends JFrame {
         );
 
         pack();
-    }// </editor-fold>
+
+		endButton.setVisible(false);
+		halfTime.setVisible(false);
+		pauseButton.setVisible(false);
+		modeButton.setVisible(false);
+    }
 }
 
