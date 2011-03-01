@@ -43,8 +43,8 @@ while (True):
     processed = cv.CloneImage(orig)
     
     object_descriptors = [find_object(image,"RED"), find_object(image,"BLUE"), find_object(image,"YELLOW")]
-  #  print "Blue orientation: ", object_descriptors[1][1]
-   # print "Yellow orientation:", object_descriptors[2][1]
+    print "Blue orientation: ", object_descriptors[1][1]
+    print "Yellow orientation:", object_descriptors[2][1]
     
     draw_on_image(processed, object_descriptors)
     
@@ -52,6 +52,6 @@ while (True):
     
     end = time.time()
     fps = 0.9 * (1/(end-start)) + 0.1 * last_time
-    #print "FPS:", int(fps)
+    print "FPS:", int(fps)
     last_time = fps 
     cv.WaitKey(25)

@@ -97,7 +97,7 @@ def find_object_descriptors(mask):
     orientation = math.degrees(math.atan2(2*mu11, mu20 - mu02 + error))
     center_point = (int(x_bar), int(y_bar))
     
-    pewpew = refine_orientation(orientation, center_point, mask)
+    #pewpew = refine_orientation(orientation, center_point, mask)
 
     return [center_point, orientation]
 
