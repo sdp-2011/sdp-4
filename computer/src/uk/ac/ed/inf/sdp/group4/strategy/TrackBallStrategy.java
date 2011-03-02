@@ -10,6 +10,8 @@ import uk.ac.ed.inf.sdp.group4.world.VisionClient;
 import uk.ac.ed.inf.sdp.group4.world.IVisionClient;
 import uk.ac.ed.inf.sdp.group4.world.WorldState;
 
+import uk.ac.ed.inf.sdp.group4.strategy.tactic.*;
+
 public class TrackBallStrategy extends Strategy
 {
     private Robot robot;
@@ -49,9 +51,15 @@ public class TrackBallStrategy extends Strategy
 
 		if(penaltyTake){
 			PenaltyTakeTactic ptt = new PenaltyTakeTactic(controller);
-			ptt.tick();
+			ptt.tick(robot, enemyRobot, ball);
 		}
 		penaltyTake = false;
+
+		if(penaltySave){
+			PenaltySaveTactic pst = new PenaltySaveTactic(controller);
+			pst.tick(robot, enemyRobot, ball);
+		}
+		penaltySave = false;
 
         /**
          * The angle variables can be anywhere from -180 to +180.
