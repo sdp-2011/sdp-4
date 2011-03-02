@@ -98,7 +98,7 @@ public class TrackBallStrategy extends Strategy
             pause(1000);
             controller.setSpeed(400);
 			// Enemy route
-            controller.driveForward((int)getEnemyUsRoute().getMagnitude() / 2);
+            controller.driveForward(((int)getEnemyUsRoute().getMagnitude() / 2)-65);
             pause(1000);
         }
 

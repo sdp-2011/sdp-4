@@ -30,8 +30,11 @@ public class CastleWindow extends JFrame {
     private JButton simStart;
     private JPanel situation;
 	private Strategy strategy;
+	private Thread stratThread;
 	private Controller controller;
 	private IVisionClient client;
+
+	private boolean pause;
 
     public CastleWindow() {
         initComponents();
@@ -45,7 +48,8 @@ public class CastleWindow extends JFrame {
 		frame.getContentPane().add(sim.makePanel());
 		frame.setSize(500, 250);
 		frame.setVisible(true);
-		new Thread(sim).start();
+		stratThread = new Thread(sim);
+		stratThread.start();
     }
 
     private void matchStartActionPerformed(java.awt.event.ActionEvent evt) {
@@ -60,7 +64,11 @@ public class CastleWindow extends JFrame {
     }
 
     private void pauseButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        
+		if (!pause) resume();
+		else pause();
+
+		pause = !pause;
     }
 
     private void modeButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -89,7 +97,9 @@ public class CastleWindow extends JFrame {
 		controller = new FatController();
 		strategy = Strategy.makeStrat(strat);
 		strategy.setup(client, controller, colour, false);
-		new Thread(strategy).start();
+		stratThread = new Thread(strategy);
+		stratThread.start();
+		stratThread.suspend();
 
 		running();
 	}
@@ -101,12 +111,14 @@ public class CastleWindow extends JFrame {
 
 	private void pause()
 	{
-		
+		stratThread.suspend();
+		pauseButton.setText("Resume");
 	}
 
 	private void resume()
 	{
-
+		stratThread.resume();
+		pauseButton.setText("Pause");
 	}
 
 	private void reset()
@@ -185,7 +197,7 @@ public class CastleWindow extends JFrame {
             }
         });
 
-        pauseButton.setText("Pause");
+        pauseButton.setText("Start");
         pauseButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pauseButtonActionPerformed(evt);
