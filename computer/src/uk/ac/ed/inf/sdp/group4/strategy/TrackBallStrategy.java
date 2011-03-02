@@ -88,25 +88,24 @@ public class TrackBallStrategy extends Strategy
         Vector enemyUsRoute = getEnemyUsRoute();
         double enemyUsAngle = enemyUsRoute.angleTo(robot.getFacing());
 
-//////////////////////////////////////////////////////////////////////////////////////////////
-		// if enemy is between us and the ball OR ________ they are much closer
+		// If enemy is between us and the ball or they are much closer.
         if (Math.abs(enemyRobot.getX()-ball.getX()) < Math.abs(robot.getX()-ball.getX() ) )
-            //use defence mode enemy is much closer to the ball 
         {
-            controller.setSpeed(300);
+            controller.setSpeed(700);
             controller.turn((int)(enemyUsAngle));
             pause(1000);
             controller.setSpeed(400);
+			
 			// Enemy route
-            controller.driveForward(((int)getEnemyUsRoute().getMagnitude() / 2)-65);
+            controller.driveForward(((int)getEnemyUsRoute().getMagnitude() / 4)-45);
             pause(1000);
         }
 
         // If we are a long turning distance from the ball then we should
         // turn towards it.
-        if (Math.abs(ballAngle) > 15)
+        if (Math.abs(ballAngle) > 12)
         {
-            controller.setSpeed(300);
+            controller.setSpeed(500);
 
             controller.turn((int)(ballAngle));
             pause(1000);
@@ -120,7 +119,7 @@ public class TrackBallStrategy extends Strategy
             }
             // If we're close to the ball and the goal is far then we should
             // drive with a ball to the goal.
-            else if (ballRoute.getMagnitude() < 40)
+            else if (ballRoute.getMagnitude() < 35)
             {
                 log.debug("Driving to the goal!");
                 if (Math.abs(goalAngle) > 15)
@@ -143,20 +142,14 @@ public class TrackBallStrategy extends Strategy
             // accurate movement.
             if (ballRoute.getMagnitude() >= 40)
             {
-                controller.setSpeed(400);
-                controller.driveForward((int)ballRoute.getMagnitude() / 5);
+                controller.setSpeed(900);
+                controller.driveForward((int)ballRoute.getMagnitude() / 6);
                 pause(1000);
             }
             else if (ballRoute.getMagnitude() < 40)
             {
                 controller.setSpeed(50);
                 controller.driveForward((int)ballRoute.getMagnitude() / 8);
-                pause(1300);
-            }
-            else if (ballRoute.getMagnitude() < 30)
-            {
-                controller.setSpeed(50);
-                controller.driveForward((int)ballRoute.getMagnitude());
                 pause(1300);
             }
         }
