@@ -51,7 +51,7 @@ public class MatchPop extends JFrame {
         jLabel2 = new javax.swing.JLabel();
         connectButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        //setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         stratBox.setModel(new javax.swing.DefaultComboBoxModel(new Strategy.Strategies[] { 
 			Strategy.Strategies.TRACKBALL }));
