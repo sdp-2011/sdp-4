@@ -10,12 +10,20 @@ import uk.ac.ed.inf.sdp.group4.world.VisionClient;
 import uk.ac.ed.inf.sdp.group4.world.IVisionClient;
 import uk.ac.ed.inf.sdp.group4.world.WorldState;
 
+import uk.ac.ed.inf.sdp.group4.strategy.tactic.*;
+
 public class TrackBallStrategy extends Strategy
 {
     private Robot robot;
     private Robot enemyRobot;
     private Ball ball;
     private WorldState state;
+
+	private static boolean penaltyTake = false;
+	private static boolean penaltySave = false;
+
+    Position westGoal = new Position(30, 162);
+    Position eastGoal = new Position(525, 162);
 
     public TrackBallStrategy(IVisionClient client, Controller controller, RobotColour colour)
     {
@@ -44,6 +52,18 @@ public class TrackBallStrategy extends Strategy
 
         // Get the world state.
         refresh();
+
+		if(penaltyTake){
+			PenaltyTakeTactic ptt = new PenaltyTakeTactic(controller);
+			ptt.tick(robot, enemyRobot, ball);
+		}
+		penaltyTake = false;
+
+		if(penaltySave){
+			PenaltySaveTactic pst = new PenaltySaveTactic(controller);
+			pst.tick(robot, enemyRobot, ball);
+		}
+		penaltySave = false;
 
         /**
          * The angle variables can be anywhere from -180 to +180.
@@ -193,10 +213,12 @@ public class TrackBallStrategy extends Strategy
 
 	public void attack()
 	{
+		penaltyTake = true;
 	}
 
 	public void defend()
 	{
+		penaltySave = true;
     }
         
 	private Vector getEnemyBallRoute()
