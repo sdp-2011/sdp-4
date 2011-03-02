@@ -5,6 +5,7 @@ from navigation import *
 from server import *
 from worldstate import *
 from setup import *
+import os
 
 def draw_on_image(image, center_points, other_points):
 	cv.Circle(image, center_points[0], 2, cv.RGB(0,0,0),-1)	
@@ -12,7 +13,7 @@ def draw_on_image(image, center_points, other_points):
 	cv.Circle(image, center_points[2], 2, cv.RGB(0,0,0),-1)
 	
 	cv.Line(image, other_points[0], center_points[1], cv.RGB(255,0,0))
-	#cv.Line(image, yellowBlack, center_points[2], cv.RGB(0,255,0))
+	cv.Line(image, other_points[1], center_points[2], cv.RGB(0,255,0))
 		
 	cv.ShowImage("Original:", orig)
 	cv.ShowImage("Processed:", image)
@@ -27,51 +28,17 @@ def update_worldstate(center_points, other_points):
 	WorldState.blue["rotation"] = (int(calculateBearing(other_points[0], center_points[1]))-180) % 360
 	WorldState.yellow["position"]["x"] = center_points[2][0]
 	WorldState.yellow["position"]["y"] = center_points[2][1]
-	WorldState.yellow["rotation"] = int(calculateBearing(other_points[1], center_points[2]))	
+	WorldState.yellow["rotation"] = (int(calculateBearing(other_points[1], center_points[2]))-180) % 360	
 	WorldState.lock.release()
 
 setup_system()
 cam = cv.CaptureFromCAM(0)
+os.system('/home/s0806628/sdp/vision/src/modv4l.sh')
 
-def whitePoint(mask):
-	return cv.Avg(mask)
-
-
-
-		if (colour == "BLACK"):
-			
-			x = 0
-			y = 0
-			
-			#for i in mask[0]:
-			#	x = x +i
-
-#			for j in mask[1]:
-##
-#				y = y + j
-
-								
-			print x
-			M00 = 0
-			M10 = 0
-			M01 = 0
-
-	#		contourLow = cv.ApproxPoly(contours, storage, cv.CV_POLY_APPROX_DP)
-			moments = cv.Moments(mask, 1)
-			M00 = M00 + cv.GetSpatialMoment(moments,0,0)
-			M10 = M10 + cv.GetSpatialMoment(moments,1,0)
-			M01 = M01 + cv.GetSpatialMoment(moments,0,1)
-
-			if M00 == 0:
-				M00 = 0.01
-
-			return(round(M10/M00),round(M01/M00))
-
-		else:
 while (True):
 	start = time.time()
 	image = cv.QueryFrame(cam)
-	cropRect = (75, 80, 554, 325)
+	cropRect = (20, 80, 610, 325)
 	cv.SetImageROI(image, cropRect)
 	orig = cv.CloneImage(image)
 	processed = cv.CloneImage(orig)
@@ -84,28 +51,28 @@ while (True):
 	yellowCenter = (int(yellowCenter[0]), int(yellowCenter[1]))
 	
 	yellowImage = cv.CloneImage(orig)
-	yellowCropRect = (yellowCenter[0] + 45, yellowCenter[1] + 45, 65, 65)
+	yellowCropRect = (yellowCenter[0] - 15, yellowCenter[1] + 45, 74, 74)
 	cv.SetImageROI(yellowImage, yellowCropRect)
 	cv.ShowImage("YellowBlack:", yellowImage)
-
-	yellowBlack = findObject(yellowImage, "BLACK")
-	yellowBlack = (int(yellowBlack[0]) + yellowCropRect[0] - 75, int(yellowBlack[1]) + yellowCropRect[1] - 80)
 	
 	blueImage = cv.CloneImage(orig)	
-	blueCropRect = (blueCenter[0] + 45, blueCenter[1] + 45, 65, 65)
+	blueCropRect = (blueCenter[0] - 10, blueCenter[1] + 45, 66, 66)
 	cv.SetImageROI(blueImage, blueCropRect)
 	cv.ShowImage("BlueBlack:", blueImage)	
 		
 	blueWhite = findObject(blueImage, "BLACK")
-	blueWhite = (int(blueWhite[0]) + blueCropRect[0] - 75, int(blueWhite[1]) + blueCropRect[1] - 80)	
+	blueWhite = (int(blueWhite[0]) + blueCropRect[0] - 22, int(blueWhite[1]) + blueCropRect[1] - 72)	
+	
+	yellowBlack = findObject(yellowImage, "BLACK")
+	yellowBlack = (int(yellowBlack[0]) + yellowCropRect[0] - 22, int(yellowBlack[1]) + yellowCropRect[1] - 78)
 	
 	center_points = (ballCenter, blueCenter, yellowCenter)
 	other_points = (blueWhite, yellowBlack)
 	draw_on_image(processed, center_points, other_points)
 	
 	print "Bearing of blue:", (int(calculateBearing(other_points[0], center_points[1]))-180) % 360
-	print "Sod blue, red is at:", ballCenter[0], ballCenter[1]
-#	print "Bearing of yellow:",  (int(calculateBearing(blueWhite,blueCenter) + 90) + 360) % 360
+	#print "Sod blue, red is at:", ballCenter[0], ballCenter[1]
+	print "Bearing of yellow:",  (int(calculateBearing(other_points[1],center_points[2])) - 180) % 360
 	
 	update_worldstate(center_points, other_points)
 

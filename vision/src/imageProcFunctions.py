@@ -72,7 +72,6 @@ def findObject(img, colour):
 		yellowUpper = cv.Scalar(mods[15]*256, mods[16]*256, mods[17]*256)
 		cv.InRangeS(hsv, yellowLower, yellowUpper, mask)
 		cv.ShowImage("Yellow:",mask)
-		#print [yellowLowerH, yellowUpperH, yellowLowerS, yellowUpperS, yellowLowerV, yellowUpperV]
 	elif (colour == "BLACK"):
 		blackLower = cv.Scalar(mods[18]*256, mods[19]*256, mods[20]*256)
 		blackUpper = cv.Scalar(mods[21]*256, mods[22]*256, mods[23]*256)
