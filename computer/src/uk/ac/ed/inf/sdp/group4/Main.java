@@ -78,7 +78,7 @@ public class Main
 				//state.getBall().setPosition(150, 80);
 				state.getBall().setPosition(170, 40);
 				state.getBlue().setPosition(20, 60);
-				state.getYellow().setPosition(190, 60);
+				state.getYellow().setPosition(130, 40);
 				Component[] components = new Component[2];
 				SimBot bot = new SimBot(state.getBlue());
 				SimBall ball = new SimBall(state.getBall());

@@ -91,7 +91,7 @@ public class Pitch implements TileBasedMap
 	{
 		// Other bot blocks our movement
 		Position pos = new Position(x,y);
-		if (pos.distance(enemyPos) < 10)
+		if (pos.distance(enemyPos) < 28)
 		{
 			return true;
 		}
@@ -107,9 +107,9 @@ public class Pitch implements TileBasedMap
 	}
 
 	public float getCost(WorldObject worldObject, int sx, int sy, int tx, int ty)
-	{
+	{	
 		Position pos = new Position(tx,ty);
-		if (pos.distance(enemyPos) <20){
+		if (pos.distance(enemyPos) <40){
 			return 2;
 		}
 		return 1;

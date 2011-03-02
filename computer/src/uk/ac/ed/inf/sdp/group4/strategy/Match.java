@@ -49,10 +49,11 @@ public class Match extends Strategy
 	}
 */
 	public void tick(){
+		log.debug("========================================");
 		pathfinder = new AStarPathFinder(pitch, 5000);
 		//trajectory = new TrajectoryFinder(pitch, ourRobot);
-		refresh();
 		log.debug("Starting tick");
+		refresh();
 		pitch.repaint(otherBot.getPosition());
 		// These will probably be useful eventually
 		usToBall = (float)(Math.sqrt(Math.pow((ourRobot.getX() - ball.getX()), 2) + Math.pow((ourRobot.getY() - ball.getY()), 2)));
@@ -69,7 +70,7 @@ public class Match extends Strategy
 					if (path != null){
 						// follow path
 						log.debug("Moving to ball");
-						Step step = path.getStep(10);
+						Step step = path.getStep(1);
 						Position stepPos = new Position (step.getX(), step.getY());
 						log.debug("Going to: (" + stepPos.getX() + ", " + stepPos.getY() + ")");
 						Position robotPos = new Position (ourRobot.getX(), ourRobot.getY());
@@ -78,21 +79,22 @@ public class Match extends Strategy
 						if ((ang < 15) && (ang > -15)){
 							log.debug("Full steam ahead");
 							controller.driveForward(1);
-							pause(1000);
+							pause(100);
 						}
 						else {
 							log.debug("Turning " + ang);
+							controller.stop();							
 							controller.turn(ang);
-							pause(1000);
+							pause(100);
 							controller.driveForward(1);
-							pause(1000);
+							pause(100);
 						}
 						
 					}
 					else {
 						log.debug("Can't move to ball");
 						controller.driveBackward(5);
-						pause(1000);
+						pause(100);
 						// can't get too ball, play defensively until we get it
 					}
 				}
@@ -113,17 +115,17 @@ public class Match extends Strategy
 				if (canShoot(ourRobot, ball) == true){
 					if ((ang < 15) && (ang > -15)){
 						log.debug("Firing main cannon");
-						controller.shoot();
-						pause(1000);
 						controller.stop();
-						pause(1000);
+						controller.shoot();
+						pause(100);
 					}
 					else {
 						log.debug("Turning " + ang);
+						controller.stop();
 						controller.turn(ang);
-						pause(1000);
+						pause(100);
 						controller.shoot();
-						pause(1000);
+						pause(100);
 					}
 				}
 				else {
@@ -131,29 +133,35 @@ public class Match extends Strategy
 						if (path != null){
 							// follow path
 							log.debug("Moving to goal with ball");
+							
 							Step step = path.getStep(1);
 							Position stepPos = new Position (step.getX(), step.getY());
+							
 							log.debug("Going to: (" + stepPos.getX() + ", " + stepPos.getY() + ")");
+							
 							Position robotPos = new Position (ourRobot.getX(), ourRobot.getY());
 							Vector stepBot = Vector.calcVect(robotPos, stepPos);
 							double angTo = stepBot.angleTo(ourRobot.getFacing());
+							
 							if ((angTo < 15) && (angTo > -15)){
 								log.debug("Full steam ahead");
 								controller.driveForward(1);
-								pause(1000);
+								pause(100);
 							}
+							
 							else {
 								log.debug("Turning " + angTo);
+								controller.stop();
 								controller.turn(angTo);
 								pause(1000);
 								controller.driveForward(1);
-								pause(1000);
+								pause(100);
 							}
 						}
 						else {
 							log.debug("Can't move to goal :(");
 							controller.driveBackward(5);
-							pause(1000);
+							pause(100);
 						}
 					}	
 				}
@@ -169,13 +177,24 @@ public class Match extends Strategy
 		double facing = ourRobot.getPosition().calcVectTo(eastGoal).getDirection();
 		boolean blocked = false;
 		for (int y = robot.getY(); y < eastGoal.getY(); y++){
+			
 			int x = (int)(y * Math.tan(facing) + ball.getX() + ball.getY() * Math.tan(facing));
+			
+			if ((x < 0) || (x > 480)){
+				break;
+			}
+			
+			log.debug(x + ", " + y);
+			
 			blocked = pitch.blocked(ball, x, y);
+			
 			if (blocked = true){
 				break;
 			}
+			
 		}
 		log.debug("Can shoot = " + blocked);
+		
 		return blocked;
 		
 		
@@ -186,9 +205,14 @@ public class Match extends Strategy
 		WorldState state = client.getWorldState();
 
 		ourRobot = (ourColour() == RobotColour.BLUE) ? state.getBlue() : state.getYellow();
+		log.debug("Our Robot at " + ourRobot.getPosition().getX() + ", " + ourRobot.getPosition().getY());
+		
 		otherBot = (ourColour() == RobotColour.BLUE) ? state.getYellow() : state.getBlue();
+		log.debug("Their Robot at " + otherBot.getPosition().getX() + ", " + otherBot.getPosition().getY());
+		
 		ball = state.getBall();
-
+		log.debug("Ball at " + ball.getPosition().getX() + ", " + ball.getPosition().getY());
+		
 		log.debug("Robot is facing: " + ourRobot.getFacing());
 	}
 
