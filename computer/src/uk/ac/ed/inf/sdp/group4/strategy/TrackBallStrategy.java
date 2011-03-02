@@ -35,6 +35,10 @@ public class TrackBallStrategy extends Strategy
     @Override
     public void tick()
     {
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+		//pause(5000);
+//////////////////////////////////////////////////////////////////////////////////////////////
         log.debug("=================================================");
         log.debug("Starting a new cycle...");
 
@@ -64,14 +68,17 @@ public class TrackBallStrategy extends Strategy
         Vector enemyUsRoute = getEnemyUsRoute();
         double enemyUsAngle = enemyUsRoute.angleTo(robot.getFacing());
 
-        if (enemyBallRoute.getMagnitude() - ballRoute.getMagnitude() > 100)
+//////////////////////////////////////////////////////////////////////////////////////////////
+		// if enemy is between us and the ball OR ________ they are much closer
+        if (Math.abs(enemyRobot.getX()-ball.getX()) < Math.abs(robot.getX()-ball.getX() ) )
             //use defence mode enemy is much closer to the ball 
         {
             controller.setSpeed(300);
             controller.turn((int)(enemyUsAngle));
             pause(1000);
             controller.setSpeed(400);
-            controller.driveForward((int)ballRoute.getMagnitude() / 2);
+			// Enemy route
+            controller.driveForward((int)getEnemyUsRoute().getMagnitude() / 2);
             pause(1000);
         }
 
@@ -80,6 +87,7 @@ public class TrackBallStrategy extends Strategy
         if (Math.abs(ballAngle) > 15)
         {
             controller.setSpeed(300);
+
             controller.turn((int)(ballAngle));
             pause(1000);
         }
@@ -116,7 +124,7 @@ public class TrackBallStrategy extends Strategy
             if (ballRoute.getMagnitude() >= 40)
             {
                 controller.setSpeed(400);
-                controller.driveForward((int)ballRoute.getMagnitude() / 4);
+                controller.driveForward((int)ballRoute.getMagnitude() / 5);
                 pause(1000);
             }
             else if (ballRoute.getMagnitude() < 40)

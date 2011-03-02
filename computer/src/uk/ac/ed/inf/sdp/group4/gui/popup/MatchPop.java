@@ -8,6 +8,7 @@ import uk.ac.ed.inf.sdp.group4.gui.CastleWindow;
 import uk.ac.ed.inf.sdp.group4.strategy.Strategy;
 import uk.ac.ed.inf.sdp.group4.strategy.TrackBallStrategy;
 import uk.ac.ed.inf.sdp.group4.strategy.RobotColour;
+import uk.ac.ed.inf.sdp.group4.sim.Simulator;
 
 public class MatchPop extends JFrame {
 

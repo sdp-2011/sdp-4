@@ -47,8 +47,8 @@ public class Simulator implements Runnable
 
 	public void run()
 	{
-		new Thread(blueStrat).start();
-		new Thread(yellowStrat).start();
+		if (blueStrat != null) new Thread(blueStrat).start();
+		if (yellowStrat != null) new Thread(yellowStrat).start();
 
 		long t = System.currentTimeMillis();
 
@@ -93,8 +93,8 @@ public class Simulator implements Runnable
 		controllerTwo.setBot((SimBot) components[1]);
 
 		//setup strategies
-		blueStrat.setup(client, controllerOne, RobotColour.BLUE, true);
-		yellowStrat.setup(client, controllerTwo, RobotColour.YELLOW, true);
+		if (blueStrat != null) blueStrat.setup(client, controllerOne, RobotColour.BLUE, true);
+		if (yellowStrat != null) yellowStrat.setup(client, controllerTwo, RobotColour.YELLOW, true);
 
 		//set up pitch
 		pitch = new Pitch(components);

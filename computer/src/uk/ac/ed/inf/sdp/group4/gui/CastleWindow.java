@@ -39,8 +39,13 @@ public class CastleWindow extends JFrame {
 
 	private void simStartActionPerformed(java.awt.event.ActionEvent evt) {
         
-		SimPop simPop = new SimPop(this);
-		simPop.setVisible(true);
+		Simulator sim = new Simulator(new TrackBallStrategy(null, null, null),
+			new TrackBallStrategy(null, null, null));
+		JFrame frame = new JFrame();
+		frame.getContentPane().add(sim.makePanel());
+		frame.setSize(500, 250);
+		frame.setVisible(true);
+		new Thread(sim).start();
     }
 
     private void matchStartActionPerformed(java.awt.event.ActionEvent evt) {
