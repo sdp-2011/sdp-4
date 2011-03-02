@@ -78,7 +78,8 @@ public class CastleWindow extends JFrame {
     }
 
     private void endButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        
+		controller.finish();
     }
 
 	public void simulate(Strategy blueStrat, Strategy yellStrat)
