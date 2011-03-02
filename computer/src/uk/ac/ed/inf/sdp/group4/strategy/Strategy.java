@@ -130,6 +130,16 @@ public abstract class Strategy implements IStrategy, Runnable
 		}
 	}
 
+	public Goals getFacing()
+	{
+		if (currentGoal.equals(eastGoal))
+		{
+			return Goals.EAST;
+		}
+
+		return Goals.WEST;
+	}
+
 	public void stop()
 	{
 		keepRunning = false;
