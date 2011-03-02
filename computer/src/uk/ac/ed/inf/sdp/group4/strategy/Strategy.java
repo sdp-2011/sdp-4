@@ -27,7 +27,8 @@ public abstract class Strategy implements IStrategy, Runnable
 
 	public enum Strategies
 	{
-		TRACKBALL
+		TRACKBALL,
+		KEYBOARD
 	}
 
 	public enum Goals
@@ -154,10 +155,15 @@ public abstract class Strategy implements IStrategy, Runnable
 			strategy = new TrackBallStrategy(null, null, null);
 		}
 
+		else if (strat == Strategies.KEYBOARD)
+		{
+			strategy = new KeyboardStrategy(null, null, null);
+		}
+
 		return strategy;
 	}
 
-	public abstract void attack();
-	public abstract void defend();
+	public abstract void penaltyAttack();
+	public abstract void penaltyDefend();
 }
 

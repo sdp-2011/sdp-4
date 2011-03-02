@@ -61,13 +61,13 @@ public class PenaltyButtons extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
         
-		strategy.defend();
+		strategy.penaltyDefend();
 		this.dispose();
     }
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
         
-		strategy.attack();
+		strategy.penaltyAttack();
 		this.dispose();
     }
 
