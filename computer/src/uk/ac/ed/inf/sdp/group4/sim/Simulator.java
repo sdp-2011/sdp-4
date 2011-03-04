@@ -33,7 +33,7 @@ public class Simulator implements Runnable
 	private Strategy blueStrat;
 	private Strategy yellowStrat;
 
-	private JPanel panel;
+	private Situation panel;
 	private boolean animate;
 
 	public Simulator(Strategy blueStrat, Strategy yellowStrat)
@@ -117,7 +117,7 @@ public class Simulator implements Runnable
 		panel.repaint();
 	}
 
-	public void makePanel(Situation situation)
+	public void setPanel(Situation situation)
 	{
 		animate = true;
 		panel = situation.setup(blue, yellow, ball);

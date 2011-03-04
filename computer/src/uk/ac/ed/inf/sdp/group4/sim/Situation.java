@@ -42,21 +42,6 @@ public class Situation extends JPanel
 		return this;
 	}
 
-	public Robot getBlue()
-	{
-		return blue;
-	}
-
-	public Robot getYellow()
-	{
-		return yellow;
-	}
-
-	public Ball getBall()
-	{
-		return ball;
-	}
-
 	public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
