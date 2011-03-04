@@ -13,6 +13,7 @@ import uk.ac.ed.inf.sdp.group4.controller.FatController;
 import uk.ac.ed.inf.sdp.group4.world.IVisionClient;
 import uk.ac.ed.inf.sdp.group4.world.VisionClient;
 import uk.ac.ed.inf.sdp.group4.sim.Simulator;
+import uk.ac.ed.inf.sdp.group4.sim.Situation;
 import uk.ac.ed.inf.sdp.group4.gui.popup.*;
 import uk.ac.ed.inf.sdp.group4.controller.Controller;
 
@@ -28,14 +29,14 @@ public class CastleWindow extends JFrame {
     private JButton modeButton;
     private JButton pauseButton;
     private JButton simStart;
-    private JPanel situation;
+    private Situation situation;
 	private Strategy strategy;
 	private Thread stratThread;
 	private Controller controller;
 	private IVisionClient client;
+	private Simulator sim;
 
 	private boolean pause;
-	private boolean facingWest;
 
     public CastleWindow() {
         initComponents();
@@ -43,14 +44,8 @@ public class CastleWindow extends JFrame {
 
 	private void simStartActionPerformed(java.awt.event.ActionEvent evt) {
         
-		Simulator sim = new Simulator(new TrackBallStrategy(null, null, null),
-			null);
-		JFrame frame = new JFrame();
-		frame.getContentPane().add(sim.makePanel());
-		frame.setSize(800, 400);
-		frame.setVisible(true);
-		stratThread = new Thread(sim);
-		stratThread.start();
+		SimPop simPop = new SimPop(this);
+		simPop.setVisible(true);
     }
 
     private void matchStartActionPerformed(java.awt.event.ActionEvent evt) {
@@ -90,21 +85,27 @@ public class CastleWindow extends JFrame {
 
     private void endButtonActionPerformed(java.awt.event.ActionEvent evt) {
         
-		controller.finish();
+		end();
     }
 
-	public void simulate(Strategy blueStrat, Strategy yellStrat)
+	public void simulate(Strategy.Strategies blueStrat, Strategy.Strategies yellStrat, SimPop pop)
 	{
-		Simulator sim = new Simulator(blueStrat, yellStrat);
-		JPanel panel = sim.makePanel();
-		//add panel to window
+		pop.dispose();
+		pause = true;
+		pauseButton.setText("Pause");
+
+		sim = new Simulator(Strategy.makeStrat(blueStrat), 
+			Strategy.makeStrat(yellStrat));
+		sim.setPanel(situation);
 		new Thread(sim).start();
 
 		running();
 	}
 
-	public void connect(Strategy.Strategies strat, RobotColour colour)
+	public void connect(Strategy.Strategies strat, RobotColour colour, MatchPop pop)
 	{
+		pop.dispose();
+
 		client = new VisionClient();
 		controller = new FatController();
 		strategy = Strategy.makeStrat(strat);
@@ -123,29 +124,32 @@ public class CastleWindow extends JFrame {
 
 	private void pause()
 	{
-		stratThread.suspend();
+		if (sim != null) sim.pause();
+		else stratThread.suspend();
 		pauseButton.setText("Resume");
 	}
 
 	private void resume()
 	{
-		stratThread.resume();
+		if (sim != null) sim.resume();
+		else stratThread.resume();
 		pauseButton.setText("Pause");
 	}
 
-	private void reset()
+	private void end()
 	{
+		if (sim == null)
+		{ 
+			controller.finish();
+			strategy.stop();
+		}
 
-	}
-
-	public void changeMode(Strategy.Strategies strat)
-	{
-		strategy.stop();
-		RobotColour colour = strategy.ourColour();
-
-		strategy = Strategy.makeStrat(strat);
-		strategy.setup(client, controller, colour, false);
-		new Thread(strategy).start();
+		else 
+		{
+			sim.stop();
+		}
+		
+		reset();
 	}
 
 	private void running()
@@ -154,6 +158,8 @@ public class CastleWindow extends JFrame {
 		halfTime.setVisible(true);
 		pauseButton.setVisible(true);
 		modeButton.setVisible(true);
+		simStart.setVisible(false);
+		matchStart.setVisible(false);
 
 		if (strategy.getFacing() == Strategy.Goals.EAST)
 		{
@@ -166,13 +172,31 @@ public class CastleWindow extends JFrame {
 		}
 	}
 
+	private void reset()
+	{
+		endButton.setVisible(false);
+		halfTime.setVisible(false);
+		pauseButton.setVisible(false);
+		modeButton.setVisible(false);
+		simStart.setVisible(true);
+		matchStart.setVisible(true);
+
+		pauseButton.setText("Start");
+
+		stratThread = null;
+		sim = null;
+		client = null;
+		controller = null;
+		strategy = null;
+	}
+
 	//This is just the netbeans generated layout
     @SuppressWarnings("unchecked")
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         logWindow = new javax.swing.JTextArea();
-        situation = new javax.swing.JPanel();
+        situation = new Situation();
         simStart = new javax.swing.JButton();
         matchStart = new javax.swing.JButton();
         halfTime = new javax.swing.JButton();

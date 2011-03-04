@@ -33,26 +33,41 @@ public class Simulator implements Runnable
 	private Strategy blueStrat;
 	private Strategy yellowStrat;
 
-	private JPanel panel;
+	private Thread blueThread;
+	private Thread yellowThread;
+
+	private Situation panel;
 	private boolean animate;
+	
+	private boolean keepRunning;
 
 	public Simulator(Strategy blueStrat, Strategy yellowStrat)
 	{
 		this.blueStrat = blueStrat;
 		this.yellowStrat = yellowStrat;
 		this.animate = false;
+		this.keepRunning = true;
 
 		setup(blueStrat, yellowStrat);
 	}
 
 	public void run()
 	{
-		if (blueStrat != null) new Thread(blueStrat).start();
-		if (yellowStrat != null) new Thread(yellowStrat).start();
+		if (blueStrat != null) 
+		{
+			blueThread = new Thread(blueStrat);
+			blueThread.start();
+		}
+
+		if (yellowStrat != null)
+		{
+			yellowThread = new Thread(yellowStrat);
+			yellowThread.start();
+		}
 
 		long t = System.currentTimeMillis();
 
-		while (true)
+		while (keepRunning)
 		{
 			long tplus = System.currentTimeMillis();
 
@@ -117,10 +132,28 @@ public class Simulator implements Runnable
 		panel.repaint();
 	}
 
-	public JPanel makePanel()
+	public void setPanel(Situation situation)
 	{
 		animate = true;
-		panel = new Situation(blue, yellow, ball);
-		return panel;
+		panel = situation.setup(blue, yellow, ball);
+	}
+
+	public void pause()
+	{
+		blueThread.suspend();
+		yellowThread.suspend();
+	}
+
+	public void resume()
+	{
+		blueThread.resume();
+		yellowThread.resume();
+	}
+
+	public void stop()
+	{
+		blueStrat.stop();
+		yellowStrat.stop();
+		keepRunning = false;
 	}
 }
