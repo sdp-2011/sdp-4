@@ -65,11 +65,11 @@ while (True):
 	cv.SetImageROI(blueImage, blueCropRect)
 	cv.ShowImage("BlueBlack:", blueImage)	
 		
-	blueWhite = findObject(blueImage, "BLACK")
-	blueWhite = (int(blueWhite[0]) + blueCropRect[0] - 22, int(blueWhite[1]) + blueCropRect[1] - 72)	
+	blueWhite = findObject(blueImage, "BBLACK")
+	blueWhite = (int(blueWhite[0]) + blueCropRect[0] - 22, int(blueWhite[1]) + blueCropRect[1] - 80)	
 	
-	yellowBlack = findObject(yellowImage, "BLACK")
-	yellowBlack = (int(yellowBlack[0]) + yellowCropRect[0] - 22, int(yellowBlack[1]) + yellowCropRect[1] - 78)
+	yellowBlack = findObject(yellowImage, "YBLACK")
+	yellowBlack = (int(yellowBlack[0]) + yellowCropRect[0] - 22, int(yellowBlack[1]) + yellowCropRect[1] - 80)
 	
 	center_points = (ballCenter, blueCenter, yellowCenter)
 	other_points = (blueWhite, yellowBlack)

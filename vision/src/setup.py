@@ -18,7 +18,8 @@ def create_windows():
 	cv.NamedWindow("Red:",cv.CV_WINDOW_AUTOSIZE)
 	cv.NamedWindow("Blue:",cv.CV_WINDOW_AUTOSIZE)
 	cv.NamedWindow("Yellow:",cv.CV_WINDOW_AUTOSIZE)
-	cv.NamedWindow("White:",cv.CV_WINDOW_AUTOSIZE)
+	cv.NamedWindow("WhiteY:",cv.CV_WINDOW_AUTOSIZE)
+	cv.NamedWindow("WhiteB:",cv.CV_WINDOW_AUTOSIZE)
 	
 def add_trackbars():
 	# Red trackbars
