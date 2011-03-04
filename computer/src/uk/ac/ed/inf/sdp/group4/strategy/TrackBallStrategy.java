@@ -204,12 +204,12 @@ public class TrackBallStrategy extends Strategy
         return route;
 	}
 
-	public void attack()
+	public void penaltyAttack()
 	{
 		penaltyTake = true;
 	}
 
-	public void defend()
+	public void penaltyDefend()
 	{
 		penaltySave = true;
     }
