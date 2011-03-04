@@ -87,8 +87,10 @@ public class CastleWindow extends JFrame {
 		controller.finish();
     }
 
-	public void simulate(Strategy.Strategies blueStrat, Strategy.Strategies yellStrat)
+	public void simulate(Strategy.Strategies blueStrat, Strategy.Strategies yellStrat, SimPop pop)
 	{
+		pop.dispose();
+
 		Simulator sim = new Simulator(Strategy.makeStrat(blueStrat), 
 			Strategy.makeStrat(yellStrat));
 		JFrame frame = new JFrame();
@@ -101,8 +103,10 @@ public class CastleWindow extends JFrame {
 		running();
 	}
 
-	public void connect(Strategy.Strategies strat, RobotColour colour)
+	public void connect(Strategy.Strategies strat, RobotColour colour, MatchPop pop)
 	{
+		pop.dispose();
+
 		client = new VisionClient();
 		controller = new FatController();
 		strategy = Strategy.makeStrat(strat);
@@ -136,22 +140,14 @@ public class CastleWindow extends JFrame {
 
 	}
 
-	public void changeMode(Strategy.Strategies strat)
-	{
-		strategy.stop();
-		RobotColour colour = strategy.ourColour();
-
-		strategy = Strategy.makeStrat(strat);
-		strategy.setup(client, controller, colour, false);
-		new Thread(strategy).start();
-	}
-
 	private void running()
 	{
 		endButton.setVisible(true);
 		halfTime.setVisible(true);
 		pauseButton.setVisible(true);
 		modeButton.setVisible(true);
+		simStart.setVisible(false);
+		matchStart.setVisible(false);
 
 		if (strategy.getFacing() == Strategy.Goals.EAST)
 		{

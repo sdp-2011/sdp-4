@@ -30,8 +30,7 @@ public class MatchPop extends JFrame {
 	private void connectButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		
 		window.connect((Strategy.Strategies) stratBox.getSelectedItem(),
-			(RobotColour) colourBox.getSelectedItem());
-		this.dispose();
+			(RobotColour) colourBox.getSelectedItem(), this);
     }
 
     private void stratBoxActionPerformed(java.awt.event.ActionEvent evt) {

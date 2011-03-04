@@ -35,8 +35,7 @@ public class SimPop extends JFrame {
     private void runButtonActionPerformed(java.awt.event.ActionEvent evt) {
     
 		main.simulate((Strategy.Strategies) blueStrats.getSelectedItem(), 
-			(Strategy.Strategies) yellowStrats.getSelectedItem());
-		this.dispose();
+			(Strategy.Strategies) yellowStrats.getSelectedItem(), this);
     }
 
     @SuppressWarnings("unchecked")
