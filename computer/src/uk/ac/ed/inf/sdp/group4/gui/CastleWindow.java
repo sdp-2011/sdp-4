@@ -45,10 +45,7 @@ public class CastleWindow extends JFrame {
         
 		Simulator sim = new Simulator(new TrackBallStrategy(null, null, null),
 			null);
-		JFrame frame = new JFrame();
-		frame.getContentPane().add(sim.makePanel());
-		frame.setSize(500, 250);
-		frame.setVisible(true);
+		situation.add(sim.makePanel());
 		stratThread = new Thread(sim);
 		stratThread.start();
     }
