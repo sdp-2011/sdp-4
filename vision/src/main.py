@@ -87,8 +87,9 @@ while (True):
 	update_worldstate(center_points, other_points)
     
 	now = time.time()
-	time_diff = now - last_time
+	time_diff = now - old_time
 
+	stdscr.erase()
 	stdscr.addstr(0,0, "Blue Player", curses.A_UNDERLINE | curses.color_pair(2))
 	stdscr.addstr(1,0, "Orientation: " + str((int(calculate_bearing(blue_white, blue_center)) - 180) % 360))
 	stdscr.addstr(2,0, "Position:" + str(blue_center))
@@ -101,13 +102,13 @@ while (True):
 	stdscr.addstr(9,0, "Moved:" + str(euclid_distance(old_yellow_position, yellow_center)))
 	stdscr.addstr(10,0, "Speed:" + str(calculate_speed(old_yellow_position, yellow_center, time_diff)))
 
-	stdcsr.addstr(12,0, "Ball", curses.A_UNDERLINE | curses.color_pair(1))
+	stdscr.addstr(12,0, "Ball", curses.A_UNDERLINE | curses.color_pair(1))
 	stdscr.addstr(13,0, "Position:" + str(ball_center))
 	stdscr.addstr(14,0, "Moved:" + str(euclid_distance(old_ball_position, ball_center)))
 	stdscr.addstr(15,0, "Speed:" + str(calculate_speed(old_ball_position, ball_center, time_diff)))
 
 	stdscr.addstr(17,0, "FPS:" + str(1/(now-start)))
-	curses.refresh()
+	stdscr.refresh()
 
 	cv.WaitKey(4)
-	last_time = now	
+	old_time = now	
