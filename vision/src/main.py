@@ -37,7 +37,7 @@ cam = cv.CaptureFromCAM(0)
 os.system('/home/s0806628/sdp/vision/src/modv4l.sh')
 
 stdscr = curses.initscr()
-curses.start_colour()
+curses.start_color()
 
 curses.init_pair(1, curses.COLOR_RED, curses.COLOR_BLACK)
 curses.init_pair(2, curses.COLOR_BLUE, curses.COLOR_BLACK)
@@ -57,11 +57,11 @@ while (True):
 	orig = cv.CloneImage(image)
 	processed = cv.CloneImage(orig)
 
-	ball_center = findObject(image,"RED")
+	ball_center = find_object(image,"RED")
 	ball_center = (int(ball_center[0]), int(ball_center[1]))
-	blue_center = findObject(image,"BLUE")
+	blue_center = find_object(image,"BLUE")
 	blue_center = (int(blue_center[0]), int(blue_center[1]))
-	yellow_center = findObject(image,"YELLOW")
+	yellow_center = find_object(image,"YELLOW")
 	yellow_center = (int(yellow_center[0]), int(yellow_center[1]))
 	
 	yellow_image = cv.CloneImage(orig)
@@ -74,10 +74,10 @@ while (True):
 	cv.SetImageROI(blue_image, blue_crop_rect)
 	cv.ShowImage("BlueBlack:", blue_image)	
 		
-	blue_white = findObject(blue_image, "BBLACK")
+	blue_white = find_object(blue_image, "BBLACK")
 	blue_white = (int(blue_white[0]) + blue_crop_rect[0] - 22, int(blue_white[1]) + blue_crop_rect[1] - 80)	
 	
-	yellow_white = findObject(yellow_image, "YBLACK")
+	yellow_white = find_object(yellow_image, "YBLACK")
 	yellow_white = (int(yellow_white[0]) + blue_crop_rect[0] - 22, int(yellow_white[1]) + blue_crop_rect[1] - 80)
 	
 	center_points = (ball_center, blue_center, yellow_center)
