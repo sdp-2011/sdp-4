@@ -123,4 +123,9 @@ public class Simulator implements Runnable
 		panel = new Situation(blue, yellow, ball);
 		return panel;
 	}
+
+	public void setPanel(Situation situation)
+	{
+		panel = situation;	
+	}
 }

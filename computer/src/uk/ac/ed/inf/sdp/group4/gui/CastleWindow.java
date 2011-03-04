@@ -13,6 +13,7 @@ import uk.ac.ed.inf.sdp.group4.controller.FatController;
 import uk.ac.ed.inf.sdp.group4.world.IVisionClient;
 import uk.ac.ed.inf.sdp.group4.world.VisionClient;
 import uk.ac.ed.inf.sdp.group4.sim.Simulator;
+import uk.ac.ed.inf.sdp.group4.sim.Situation;
 import uk.ac.ed.inf.sdp.group4.gui.popup.*;
 import uk.ac.ed.inf.sdp.group4.controller.Controller;
 
@@ -28,7 +29,7 @@ public class CastleWindow extends JFrame {
     private JButton modeButton;
     private JButton pauseButton;
     private JButton simStart;
-    private JPanel situation;
+    private Situation situation;
 	private Strategy strategy;
 	private Thread stratThread;
 	private Controller controller;
@@ -93,10 +94,8 @@ public class CastleWindow extends JFrame {
 
 		Simulator sim = new Simulator(Strategy.makeStrat(blueStrat), 
 			Strategy.makeStrat(yellStrat));
-		JFrame frame = new JFrame();
-		frame.getContentPane().add(sim.makePanel());
-		frame.setSize(800, 400);
-		frame.setVisible(true);
+		situation.replace((Situation) sim.makePanel());
+		sim.setPanel(situation);
 		stratThread = new Thread(sim);
 		stratThread.start();
 
@@ -166,7 +165,7 @@ public class CastleWindow extends JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         logWindow = new javax.swing.JTextArea();
-        situation = new javax.swing.JPanel();
+        situation = new Situation();
         simStart = new javax.swing.JButton();
         matchStart = new javax.swing.JButton();
         halfTime = new javax.swing.JButton();
