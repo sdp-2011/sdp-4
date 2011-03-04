@@ -117,15 +117,9 @@ public class Simulator implements Runnable
 		panel.repaint();
 	}
 
-	public JPanel makePanel()
+	public void makePanel(Situation situation)
 	{
 		animate = true;
-		panel = new Situation(blue, yellow, ball);
-		return panel;
-	}
-
-	public void setPanel(Situation situation)
-	{
-		panel = situation;	
+		panel = situation.setup(blue, yellow, ball);
 	}
 }

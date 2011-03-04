@@ -31,12 +31,15 @@ public class Situation extends JPanel
 		this.blank = true;
 	}
 
-	public void replace(Situation situation)
+	protected Situation setup(Robot blue, Robot yellow, Ball ball)
 	{
-		this.ball = situation.getBall();
-		this.blue = situation.getBlue();
-		this.yellow = situation.getYellow();
 		this.blank = false;
+
+		this.blue = blue;
+		this.yellow = yellow;
+		this.ball = ball;
+
+		return this;
 	}
 
 	public Robot getBlue()
