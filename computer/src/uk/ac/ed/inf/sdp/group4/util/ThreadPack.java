@@ -9,7 +9,7 @@ public class ThreadPack
 		threads = new Thread[2];
 	}
 
-	public void add(Thread thread)
+	public void add(Thread thread, boolean start)
 	{
 		int count = -1;
 
@@ -40,7 +40,7 @@ public class ThreadPack
 			threads[count] = thread;
 		}
 
-		thread.start();
+		if (start) thread.start();
 	}
 
 	public void start()

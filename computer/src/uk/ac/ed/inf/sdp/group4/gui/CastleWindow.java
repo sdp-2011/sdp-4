@@ -34,6 +34,7 @@ public class CastleWindow extends JFrame {
 	private Thread stratThread;
 	private Controller controller;
 	private IVisionClient client;
+	private Simulator sim;
 
 	private boolean pause;
 	private boolean facingWest;
@@ -91,12 +92,13 @@ public class CastleWindow extends JFrame {
 	public void simulate(Strategy.Strategies blueStrat, Strategy.Strategies yellStrat, SimPop pop)
 	{
 		pop.dispose();
+		pauseButton.setText("Pause");
+		pause = true;
 
-		Simulator sim = new Simulator(Strategy.makeStrat(blueStrat), 
+		sim = new Simulator(Strategy.makeStrat(blueStrat), 
 			Strategy.makeStrat(yellStrat));
 		sim.setPanel(situation);
-		stratThread = new Thread(sim);
-		stratThread.start();
+		new Thread(sim).start();
 
 		running();
 	}
@@ -123,13 +125,15 @@ public class CastleWindow extends JFrame {
 
 	private void pause()
 	{
-		stratThread.suspend();
+		if (sim != null) sim.pause();
+		else stratThread.suspend();
 		pauseButton.setText("Resume");
 	}
 
 	private void resume()
 	{
-		stratThread.resume();
+		if (sim != null) sim.resume();
+		else stratThread.resume();
 		pauseButton.setText("Pause");
 	}
 
