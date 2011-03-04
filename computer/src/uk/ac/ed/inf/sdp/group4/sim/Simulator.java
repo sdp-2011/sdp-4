@@ -38,12 +38,15 @@ public class Simulator implements Runnable
 
 	private Situation panel;
 	private boolean animate;
+	
+	private boolean keepRunning;
 
 	public Simulator(Strategy blueStrat, Strategy yellowStrat)
 	{
 		this.blueStrat = blueStrat;
 		this.yellowStrat = yellowStrat;
 		this.animate = false;
+		this.keepRunning = true;
 
 		setup(blueStrat, yellowStrat);
 	}
@@ -64,7 +67,7 @@ public class Simulator implements Runnable
 
 		long t = System.currentTimeMillis();
 
-		while (true)
+		while (keepRunning)
 		{
 			long tplus = System.currentTimeMillis();
 
@@ -145,5 +148,12 @@ public class Simulator implements Runnable
 	{
 		blueThread.resume();
 		yellowThread.resume();
+	}
+
+	public void stop()
+	{
+		blueStrat.stop();
+		yellowStrat.stop();
+		keepRunning = false;
 	}
 }

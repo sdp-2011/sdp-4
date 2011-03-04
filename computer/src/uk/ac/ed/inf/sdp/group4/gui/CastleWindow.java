@@ -37,7 +37,6 @@ public class CastleWindow extends JFrame {
 	private Simulator sim;
 
 	private boolean pause;
-	private boolean facingWest;
 
     public CastleWindow() {
         initComponents();
@@ -86,14 +85,14 @@ public class CastleWindow extends JFrame {
 
     private void endButtonActionPerformed(java.awt.event.ActionEvent evt) {
         
-		controller.finish();
+		end();
     }
 
 	public void simulate(Strategy.Strategies blueStrat, Strategy.Strategies yellStrat, SimPop pop)
 	{
 		pop.dispose();
-		pauseButton.setText("Pause");
 		pause = true;
+		pauseButton.setText("Pause");
 
 		sim = new Simulator(Strategy.makeStrat(blueStrat), 
 			Strategy.makeStrat(yellStrat));
@@ -137,9 +136,20 @@ public class CastleWindow extends JFrame {
 		pauseButton.setText("Pause");
 	}
 
-	private void reset()
+	private void end()
 	{
+		if (sim == null)
+		{ 
+			controller.finish();
+			strategy.stop();
+		}
 
+		else 
+		{
+			sim.stop();
+		}
+		
+		reset();
 	}
 
 	private void running()
@@ -160,6 +170,24 @@ public class CastleWindow extends JFrame {
 		{
 			halfTime.setText("Facing: West");
 		}
+	}
+
+	private void reset()
+	{
+		endButton.setVisible(false);
+		halfTime.setVisible(false);
+		pauseButton.setVisible(false);
+		modeButton.setVisible(false);
+		simStart.setVisible(true);
+		matchStart.setVisible(true);
+
+		pauseButton.setText("Start");
+
+		stratThread = null;
+		sim = null;
+		client = null;
+		controller = null;
+		strategy = null;
 	}
 
 	//This is just the netbeans generated layout
