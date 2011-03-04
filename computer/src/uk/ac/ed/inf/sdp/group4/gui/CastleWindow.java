@@ -43,14 +43,8 @@ public class CastleWindow extends JFrame {
 
 	private void simStartActionPerformed(java.awt.event.ActionEvent evt) {
         
-		Simulator sim = new Simulator(new TrackBallStrategy(null, null, null),
-			new TrackBallStrategy(null, null, null));
-		JFrame frame = new JFrame();
-		frame.getContentPane().add(sim.makePanel());
-		frame.setSize(800, 400);
-		frame.setVisible(true);
-		stratThread = new Thread(sim);
-		stratThread.start();
+		SimPop simPop = new SimPop(this);
+		simPop.setVisible(true);
     }
 
     private void matchStartActionPerformed(java.awt.event.ActionEvent evt) {
@@ -93,12 +87,16 @@ public class CastleWindow extends JFrame {
 		controller.finish();
     }
 
-	public void simulate(Strategy blueStrat, Strategy yellStrat)
+	public void simulate(Strategy.Strategies blueStrat, Strategy.Strategies yellStrat)
 	{
-		Simulator sim = new Simulator(blueStrat, yellStrat);
-		JPanel panel = sim.makePanel();
-		//add panel to window
-		new Thread(sim).start();
+		Simulator sim = new Simulator(Strategy.makeStrat(blueStrat), 
+			Strategy.makeStrat(yellStrat));
+		JFrame frame = new JFrame();
+		frame.getContentPane().add(sim.makePanel());
+		frame.setSize(800, 400);
+		frame.setVisible(true);
+		stratThread = new Thread(sim);
+		stratThread.start();
 
 		running();
 	}

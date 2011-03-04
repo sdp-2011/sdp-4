@@ -5,8 +5,11 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import uk.ac.ed.inf.sdp.group4.gui.CastleWindow;
+import uk.ac.ed.inf.sdp.group4.strategy.Strategy;
 
 public class SimPop extends JFrame {
+
+	private static final long serialVersionUID = 101;
 
     private JComboBox blueStrats;
     private JLabel jLabel1;
@@ -30,7 +33,10 @@ public class SimPop extends JFrame {
     }
 
     private void runButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+    
+		main.simulate((Strategy.Strategies) blueStrats.getSelectedItem(), 
+			(Strategy.Strategies) yellowStrats.getSelectedItem());
+		this.dispose();
     }
 
     @SuppressWarnings("unchecked")
@@ -42,7 +48,7 @@ public class SimPop extends JFrame {
         jLabel2 = new javax.swing.JLabel();
         runButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        //setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         blueStrats.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         blueStrats.addActionListener(new java.awt.event.ActionListener() {
