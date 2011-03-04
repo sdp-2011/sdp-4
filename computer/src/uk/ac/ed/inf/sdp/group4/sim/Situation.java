@@ -29,8 +29,8 @@ public class Situation extends JPanel
 	{
 		super.paintComponent(g);
 
-		double X_RATIO = 244 / 244;
-		double Y_RATIO = 122 / 122;
+		double X_RATIO = 800 / 244;
+		double Y_RATIO = 400 / 122;
 		int ROB_X = (int) (X_RATIO * 20);
 		int ROB_Y = (int) (Y_RATIO * 18);
 		int BALL_SIZE = (int) (X_RATIO * 4);
