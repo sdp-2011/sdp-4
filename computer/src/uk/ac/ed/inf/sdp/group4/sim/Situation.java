@@ -68,11 +68,22 @@ public class Situation extends JPanel
 		g.fillOval((int) (yPos.getX() * X_RATIO - adjustX), (int) (yPos.getY() * Y_RATIO - adjustY),
 	    	ROB_X, ROB_Y); 
 
+		g.setColor(Color.red);
+
+		speedX = 10 * Math.cos(Math.toRadians(yellow.getVector().getDirection() - 90));
+		speedY = 10 * Math.sin(Math.toRadians(yellow.getVector().getDirection() - 90));
+		endX = (yPos.getX() * X_RATIO) + (speedX * X_RATIO);
+		endY = (yPos.getY() * Y_RATIO) + (speedY * Y_RATIO);
+
+		g.drawLine((int) (yPos.getX() * X_RATIO), (int) (yPos.getY() * Y_RATIO), (int) endX, (int) endY);
+
 		//draw ball
 		g.setColor(Color.red);
 
 		Position ballPos = ball.getPosition();
 		g.fillOval((int) (ballPos.getX() * X_RATIO - (4/2)), (int) (ballPos.getY() * Y_RATIO - (4/2)),
 			BALL_SIZE, BALL_SIZE);
+
+		
 	}
 }
