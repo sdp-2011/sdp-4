@@ -50,14 +50,16 @@ public class SimPop extends JFrame {
 
         //setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        blueStrats.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        blueStrats.setModel(new javax.swing.DefaultComboBoxModel(new Strategy.Strategies[] { 
+			Strategy.Strategies.TRACKBALL, Strategy.Strategies.KEYBOARD }));
         blueStrats.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 blueStratsActionPerformed(evt);
             }
         });
 
-        yellowStrats.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        yellowStrats.setModel(new javax.swing.DefaultComboBoxModel(new Strategy.Strategies[] { 
+			Strategy.Strategies.TRACKBALL, Strategy.Strategies.KEYBOARD }));
         yellowStrats.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 yellowStratsActionPerformed(evt);
