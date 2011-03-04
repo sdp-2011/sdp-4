@@ -45,17 +45,26 @@ public class ThreadPack
 
 	public void start()
 	{
-		
+		for (int i = 0; i < threads.length; i++)
+		{
+			if (threads[i] != null) threads[i].start();
+		}	
 	}
 
-	public void pause()
+	public void suspend()
 	{
-
+		for (int i = 0; i < threads.length; i++)
+		{
+			if (threads[i] != null) threads[i].suspend();
+		}
 	}
 
 	public void resume()
 	{
-
+		for (int i = 0; i < threads.length; i++)
+		{
+			if (threads[i] != null) threads[i].resume();
+		}
 	}
 
 	public void release(Thread thread)	
@@ -65,6 +74,7 @@ public class ThreadPack
 			if (threads[i].equals(thread))
 			{
 				threads[i] = null;
+				break;
 			}
 		}
 	}
