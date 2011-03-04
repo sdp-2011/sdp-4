@@ -54,7 +54,7 @@ public class MatchPop extends JFrame {
         //setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         stratBox.setModel(new javax.swing.DefaultComboBoxModel(new Strategy.Strategies[] { 
-			Strategy.Strategies.TRACKBALL }));
+			Strategy.Strategies.TRACKBALL, Strategy.Strategies.KEYBOARD }));
         stratBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 stratBoxActionPerformed(evt);

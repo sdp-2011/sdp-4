@@ -25,6 +25,7 @@ public class PenaltyButtons extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
 
         //setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+		setTitle("Penalty Mode");
 
         jButton1.setText("Attack");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -60,12 +61,14 @@ public class PenaltyButtons extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
         
-		strategy.defend();
+		strategy.penaltyDefend();
+		this.dispose();
     }
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
         
-		strategy.attack();
+		strategy.penaltyAttack();
+		this.dispose();
     }
 
     /**

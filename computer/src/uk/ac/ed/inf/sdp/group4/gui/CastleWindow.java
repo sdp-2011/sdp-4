@@ -35,6 +35,7 @@ public class CastleWindow extends JFrame {
 	private IVisionClient client;
 
 	private boolean pause;
+	private boolean facingWest;
 
     public CastleWindow() {
         initComponents();
@@ -43,7 +44,7 @@ public class CastleWindow extends JFrame {
 	private void simStartActionPerformed(java.awt.event.ActionEvent evt) {
         
 		Simulator sim = new Simulator(new TrackBallStrategy(null, null, null),
-			new TrackBallStrategy(null, null, null));
+			null);
 		JFrame frame = new JFrame();
 		frame.getContentPane().add(sim.makePanel());
 		frame.setSize(500, 250);
@@ -61,6 +62,16 @@ public class CastleWindow extends JFrame {
     private void halfTimeActionPerformed(java.awt.event.ActionEvent evt) {
        	
 		halfTime();
+
+		if (strategy.getFacing() == Strategy.Goals.EAST)
+		{
+			halfTime.setText("Facing: East");
+		}
+
+		else
+		{
+			halfTime.setText("Facing: West");
+		}
     }
 
     private void pauseButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -143,6 +154,16 @@ public class CastleWindow extends JFrame {
 		halfTime.setVisible(true);
 		pauseButton.setVisible(true);
 		modeButton.setVisible(true);
+
+		if (strategy.getFacing() == Strategy.Goals.EAST)
+		{
+			halfTime.setText("Facing: East");
+		}
+
+		else
+		{
+			halfTime.setText("Facing: West");
+		}
 	}
 
 	//This is just the netbeans generated layout
@@ -191,7 +212,7 @@ public class CastleWindow extends JFrame {
             }
         });
 
-        halfTime.setText("Half-Time");
+        halfTime.setText("Facing: East");
         halfTime.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 halfTimeActionPerformed(evt);
@@ -205,7 +226,7 @@ public class CastleWindow extends JFrame {
             }
         });
 
-        modeButton.setText("Change Mode");
+        modeButton.setText("Penalty!");
         modeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 modeButtonActionPerformed(evt);
