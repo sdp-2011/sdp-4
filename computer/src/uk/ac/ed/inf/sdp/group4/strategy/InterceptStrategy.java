@@ -44,6 +44,21 @@ public class InterceptStrategy extends Strategy
 
         // Get the world state.
         refresh();
+
+		Vector interceptRoute = getInterceptRoute();
+        double interceptAngle = interceptRoute.angleTo(robot.getFacing());
+
+		if (Math.abs(interceptAngle) < 20)
+		{
+			controller.setSpeed(900);
+			controller.driveForward((int)interceptRoute.getMagnitude());
+		}
+		else
+		{
+			controller.setSpeed(900);
+			controller.turn((int)interceptAngle);
+		}
+
     }
 
     private void refresh()
@@ -64,5 +79,26 @@ public class InterceptStrategy extends Strategy
 	public void penaltyDefend()
 	{
     }
+
+	private Vector getInterceptRoute()
+    {
+        Vector interceptRoute = null;
+		Position interceptPosition = new Position(robot.getX(), ball.getY());
+
+        try
+        {
+			interceptRoute = robot.getPosition().calcVectTo(interceptPosition);
+        }
+        catch (InvalidAngleException e)
+        {
+            log.error(e.getMessage());
+        }
+
+        log.debug("Intercept is towards: " + interceptRoute.getDirection());
+        log.debug("Intercept is at distance: " + interceptRoute.getMagnitude());
+
+        return interceptRoute;
+    }
+
 }
 
