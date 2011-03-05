@@ -1,10 +1,7 @@
 package uk.ac.ed.inf.sdp.group4.controller;
 
-import uk.ac.ed.inf.sdp.group4.world.WorldState;
-import uk.ac.ed.inf.sdp.group4.domain.Vector;
-import uk.ac.ed.inf.sdp.group4.sim.SimBot;
 import uk.ac.ed.inf.sdp.group4.sim.Action;
-import java.lang.Math;
+import uk.ac.ed.inf.sdp.group4.sim.SimBot;
 
 public class ThinController extends Controller
 {

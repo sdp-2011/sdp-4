@@ -1,13 +1,10 @@
 package uk.ac.ed.inf.sdp.group4.gui.popup;
 
-import javax.swing.JFrame;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JComboBox;
 import uk.ac.ed.inf.sdp.group4.gui.CastleWindow;
-import uk.ac.ed.inf.sdp.group4.strategy.Strategy;
-import uk.ac.ed.inf.sdp.group4.strategy.TrackBallStrategy;
 import uk.ac.ed.inf.sdp.group4.strategy.RobotColour;
+import uk.ac.ed.inf.sdp.group4.strategy.Strategy;
+
+import javax.swing.*;
 
 public class ModePop extends JFrame {
 

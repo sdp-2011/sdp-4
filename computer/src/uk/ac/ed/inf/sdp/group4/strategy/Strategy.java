@@ -1,11 +1,9 @@
 package uk.ac.ed.inf.sdp.group4.strategy;
 
 import org.apache.log4j.Logger;
-
-import uk.ac.ed.inf.sdp.group4.world.VisionClient;
-import uk.ac.ed.inf.sdp.group4.world.IVisionClient;
 import uk.ac.ed.inf.sdp.group4.controller.Controller;
 import uk.ac.ed.inf.sdp.group4.domain.Position;
+import uk.ac.ed.inf.sdp.group4.world.IVisionClient;
 
 public abstract class Strategy implements IStrategy, Runnable
 {

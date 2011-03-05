@@ -1,13 +1,11 @@
 package uk.ac.ed.inf.sdp.group4.sim;
 
-import uk.ac.ed.inf.sdp.group4.world.Robot;
+import uk.ac.ed.inf.sdp.group4.domain.Position;
 import uk.ac.ed.inf.sdp.group4.world.Ball;
-import uk.ac.ed.inf.sdp.group4.domain.Position; 
+import uk.ac.ed.inf.sdp.group4.world.Robot;
 
-import javax.swing.JPanel;
-import javax.swing.JFrame;
-import java.awt.Color;
-import java.awt.Graphics;
+import javax.swing.*;
+import java.awt.*;
 
 public class Situation extends JPanel
 {

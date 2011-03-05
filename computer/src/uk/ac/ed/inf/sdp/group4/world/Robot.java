@@ -1,11 +1,8 @@
 package uk.ac.ed.inf.sdp.group4.world;
 
 import uk.ac.ed.inf.sdp.group4.domain.InvalidAngleException;
-import uk.ac.ed.inf.sdp.group4.world.WorldObject;
-import uk.ac.ed.inf.sdp.group4.strategy.RobotColour;
 import uk.ac.ed.inf.sdp.group4.domain.Vector;
-import uk.ac.ed.inf.sdp.group4.world.Ball;
-import java.lang.Math;
+import uk.ac.ed.inf.sdp.group4.strategy.RobotColour;
 
 public class Robot extends WorldObject
 {
@@ -67,16 +64,6 @@ public class Robot extends WorldObject
 	public boolean inEnemyHalf()
 	{
 		return !this.inOwnHalf();
-	}
-
-	public boolean inTopHalf()
-	{
-		return this.getY() < 162;
-	}
-
-	public boolean inBottomHalf()
-	{
-		return !this.inTopHalf();
 	}
 
 	// Added for Andrew's strategy system

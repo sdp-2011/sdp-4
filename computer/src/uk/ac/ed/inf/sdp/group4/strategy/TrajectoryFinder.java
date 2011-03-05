@@ -1,11 +1,10 @@
 package uk.ac.ed.inf.sdp.group4.strategy;
 
+import uk.ac.ed.inf.sdp.group4.world.Ball;
 import uk.ac.ed.inf.sdp.group4.world.Robot;
 import uk.ac.ed.inf.sdp.group4.world.WorldObject;
-import uk.ac.ed.inf.sdp.group4.world.Ball;
 
 import java.util.ArrayList;
-import uk.ac.ed.inf.sdp.group4.world.Robot;
 
 public class TrajectoryFinder
 {

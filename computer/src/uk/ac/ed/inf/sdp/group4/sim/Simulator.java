@@ -1,24 +1,11 @@
 package uk.ac.ed.inf.sdp.group4.sim;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.geom.Rectangle2D;
-import java.io.File;
-import java.io.IOException;
-import java.lang.Runnable;
-import javax.swing.JPanel;
-
-import uk.ac.ed.inf.sdp.group4.domain.Position;
-import uk.ac.ed.inf.sdp.group4.world.Robot;
-import uk.ac.ed.inf.sdp.group4.world.Ball;
-import uk.ac.ed.inf.sdp.group4.world.WorldState;
-import uk.ac.ed.inf.sdp.group4.world.VisionClient;
-import uk.ac.ed.inf.sdp.group4.domain.InvalidAngleException;
+import uk.ac.ed.inf.sdp.group4.controller.ThinController;
 import uk.ac.ed.inf.sdp.group4.strategy.RobotColour;
 import uk.ac.ed.inf.sdp.group4.strategy.Strategy;
-import uk.ac.ed.inf.sdp.group4.controller.ThinController;
+import uk.ac.ed.inf.sdp.group4.world.Ball;
+import uk.ac.ed.inf.sdp.group4.world.Robot;
+import uk.ac.ed.inf.sdp.group4.world.WorldState;
 
 public class Simulator implements Runnable
 {

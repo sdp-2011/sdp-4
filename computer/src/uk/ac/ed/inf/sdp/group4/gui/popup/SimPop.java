@@ -1,11 +1,9 @@
 package uk.ac.ed.inf.sdp.group4.gui.popup;
 
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import javax.swing.JFrame;
 import uk.ac.ed.inf.sdp.group4.gui.CastleWindow;
 import uk.ac.ed.inf.sdp.group4.strategy.Strategy;
+
+import javax.swing.*;
 
 public class SimPop extends JFrame {
 

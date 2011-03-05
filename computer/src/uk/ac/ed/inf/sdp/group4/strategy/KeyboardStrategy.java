@@ -1,8 +1,10 @@
 package uk.ac.ed.inf.sdp.group4.strategy;
 
-import uk.ac.ed.inf.sdp.group4.world.IVisionClient;
 import uk.ac.ed.inf.sdp.group4.controller.Controller;
-import java.io.*;
+import uk.ac.ed.inf.sdp.group4.world.IVisionClient;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 public class KeyboardStrategy extends Strategy
 {

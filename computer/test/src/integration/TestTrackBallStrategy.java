@@ -1,34 +1,28 @@
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
+package integration;
 
-import org.junit.Test;
-import org.junit.Ignore;
+import helper.TestController;
+import helper.TestVisionClient;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.BeforeClass;
-
-import org.apache.log4j.Logger;
-import org.apache.log4j.Level;
-
-import uk.ac.ed.inf.sdp.group4.domain.Position;
-import uk.ac.ed.inf.sdp.group4.domain.Vector;
+import org.junit.Ignore;
+import org.junit.Test;
 import uk.ac.ed.inf.sdp.group4.domain.InvalidAngleException;
-
-import uk.ac.ed.inf.sdp.group4.controller.Controller;
-
-import uk.ac.ed.inf.sdp.group4.strategy.Strategy;
 import uk.ac.ed.inf.sdp.group4.strategy.RobotColour;
+import uk.ac.ed.inf.sdp.group4.strategy.Strategy;
 import uk.ac.ed.inf.sdp.group4.strategy.TrackBallStrategy;
-import uk.ac.ed.inf.sdp.group4.world.BadWorldStateException;
-import uk.ac.ed.inf.sdp.group4.world.Ball;
-import uk.ac.ed.inf.sdp.group4.world.IVisionClient;
-import uk.ac.ed.inf.sdp.group4.world.WorldState;
-import uk.ac.ed.inf.sdp.group4.world.Robot;
+import uk.ac.ed.inf.sdp.group4.world.*;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.junit.Assert.assertThat;
 
 public class TestTrackBallStrategy
 {
-	static TestController testController;
-	IVisionClient visionClient;
-	Strategy trackBallStrategy;
+	private static TestController testController;
+	private IVisionClient visionClient;
+	private Strategy trackBallStrategy;
 
 	@BeforeClass
 	public static void beforeClass()
@@ -123,7 +117,7 @@ public class TestTrackBallStrategy
 
 		// Slow down.
 		assertThat(testController.getCommand(0), is(97));
-		assertThat(testController.getArgument(0), is(300));
+		assertThat(testController.getArgument(0), is(500));
 
 		// Turn!
 		assertThat(testController.getCommand(1), is(5));
@@ -148,7 +142,7 @@ public class TestTrackBallStrategy
 
 		// Slow down.
 		assertThat(testController.getCommand(0), is(97));
-		assertThat(testController.getArgument(0), is(300));
+		assertThat(testController.getArgument(0), is(500));
 
 		// Turn!
 		assertThat(testController.getCommand(1), is(4));
@@ -173,7 +167,7 @@ public class TestTrackBallStrategy
 
 		// Slow down.
 		assertThat(testController.getCommand(0), is(97));
-		assertThat(testController.getArgument(0), is(300));
+		assertThat(testController.getArgument(0), is(500));
 
 		assertThat(testController.getCommand(1), is(4));
 		assertThat(testController.getArgument(1), is(180));
@@ -197,11 +191,11 @@ public class TestTrackBallStrategy
 
 		// Slow down.
 		assertThat(testController.getCommand(0), is(97));
-		assertThat(testController.getArgument(0), is(400));
+		assertThat(testController.getArgument(0), is(900));
 
 		// Go!
 		assertThat(testController.getCommand(1), is(0));
-		assertThat(testController.getArgument(1), is(10));
+		assertThat(testController.getArgument(1), is(6));
 	}
 
 	@Test
@@ -222,11 +216,11 @@ public class TestTrackBallStrategy
 
 		// Speed up.
 		assertThat(testController.getCommand(0), is(97));
-		assertThat(testController.getArgument(0), is(400));
+		assertThat(testController.getArgument(0), is(900));
 
 		// Go forwards.
 		assertThat(testController.getCommand(1), is(0));
-		assertThat(testController.getArgument(1), is(75));
+		assertThat(testController.getArgument(1), is(50));
 	}
 
 	@Test

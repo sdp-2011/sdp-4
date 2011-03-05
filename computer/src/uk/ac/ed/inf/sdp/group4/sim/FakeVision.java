@@ -1,7 +1,7 @@
 package uk.ac.ed.inf.sdp.group4.sim;
 
-import uk.ac.ed.inf.sdp.group4.world.WorldState;
 import uk.ac.ed.inf.sdp.group4.world.IVisionClient;
+import uk.ac.ed.inf.sdp.group4.world.WorldState;
 
 public class FakeVision implements IVisionClient
 {
