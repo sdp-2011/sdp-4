@@ -47,7 +47,7 @@ old_ball_position = (0,0)
 old_blue_position = (0,0)
 old_yellow_position = (0,0)
 
-old_time = 0
+old_time = time.time()
 
 while (True):
 	start = time.time()
@@ -74,10 +74,10 @@ while (True):
 	cv.SetImageROI(blue_image, blue_crop_rect)
 	cv.ShowImage("BlueBlack:", blue_image)	
 		
-	blue_white = find_object(blue_image, "BBLACK")
+	blue_white = find_object(blue_image, "BWHITE")
 	blue_white = (int(blue_white[0]) + blue_crop_rect[0] - 22, int(blue_white[1]) + blue_crop_rect[1] - 80)	
 	
-	yellow_white = find_object(yellow_image, "YBLACK")
+	yellow_white = find_object(yellow_image, "YWHITE")
 	yellow_white = (int(yellow_white[0]) + blue_crop_rect[0] - 22, int(yellow_white[1]) + blue_crop_rect[1] - 80)
 	
 	center_points = (ball_center, blue_center, yellow_center)

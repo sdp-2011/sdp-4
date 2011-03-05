@@ -72,12 +72,16 @@ def find_object(img, colour):
 		yellowUpper = cv.Scalar(mods[15]*256, mods[16]*256, mods[17]*256)
 		cv.InRangeS(hsv, yellowLower, yellowUpper, mask)
 		cv.ShowImage("Yellow:",mask)
-		#print [yellowLowerH, yellowUpperH, yellowLowerS, yellowUpperS, yellowLowerV, yellowUpperV]
-	elif (colour == "BLACK"):
+	elif (colour == "YWHITE"):
 		blackLower = cv.Scalar(mods[18]*256, mods[19]*256, mods[20]*256)
 		blackUpper = cv.Scalar(mods[21]*256, mods[22]*256, mods[23]*256)
 		cv.InRangeS(hsv, blackLower, blackUpper, mask)
-		cv.ShowImage("White:",mask)
+		cv.ShowImage("YellowWhite:",mask)            
+	elif (colour == "BWHITE"):
+		blackLower = cv.Scalar(mods[18]*256, mods[19]*256, mods[20]*256)
+		blackUpper = cv.Scalar(mods[21]*256, mods[22]*256, mods[23]*256)
+		cv.InRangeS(hsv, blackLower, blackUpper, mask)
+		cv.ShowImage("BlueWhite:",mask)        
 		
     # Count white pixels to make sure program doesn't crash if it finds nothing
 	if (cv.CountNonZero(mask) < 3):
