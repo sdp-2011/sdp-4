@@ -56,11 +56,21 @@ public abstract class WorldObject
 
     	public boolean inTopHalf()
 	{
-		return this.getY() < 162;
+		return this.getY() < Pitch.CENTER_HORIZONTAL;
 	}
 
 	public boolean inBottomHalf()
 	{
 		return !this.inTopHalf();
+	}
+
+	public boolean isNear(WorldObject object)
+	{
+		return isNear(object.getPosition());
+	}
+
+	public boolean isNear(Position position)
+	{
+		return getPosition().distance(position) < 20;
 	}
 }
