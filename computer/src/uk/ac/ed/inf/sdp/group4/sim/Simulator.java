@@ -21,9 +21,6 @@ public class Simulator implements Runnable
 	private Strategy blueStrat;
 	private Strategy yellowStrat;
 
-	private Thread blueThread;
-	private Thread yellowThread;
-
 	private Situation panel;
 	private boolean animate;
 	
@@ -41,17 +38,8 @@ public class Simulator implements Runnable
 
 	public void run()
 	{
-		if (blueStrat != null) 
-		{
-			blueThread = new Thread(blueStrat);
-			blueThread.start();
-		}
-
-		if (yellowStrat != null)
-		{
-			yellowThread = new Thread(yellowStrat);
-			yellowThread.start();
-		}
+		new Thread(blueStrat).start();
+		new Thread(yellowStrat).start();
 
 		long t = System.currentTimeMillis();
 
@@ -130,14 +118,14 @@ public class Simulator implements Runnable
 
 	public void pause()
 	{
-		blueThread.suspend();
-		yellowThread.suspend();
+		blueStrat.suspend();
+		yellowStrat.suspend();
 	}
 
 	public void resume()
 	{
-		blueThread.resume();
-		yellowThread.resume();
+		blueStrat.resume();
+		yellowStrat.resume();
 	}
 
 	public void stop()

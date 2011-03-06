@@ -22,6 +22,7 @@ public abstract class Strategy implements IStrategy, Runnable
 	protected Position currentGoal;
 
 	boolean keepRunning;
+	boolean paused;
 
 	public enum Strategies
 	{
@@ -44,6 +45,7 @@ public abstract class Strategy implements IStrategy, Runnable
 		this.testing = testing;
 		this.keepRunning = true;
 		this.currentGoal = eastGoal;
+		this.paused = true;
 	}
 
 	public void run()
@@ -56,6 +58,7 @@ public abstract class Strategy implements IStrategy, Runnable
 		log.debug("Starting strategy loop...");
 		while (keepRunning)
 		{
+			if (paused) continue;
 			tick();
 		}
 	}
@@ -102,6 +105,16 @@ public abstract class Strategy implements IStrategy, Runnable
 
 			}
 		}
+	}
+	
+	public void suspend()
+	{
+		paused = true;
+	}
+	
+	public void resume()
+	{
+		paused = false;
 	}
 
 	public void setGoals(int wX, int wY, int eX, int eY)
