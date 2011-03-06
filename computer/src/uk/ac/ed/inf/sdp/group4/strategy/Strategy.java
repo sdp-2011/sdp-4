@@ -46,7 +46,7 @@ public abstract class Strategy implements IStrategy, Runnable
 		this.testing = testing;
 		this.keepRunning = true;
 		this.currentGoal = eastGoal;
-		this.paused = false;
+		this.paused = true;
 	}
 
 	public void run()
