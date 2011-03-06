@@ -100,6 +100,7 @@ public class Simulator implements Runnable
 		//setup strategies
 		if (blueStrat != null) blueStrat.setup(client, controllerOne, RobotColour.BLUE, true);
 		if (yellowStrat != null) yellowStrat.setup(client, controllerTwo, RobotColour.YELLOW, true);
+		if (yellowStrat != null) yellowStrat.halfTime();
 
 		//set up pitch
 		pitch = new Pitch(components);
