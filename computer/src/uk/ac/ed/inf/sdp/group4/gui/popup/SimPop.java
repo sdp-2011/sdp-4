@@ -48,7 +48,7 @@ public class SimPop extends JFrame {
         //setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         blueStrats.setModel(new javax.swing.DefaultComboBoxModel(new Strategy.Strategies[] { 
-			Strategy.Strategies.TRACKBALL, Strategy.Strategies.KEYBOARD }));
+			Strategy.Strategies.TRACKBALL, Strategy.Strategies.KEYBOARD, Strategy.Strategies.INTERCEPT }));
         blueStrats.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 blueStratsActionPerformed(evt);
@@ -56,7 +56,7 @@ public class SimPop extends JFrame {
         });
 
         yellowStrats.setModel(new javax.swing.DefaultComboBoxModel(new Strategy.Strategies[] { 
-			Strategy.Strategies.TRACKBALL, Strategy.Strategies.KEYBOARD }));
+			Strategy.Strategies.TRACKBALL, Strategy.Strategies.KEYBOARD, Strategy.Strategies.INTERCEPT }));
         yellowStrats.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 yellowStratsActionPerformed(evt);

@@ -6,6 +6,7 @@ import uk.ac.ed.inf.sdp.group4.strategy.Strategy;
 import uk.ac.ed.inf.sdp.group4.world.Ball;
 import uk.ac.ed.inf.sdp.group4.world.Robot;
 import uk.ac.ed.inf.sdp.group4.world.WorldState;
+import uk.ac.ed.inf.sdp.group4.domain.InvalidAngleException;
 
 public class Simulator implements Runnable
 {
@@ -80,7 +81,8 @@ public class Simulator implements Runnable
 		//set up positions
 		blue.setPosition(210, 60);
 		yellow.setPosition(30, 20);
-		ball.setPosition(20, 60);
+		ball.setPosition(210, 80);
+
 		if (blueStrat != null) blueStrat.setGoals(0, 61, 244, 61);
 		if (yellowStrat != null) yellowStrat.setGoals(0, 61, 244, 61);
 		
@@ -99,6 +101,7 @@ public class Simulator implements Runnable
 		//setup strategies
 		if (blueStrat != null) blueStrat.setup(client, controllerOne, RobotColour.BLUE, true);
 		if (yellowStrat != null) yellowStrat.setup(client, controllerTwo, RobotColour.YELLOW, true);
+		if (yellowStrat != null) yellowStrat.halfTime();
 
 		//set up pitch
 		pitch = new Pitch(components);
