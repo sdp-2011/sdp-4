@@ -11,20 +11,20 @@ public class TestVector
 	@Test
 	public void testAngleRight() throws InvalidAngleException
 	{
-		Vector a = new Vector(0, 0);
-		double b = 90;
+		Vector a = new Vector(90, 0);
+		double b = 0;
 
-		double angle = a.angleTo(b);
+		double angle = a.angleFrom(b);
 		assertEquals(90, angle, 0);
 	}
 
 	@Test
 	public void testAngleLeft() throws InvalidAngleException
 	{
-		Vector a = new Vector(0, 0);
-		double b = 270;
+		Vector a = new Vector(270, 0);
+		double b = 0;
 
-		double angle = a.angleTo(b);
+		double angle = a.angleFrom(b);
 		assertEquals(-90, angle, 0);
 	}
 
@@ -34,7 +34,7 @@ public class TestVector
 		Vector a = new Vector(0, 0);
 		double b = 0;
 
-		double angle = a.angleTo(b);
+		double angle = a.angleFrom(b);
 		assertEquals(0, angle, 0);
 	}
 
@@ -44,8 +44,18 @@ public class TestVector
 		Vector a = new Vector(0, 0);
 		double b = 180;
 
-		double angle = a.angleTo(b);
-		assertEquals(180, angle, 0);
+		double angle = a.angleFrom(b);
+		assertEquals(-180, angle, 0);
+	}
+
+	@Test
+	public void testSmallLeft() throws InvalidAngleException
+	{
+	    Vector a = new Vector(297, 0);
+	    double b = 17.0;
+
+	    double angle = a.angleFrom(b);
+	    assertEquals(-80, angle, 0);
 	}
 
 	@Test()

@@ -78,22 +78,20 @@ public class FatController extends Controller
 	{
 		log.debug(String.format("Turning Left: %d degrees", angle));
 
-		// 0.6 == Inertia compensation.
-		sendCommand(4, (int)(angle * 0.6));
+		sendCommand(4, (int)(angle*0.7));
 	}
 
 	public void turnRight(int angle)
 	{
 		log.debug(String.format("Turning Right: %d degrees", angle));
 
-		// 0.6 == Inertia compensation.
-		sendCommand(5, (int)(angle * 0.6));
+		sendCommand(5, (int)(angle*0.7));
 	}
 
 	public void steer(int angle)
 	{
 		log.debug(String.format("Steering: %d turn rate", angle));
-		sendCommand(3, angle);
+		sendCommand(3, (int)(angle*0.7));
 	}
 
 	public void setSpeed(int motorSpeed)

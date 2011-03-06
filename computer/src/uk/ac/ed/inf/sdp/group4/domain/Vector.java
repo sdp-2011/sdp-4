@@ -49,14 +49,16 @@ public class Vector
 		return new Vector(angle, mag);
 	}
 
-	public double angleTo(double bearing)
+	public double angleFrom(double bearing)
 	{
 		double from = this.getDirection();
-		double angle = bearing - from;
+		double angle = from - bearing;
+
+		System.out.println(angle);
 
 		if (angle > 180)
 		{
-			angle = -1 * (angle - 180);
+			angle = -1 * (360 - angle);
 		}
 
 		return angle;

@@ -17,11 +17,11 @@ public abstract class Controller
 	{
 		if (angle >= 0)
 		{
-			turnLeft((int)angle);
+			turnRight((int)angle);
 		}
 		else
 		{
-			turnRight((int)angle * -1);
+			turnLeft((int)angle * -1);
 		}
 	}
 

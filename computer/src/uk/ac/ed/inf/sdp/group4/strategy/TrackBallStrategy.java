@@ -71,17 +71,17 @@ public class TrackBallStrategy extends Strategy
          * negative then it means turn left.
          */
         Vector ballRoute = getBallRoute();
-        double ballAngle = ballRoute.angleTo(robot.getFacing());
+        double ballAngle = ballRoute.angleFrom(robot.getFacing());
 
         Vector goalRoute = getGoalRoute();
-        double goalAngle = goalRoute.angleTo(robot.getFacing());
+        double goalAngle = goalRoute.angleFrom(robot.getFacing());
 
         if (ball.isHidden() && Math.abs(goalAngle) < 30)
         {
             log.debug("Can't see the ball - Shooting!");
             controller.shoot();
         }
-
+/*
         Vector enemyBallRoute = getEnemyBallRoute();
 
         Vector enemyUsRoute = getEnemyUsRoute();
@@ -98,13 +98,14 @@ public class TrackBallStrategy extends Strategy
 			// Enemy route
             controller.driveForward(((int)getEnemyUsRoute().getMagnitude() / 4)-45);
             pause(1000);
-        }
+        }*/
 
         // If we are a long turning distance from the ball then we should
         // turn towards it.
-        if (Math.abs(ballAngle) > 12)
+        System.out.println("Ball is at angle: " + ballAngle);
+        if (Math.abs(ballAngle) > 16)
         {
-            controller.setSpeed(500);
+           controller.setSpeed(500);
 
             controller.turn((int)(ballAngle));
             pause(1000);
@@ -118,7 +119,7 @@ public class TrackBallStrategy extends Strategy
             }
             // If we're close to the ball and the goal is far then we should
             // drive with a ball to the goal.
-            else if (ballRoute.getMagnitude() < 35)
+            else if (ballRoute.getMagnitude() < 20)
             {
                 log.debug("Driving to the goal!");
                 if (Math.abs(goalAngle) > 15)

@@ -21,6 +21,8 @@ public class InterceptStrategy extends Strategy
     Position westGoal = new Position(30, 162);
     Position eastGoal = new Position(525, 162);
 
+    private static int line = -1;
+
     public InterceptStrategy(IVisionClient client, Controller controller, RobotColour colour)
     {
         this(client, controller, colour, false);
@@ -45,19 +47,28 @@ public class InterceptStrategy extends Strategy
         // Get the world state.
         refresh();
 
-		Vector interceptRoute = getInterceptRoute();
-        double interceptAngle = interceptRoute.angleTo(robot.getFacing());
+	if (line == -1)
+	    line = robot.getX();
 
-		if (Math.abs(interceptAngle) < 20)
-		{
-			controller.setSpeed(900);
-			controller.driveForward((int)interceptRoute.getMagnitude());
-		}
-		else
-		{
-			controller.setSpeed(900);
-			controller.turn((int)interceptAngle);
-		}
+	Vector interceptRoute = getInterceptRoute();
+	double interceptAngle = interceptRoute.angleFrom(robot.getFacing());
+
+	if (Math.abs(robot.getY() - ball.getY()) < 20)
+	{
+	    return;
+	}
+	else if (Math.abs(interceptAngle) < 15)
+	{
+		controller.setSpeed(900);
+		controller.driveForward((int)interceptRoute.getMagnitude()/3);
+		pause(1000);
+	}
+	else
+	{
+		controller.setSpeed(400);
+		controller.turn((int)interceptAngle);
+		pause(1000);
+	}
 
     }
 
@@ -83,19 +94,19 @@ public class InterceptStrategy extends Strategy
 	private Vector getInterceptRoute()
     {
         Vector interceptRoute = null;
-		Position interceptPosition = new Position(robot.getX(), ball.getY());
+		Position interceptPosition = new Position(line, ball.getY());
 
         try
         {
-			interceptRoute = robot.getPosition().calcVectTo(interceptPosition);
+	    interceptRoute = robot.getPosition().calcVectTo(interceptPosition);
         }
         catch (InvalidAngleException e)
         {
             log.error(e.getMessage());
         }
 
+        log.debug(String.format("Intercept is at position: (%d, %d)", interceptPosition.getX(), interceptPosition.getY()));
         log.debug("Intercept is towards: " + interceptRoute.getDirection());
-        log.debug("Intercept is at distance: " + interceptRoute.getMagnitude());
 
         return interceptRoute;
     }

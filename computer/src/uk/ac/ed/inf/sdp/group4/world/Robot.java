@@ -71,7 +71,7 @@ public class Robot extends WorldObject
 	{
 		Vector ballToBot = Vector.calcVect(this.getPosition(), ball.getPosition());
 		double mag = ballToBot.getMagnitude();
-		double dir = ballToBot.angleTo(this.getFacing());
+		double dir = ballToBot.angleFrom(this.getFacing());
 		if ((mag < 30) && ((dir < 16) || (dir > -16)))
 		{
 			return true;

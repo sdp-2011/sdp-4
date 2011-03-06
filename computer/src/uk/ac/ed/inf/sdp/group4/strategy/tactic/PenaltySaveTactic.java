@@ -58,7 +58,7 @@ public class PenaltySaveTactic extends Tactic
 		// CHAAAAARGEEEEEEE
 		controller.setSpeed(900);
 		Vector ballRoute = getBallRoute(ours, ball);
-		double ballAngle = ballRoute.angleTo(ours.getFacing());
+		double ballAngle = ballRoute.angleFrom(ours.getFacing());
 
 		while (ballAngle > 10)
 		{

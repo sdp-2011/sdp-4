@@ -84,7 +84,7 @@ public class Match extends Strategy
 						Position stepPos = new Position(step.getX(), step.getY());
 						Position robotPos = new Position(ourRobot.getX(), ourRobot.getY());
 						Vector stepBot = Vector.calcVect(robotPos, stepPos);
-						double ang = stepBot.angleTo(ourRobot.getFacing());
+						double ang = stepBot.angleFrom(ourRobot.getFacing());
 						if ((ang < 15) && (ang > -15))
 						{
 							controller.setSpeed(150);
@@ -124,7 +124,7 @@ public class Match extends Strategy
 				// Goal-finding and scoring algorithm here
 				log.debug("We has ball");
 				Vector botToGoal = Vector.calcVect(ourRobot.getPosition(), westGoal);
-				double ang = botToGoal.angleTo(ourRobot.getFacing());
+				double ang = botToGoal.angleFrom(ourRobot.getFacing());
 				// Can we shoot? If not move towards goal for better shot
 				if (ang < 15)
 				{
@@ -147,7 +147,7 @@ public class Match extends Strategy
 							Position stepPos = new Position(step.getX(), step.getY());
 							Position robotPos = new Position(ourRobot.getX(), ourRobot.getY());
 							Vector stepBot = Vector.calcVect(robotPos, stepPos);
-							double angTo = stepBot.angleTo(ourRobot.getFacing());
+							double angTo = stepBot.angleFrom(ourRobot.getFacing());
 							if ((angTo < 15) && (ang > -15))
 							{
 								controller.setSpeed(150);
