@@ -92,6 +92,7 @@ public class CastleWindow extends JFrame {
 			Strategy.makeStrat(yellStrat));
 		sim.setPanel(situation);
 		new Thread(sim).start();
+		halfTime.setEnabled(false);
 
 		running();
 	}
@@ -166,6 +167,7 @@ public class CastleWindow extends JFrame {
 
 	private void reset()
 	{
+		halfTime.setEnabled(true);
 		endButton.setVisible(false);
 		halfTime.setVisible(false);
 		pauseButton.setVisible(false);

@@ -67,8 +67,8 @@ public class Simulator implements Runnable
 		ball = state.getBall();		
 
 		//set up positions
-		blue.setPosition(210, 60);
-		yellow.setPosition(30, 20);
+		blue.setPosition(30, 60);
+		yellow.setPosition(210, 20);
 		ball.setPosition(210, 80);
 
 		if (blueStrat != null) blueStrat.setGoals(0, 61, 244, 61);
