@@ -208,11 +208,11 @@ public class Match extends Strategy
 
 	}
 
-	public void attack()
+	public void penaltyAttack()
 	{
 	}
 
-	public void defend()
+	public void penaltyDefend()
 	{
 	}
 }
