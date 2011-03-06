@@ -69,7 +69,7 @@ public class Simulator implements Runnable
 		//set up positions
 		blue.setPosition(30, 60);
 		yellow.setPosition(210, 20);
-		ball.setPosition(210, 80);
+		ball.setPosition(122, 60);
 
 		if (blueStrat != null) blueStrat.setGoals(0, 61, 244, 61);
 		if (yellowStrat != null) yellowStrat.setGoals(0, 61, 244, 61);
