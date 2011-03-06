@@ -1,8 +1,9 @@
 package uk.ac.ed.inf.sdp.group4;
 
-import java.io.*;
 import org.apache.log4j.BasicConfigurator;
 import uk.ac.ed.inf.sdp.group4.gui.CastleWindow;
+
+import java.io.IOException;
 
 public class Main
 {

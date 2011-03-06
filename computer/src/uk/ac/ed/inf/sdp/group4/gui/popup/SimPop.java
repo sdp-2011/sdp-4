@@ -1,11 +1,9 @@
 package uk.ac.ed.inf.sdp.group4.gui.popup;
 
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import javax.swing.JFrame;
 import uk.ac.ed.inf.sdp.group4.gui.CastleWindow;
 import uk.ac.ed.inf.sdp.group4.strategy.Strategy;
+
+import javax.swing.*;
 
 public class SimPop extends JFrame {
 
@@ -50,7 +48,7 @@ public class SimPop extends JFrame {
         //setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         blueStrats.setModel(new javax.swing.DefaultComboBoxModel(new Strategy.Strategies[] { 
-			Strategy.Strategies.TRACKBALL, Strategy.Strategies.KEYBOARD }));
+			Strategy.Strategies.TRACKBALL, Strategy.Strategies.KEYBOARD, Strategy.Strategies.INTERCEPT }));
         blueStrats.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 blueStratsActionPerformed(evt);
@@ -58,7 +56,7 @@ public class SimPop extends JFrame {
         });
 
         yellowStrats.setModel(new javax.swing.DefaultComboBoxModel(new Strategy.Strategies[] { 
-			Strategy.Strategies.TRACKBALL, Strategy.Strategies.KEYBOARD }));
+			Strategy.Strategies.TRACKBALL, Strategy.Strategies.KEYBOARD, Strategy.Strategies.INTERCEPT }));
         yellowStrats.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 yellowStratsActionPerformed(evt);

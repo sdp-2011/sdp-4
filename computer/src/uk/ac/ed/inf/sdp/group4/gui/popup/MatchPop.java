@@ -1,14 +1,10 @@
 package uk.ac.ed.inf.sdp.group4.gui.popup;
 
-import javax.swing.JFrame;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JComboBox;
 import uk.ac.ed.inf.sdp.group4.gui.CastleWindow;
-import uk.ac.ed.inf.sdp.group4.strategy.Strategy;
-import uk.ac.ed.inf.sdp.group4.strategy.TrackBallStrategy;
 import uk.ac.ed.inf.sdp.group4.strategy.RobotColour;
-import uk.ac.ed.inf.sdp.group4.sim.Simulator;
+import uk.ac.ed.inf.sdp.group4.strategy.Strategy;
+
+import javax.swing.*;
 
 public class MatchPop extends JFrame {
 
@@ -53,7 +49,7 @@ public class MatchPop extends JFrame {
         //setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         stratBox.setModel(new javax.swing.DefaultComboBoxModel(new Strategy.Strategies[] { 
-			Strategy.Strategies.TRACKBALL, Strategy.Strategies.KEYBOARD }));
+			Strategy.Strategies.TRACKBALL, Strategy.Strategies.KEYBOARD, Strategy.Strategies.INTERCEPT }));
         stratBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 stratBoxActionPerformed(evt);

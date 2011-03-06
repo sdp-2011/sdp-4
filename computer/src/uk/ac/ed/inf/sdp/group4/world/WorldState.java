@@ -1,9 +1,6 @@
 package uk.ac.ed.inf.sdp.group4.world;
 
 import uk.ac.ed.inf.sdp.group4.WorldStateCommunication.WorldStateResponse;
-import uk.ac.ed.inf.sdp.group4.world.Ball;
-import uk.ac.ed.inf.sdp.group4.world.Robot;
-import uk.ac.ed.inf.sdp.group4.world.BadWorldStateException;
 import uk.ac.ed.inf.sdp.group4.domain.InvalidAngleException;
 import uk.ac.ed.inf.sdp.group4.strategy.RobotColour;
 

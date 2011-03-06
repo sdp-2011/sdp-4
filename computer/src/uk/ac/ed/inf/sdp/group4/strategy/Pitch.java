@@ -1,10 +1,6 @@
 package uk.ac.ed.inf.sdp.group4.strategy;
 
-import uk.ac.ed.inf.sdp.group4.world.IVisionClient;
-import uk.ac.ed.inf.sdp.group4.world.Robot;
-import uk.ac.ed.inf.sdp.group4.world.Ball;
-import uk.ac.ed.inf.sdp.group4.world.WorldObject;
-import uk.ac.ed.inf.sdp.group4.world.WorldState;
+import uk.ac.ed.inf.sdp.group4.world.*;
 
 public class Pitch implements TileBasedMap
 {

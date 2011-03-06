@@ -1,6 +1,8 @@
-import java.util.ArrayList;
+package helper;
 
 import uk.ac.ed.inf.sdp.group4.controller.Controller;
+
+import java.util.ArrayList;
 
 public class TestController extends Controller
 {

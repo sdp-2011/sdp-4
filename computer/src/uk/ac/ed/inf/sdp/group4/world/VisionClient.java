@@ -1,11 +1,12 @@
 package uk.ac.ed.inf.sdp.group4.world;
 
-import java.io.*;
-import java.net.*;
+import uk.ac.ed.inf.sdp.group4.WorldStateCommunication.WorldStateRequest;
+import uk.ac.ed.inf.sdp.group4.WorldStateCommunication.WorldStateResponse;
 
-import uk.ac.ed.inf.sdp.group4.WorldStateCommunication.*;
-import uk.ac.ed.inf.sdp.group4.WorldStateCommunication.WorldStateRequest.*;
-import uk.ac.ed.inf.sdp.group4.WorldStateCommunication.WorldStateResponse.*;
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.net.Socket;
 
 public class VisionClient implements IVisionClient
 {

@@ -1,11 +1,10 @@
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
-
 import org.junit.Test;
-
-import uk.ac.ed.inf.sdp.group4.domain.Position;
-import uk.ac.ed.inf.sdp.group4.domain.Vector;
 import uk.ac.ed.inf.sdp.group4.domain.InvalidAngleException;
+import uk.ac.ed.inf.sdp.group4.domain.Vector;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 public class TestVector
 {

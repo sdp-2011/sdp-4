@@ -1,7 +1,9 @@
+package helper;
+
 import uk.ac.ed.inf.sdp.group4.world.IVisionClient;
 import uk.ac.ed.inf.sdp.group4.world.WorldState;
 
-class TestVisionClient implements IVisionClient
+public class TestVisionClient implements IVisionClient
 {
 	WorldState state;
 

@@ -52,4 +52,11 @@ public class Position
 
 		return Math.sqrt((partX * partX) + (partY * partY));
 	}
+
+    public static Position centerPoint(Position a, Position b)
+    {
+        int x = (a.getX() + b.getX())/2;
+        int y = (a.getY() + b.getY())/2;
+        return new Position(x, y);
+    }
 }

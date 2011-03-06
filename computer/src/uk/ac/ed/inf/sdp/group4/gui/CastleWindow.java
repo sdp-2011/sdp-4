@@ -1,21 +1,18 @@
 package uk.ac.ed.inf.sdp.group4.gui;
 
-import javax.swing.JFrame;
-import javax.swing.JButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JPanel;
-
-import uk.ac.ed.inf.sdp.group4.strategy.RobotColour;
-import uk.ac.ed.inf.sdp.group4.strategy.Strategy;
-import uk.ac.ed.inf.sdp.group4.strategy.TrackBallStrategy;
+import uk.ac.ed.inf.sdp.group4.controller.Controller;
 import uk.ac.ed.inf.sdp.group4.controller.FatController;
-import uk.ac.ed.inf.sdp.group4.world.IVisionClient;
-import uk.ac.ed.inf.sdp.group4.world.VisionClient;
+import uk.ac.ed.inf.sdp.group4.gui.popup.MatchPop;
+import uk.ac.ed.inf.sdp.group4.gui.popup.PenaltyButtons;
+import uk.ac.ed.inf.sdp.group4.gui.popup.SimPop;
 import uk.ac.ed.inf.sdp.group4.sim.Simulator;
 import uk.ac.ed.inf.sdp.group4.sim.Situation;
-import uk.ac.ed.inf.sdp.group4.gui.popup.*;
-import uk.ac.ed.inf.sdp.group4.controller.Controller;
+import uk.ac.ed.inf.sdp.group4.strategy.RobotColour;
+import uk.ac.ed.inf.sdp.group4.strategy.Strategy;
+import uk.ac.ed.inf.sdp.group4.world.IVisionClient;
+import uk.ac.ed.inf.sdp.group4.world.VisionClient;
+
+import javax.swing.*;
 
 public class CastleWindow extends JFrame {
 
@@ -307,6 +304,9 @@ public class CastleWindow extends JFrame {
 		halfTime.setVisible(false);
 		pauseButton.setVisible(false);
 		modeButton.setVisible(false);
+    }
+
+    public void changeMode(Strategy.Strategies selectedItem) {
     }
 }
 

@@ -1,9 +1,11 @@
-import static org.junit.Assert.*;
-import org.junit.Test;
+package unit;
 
+import org.junit.Test;
+import uk.ac.ed.inf.sdp.group4.domain.InvalidAngleException;
 import uk.ac.ed.inf.sdp.group4.domain.Position;
 import uk.ac.ed.inf.sdp.group4.domain.Vector;
-import uk.ac.ed.inf.sdp.group4.domain.InvalidAngleException;
+
+import static org.junit.Assert.assertEquals;
 
 public class TestPosition
 {
@@ -49,4 +51,15 @@ public class TestPosition
 		assertEquals(282.84, v.getMagnitude(), 0.01);
 		assertEquals(315, v.getDirection(), 0);
 	}
+
+    @Test
+    public void testCenterPoint() throws InvalidAngleException
+    {
+        Position a = new Position(100, 100);
+        Position b = new Position(300, 300);
+
+        Position actual = Position.centerPoint(a, b);
+        assertEquals(200, actual.getX());
+        assertEquals(200, actual.getY());
+    }
 }

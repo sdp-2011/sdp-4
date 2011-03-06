@@ -1,6 +1,5 @@
 package uk.ac.ed.inf.sdp.group4.sim;
 
-import uk.ac.ed.inf.sdp.group4.domain.Position;
 import uk.ac.ed.inf.sdp.group4.world.WorldObject;
 
 public class Pitch implements Runnable

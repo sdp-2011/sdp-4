@@ -1,9 +1,9 @@
 package uk.ac.ed.inf.sdp.group4.strategy;
 
+import uk.ac.ed.inf.sdp.group4.world.WorldObject;
+
 import java.util.ArrayList;
 import java.util.Collections;
-import uk.ac.ed.inf.sdp.group4.world.Robot;
-import uk.ac.ed.inf.sdp.group4.world.WorldObject;
 
 
 

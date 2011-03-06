@@ -1,11 +1,9 @@
 package uk.ac.ed.inf.sdp.group4.strategy;
 
 import org.apache.log4j.Logger;
-
-import uk.ac.ed.inf.sdp.group4.world.VisionClient;
-import uk.ac.ed.inf.sdp.group4.world.IVisionClient;
 import uk.ac.ed.inf.sdp.group4.controller.Controller;
 import uk.ac.ed.inf.sdp.group4.domain.Position;
+import uk.ac.ed.inf.sdp.group4.world.IVisionClient;
 
 public abstract class Strategy implements IStrategy, Runnable
 {
@@ -29,7 +27,8 @@ public abstract class Strategy implements IStrategy, Runnable
 	public enum Strategies
 	{
 		TRACKBALL,
-		KEYBOARD
+		KEYBOARD,
+		INTERCEPT
 	}
 
 	public enum Goals
@@ -171,6 +170,11 @@ public abstract class Strategy implements IStrategy, Runnable
 		else if (strat == Strategies.KEYBOARD)
 		{
 			strategy = new KeyboardStrategy(null, null, null);
+		}
+
+		else if (strat == Strategies.INTERCEPT)
+		{
+			strategy = new InterceptStrategy(null, null, null);
 		}
 
 		return strategy;

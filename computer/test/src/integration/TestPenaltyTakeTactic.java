@@ -1,29 +1,26 @@
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
+package integration;
 
-import org.junit.Test;
-import org.junit.Ignore;
+import helper.TestController;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.BeforeClass;
-
-import org.apache.log4j.Logger;
-import org.apache.log4j.Level;
-
+import org.junit.Test;
 import uk.ac.ed.inf.sdp.group4.domain.InvalidAngleException;
-
 import uk.ac.ed.inf.sdp.group4.strategy.RobotColour;
 import uk.ac.ed.inf.sdp.group4.strategy.tactic.PenaltyTakeTactic;
 import uk.ac.ed.inf.sdp.group4.strategy.tactic.Tactic;
-
-import uk.ac.ed.inf.sdp.group4.world.Ball;
 import uk.ac.ed.inf.sdp.group4.world.BadWorldStateException;
+import uk.ac.ed.inf.sdp.group4.world.Ball;
 import uk.ac.ed.inf.sdp.group4.world.Robot;
-import uk.ac.ed.inf.sdp.group4.world.WorldState;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 public class TestPenaltyTakeTactic
 {
-	static TestController testController;
-	Tactic penaltyTakeTactic;
+	private static TestController testController;
+	private Tactic penaltyTakeTactic;
 
 	@BeforeClass
 	public static void beforeClass()

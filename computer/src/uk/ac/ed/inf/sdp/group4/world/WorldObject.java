@@ -1,8 +1,8 @@
 package uk.ac.ed.inf.sdp.group4.world;
 
+import uk.ac.ed.inf.sdp.group4.domain.InvalidAngleException;
 import uk.ac.ed.inf.sdp.group4.domain.Position;
 import uk.ac.ed.inf.sdp.group4.domain.Vector;
-import uk.ac.ed.inf.sdp.group4.domain.InvalidAngleException;
 
 public abstract class WorldObject
 {
@@ -52,5 +52,25 @@ public abstract class WorldObject
 	public int getY()
 	{
 		return getPosition().getY();
+	}
+
+    	public boolean inTopHalf()
+	{
+		return this.getY() < Pitch.CENTER_HORIZONTAL;
+	}
+
+	public boolean inBottomHalf()
+	{
+		return !this.inTopHalf();
+	}
+
+	public boolean isNear(WorldObject object)
+	{
+		return isNear(object.getPosition());
+	}
+
+	public boolean isNear(Position position)
+	{
+		return getPosition().distance(position) < 20;
 	}
 }

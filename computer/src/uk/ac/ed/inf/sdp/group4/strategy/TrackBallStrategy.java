@@ -1,16 +1,15 @@
 package uk.ac.ed.inf.sdp.group4.strategy;
 
-import java.lang.Math.*;
-
 import uk.ac.ed.inf.sdp.group4.controller.Controller;
-import uk.ac.ed.inf.sdp.group4.domain.*;
+import uk.ac.ed.inf.sdp.group4.domain.InvalidAngleException;
+import uk.ac.ed.inf.sdp.group4.domain.Position;
+import uk.ac.ed.inf.sdp.group4.domain.Vector;
+import uk.ac.ed.inf.sdp.group4.strategy.tactic.PenaltySaveTactic;
+import uk.ac.ed.inf.sdp.group4.strategy.tactic.PenaltyTakeTactic;
 import uk.ac.ed.inf.sdp.group4.world.Ball;
-import uk.ac.ed.inf.sdp.group4.world.Robot;
-import uk.ac.ed.inf.sdp.group4.world.VisionClient;
 import uk.ac.ed.inf.sdp.group4.world.IVisionClient;
+import uk.ac.ed.inf.sdp.group4.world.Robot;
 import uk.ac.ed.inf.sdp.group4.world.WorldState;
-
-import uk.ac.ed.inf.sdp.group4.strategy.tactic.*;
 
 public class TrackBallStrategy extends Strategy
 {
