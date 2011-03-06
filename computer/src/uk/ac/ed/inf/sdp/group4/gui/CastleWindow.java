@@ -11,6 +11,7 @@ import uk.ac.ed.inf.sdp.group4.strategy.RobotColour;
 import uk.ac.ed.inf.sdp.group4.strategy.Strategy;
 import uk.ac.ed.inf.sdp.group4.world.IVisionClient;
 import uk.ac.ed.inf.sdp.group4.world.VisionClient;
+import uk.ac.ed.inf.sdp.group4.world.WorldState;
 
 import javax.swing.*;
 
@@ -106,6 +107,7 @@ public class CastleWindow extends JFrame {
 		strategy = Strategy.makeStrat(strat);
 		strategy.setup(client, controller, colour, false);
 		new Thread(strategy).start();
+		new Thread(new Animator(new Situation(null, null, null), client)).start();
 
 		running();
 	}
@@ -181,6 +183,45 @@ public class CastleWindow extends JFrame {
 		client = null;
 		controller = null;
 		strategy = null;
+	}
+
+	private class Animator implements Runnable
+	{
+		private Situation situation;
+		private IVisionClient client;
+		private boolean keepRunning;
+
+		public Animator(Situation situation, IVisionClient client)
+		{
+			this.situation = situation;
+			this.client = client;
+			this.keepRunning = true;
+		}
+	
+		public void run()
+		{
+			while (keepRunning)
+			{
+				WorldState state = client.getWorldState();
+				situation.setup(state.getBlue(), state.getYellow(), state.getBall());
+				situation.repaint();
+
+				try
+				{
+					Thread.sleep(40);
+				}
+				
+				catch (InterruptedException e)
+				{
+					System.out.println("Threading is borked");
+				}
+			}
+		}
+
+		public void stop()
+		{
+			keepRunning = false;
+		}
 	}
 
 	//This is just the netbeans generated layout
@@ -306,9 +347,6 @@ public class CastleWindow extends JFrame {
 		halfTime.setVisible(false);
 		pauseButton.setVisible(false);
 		modeButton.setVisible(false);
-    }
-
-    public void changeMode(Strategy.Strategies selectedItem) {
     }
 }
 

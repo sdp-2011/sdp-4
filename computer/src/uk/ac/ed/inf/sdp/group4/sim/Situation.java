@@ -29,7 +29,7 @@ public class Situation extends JPanel
 		this.blank = true;
 	}
 
-	protected Situation setup(Robot blue, Robot yellow, Ball ball)
+	public Situation setup(Robot blue, Robot yellow, Ball ball)
 	{
 		this.blank = false;
 
@@ -59,7 +59,7 @@ public class Situation extends JPanel
 
 			//draw lines
 			g.setColor(Color.white);
-			g.fillRect((int) (121 * X_RATIO), (int) (0 * Y_RATIO), (int) (1 * X_RATIO), (int) (122 * Y_RATIO));
+			g.fillRect((int) (122 * X_RATIO), (int) (0 * Y_RATIO), (int) (1 * X_RATIO), (int) (122 * Y_RATIO));
 			g.fillRect((int) (0 * X_RATIO), (int) (121 * Y_RATIO), (int) (244 * X_RATIO), (int) (1 * Y_RATIO));
 			g.fillRect((int) (0 * X_RATIO), (int) (0 * Y_RATIO), (int) (244 * X_RATIO), (int) (1 * Y_RATIO));
 			g.fillRect((int) (243 * X_RATIO), (int) (0 * Y_RATIO), (int) (1 * X_RATIO), (int) (122 * Y_RATIO));
