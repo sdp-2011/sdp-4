@@ -57,9 +57,19 @@ public class Situation extends JPanel
 			int adjustX = ROB_X / 2;
 			int adjustY = ROB_Y / 2;
 
+			//draw lines
+			g.setColor(Color.white);
+			g.fillRect((int) (121 * X_RATIO), (int) (0 * Y_RATIO), (int) (1 * X_RATIO), (int) (122 * Y_RATIO));
+			g.fillRect((int) (0 * X_RATIO), (int) (121 * Y_RATIO), (int) (244 * X_RATIO), (int) (1 * Y_RATIO));
+			g.fillRect((int) (0 * X_RATIO), (int) (0 * Y_RATIO), (int) (244 * X_RATIO), (int) (1 * Y_RATIO));
+			g.fillRect((int) (243 * X_RATIO), (int) (0 * Y_RATIO), (int) (1 * X_RATIO), (int) (122 * Y_RATIO));
+			g.fillRect((int) (0 * X_RATIO), (int) (0 * Y_RATIO), (int) (1 * X_RATIO), (int) (122 * Y_RATIO));
+			
+
+			//draw goals
 			g.setColor(Color.pink);
 			g.fillRect((int) (0 * X_RATIO), (int) (20 * Y_RATIO), (int) (10 * X_RATIO), (int) (80 * Y_RATIO));
-			g.fillRect((int) (256 * X_RATIO), (int) (20 * Y_RATIO), (int) (10 * X_RATIO), (int) (80 * Y_RATIO));
+			g.fillRect((int) (234 * X_RATIO), (int) (20 * Y_RATIO), (int) (10 * X_RATIO), (int) (80 * Y_RATIO));			
 
 			//draw blue
 			g.setColor(Color.blue);
