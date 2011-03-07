@@ -49,13 +49,24 @@ old_yellow_position = (0,0)
 
 old_time = time.time()
 
+intrinsics = cv.Load("Intrinsics.xml")
+distortion = cv.Load("Distortion.xml")
+
+image = cv.QueryFrame(cam)
+mapx = cv.CreateImage(cv.GetSize(image), cv.IPL_DEPTH_32F, 1)
+mapy = cv.CreateImage(cv.GetSize(image), cv.IPL_DEPTH_32F, 1)
+cv.InitUndistortMap(intrinsic, distortion, mapx, mapy)
+
 while (True):
     start = time.time()
     image = cv.QueryFrame(cam)
+     
     crop_rect = (20, 80, 610, 325)
     cv.SetImageROI(image, crop_rect)
     orig = cv.CloneImage(image)
     processed = cv.CloneImage(orig)
+    cv.Remap(orig, image, mapx, mapy)
+    cv.Remap(orig, processed, mapx, mapy)
 
     ball_center = find_object(image,"RED")
     ball_center = (int(ball_center[0]), int(ball_center[1]))
