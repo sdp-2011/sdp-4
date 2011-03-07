@@ -16,12 +16,27 @@ public class Situation extends JPanel
 	private Ball ball;
 
 	private boolean blank;
+	
+	private int pitchX;
+	private int pitchY;
 
-	public Situation(Robot blue, Robot yellow, Ball ball)
+	public Situation(Robot blue, Robot yellow, Ball ball, boolean sim)
 	{
 		this.blue = blue;
 		this.yellow = yellow;
 		this.ball = ball;
+
+		if (sim)
+		{
+			pitchX = 244;
+			pitchY = 122;
+		}
+	
+		else 
+		{
+			pitchX = 590;
+			pitchY = 305;
+		}
 	}
 
 	public Situation()
@@ -29,13 +44,25 @@ public class Situation extends JPanel
 		this.blank = true;
 	}
 
-	public Situation setup(Robot blue, Robot yellow, Ball ball)
+	public Situation setup(Robot blue, Robot yellow, Ball ball, boolean sim)
 	{
 		this.blank = false;
 
 		this.blue = blue;
 		this.yellow = yellow;
 		this.ball = ball;
+
+		if (sim)
+		{
+			pitchX = 244;
+			pitchY = 122;
+		}
+	
+		else 
+		{
+			pitchX = 590;
+			pitchY = 305;
+		}
 
 		return this;
 	}
@@ -46,8 +73,8 @@ public class Situation extends JPanel
 
 		if (!blank)
 		{
-			double X_RATIO = this.getSize().width / 244.0;
-			double Y_RATIO = this.getSize().height / 122.0;
+			double X_RATIO = this.getSize().width / (double) pitchX;
+			double Y_RATIO = this.getSize().height / (double) pitchY;
 			int ROB_X = (int) (X_RATIO * 20);
 			int ROB_Y = (int) (Y_RATIO * 18);
 			int BALL_SIZE = (int) (X_RATIO * 4);
@@ -111,5 +138,10 @@ public class Situation extends JPanel
 			g.fillOval((int) (ballPos.getX() * X_RATIO - (4/2)), (int) (ballPos.getY() * Y_RATIO - (4/2)),
 				BALL_SIZE, BALL_SIZE);
 		}	
+
+		else
+		{
+			setBackground(Color.green);
+		}
 	}
 }

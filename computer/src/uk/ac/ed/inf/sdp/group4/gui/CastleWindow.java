@@ -93,7 +93,7 @@ public class CastleWindow extends JFrame {
 		sim = new Simulator(Strategy.makeStrat(blueStrat), 
 			Strategy.makeStrat(yellStrat));
 		new Thread(sim).start();
-		animator = new Animator(situation, sim.getVision());
+		animator = new Animator(situation, sim.getVision(), true);
 		new Thread(animator).start();
 		halfTime.setEnabled(false);
 
@@ -109,7 +109,7 @@ public class CastleWindow extends JFrame {
 		strategy = Strategy.makeStrat(strat);
 		strategy.setup(client, controller, colour, false);
 		new Thread(strategy).start();
-		animator = new Animator(situation, sim.getVision());
+		animator = new Animator(situation, sim.getVision(), false);
 		new Thread(animator).start();
 
 		running();
@@ -195,12 +195,14 @@ public class CastleWindow extends JFrame {
 		private Situation situation;
 		private IVisionClient client;
 		private boolean keepRunning;
+		private boolean sim;
 
-		public Animator(Situation situation, IVisionClient client)
+		public Animator(Situation situation, IVisionClient client, boolean sim)
 		{
 			this.situation = situation;
 			this.client = client;
 			this.keepRunning = true;
+			this.sim = sim;
 		}
 	
 		public void run()
@@ -208,7 +210,7 @@ public class CastleWindow extends JFrame {
 			while (keepRunning)
 			{
 				WorldState state = client.getWorldState();
-				situation.setup(state.getBlue(), state.getYellow(), state.getBall());
+				situation.setup(state.getBlue(), state.getYellow(), state.getBall(), sim);
 				situation.repaint();
 
 				try
