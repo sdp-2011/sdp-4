@@ -32,6 +32,7 @@ public class CastleWindow extends JFrame {
 	private Controller controller;
 	private IVisionClient client;
 	private Simulator sim;
+	private Animator animator;
 
 	private boolean pause;
 
@@ -92,7 +93,8 @@ public class CastleWindow extends JFrame {
 		sim = new Simulator(Strategy.makeStrat(blueStrat), 
 			Strategy.makeStrat(yellStrat));
 		new Thread(sim).start();
-		new Thread(new Animator(situation, sim.getVision())).start();
+		animator = new Animator(situation, sim.getVision());
+		new Thread(animator).start();
 		halfTime.setEnabled(false);
 
 		running();
@@ -107,7 +109,8 @@ public class CastleWindow extends JFrame {
 		strategy = Strategy.makeStrat(strat);
 		strategy.setup(client, controller, colour, false);
 		new Thread(strategy).start();
-		new Thread(new Animator(situation, client)).start();
+		animator = new Animator(situation, sim.getVision());
+		new Thread(animator).start();
 
 		running();
 	}
@@ -179,6 +182,8 @@ public class CastleWindow extends JFrame {
 
 		pauseButton.setText("Start");
 
+		animator.stop();
+		animator = null;
 		sim = null;
 		client = null;
 		controller = null;
