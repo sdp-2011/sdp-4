@@ -42,3 +42,12 @@ def add_trackbars():
 	cv.CreateTrackbar("H Upper:", "Yellow:", 50, 255, onHUpperYChange)
 	cv.CreateTrackbar("S Upper:", "Yellow:", 255, 255, onSUpperYChange)
 	cv.CreateTrackbar("V Upper:", "Yellow:", 255, 255, onVUpperYChange)
+
+	# White trackbars
+	cv.CreateTrackbar("H Lower:", "Processed:", 22, 255, onHLowerBkChange)
+	cv.CreateTrackbar("S Lower:", "Processed:", 115, 255, onSLowerBkChange)
+	cv.CreateTrackbar("V Lower:", "Processed:", 125, 255, onVLowerBkChange)
+	cv.CreateTrackbar("H Upper:", "Processed:", 50, 255, onHUpperBkChange)
+	cv.CreateTrackbar("S Upper:", "Processed:", 255, 255, onSUpperBkChange)
+	cv.CreateTrackbar("V Upper:", "Processed:", 255, 255, onVUpperBkChange)
+
