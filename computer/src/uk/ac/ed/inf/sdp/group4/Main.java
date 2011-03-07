@@ -12,7 +12,7 @@ public class Main
 		BasicConfigurator.configure();
 
 		CastleWindow window = new CastleWindow();
-		window.setTitle("Castle Control v0.1");
+		window.setTitle("Castle Control v0.2");
 		window.setVisible(true);
 	}
 }

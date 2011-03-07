@@ -46,8 +46,8 @@ public class Situation extends JPanel
 
 		if (!blank)
 		{
-			double X_RATIO = getSize().width / 244;
-			double Y_RATIO = getSize().height / 122;
+			double X_RATIO = this.getSize().width / 244;
+			double Y_RATIO = this.getSize().height / 122;
 			int ROB_X = (int) (X_RATIO * 20);
 			int ROB_Y = (int) (Y_RATIO * 18);
 			int BALL_SIZE = (int) (X_RATIO * 4);
