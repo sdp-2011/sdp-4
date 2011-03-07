@@ -7,6 +7,7 @@ import uk.ac.ed.inf.sdp.group4.world.Ball;
 import uk.ac.ed.inf.sdp.group4.world.Robot;
 import uk.ac.ed.inf.sdp.group4.world.WorldState;
 import uk.ac.ed.inf.sdp.group4.domain.InvalidAngleException;
+improt uk.ac.ed.inf.sdp.group4.world.IVisionClient;
 
 public class Simulator implements Runnable
 {
@@ -20,17 +21,14 @@ public class Simulator implements Runnable
 	private ThinController controllerTwo;
 	private Strategy blueStrat;
 	private Strategy yellowStrat;
+	private FakeVision client;
 
-	private Situation panel;
-	private boolean animate;
-	
 	private boolean keepRunning;
 
 	public Simulator(Strategy blueStrat, Strategy yellowStrat)
 	{
 		this.blueStrat = blueStrat;
 		this.yellowStrat = yellowStrat;
-		this.animate = false;
 		this.keepRunning = true;
 
 		setup(blueStrat, yellowStrat);
@@ -59,7 +57,7 @@ public class Simulator implements Runnable
 	{
 		//create world state
 		state = new WorldState();
-		FakeVision client = new FakeVision(state);
+		client = new FakeVision(state);
 
 		//get state objects
 		blue = state.getBlue();
@@ -102,18 +100,11 @@ public class Simulator implements Runnable
 			components[i].update(time);
 		}
 		pitch.run();
-		if (animate) draw();
 	}
 
-	private void draw()
+	public IVisionClient getVision()
 	{
-		panel.repaint();
-	}
-
-	public void setPanel(Situation situation)
-	{
-		animate = true;
-		panel = situation.setup(blue, yellow, ball);
+		return client; 
 	}
 
 	public void pause()
