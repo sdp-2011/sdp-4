@@ -16,7 +16,6 @@ def draw_on_image(image, center_points, other_points):
     cv.Line(image, other_points[0], center_points[1], cv.RGB(255,0,0))
     cv.Line(image, other_points[1], center_points[2], cv.RGB(0,255,0))
     	
-    cv.ShowImage("Original:", orig)
     cv.ShowImage("Processed:", image)
 	
 def update_worldstate(center_points, other_points):
@@ -55,24 +54,26 @@ distortion = cv.Load("Distortion.xml")
 image = cv.QueryFrame(cam)
 mapx = cv.CreateImage(cv.GetSize(image), cv.IPL_DEPTH_32F, 1)
 mapy = cv.CreateImage(cv.GetSize(image), cv.IPL_DEPTH_32F, 1)
-cv.InitUndistortMap(intrinsic, distortion, mapx, mapy)
+cv.InitUndistortMap(intrinsics, distortion, mapx, mapy)
 
 while (True):
     start = time.time()
     image = cv.QueryFrame(cam)
      
-    crop_rect = (20, 80, 610, 325)
-    cv.SetImageROI(image, crop_rect)
     orig = cv.CloneImage(image)
+  
     processed = cv.CloneImage(orig)
-    cv.Remap(orig, image, mapx, mapy)
     cv.Remap(orig, processed, mapx, mapy)
+    cv.Remap(image, orig, mapx, mapy)
+    crop_rect = (0, 53, 650, 350)
+    cv.SetImageROI(processed, crop_rect)
+    cv.SetImageROI(orig, crop_rect)
 
-    ball_center = find_object(image,"RED")
+    ball_center = find_object(processed,"RED")
     ball_center = (int(ball_center[0]), int(ball_center[1]))
-    blue_center = find_object(image,"BLUE")
+    blue_center = find_object(processed,"BLUE")
     blue_center = (int(blue_center[0]), int(blue_center[1]))
-    yellow_center = find_object(image,"YELLOW")
+    yellow_center = find_object(processed,"YELLOW")
     yellow_center = (int(yellow_center[0]), int(yellow_center[1]))
 
     yellow_image = cv.CloneImage(orig)
@@ -81,19 +82,19 @@ while (True):
     cv.ShowImage("YellowBlack:", yellow_image)
 	
     blue_image = cv.CloneImage(orig)	
-    blue_crop_rect = (blue_center[0] - 10, blue_center[1] + 45, 66, 66)
+    blue_crop_rect = (blue_center[0] - 30, blue_center[1] + 25, 66, 66)
     cv.SetImageROI(blue_image, blue_crop_rect)
     cv.ShowImage("BlueBlack:", blue_image)	
 	
     blue_white = find_object(blue_image, "BWHITE")
-    blue_white = (int(blue_white[0]) + blue_crop_rect[0] - 22, int(blue_white[1]) + blue_crop_rect[1] - 80)	
+    blue_white = (int(blue_white[0]) + blue_crop_rect[0] + 5, int(blue_white[1]) + blue_crop_rect[1] - 50)	
 	
     yellow_white = find_object(yellow_image, "YWHITE")
-    yellow_white = (int(yellow_white[0]) + blue_crop_rect[0] - 22, int(yellow_white[1]) + blue_crop_rect[1] - 80)
+    yellow_white = (int(yellow_white[0]) + yellow_crop_rect[0] + 5, int(yellow_white[1]) + yellow_crop_rect[1] - 50)
 	
     center_points = (ball_center, blue_center, yellow_center)
     other_points = (blue_white, yellow_white)
-    draw_on_image(processed, center_points, other_points)
+    draw_on_image(orig, center_points, other_points)
 	
     update_worldstate(center_points, other_points)
     

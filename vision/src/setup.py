@@ -11,13 +11,13 @@ def setup_system():
 	Server().start()
 	
 def create_windows():
-	cv.NamedWindow("Original:", cv.CV_WINDOW_AUTOSIZE)
 	cv.NamedWindow("Processed:", cv.CV_WINDOW_AUTOSIZE)
 	cv.NamedWindow("Red:",cv.CV_WINDOW_AUTOSIZE)
 	cv.NamedWindow("Blue:",cv.CV_WINDOW_AUTOSIZE)
 	cv.NamedWindow("Yellow:",cv.CV_WINDOW_AUTOSIZE)
 	cv.NamedWindow("YellowWhite:",cv.CV_WINDOW_AUTOSIZE)      
- 	cv.NamedWindow("BlueWhite:",cv.CV_WINDOW_AUTOSIZE)         
+ 	cv.NamedWindow("BlueWhite:",cv.CV_WINDOW_AUTOSIZE)       
+  
 def add_trackbars():
 	# Red trackbars
 	cv.CreateTrackbar("H Lower:", "Red:", 0, 255, onHLowerRChange)
