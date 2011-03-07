@@ -107,7 +107,7 @@ public class CastleWindow extends JFrame {
 		strategy = Strategy.makeStrat(strat);
 		strategy.setup(client, controller, colour, false);
 		new Thread(strategy).start();
-		new Thread(new Animator(new Situation(null, null, null), client)).start();
+		new Thread(new Animator(situation, client)).start();
 
 		running();
 	}
