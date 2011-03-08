@@ -77,7 +77,7 @@ while (True):
     yellow_center = (int(yellow_center[0]), int(yellow_center[1]))
 
     yellow_image = cv.CloneImage(orig)
-    yellow_crop_rect = (yellow_center[0] - 15, yellow_center[1] + 45, 74, 74)
+    yellow_crop_rect = (yellow_center[0] - 47, yellow_center[1] + 15, 74, 74)
     cv.SetImageROI(yellow_image, yellow_crop_rect)
     cv.ShowImage("YellowBlack:", yellow_image)
 	
@@ -87,10 +87,10 @@ while (True):
     cv.ShowImage("BlueBlack:", blue_image)	
 	
     blue_white = find_object(blue_image, "BWHITE")
-    blue_white = (int(blue_white[0]) + blue_crop_rect[0] + 5, int(blue_white[1]) + blue_crop_rect[1] - 50)	
+    blue_white = (int(blue_white[0]) + blue_crop_rect[0] - 3, int(blue_white[1]) + blue_crop_rect[1] - 50)	
 	
     yellow_white = find_object(yellow_image, "YWHITE")
-    yellow_white = (int(yellow_white[0]) + yellow_crop_rect[0] + 5, int(yellow_white[1]) + yellow_crop_rect[1] - 50)
+    yellow_white = (int(yellow_white[0]) + yellow_crop_rect[0] - 3, int(yellow_white[1]) + yellow_crop_rect[1] - 50)
 	
     center_points = (ball_center, blue_center, yellow_center)
     other_points = (blue_white, yellow_white)
@@ -99,8 +99,7 @@ while (True):
     update_worldstate(center_points, other_points)
     
     now = time.time()
-    time_diff = now - old_time
-
+    time_diff = now - old_time   
     stdscr.erase()
     stdscr.addstr(0,0, "Blue Player", curses.A_UNDERLINE | curses.color_pair(2))
     stdscr.addstr(1,0, "Orientation: " + str((int(calculate_bearing(blue_white, blue_center)) - 180) % 360))
@@ -121,6 +120,10 @@ while (True):
 
     stdscr.addstr(17,0, "FPS:" + str(1/(now-start)))
     stdscr.refresh()
+
+    old_ball_position = ball_center
+    old_yellow_position = yellow_center
+    old_blue_position = blue_center
 
     cv.WaitKey(4)
     old_time = now	

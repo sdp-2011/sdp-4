@@ -2,7 +2,10 @@ import cv
 from math import * 
 
 def euclid_distance(pt1, pt2):
-    return sqrt((pt1[0] - pt2[0])^2 + (pt1[1] - pt2[1])^2)	
+    distance = sqrt((pt1[0] - pt2[0])**2 + (pt1[1] - pt2[1])**2)	   
+    if (distance < 2):
+	return 0
+    return distance
 
 def calculate_speed(old_point, new_point, time):
     return (euclid_distance(new_point, old_point) / time)
