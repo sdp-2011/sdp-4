@@ -2,6 +2,7 @@ package uk.ac.ed.inf.sdp.group4.gui;
 
 import uk.ac.ed.inf.sdp.group4.controller.Controller;
 import uk.ac.ed.inf.sdp.group4.controller.FatController;
+import uk.ac.ed.inf.sdp.group4.controller.ThinController;
 import uk.ac.ed.inf.sdp.group4.gui.popup.MatchPop;
 import uk.ac.ed.inf.sdp.group4.gui.popup.PenaltyButtons;
 import uk.ac.ed.inf.sdp.group4.gui.popup.SimPop;
@@ -109,7 +110,7 @@ public class CastleWindow extends JFrame {
 		strategy = Strategy.makeStrat(strat);
 		strategy.setup(client, controller, colour, false);
 		new Thread(strategy).start();
-		animator = new Animator(situation, sim.getVision(), false);
+		animator = new Animator(situation, client, false);
 		new Thread(animator).start();
 
 		running();
