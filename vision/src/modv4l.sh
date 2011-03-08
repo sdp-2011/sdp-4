@@ -15,7 +15,7 @@ $v4l_ctl setinput Composite0
 
 # Now setting the correct values.
 echo 'V4L: Setting video norm to PAL ...'
-$v4l_ctl setnorm PAL    # set video norm to PAL
+$v4l_ctl setnorm PAL # set video norm to PAL
 echo 'V4L: Setting video source to S-Video ...'
 $v4l_ctl setinput S-Video
 echo 'Done. Exiting ...'

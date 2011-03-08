@@ -41,36 +41,83 @@ public class InterceptStrategy extends Strategy
     @Override
     public void tick()
     {
-        log.debug("=================================================");
-        log.debug("Starting a new cycle...");
+	    log.debug("=================================================");
+	    log.debug("Starting a new cycle...");
 
-        // Get the world state.
-        refresh();
+	    // Get the world state.
+	    refresh();
 
-	if (line == -1)
-	    line = robot.getX();
+		if (line == -1)
+			line = robot.getX();
 
-	Vector interceptRoute = getInterceptRoute();
-	double interceptAngle = interceptRoute.angleFrom(robot.getFacing());
+		Vector interceptRoute = getInterceptRoute();
+		double interceptAngle = interceptRoute.angleFrom(robot.getFacing());
 
-	if (Math.abs(robot.getY() - ball.getY()) < 20)
-	{
-	    return;
+		double absInterceptAngle = Math.abs(interceptAngle)%360;
+
+		if (Math.abs(robot.getY() - ball.getY()) < 20)
+		{
+			return;
+		}
+		else if ((false) &&(Math.abs(interceptAngle) < 15))
+		{
+			controller.setSpeed(900);
+			controller.driveForward(15);
+			pause(200);
+		}
+		else if ((false) && (Math.abs(interceptAngle) > 165) && (Math.abs(interceptAngle) < 195)) 
+		{
+			controller.setSpeed(900);
+			controller.driveBackward(15);
+			pause(200);
+		}
+		else if (((absInterceptAngle > 10) && (absInterceptAngle <= 90)) || ((absInterceptAngle >= 180) && (absInterceptAngle <= 350)))
+		{
+			controller.setSpeed(900);
+			int turnamount = (10); 
+			controller.turn(turnamount);
+			pause(Math.abs(150));
+		}
+		else 
+		{
+			controller.setSpeed(900);
+			int turnamount = - 10;
+			controller.turn(turnamount);
+			pause(Math.abs(150));
+		}
+/*
+		if (Math.abs(robot.getY() - ball.getY()) < 20)
+		{
+			return;
+		}
+		else if (Math.abs(interceptAngle) < 15)
+		{
+			controller.setSpeed(900);
+			controller.driveForward((int)(interceptRoute.getMagnitude()/2));
+			pause((int)(interceptRoute.getMagnitude()/2)*10);
+		}
+		else if ((Math.abs(interceptAngle) > 165) && (Math.abs(interceptAngle) < 195)) 
+		{
+			controller.setSpeed(900);
+			controller.driveBackward((int)(interceptRoute.getMagnitude()/2));
+			pause((int)(interceptRoute.getMagnitude()/2)*10);
+		}
+		else if (Math.abs(interceptAngle) < 95)
+		{
+			controller.setSpeed(400);
+			int turnamount =((int)interceptAngle) % 360; 
+			controller.turn(turnamount);
+			pause(Math.abs(turnamount*9));
+		}
+		else 
+		{
+			controller.setSpeed(400);
+			int turnamount =((int)interceptAngle-180) % 360; 
+			controller.turn(turnamount);
+			pause(Math.abs(turnamount*9));
+		}
+*/
 	}
-	else if (Math.abs(interceptAngle) < 15)
-	{
-		controller.setSpeed(900);
-		controller.driveForward((int)interceptRoute.getMagnitude()/3);
-		pause(1000);
-	}
-	else
-	{
-		controller.setSpeed(400);
-		controller.turn((int)interceptAngle);
-		pause(1000);
-	}
-
-    }
 
     private void refresh()
     {

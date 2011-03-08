@@ -1,11 +1,14 @@
 import cv
 from math import * 
 
-def euclidDistance(pt1, pt2):
-	return sqrt((pt1[0] - pt2[0])^2 + (pt1[1] - pt2[1])^2)	
+def euclid_distance(pt1, pt2):
+    distance = sqrt((pt1[0] - pt2[0])**2 + (pt1[1] - pt2[1])**2)	   
+    if (distance < 2):
+	return 0
+    return distance
 
-def calculateSpeed(oldPoint, newPoint, time):
-	return (euclidDistance(newPoint, oldPoint) / time)
+def calculate_speed(old_point, new_point, time):
+    return (euclid_distance(new_point, old_point) / time)
 	
-def calculateBearing(sourcePoint, destPoint):
-	return (((atan2(destPoint[1] - sourcePoint[1],	destPoint[0] - sourcePoint[0]) * (180/pi)) + 90) + 360) % 360
+def calculate_bearing(source_point, dest_point):
+    return (((atan2(dest_point[1] - source_point[1], dest_point[0] - source_point[0]) * (180/pi)) + 90) + 360) % 360
