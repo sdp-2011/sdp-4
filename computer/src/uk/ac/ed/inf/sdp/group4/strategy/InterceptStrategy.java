@@ -72,7 +72,7 @@ public class InterceptStrategy extends Strategy
 			|| ((robotDirection >= 190) && (robotDirection <= 270)))
 		{
 			controller.setSpeed(900);
-			int turnamount = (-10); 
+			int turnamount = (-7); 
 			controller.turn(turnamount);
 			pause(150);
 		}
@@ -80,7 +80,7 @@ public class InterceptStrategy extends Strategy
 		    || ((robotDirection >= 270) && (robotDirection <= 350)))
 		{
 			controller.setSpeed(900);
-			int turnamount = 10;
+			int turnamount = 7;
 			controller.turn(turnamount);
 			pause(150);
 		}
