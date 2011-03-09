@@ -1,22 +1,150 @@
-<project name="Computer" default="build" basedir="."> 	
+<project name="SDP Group 4 - Strategy" default="build" basedir=".">
 	<property environment="env" />
 	<property name="nxj.home" value="${env.NXJ_HOME}" />
 
-  	<target name="build" description="compile PC samples">
-    	<mkdir dir="classes"/>
-    	<javac srcdir="." destdir="classes" fork="yes" optimize="on" debug="on" source="1.5" target="1.5" includeantruntime="false">
-			<classpath location="${nxj.home}/projects/pccomms/lib/pccomm.jar"/>
-			<classpath location="${nxj.home}/projects/pccomms/3rdparty/bluecove.jar"/>
-			<classpath location="${nxj.home}/projects/pctools/lib/pctools.jar"/>
+	<property name="lib" value="lib" />
+	<property name="src" value="src" />
+	<property name="classes" value="classes" />
+
+	<property name="test" value="test" />
+	<property name="test.src" value="${test}/src" />
+	<property name="test.src.helper" value="${test.src}/helper" />
+	<property name="test.src.unit" value="${test.src}/unit" />
+	<property name="test.src.integration" value="${test.src}/integration" />
+
+	<property name="test.lib" value="${test}/lib" />
+
+	<property name="test.classes" value="${test}/classes" />
+	<property name="test.classes.helper" value="${test.classes}/helper" />
+	<property name="test.classes.unit" value="${test.classes}/unit" />
+	<property name="test.classes.integration" value="${test.classes}/integration" />
+
+	<path id="classpath">
+		<pathelement location="${classes}" />
+		<fileset dir="${lib}">
+			<include name="**/*.jar"/>
+		</fileset>
+
+		<pathelement location="${nxj.home}/projects/pccomms/lib/pccomm.jar"/>
+		<pathelement location="${nxj.home}/projects/pccomms/3rdparty/bluecove.jar"/>
+		<pathelement location="${nxj.home}/projects/pctools/lib/pctools.jar"/>
+	</path>
+
+	<path id="classpath.test">
+		<path refid="classpath" />
+		<pathelement location="${test.classes.helper}" />
+		<fileset dir="${test.lib}">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+
+	<path id="classpath.test.unit">
+		<path refid="classpath.test" />
+		<pathelement location="${test.classes.unit}" />
+	</path>
+
+	<path id="classpath.test.integration">
+		<path refid="classpath.test" />
+		<pathelement location="${test.classes.integration}" />
+	</path>
+
+	<target name="build" description="Compile the project">
+		<mkdir dir="classes"/>
+		<javac srcdir="${src}"
+			destdir="${classes}"
+			fork="yes"
+			optimize="on"
+			debug="on"
+			source="1.5"
+			target="1.5"
+			includeantruntime="false">
+			<classpath refid="classpath" />
+
+			<compilerarg value="-Xlint"/>
 		</javac>
-  	</target>
-	
+	</target>
+
 	<!-- deletes class files -->
 	<target name="clean" description="clean up all generated files">
-		<delete>
-			<fileset dir="."> 
-				<include name="**/*.class"/>
-			</fileset>
-		</delete>
+		<delete dir="${classes}" />
+	</target>
+
+	<target name="rebuild" description="" depends="clean,test" />
+
+	<target name="test" description="Run the tests" depends="compile-helper-test,test-unit,test-integration" />
+
+	<target name="compile-helper-test">
+		<mkdir dir="${test.classes.helper}" />
+		<javac srcdir="${test.src.helper}" destdir="${test.classes.helper}" includeantruntime="false">
+			<classpath refid="classpath.test"/>
+
+			<compilerarg value="-Xlint"/>
+		</javac>
+	</target>
+
+	<target name="test-unit" depends="build,compile-unit-test">
+		<junit printsummary="off"
+			fork="false"
+			haltonfailure="false"
+			failureproperty="tests.failed"
+			outputtoformatters="false"
+			showoutput="true">
+
+			<classpath refid="classpath.test.unit" />
+			<formatter classname="uk.ac.ed.inf.sdp.group4.test.OneLinerFormatter" usefile="false" />
+
+			<batchtest>
+				<fileset dir="${test.classes.unit}">
+					<include name="**/*Test*.class"/>
+				</fileset>
+			</batchtest>
+		</junit>
+
+		<fail if="tests.failed">
+			One or more tests failed. Try again...
+		</fail>
+	</target>
+
+	<target name="compile-unit-test">
+		<mkdir dir="${test.classes.unit}" />
+		<javac srcdir="${test.src.unit}" destdir="${test.classes.unit}" includeantruntime="false">
+			<classpath refid="classpath.test.unit"/>
+
+			<compilerarg value="-Xlint"/>
+		</javac>
+	</target>
+
+	<target name="test-integration" depends="build,compile-integration-test">
+		<junit printsummary="off"
+			fork="false"
+			haltonfailure="false"
+			failureproperty="tests.failed"
+			outputtoformatters="false"
+			showoutput="true">
+
+			<classpath refid="classpath.test.integration" />
+			<formatter classname="uk.ac.ed.inf.sdp.group4.test.OneLinerFormatter" usefile="false" />
+
+			<batchtest>
+				<fileset dir="${test.classes.integration}">
+					<include name="**/*Test*.class"/>
+				</fileset>
+			</batchtest>
+		</junit>
+
+		<fail if="tests.failed">
+			One or more tests failed. Try again...
+		</fail>
+	</target>
+
+	<target name="compile-integration-test">
+		<mkdir dir="${test.classes.integration}" />
+		<javac srcdir="${test.src.integration}"
+			destdir="${test.classes.integration}"
+			includeantruntime="false">
+			<classpath refid="classpath.test.integration"/>
+
+			<compilerarg value="-Xlint"/>
+		</javac>
 	</target>
 </project>

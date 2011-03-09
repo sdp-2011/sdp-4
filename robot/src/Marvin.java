@@ -12,8 +12,13 @@ import java.io.*;
  */
 public class Marvin
 {
+	// Movement
+	private final int REACTION_DISTANCE = 10;
+	private final int ULTRASONIC_THRESHOLD = 10;
+	private final boolean MOTORS_REVERSED = false;
+
 	// Basic control and communication utility classes
-	Robot robot = new Robot();
+	Robot robot = new Robot(MOTORS_REVERSED);
 	Communicator communicator = new Communicator();
 
 	// Sensors
@@ -23,7 +28,8 @@ public class Marvin
 	LightSensor lightSensor = new LightSensor(SensorPort.S4);
 
 	// Fields
-	boolean sensorsActive = true;
+	private boolean sensorsActive = true;
+	
 
 	/**
 	 * Allows for a standard interface of instructions throughout the code.
@@ -33,13 +39,16 @@ public class Marvin
 	 */
 	public enum Instruction
 	{
-		FORWARD  (0),
-		BACKWARD (1),
-		SHOOT	 (2),
-		BESERK	 (3),
-		LEFT	 (4),
-		RIGHT	 (5),
-		FINISH	 (99);
+		FORWARD(0),
+		BACKWARD(1),
+		SHOOT(2),
+		STEER(3),
+		LEFT(4),
+		RIGHT(5),
+		STOP(6),
+		SETSPEED(97),
+		BESERK(98),
+		FINISH(99);
 
 		private int value;
 
@@ -86,11 +95,10 @@ public class Marvin
 	 * @see Communicator
 	 * @see Robot
 	 */
-	public void start() {
-
+	public void start()
+	{
 		// UI Setup
-		LCD.drawString("Sensors: ACTIVE", 0, 7);
-
+		Log.sensorsActive(true);
 		while (true)
 		{
 			checkButtons();
@@ -122,7 +130,6 @@ public class Marvin
 		{
 			shutdown();
 		}
-
 		// If the left arrow is pressed then the robot should stop reacting
 		// to its sensors. This allows the robot to be moved and tested
 		// without it spinning up it's tracks because the sensors have been
@@ -130,11 +137,7 @@ public class Marvin
 		if (Button.LEFT.isPressed())
 		{
 			sensorsActive = !sensorsActive;
-
-			StringBuffer message = new StringBuffer("Sensors:");
-			message.append(sensorsActive ? "ACTIVE	" : "INACTIVE");
-
-			LCD.drawString(message.toString(), 0, 7);
+			Log.sensorsActive(sensorsActive);
 		}
 	}
 
@@ -153,17 +156,28 @@ public class Marvin
 			int instruction = command[0];
 			int argument = command[1];
 
-			LCD.drawInt(instruction, 0, 4);
-			LCD.drawInt(argument, 0, 5);
-
 			// What should we do?
 			if (instruction == Instruction.FORWARD.getValue())
 			{
-				robot.drive((float)argument);
+				if (MOTORS_REVERSED)
+				{
+					robot.drive((float)argument * -1);
+				}
+				else
+				{
+					robot.drive((float)argument);
+				}
 			}
 			else if (instruction == Instruction.BACKWARD.getValue())
 			{
-				robot.drive((float)argument * -1);
+				if (MOTORS_REVERSED)
+				{
+					robot.drive((float)argument);
+				}
+				else
+				{
+					robot.drive((float)argument * -1);
+				}
 			}
 			else if (instruction == Instruction.SHOOT.getValue())
 			{
@@ -171,32 +185,51 @@ public class Marvin
 			}
 			else if (instruction == Instruction.FINISH.getValue())
 			{
-				shutdown();	
+				shutdown();
 			}
 			else if (instruction == Instruction.BESERK.getValue())
 			{
-				if (argument == 0)
-				{
-					sensorSwitch(true);
-				}
-				else
-				{
-					sensorSwitch(false);
-				}
+				sensorSwitch(argument != 0);
 			}
 			else if (instruction == Instruction.LEFT.getValue())
 			{
-				robot.left(argument);
+				if (MOTORS_REVERSED)
+				{
+					robot.right(argument);
+				}
+				else
+				{
+					robot.left(argument);
+				}
 			}
 			else if (instruction == Instruction.RIGHT.getValue())
 			{
-				robot.right(argument);
+				if (MOTORS_REVERSED)
+				{
+					robot.left(argument);
+				}
+				else
+				{
+					robot.right(argument);
+				}
+			}
+			else if (instruction == Instruction.STEER.getValue())
+			{
+				robot.steer(argument);
+			}
+			else if (instruction == Instruction.SETSPEED.getValue())
+			{
+				robot.setSpeed(argument);
+			}
+			else if (instruction == Instruction.STOP.getValue())
+			{
+				robot.stop();
 			}
 		}
 	}
 
 	/**
-	 * Check any sensors for input this loop iteration. This method will 
+	 * Check any sensors for input this loop iteration. This method will
 	 * block if sensors aren't actually connected.
 	 */
 	private void checkSensors()
@@ -211,14 +244,27 @@ public class Marvin
 			// robot should drive a short distance backwards.
 			if ((leftTouchSensor.isPressed()) || (rightTouchSensor.isPressed()))
 			{
-				robot.drive(-10);
+				if (MOTORS_REVERSED)
+				{
+					robot.drive(REACTION_DISTANCE, false);
+				}
+				else
+				{
+					robot.drive(-REACTION_DISTANCE, false);
+				}
 			}
-
 			// If the (back) ultrasonic sensors are triggered then the
 			// robot should drive a short distance forwards.
-			if (ultrasonicSensor.getDistance() < 10) 
+			if (ultrasonicSensor.getDistance() < ULTRASONIC_THRESHOLD)
 			{
-				robot.drive(10);
+				if (MOTORS_REVERSED)
+				{
+					robot.drive(-REACTION_DISTANCE, false);
+				}
+				else
+				{
+					robot.drive(REACTION_DISTANCE, false);
+				}
 			}
 		}
 	}

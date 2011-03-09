@@ -7,12 +7,14 @@ import lejos.nxt.comm.*;
 public class Communicator
 {
 	public static Queue commands;
+	public static int status;
 
 	private static BTConnection connection;
 	private static DataOutputStream dataOut;
 	private static DataInputStream dataIn;
 
 	private static boolean keepReceiving = true;
+	private static boolean sendLock = false;
 
 	public Communicator()
 	{
@@ -25,16 +27,21 @@ public class Communicator
 		return (int[]) commands.pop();
 	}
 
+	public void sendStatus(int val)
+	{
+		status = val;
+		new Thread(new StatusSender()).start();
+	}
+
 	private class CommandReciever implements Runnable
 	{
 		public void run()
 		{
-			LCD.drawString("No Connection...", 0, 0);
+			Log.connectionOpen(false);
 			connection = Bluetooth.waitForConnection();
-			LCD.drawString("Connection Open", 0, 0);
-			dataOut = connection.openDataOutputStream();
+			Log.connectionOpen(true);
 			dataIn = connection.openDataInputStream();
-
+			dataOut = connection.openDataOutputStream();
 			while (keepReceiving)
 			{
 				try
@@ -43,15 +50,35 @@ public class Communicator
 					command[0] = dataIn.readInt();
 					command[1] = dataIn.readInt();
 					commands.push(command);
-					LCD.drawInt(command[0], 0, 1);
-					LCD.drawInt(command[1], 0, 2);
 				}
 				catch (IOException e)
 				{
-					LCD.drawString("Connection Done", 0, 0);
+					Log.connectionOpen(false);
 					keepReceiving = false;
 				}
 			}
+		}
+	}
+
+	private class StatusSender implements Runnable
+	{
+		public void run()
+		{
+			while (sendLock)
+			{
+				//block
+			}
+			sendLock = true;
+			try
+			{
+				dataOut.writeInt(status);
+				dataOut.flush();
+			}
+			catch (IOException e)
+			{
+				Log.e("Status cannot be sent");
+			}
+			sendLock = false;
 		}
 	}
 }

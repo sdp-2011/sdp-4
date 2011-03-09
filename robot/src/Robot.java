@@ -17,18 +17,21 @@ public class Robot
 	private Motor SHOOT_MOTOR = Motor.C;
 	private int SHOOT_ANGLE = 90;
 
-	private float WHEEL_DIAMETER = 3.0f * 2.4f;
+	private float WHEEL_DIAMETER = 7.5f;
 	private float TRACK_WIDTH = 13.0f;
 
 	private Pilot pilot;
+	private Thread kicker;
 
-	public Robot()
+	public Robot(boolean reversed)
 	{
-		pilot = new TachoPilot(WHEEL_DIAMETER, TRACK_WIDTH, LEFT_MOTOR, RIGHT_MOTOR, true);
+		pilot = new TachoPilot(WHEEL_DIAMETER, TRACK_WIDTH, LEFT_MOTOR, RIGHT_MOTOR, reversed);
 
-		Motor.A.setSpeed(900);
-		Motor.B.setSpeed(900);
+		// Set faster motor speeds.
+		pilot.setSpeed(900);
 		Motor.C.setSpeed(900);
+
+		kicker = new Thread(new ShootThread());
 	}
 
 	public boolean isMoving()
@@ -39,11 +42,11 @@ public class Robot
 	public void drive(float distance)
 	{
 		this.drive(distance, true);
-	}	
+	}
 
 	public void drive(float distance, boolean instant)
 	{
-		pilot.travel(distance, instant);
+		pilot.travel((float)(distance), instant);
 	}
 
 	public void stop()
@@ -64,18 +67,35 @@ public class Robot
 
 	public void shoot()
 	{
-		SHOOT_MOTOR.rotate(SHOOT_ANGLE);
-		SHOOT_MOTOR.rotate(-SHOOT_ANGLE);
+		kicker.start();
+		try
+		{
+			kicker.join();
+		}
+		catch (InterruptedException e)
+		{
+		}
+		kicker = new Thread(new ShootThread());
 	}
 
 	public void left(int degrees)
 	{
-		pilot.rotate(-degrees, true);
+		pilot.rotate(degrees, true);
 	}
 
 	public void right(int degrees)
 	{
-		pilot.rotate(degrees, true);
+		pilot.rotate((-1 * degrees), true);
+	}
+
+	public void steer(int turnRate)
+	{
+		pilot.steer(turnRate);
+	}
+
+	public void setSpeed(int degreesPerSecond)
+	{
+		pilot.setSpeed(degreesPerSecond);
 	}
 
 	// The code following this line is a complete travesty. I'm not even
@@ -84,35 +104,35 @@ public class Robot
 	{
 		try
 		{
-			playNote(392,500);
-			playNote(392,200);
-			playNote(440,500);
-			playNote(392,500);
-			playNote(523,500);
-			playNote(493,500);
+			playNote(392, 500);
+			playNote(392, 200);
+			playNote(440, 500);
+			playNote(392, 500);
+			playNote(523, 500);
+			playNote(493, 500);
 			Thread.sleep(500);
-			playNote(392,500);
-			playNote(392,200);
-			playNote(440,500);
-			playNote(392,200);
-			playNote(587,500);
-			playNote(523,500);
+			playNote(392, 500);
+			playNote(392, 200);
+			playNote(440, 500);
+			playNote(392, 200);
+			playNote(587, 500);
+			playNote(523, 500);
 			Thread.sleep(500);
-			playNote(392,500);
-			playNote(392,200);
-			playNote(784,500);
-			playNote(659,500);
-			playNote(523,200);
-			playNote(523,200);
-			playNote(493,500);
-			playNote(440,500);
+			playNote(392, 500);
+			playNote(392, 200);
+			playNote(784, 500);
+			playNote(659, 500);
+			playNote(523, 200);
+			playNote(523, 200);
+			playNote(493, 500);
+			playNote(440, 500);
 			Thread.sleep(500);
-			playNote(698,500);
-			playNote(698,500);
-			playNote(659,500);
-			playNote(523,500);
-			playNote(587,500);
-			playNote(523,500);
+			playNote(698, 500);
+			playNote(698, 500);
+			playNote(659, 500);
+			playNote(523, 500);
+			playNote(587, 500);
+			playNote(523, 500);
 		}
 		catch (InterruptedException e) {}
 	}
@@ -121,5 +141,26 @@ public class Robot
 	{
 		Sound.playTone(frequency, length);
 		Thread.sleep(length);
+	}
+
+	private class ShootThread implements Runnable
+	{
+		public void run()
+		{
+			try
+			{
+				SHOOT_MOTOR.backward();
+				Thread.sleep(40);
+				SHOOT_MOTOR.forward();
+				Thread.sleep(130);
+				SHOOT_MOTOR.backward();
+				Thread.sleep(150);
+				SHOOT_MOTOR.stop();
+			}
+			catch (Exception e)
+			{
+				Log.e("Interrupted Thread!");
+			}
+		}
 	}
 }

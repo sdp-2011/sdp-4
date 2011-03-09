@@ -1,0 +1,32 @@
+package uk.ac.ed.inf.sdp.group4;
+
+option java_outer_classname = "WorldStateCommunication";
+
+message WorldObject {
+  message Position {
+	required int32 x = 1;
+	required int32 y = 2;
+  }
+
+  message Velocity {
+	optional int32 direction = 1;
+	optional float magnitude = 2;
+  }
+
+  required Position position = 1;
+  required Velocity velocity = 2;
+  optional int32 rotation = 3;
+}
+
+message WorldStateResponse {
+  required bool changed = 1;
+  required uint64 timestamp = 2;
+
+  optional WorldObject ball = 3;
+  optional WorldObject blue = 4;
+  optional WorldObject yellow = 5;
+}
+
+message WorldStateRequest {
+  required uint64 last_timestamp = 1;
+}
