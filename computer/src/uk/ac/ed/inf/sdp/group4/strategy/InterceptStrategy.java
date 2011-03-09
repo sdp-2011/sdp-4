@@ -1,5 +1,7 @@
 package uk.ac.ed.inf.sdp.group4.strategy;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import uk.ac.ed.inf.sdp.group4.controller.Controller;
 import uk.ac.ed.inf.sdp.group4.domain.InvalidAngleException;
 import uk.ac.ed.inf.sdp.group4.domain.Position;
@@ -26,16 +28,22 @@ public class InterceptStrategy extends Strategy
     public InterceptStrategy(IVisionClient client, Controller controller, RobotColour colour)
     {
         this(client, controller, colour, false);
+		Logger root = Logger.getRootLogger();
+		root.setLevel(Level.OFF);
     }
 
     public InterceptStrategy(IVisionClient client, Controller controller, RobotColour colour, boolean testing)
     {
         super(client, controller, colour, testing);
+		Logger root = Logger.getRootLogger();
+		root.setLevel(Level.OFF);
     }
 
     public InterceptStrategy(Controller controller, WorldState state)
     {
         super(null, controller, RobotColour.BLUE, false);
+		Logger root = Logger.getRootLogger();
+		root.setLevel(Level.OFF);
     }
 
     @Override
@@ -53,38 +61,57 @@ public class InterceptStrategy extends Strategy
 		Vector interceptRoute = getInterceptRoute();
 		double interceptAngle = interceptRoute.angleFrom(robot.getFacing());
 
-		double absInterceptAngle = Math.abs(interceptAngle)%360;
+		double robotDirection = (robot.getFacing())%360;
 
-		if (Math.abs(robot.getY() - ball.getY()) < 20)
+		if (false && Math.abs(robot.getY() - ball.getY()) < 20)
 		{
 			return;
 		}
-		else if ((false) &&(Math.abs(interceptAngle) < 15))
+
+		else if (((robotDirection > 10) && (robotDirection <= 90))
+			|| ((robotDirection >= 190) && (robotDirection <= 270)))
 		{
 			controller.setSpeed(900);
-			controller.driveForward(15);
-			pause(200);
-		}
-		else if ((false) && (Math.abs(interceptAngle) > 165) && (Math.abs(interceptAngle) < 195)) 
-		{
-			controller.setSpeed(900);
-			controller.driveBackward(15);
-			pause(200);
-		}
-		else if (((absInterceptAngle > 10) && (absInterceptAngle <= 90)) || ((absInterceptAngle >= 180) && (absInterceptAngle <= 350)))
-		{
-			controller.setSpeed(900);
-			int turnamount = (10); 
+			int turnamount = (-10); 
 			controller.turn(turnamount);
-			pause(Math.abs(150));
+			pause(150);
 		}
-		else 
+		else if (((robotDirection > 90) && (robotDirection <= 170))
+		    || ((robotDirection >= 270) && (robotDirection <= 350)))
 		{
 			controller.setSpeed(900);
-			int turnamount = - 10;
+			int turnamount = 10;
 			controller.turn(turnamount);
-			pause(Math.abs(150));
+			pause(150);
 		}
+		else// if (ball.getVector().getMagnitude() < 2)
+		{
+		/*
+		    int enemyAngle = (int)Math.tan(Math.toRadians(enemyRobot.getFacing()-90));
+		    int destination = ((robot.getX() - enemyRobot.getX()) * enemyAngle) + enemyRobot.getY();
+
+		    int distance = robot.getY() - destination;
+		    System.out.println(distance);
+		    
+		    controller.driveForward((int)(-distance/2.1));
+		    pause(1000);
+		    */
+		    
+			if (Math.abs(interceptAngle) < 15)
+			{
+				controller.setSpeed(900);
+				controller.driveForward((int)(interceptRoute.getMagnitude()/2));
+				//pause((int)(interceptRoute.getMagnitude()/2)*10);
+				pause(1000);
+			}
+			else if ((Math.abs(interceptAngle) > 165) && (Math.abs(interceptAngle) < 195)) 
+			{
+				controller.setSpeed(900);
+				controller.driveBackward((int)(interceptRoute.getMagnitude()/2));
+				//pause((int)(interceptRoute.getMagnitude()/2)*10);
+				pause(1000);
+			}
+}
 /*
 		if (Math.abs(robot.getY() - ball.getY()) < 20)
 		{

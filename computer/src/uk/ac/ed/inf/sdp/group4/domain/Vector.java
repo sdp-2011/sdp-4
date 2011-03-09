@@ -54,8 +54,6 @@ public class Vector
 		double from = this.getDirection();
 		double angle = from - bearing;
 
-		System.out.println(angle);
-
 		if (angle > 180)
 		{
 			angle = -1 * (360 - angle);

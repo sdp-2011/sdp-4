@@ -11,7 +11,6 @@ class WorldStateRequestHandler(SocketServer.BaseRequestHandler):
         data = self.request.recv(1024)
         request = worldstate_pb2.WorldStateRequest()
         request.ParseFromString(data)
-        print worldstate.WorldState.serialise()
 	self.request.send(worldstate.WorldState.serialise())
 	
 

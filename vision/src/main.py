@@ -75,7 +75,7 @@ while (True):
     yellow_center = (int(yellow_center[0]), int(yellow_center[1]))
 
     yellow_image = cv.CloneImage(orig)
-    yellow_crop_rect = (yellow_center[0] - 47, yellow_center[1] + 15, 74, 74)
+    yellow_crop_rect = (yellow_center[0] - 40, yellow_center[1] + 15, 74, 74)
     cv.SetImageROI(yellow_image, yellow_crop_rect)
     cv.ShowImage("YellowBlack:", yellow_image)
 	
