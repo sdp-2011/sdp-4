@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-# UNIVERSITY OF EDINBURG, SDP GROUP 2, 2011
+# UNIVERSITY OF EDINBURGH, SDP GROUP 2, 2011
 #
 
 v4l_ctl=/usr/bin/v4lctl
@@ -15,7 +15,7 @@ $v4l_ctl setinput Composite0
 
 # Now setting the correct values.
 echo 'V4L: Setting video norm to PAL ...'
-$v4l_ctl setnorm PAL # set video norm to PAL
+$v4l_ctl setnorm PAL    # set video norm to PAL
 echo 'V4L: Setting video source to S-Video ...'
 $v4l_ctl setinput S-Video
 echo 'Done. Exiting ...'

@@ -8,16 +8,9 @@ import uk.ac.ed.inf.sdp.group4.world.IVisionClient;
 
 public class Pitch implements TileBasedMap
 {
-	IVisionClient client;
-	WorldState state;
-	Ball ball;
-	Robot ourRobot;
-	Robot theirRobot;
-	RobotColour colour;
-	long timestamp = 0;
 	// Height and width specifications
-	public static final int WIDTH = 475; // Needs to be changed to method finding width of vision feed
-	public static final int HEIGHT = 245; // As above
+	public static final int WIDTH = 640; // Needs to be changed to method finding width of vision feed
+	public static final int HEIGHT = 480; // As above
 
 	// Visited boolean for the pathfinder
 	private boolean visited[][] = new boolean [WIDTH][HEIGHT];
@@ -34,8 +27,10 @@ public class Pitch implements TileBasedMap
 	public static int GOALA = 4;
 	public static int GOALB = 5;
 	public static int WALL = 6;
+	
+	private Position enemyPos;
 
-	public Pitch(IVisionClient client, RobotColour colour)
+	public Pitch()
 	{
 		this.client = client;
 		this.colour = colour;
@@ -140,7 +135,8 @@ public class Pitch implements TileBasedMap
 	public boolean blocked(WorldObject worldObject, int x, int y)
 	{
 		// Other bot blocks our movement
-		if (getUnits(x, y) == 2)
+		Position pos = new Position(x,y);
+		if (pos.distance(enemyPos) < 28)
 		{
 			return true;
 		}
@@ -156,7 +152,11 @@ public class Pitch implements TileBasedMap
 	}
 
 	public float getCost(WorldObject worldObject, int sx, int sy, int tx, int ty)
-	{
+	{	
+		Position pos = new Position(tx,ty);
+		if (pos.distance(enemyPos) <40){
+			return 2;
+		}
 		return 1;
 	}
 }

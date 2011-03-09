@@ -52,6 +52,7 @@ def find_object(img, colour):
     hsv = cv.CreateImage(size, cv.IPL_DEPTH_8U, 3)
     cv.CvtColor(img, hsv, cv.CV_BGR2HSV)
     # Convert to binary image based on colour
+<<<<<<< HEAD
 
     mask = cv.CreateMat(size[1], size[0], cv.CV_8UC1)
     maskSize = cv.GetSize(mask)
@@ -80,6 +81,30 @@ def find_object(img, colour):
 	blackUpper = cv.Scalar(mods[21]*256, mods[22]*256, mods[23]*256)
 	cv.InRangeS(hsv, blackLower, blackUpper, mask)
 	cv.ShowImage("BlueWhite:",mask)        
+=======
+	mask = cv.CreateMat(size[1], size[0], cv.CV_8UC1)
+	maskSize = cv.GetSize(mask)
+	if (colour == "RED"):
+		redLower = cv.Scalar(mods[0]*256, mods[1]*256, mods[2]*256)
+		redUpper = cv.Scalar(mods[3]*256, mods[4]*256, mods[5]*256)
+		cv.InRangeS(hsv, redLower, redUpper, mask)		
+		cv.ShowImage("Red:",mask)
+	elif (colour == "BLUE"):
+		blueLower = cv.Scalar(mods[6]*256, mods[7]*256, mods[8]*256)
+		blueUpper = cv.Scalar(mods[9]*256, mods[10]*256, mods[11]*256)
+		cv.InRangeS(hsv, blueLower, blueUpper, mask)
+		cv.ShowImage("Blue:",mask)
+	elif (colour == "YELLOW"):
+		yellowLower = cv.Scalar(mods[12]*256, mods[13]*256, mods[14]*256)
+		yellowUpper = cv.Scalar(mods[15]*256, mods[16]*256, mods[17]*256)
+		cv.InRangeS(hsv, yellowLower, yellowUpper, mask)
+		cv.ShowImage("Yellow:",mask)
+	elif (colour == "BLACK"):
+		blackLower = cv.Scalar(mods[18]*256, mods[19]*256, mods[20]*256)
+		blackUpper = cv.Scalar(mods[21]*256, mods[22]*256, mods[23]*256)
+		cv.InRangeS(hsv, blackLower, blackUpper, mask)
+		cv.ShowImage("White:",mask)
+>>>>>>> new_strategy
 		
     # Count white pixels to make sure program doesn't crash if it finds nothing
     if (cv.CountNonZero(mask) < 3):
