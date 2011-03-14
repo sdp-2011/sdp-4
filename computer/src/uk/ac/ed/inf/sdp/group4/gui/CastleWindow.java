@@ -94,8 +94,8 @@ public class CastleWindow extends JFrame {
 		sim = new Simulator(Strategy.makeStrat(blueStrat), 
 			Strategy.makeStrat(yellStrat));
 		new Thread(sim).start();
-		animator = new Animator(situation, sim.getVision(), true);
-		new Thread(animator).start();
+		//animator = new Animator(situation, sim.getVision(), true);
+		//new Thread(animator).start();
 		halfTime.setEnabled(false);
 
 		running();
