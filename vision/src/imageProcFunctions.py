@@ -1,5 +1,6 @@
 import cv
 import math
+from navigation import *
 
 mods = [0.0, 0.4, 0.4, 0.05, 1.0, 1.0, 0.3, 0.3, 0.5, 0.8, 1.0, 1.0, 0.1, 0.36, 0.37, 0.2, 1.0, 1.0, 0.0, 0.0, 0.8, 1.0, 0.16, 1.0]
 
@@ -31,6 +32,21 @@ def onHUpperBkChange(position):	mods[21] = position/255.0
 def onSUpperBkChange(position): mods[22] = position/255.0
 def onVUpperBkChange(position):	mods[23] = position/255.0
 
+def find_orientation(mask, center_point):
+    cv.Circle(mask, center_point, 19, cv.RGB(0,0,0), -1)
+
+    moments = cv.Moments(mask, 1)
+    M00 = cv.GetSpatialMoment(moments,0,0)
+    M10 = cv.GetSpatialMoment(moments,1,0)
+    M01 = cv.GetSpatialMoment(moments,0,1)
+    
+    if M00 == 0:
+        M00 = 0.01
+
+    center_of_mass = (round(M10/M00), round(M01/M00))
+
+    return (int(calculate_bearing(center_of_mass, center_point)) - 180) % 360
+
 def find_object(img, colour):
     '''
     Finds the objects in an image with given colour.
@@ -59,35 +75,35 @@ def find_object(img, colour):
     	redLower = cv.Scalar(mods[0]*256, mods[1]*256, mods[2]*256)
     	redUpper = cv.Scalar(mods[3]*256, mods[4]*256, mods[5]*256)
     	cv.InRangeS(hsv, redLower, redUpper, mask)		
-    	cv.ShowImage("Red:",mask)
+    	cv.ShowImage("Red:", mask)
     elif (colour == "BLUE"):
     	blueLower = cv.Scalar(mods[6]*256, mods[7]*256, mods[8]*256)
     	blueUpper = cv.Scalar(mods[9]*256, mods[10]*256, mods[11]*256)
     	cv.InRangeS(hsv, blueLower, blueUpper, mask)
-	cv.ShowImage("Blue:",mask)
+	cv.ShowImage("Blue:", mask)
     elif (colour == "YELLOW"):
     	yellowLower = cv.Scalar(mods[12]*256, mods[13]*256, mods[14]*256)
 	yellowUpper = cv.Scalar(mods[15]*256, mods[16]*256, mods[17]*256)
 	cv.InRangeS(hsv, yellowLower, yellowUpper, mask)
-	cv.ShowImage("Yellow:",mask)
+	cv.ShowImage("Yellow:", mask)
     elif (colour == "YWHITE"):
     	blackLower = cv.Scalar(mods[18]*256, mods[19]*256, mods[20]*256)
     	blackUpper = cv.Scalar(mods[21]*256, mods[22]*256, mods[23]*256)
 	cv.InRangeS(hsv, blackLower, blackUpper, mask)
-	cv.ShowImage("YellowWhite:",mask)            
+	cv.ShowImage("YellowWhite:", mask)            
     elif (colour == "BWHITE"):
 	blackLower = cv.Scalar(mods[18]*256, mods[19]*256, mods[20]*256)
 	blackUpper = cv.Scalar(mods[21]*256, mods[22]*256, mods[23]*256)
 	cv.InRangeS(hsv, blackLower, blackUpper, mask)
-	cv.ShowImage("BlueWhite:",mask)        
+	cv.ShowImage("BlueWhite:", mask)        
 		
     # Count white pixels to make sure program doesn't crash if it finds nothing
     if (cv.CountNonZero(mask) < 3):
-	return (0, 0)
+	return ((0, 0), 0)
 
     # Clean up the image to reduce anymore noise in the binary image
     cv.Smooth(mask, mask, cv.CV_GAUSSIAN, 9, 9, 0, 0)
-    convKernel = cv.CreateStructuringElementEx(1, 1, 0, 0, cv.CV_SHAPE_ELLIPSE)
+    convKernel = cv.CreateStructuringElementEx(9, 9, 0, 0, cv.CV_SHAPE_RECT)
     cv.Erode(mask, mask, convKernel, 1)
     cv.Dilate(mask, mask, convKernel, 1)
     
@@ -99,4 +115,9 @@ def find_object(img, colour):
     if M00 == 0:
         M00 = 0.01
 
-    return(round(M10/M00),round(M01/M00))
+    center_of_mass = (round(M10/M00), round(M01/M00))
+
+    if (colour == "BLUE" or colour == "YELLOW"):
+	return(center_of_mass, find_orientation(mask, center_of_mass))
+    else:
+	return(center_of_mass, 0)
