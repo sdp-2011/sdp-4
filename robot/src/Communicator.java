@@ -13,13 +13,26 @@ public class Communicator
 	private static DataOutputStream dataOut;
 	private static DataInputStream dataIn;
 
-	private static boolean keepReceiving = true;
-	private static boolean sendLock = false;
+	private static boolean keepReceiving;
+	private static boolean sendLock;
+	
+	private boolean connected;
 
 	public Communicator()
 	{
-		commands = new Queue();
-		new Thread(new CommandReciever()).start();
+		connected = false;
+
+		while (true)
+		{
+			if (!connected)
+			{
+				connected = true;
+				keepReceiving = true;
+				sendLock = false;
+				commands = new Queue();
+				new Thread(new CommandReciever()).start();
+			}
+		}
 	}
 
 	public int[] getCommand()
@@ -57,7 +70,14 @@ public class Communicator
 					keepReceiving = false;
 				}
 			}
+
+			connected = false;
 		}
+	}
+
+	public void finish()
+	{
+		keepReceiving = false;
 	}
 
 	private class StatusSender implements Runnable
