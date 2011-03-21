@@ -46,6 +46,10 @@ public class Marvin
 		LEFT(4),
 		RIGHT(5),
 		STOP(6),
+		LONGFORWARD(50),
+		LONGBACKWARD(51),
+		LEFTSPEED(52),
+		RIGHTSPEED(53),
 		SETSPEED(97),
 		BESERK(98),
 		FINISH(99);
@@ -224,6 +228,22 @@ public class Marvin
 			else if (instruction == Instruction.STOP.getValue())
 			{
 				robot.stop();
+			}
+			else if (instruction == Instruction.LONGFORWARD.getValue())
+			{
+				robot.driveForward();
+			}
+			else if (instruction == Instruction.LONGBACKWARD.getValue())
+			{
+				robot.driveBackward();
+			}
+			else if (instruction == Instruction.LEFTSPEED.getValue())
+			{
+				robot.setLeftSpeed(argument);
+			}
+			else if (instruction == Instruction.RIGHTSPEED.getValue())
+			{
+				robot.setRightSpeed(argument);
 			}
 		}
 	}

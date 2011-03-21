@@ -39,6 +39,26 @@ public class Robot
 		return pilot.isMoving();
 	}
 
+	public void driveForward()
+	{
+		pilot.forward();
+	}
+
+	public void driveBackward()
+	{
+		pilot.backward();
+	}
+
+	public void setLeftSpeed(int speed)
+	{
+		pilot.getLeft().setSpeed(speed);
+	}
+
+	public void setRightSpeed(int speed)
+	{
+		pilot.getRight().setSpeed(speed);
+	}
+
 	public void drive(float distance)
 	{
 		this.drive(distance, true);
