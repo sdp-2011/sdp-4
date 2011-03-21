@@ -1,4 +1,4 @@
-package uk.ac.ed.inf.sdp.group4.strategy;
+package uk.ac.ed.inf.sdp.group4.strategy.astar;
 
 import uk.ac.ed.inf.sdp.group4.world.Ball;
 import uk.ac.ed.inf.sdp.group4.world.Robot;

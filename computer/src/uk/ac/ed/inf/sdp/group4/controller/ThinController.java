@@ -1,5 +1,6 @@
 package uk.ac.ed.inf.sdp.group4.controller;
 
+import uk.ac.ed.inf.sdp.group4.domain.Position;
 import uk.ac.ed.inf.sdp.group4.sim.Action;
 import uk.ac.ed.inf.sdp.group4.sim.SimBot;
 
@@ -89,5 +90,29 @@ public class ThinController extends Controller
 		{
 			turnRight(argument);
 		}
+	}
+
+	@Override
+	public void driveForward() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void driveBackward() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setLeftMotorSpeed(int speed) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setRightMotorSpeed(int speed) {
+		// TODO Auto-generated method stub
+		
 	}
 }

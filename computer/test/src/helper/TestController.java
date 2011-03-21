@@ -1,6 +1,7 @@
 package helper;
 
 import uk.ac.ed.inf.sdp.group4.controller.Controller;
+import uk.ac.ed.inf.sdp.group4.domain.Position;
 
 import java.util.ArrayList;
 
@@ -101,6 +102,30 @@ public class TestController extends Controller
 	public ArrayList<Integer[]> getInstructions()
 	{
 		return this.instructions;
+	}
+
+	@Override
+	public void driveForward() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void driveBackward() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setLeftMotorSpeed(int speed) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setRightMotorSpeed(int speed) {
+		// TODO Auto-generated method stub
+		
 	}
 }
 

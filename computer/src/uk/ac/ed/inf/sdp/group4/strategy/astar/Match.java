@@ -1,10 +1,12 @@
-package uk.ac.ed.inf.sdp.group4.strategy;
+package uk.ac.ed.inf.sdp.group4.strategy.astar;
 
 import uk.ac.ed.inf.sdp.group4.controller.Controller;
 import uk.ac.ed.inf.sdp.group4.domain.InvalidAngleException;
 import uk.ac.ed.inf.sdp.group4.domain.Position;
 import uk.ac.ed.inf.sdp.group4.domain.Vector;
-import uk.ac.ed.inf.sdp.group4.strategy.Path.Step;
+import uk.ac.ed.inf.sdp.group4.strategy.RobotColour;
+import uk.ac.ed.inf.sdp.group4.strategy.Strategy;
+import uk.ac.ed.inf.sdp.group4.strategy.astar.Path.Step;
 import uk.ac.ed.inf.sdp.group4.world.Ball;
 import uk.ac.ed.inf.sdp.group4.world.IVisionClient;
 import uk.ac.ed.inf.sdp.group4.world.Robot;

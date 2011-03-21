@@ -1,5 +1,7 @@
 package uk.ac.ed.inf.sdp.group4.controller;
 
+import static com.google.common.base.Preconditions.*;
+
 import lejos.pc.comm.NXTComm;
 import lejos.pc.comm.NXTCommException;
 import lejos.pc.comm.NXTCommFactory;
@@ -10,6 +12,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
+
+import uk.ac.ed.inf.sdp.group4.domain.Position;
 
 public class FatController extends Controller
 {
@@ -163,5 +167,39 @@ public class FatController extends Controller
 				}
 			}
 		}
+	}
+
+	@Override
+	public void driveForward()
+	{
+		log.debug("Driving forward indefinitely.");
+		sendCommand(50, 0);
+	}
+
+	@Override
+	public void driveBackward()
+	{
+		log.debug("Driving backward indefinitely.");
+		sendCommand(51, 0);
+	}
+
+	@Override
+	public void setLeftMotorSpeed(int speed)
+	{
+		checkArgument(speed > -900, "Speed must be more than -900");
+		checkArgument(speed < 900, "Speed must be less than 900");
+		
+		log.debug(String.format("Setting the left motor speed: %d", speed));
+		sendCommand(52, speed);
+	}
+
+	@Override
+	public void setRightMotorSpeed(int speed) 
+	{
+		checkArgument(speed > -900, "Speed must be more than -900");
+		checkArgument(speed < 900, "Speed must be less than 900");
+		
+		log.debug(String.format("Setting the left motor speed: %d", speed));
+		sendCommand(53, speed);
 	}
 }
