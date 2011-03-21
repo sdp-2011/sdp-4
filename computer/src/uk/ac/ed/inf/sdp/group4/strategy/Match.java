@@ -28,9 +28,6 @@ public class Match extends Strategy
 	private Ball ball;
 
 	// estimated goal positions
-	Position westGoal = new Position(30, 122);
-	Position eastGoal = new Position(445, 122);
-
 	Position westGoal = new Position(30, 162);
 	Position eastGoal = new Position(525, 162);
 	
@@ -52,10 +49,6 @@ public class Match extends Strategy
 			super(null, controller, RobotColour.BLUE, false);
 		}
 	*/
-	public void tick()
-	{
-		super(null, controller, RobotColour.BLUE, false);
-	}
 
 	public void tick(){
 		log.debug("========================================");
@@ -63,7 +56,7 @@ public class Match extends Strategy
 		//trajectory = new TrajectoryFinder(pitch, ourRobot);
 		log.debug("Starting tick");
 		refresh();
-		pitch.repaint(otherBot.getPosition());
+		pitch.repaint();
 		// These will probably be useful eventually
 		usToBall = (float)(Math.sqrt(Math.pow((ourRobot.getX() - ball.getX()), 2) + Math.pow((ourRobot.getY() - ball.getY()), 2)));
 		themToBall = (float)(Math.sqrt(Math.pow((otherBot.getX() - ball.getX()), 2) + Math.pow((ourRobot.getY() - ball.getY()), 2)));
@@ -84,7 +77,7 @@ public class Match extends Strategy
 						log.debug("Going to: (" + stepPos.getX() + ", " + stepPos.getY() + ")");
 						Position robotPos = new Position (ourRobot.getX(), ourRobot.getY());
 						Vector stepBot = Vector.calcVect(robotPos, stepPos);
-						double ang = stepBot.angleTo(ourRobot.getFacing());
+						double ang = stepBot.angleFrom(ourRobot.getFacing());
 						if ((ang < 15) && (ang > -15)){
 							log.debug("Full steam ahead");
 							controller.driveForward(1);
@@ -120,7 +113,7 @@ public class Match extends Strategy
 				// Goal-finding and scoring algorithm here
 				log.debug("We has ball");
 				Vector botToGoal = Vector.calcVect(ourRobot.getPosition(), eastGoal);
-				double ang = botToGoal.angleTo(ourRobot.getFacing());
+				double ang = botToGoal.angleFrom(ourRobot.getFacing());
 				// Can we shoot? If not move towards goal for better shot
 				if (canShoot(ourRobot, ball) == true){
 					if ((ang < 15) && (ang > -15)){
@@ -151,7 +144,7 @@ public class Match extends Strategy
 							
 							Position robotPos = new Position (ourRobot.getX(), ourRobot.getY());
 							Vector stepBot = Vector.calcVect(robotPos, stepPos);
-							double angTo = stepBot.angleTo(ourRobot.getFacing());
+							double angTo = stepBot.angleFrom(ourRobot.getFacing());
 							
 							if ((angTo < 15) && (angTo > -15)){
 								log.debug("Full steam ahead");
