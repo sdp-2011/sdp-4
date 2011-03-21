@@ -51,12 +51,12 @@ public class Robot
 
 	public void setLeftSpeed(int speed)
 	{
-		pilot.getLeft().setSpeed(speed);
+		LEFT_MOTOR.setSpeed(speed);
 	}
 
 	public void setRightSpeed(int speed)
 	{
-		pilot.getRight().setSpeed(speed);
+		RIGHT_MOTOR.setSpeed(speed);
 	}
 
 	public void drive(float distance)
