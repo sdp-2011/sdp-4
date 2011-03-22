@@ -13,26 +13,13 @@ public class Communicator
 	private static DataOutputStream dataOut;
 	private static DataInputStream dataIn;
 
-	private static boolean keepReceiving;
-	private static boolean sendLock;
-	
-	private boolean connected;
+	private static boolean keepReceiving = true;
+	private static boolean sendLock = false;
 
 	public Communicator()
 	{
-		connected = false;
-
-		while (true)
-		{
-			if (!connected)
-			{
-				connected = true;
-				keepReceiving = true;
-				sendLock = false;
-				commands = new Queue();
-				new Thread(new CommandReciever()).start();
-			}
-		}
+		commands = new Queue();
+		new Thread(new CommandReciever()).start();
 	}
 
 	public int[] getCommand()
@@ -70,8 +57,6 @@ public class Communicator
 					keepReceiving = false;
 				}
 			}
-
-			connected = false;
 		}
 	}
 
