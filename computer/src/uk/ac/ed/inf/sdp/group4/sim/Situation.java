@@ -75,31 +75,14 @@ public class Situation extends JPanel
 		{
 			double X_RATIO = this.getSize().width / (double) pitchX;
 			double Y_RATIO = this.getSize().height / (double) pitchY;
-			int ROB_X = (int) (X_RATIO * 20);
-			int ROB_Y = (int) (Y_RATIO * 18);
-			int BALL_SIZE = (int) (X_RATIO * 4);
+			int ROB_X = (int) (X_RATIO * 50);
+			int ROB_Y = (int) (Y_RATIO * 30);
+			int BALL_SIZE = (int) (X_RATIO * 10);
 
 			setBackground(Color.green);
 
 			int adjustX = ROB_X / 2;
-			int adjustY = ROB_Y / 2;
-
-			//draw lines
-			g.setColor(Color.white);
-			g.fillRect((int) ((pitchX / 2) * X_RATIO), (int) (0 * Y_RATIO), 
-				(int) (1 * X_RATIO), (int) (pitchY * Y_RATIO));
-			g.fillRect((int) (0 * X_RATIO), (int) ((pitchY - 1) * Y_RATIO), 
-				(int) (pitchX * X_RATIO), (int) (1 * Y_RATIO));
-			g.fillRect((int) (0 * X_RATIO), (int) (0 * Y_RATIO), (int) (pitchX * X_RATIO), (int) (1 * Y_RATIO));
-			g.fillRect((int) ((pitchX - 1) * X_RATIO), (int) (0 * Y_RATIO), 
-				(int) (1 * X_RATIO), (int) (pitchY * Y_RATIO));
-			g.fillRect((int) (0 * X_RATIO), (int) (0 * Y_RATIO), (int) (1 * X_RATIO), (int) (pitchY * Y_RATIO));
-			
-
-			//draw goals
-			g.setColor(Color.pink);
-			g.fillRect((int) (0 * X_RATIO), (int) (20 * Y_RATIO), (int) (10 * X_RATIO), (int) (80 * Y_RATIO));
-			g.fillRect((int) (234 * X_RATIO), (int) (20 * Y_RATIO), (int) (10 * X_RATIO), (int) (80 * Y_RATIO));			
+			int adjustY = ROB_Y / 2;		
 
 			//draw blue
 			g.setColor(Color.blue);
