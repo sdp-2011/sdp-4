@@ -1,5 +1,6 @@
-package uk.ac.ed.inf.sdp.group4.strategy;
+package uk.ac.ed.inf.sdp.group4.strategy.astar;
 
+import uk.ac.ed.inf.sdp.group4.domain.Position;
 import uk.ac.ed.inf.sdp.group4.world.Ball;
 import uk.ac.ed.inf.sdp.group4.world.Robot;
 import uk.ac.ed.inf.sdp.group4.world.WorldState;
@@ -32,8 +33,8 @@ public class Pitch implements TileBasedMap
 
 	public Pitch()
 	{
-		this.client = client;
-		this.colour = colour;
+//		this.client = client;
+//		this.colour = colour;
 		fillArea(0, 0, 245, 30, WALL);
 
 		repaint();
@@ -41,29 +42,29 @@ public class Pitch implements TileBasedMap
 
 	public void repaint()
 	{
-		clearUnits();
-		state = client.getWorldState();
-		if (state.getTimestamp() != timestamp)
-		{
-			ball = state.getBall();
-			units[ball.getX()][ball.getY()] = BALL;
-			if (colour.equals(RobotColour.YELLOW))
-			{
-				ourRobot = state.getYellow();
-				units[ourRobot.getX()][ourRobot.getY()] = OURS;
-				theirRobot = state.getBlue();
-				foeBlob();
-			}
-			else
-			{
-				ourRobot = state.getBlue();
-				units[ourRobot.getX()][ourRobot.getY()] = OURS;
-				theirRobot = state.getYellow();
-				foeBlob();
-			}
-			ball = state.getBall();
-			units[ball.getX()][ball.getY()] = BALL;
-		}
+//		clearUnits();
+//		state = client.getWorldState();
+//		if (state.getTimestamp() != timestamp)
+//		{
+//			ball = state.getBall();
+//			units[ball.getX()][ball.getY()] = BALL;
+//			if (colour.equals(RobotColour.YELLOW))
+//			{
+//				ourRobot = state.getYellow();
+//				units[ourRobot.getX()][ourRobot.getY()] = OURS;
+//				theirRobot = state.getBlue();
+//				foeBlob();
+//			}
+//			else
+//			{
+//				ourRobot = state.getBlue();
+//				units[ourRobot.getX()][ourRobot.getY()] = OURS;
+//				theirRobot = state.getYellow();
+//				foeBlob();
+//			}
+//			ball = state.getBall();
+//			units[ball.getX()][ball.getY()] = BALL;
+//		}
 	}
 
 	protected void fillArea(int x, int y, int width, int height, int type)
@@ -121,15 +122,15 @@ public class Pitch implements TileBasedMap
 
 	public void foeBlob()
 	{
-		int X = theirRobot.getX() + 25;
-		int Y = theirRobot.getY() + 25;
-		for (int xp = X; xp < X + 50; xp++)
-		{
-			for (int yp = Y; yp < Y + 50; yp++)
-			{
-				units[xp][yp] = THEIRS;
-			}
-		}
+//		int X = theirRobot.getX() + 25;
+//		int Y = theirRobot.getY() + 25;
+//		for (int xp = X; xp < X + 50; xp++)
+//		{
+//			for (int yp = Y; yp < Y + 50; yp++)
+//			{
+//				units[xp][yp] = THEIRS;
+//			}
+//		}
 	}
 
 	public boolean blocked(WorldObject worldObject, int x, int y)

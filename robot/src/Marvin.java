@@ -7,8 +7,8 @@ import java.io.*;
  *
  * Operation Instructions:
  *
- *   Escape Button - Exit program.
- *   Left button   - Toggle sensors.
+ *	 Escape Button - Exit program.
+ *	 Left button   - Toggle sensors.
  */
 public class Marvin
 {
@@ -25,6 +25,7 @@ public class Marvin
 	TouchSensor leftTouchSensor = new TouchSensor(SensorPort.S1);
 	TouchSensor rightTouchSensor = new TouchSensor(SensorPort.S2);
 	UltrasonicSensor ultrasonicSensor = new UltrasonicSensor(SensorPort.S3);
+	LightSensor lightSensor = new LightSensor(SensorPort.S4);
 
 	// Fields
 	private boolean sensorsActive = true;
@@ -45,6 +46,10 @@ public class Marvin
 		LEFT(4),
 		RIGHT(5),
 		STOP(6),
+		LONGFORWARD(50),
+		LONGBACKWARD(51),
+		LEFTSPEED(52),
+		RIGHTSPEED(53),
 		SETSPEED(97),
 		BESERK(98),
 		FINISH(99);
@@ -224,6 +229,22 @@ public class Marvin
 			{
 				robot.stop();
 			}
+			else if (instruction == Instruction.LONGFORWARD.getValue())
+			{
+				robot.driveForward();
+			}
+			else if (instruction == Instruction.LONGBACKWARD.getValue())
+			{
+				robot.driveBackward();
+			}
+			else if (instruction == Instruction.LEFTSPEED.getValue())
+			{
+				robot.setLeftSpeed(argument);
+			}
+			else if (instruction == Instruction.RIGHTSPEED.getValue())
+			{
+				robot.setRightSpeed(argument);
+			}
 		}
 	}
 
@@ -236,7 +257,10 @@ public class Marvin
 		// Check Sensors
 		if (sensorsActive)
 		{
-			// If one of the (front) touch sensors are pressed then the
+			// reads the amount of light reflected for the light sensor 
+			// and prints out the value on the NXT screen
+			//System.out.println(lightSensor.readValue());
+
 			// robot should drive a short distance backwards.
 			if ((leftTouchSensor.isPressed()) || (rightTouchSensor.isPressed()))
 			{

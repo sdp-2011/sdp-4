@@ -2,6 +2,8 @@ package uk.ac.ed.inf.sdp.group4.controller;
 
 import org.apache.log4j.Logger;
 
+import uk.ac.ed.inf.sdp.group4.domain.Position;
+
 public abstract class Controller
 {
 	// Logger. Like a lumberjack but it prints stuff out.
@@ -40,4 +42,11 @@ public abstract class Controller
 
 	// All of the other commands use this.
 	public abstract void sendCommand(int command, int argument);
+	
+	// Smooth Commands
+	public abstract void driveForward();
+	public abstract void driveBackward();
+	
+	public abstract void setLeftMotorSpeed(int speed);
+	public abstract void setRightMotorSpeed(int speed);	
 }

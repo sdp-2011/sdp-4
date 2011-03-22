@@ -39,6 +39,34 @@ public class Robot
 		return pilot.isMoving();
 	}
 
+	public void driveForward()
+	{
+		stop();
+		pilot.forward();
+	}
+
+	public void driveBackward()
+	{
+		stop();
+		pilot.backward();
+	}
+
+	public void setLeftSpeed(int speed)
+	{
+		LEFT_MOTOR.setSpeed(speed);
+
+		if (speed < 0)
+			LEFT_MOTOR.backward();
+	}
+
+	public void setRightSpeed(int speed)
+	{
+		RIGHT_MOTOR.setSpeed(speed);
+
+		if (speed < 0)
+			RIGHT_MOTOR.backward();
+	}
+
 	public void drive(float distance)
 	{
 		this.drive(distance, true);
@@ -95,7 +123,8 @@ public class Robot
 
 	public void setSpeed(int degreesPerSecond)
 	{
-		pilot.setSpeed(degreesPerSecond);
+		setLeftSpeed(degreesPerSecond);
+		setRightSpeed(degreesPerSecond);
 	}
 
 	// The code following this line is a complete travesty. I'm not even
