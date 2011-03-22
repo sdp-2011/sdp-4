@@ -13,6 +13,7 @@ import uk.ac.ed.inf.sdp.group4.domain.Vector;
 import uk.ac.ed.inf.sdp.group4.world.Robot;
 import uk.ac.ed.inf.sdp.group4.world.IVisionClient;
 import uk.ac.ed.inf.sdp.group4.world.WorldState;
+import uk.ac.ed.inf.sdp.group4.utils.Utils;
 
 public class Navigator
 {
@@ -60,7 +61,7 @@ public class Navigator
 	
 	private class SamuelLJackson implements Runnable
 	{
-		private final int MAX_SPEED = 400;
+		private final int MAX_SPEED = 600;
 		
 		private Controller controller;
 		private IVisionClient client;
@@ -134,6 +135,17 @@ public class Navigator
 				else
 				{
 					double angle = vectorToTarget.angleFrom(robot.getFacing())/2;
+					int speed = 0;
+
+					if (angle > Math.abs(15))
+					{
+						speed = MAX_SPEED/2;
+					}
+
+					else
+					{
+						speed = MAX_SPEED;
+					}
 
 					System.out.println("S-Angle: " + angle);
 					
@@ -141,28 +153,8 @@ public class Navigator
 					{
 						System.out.println("Turning left");
 						
-						int rightMotorSpeed = (int)(MAX_SPEED * 0.85);
-						int leftMotorSpeed = (int)(0.85 * (MAX_SPEED - Math.sqrt(MAX_SPEED)*Math.abs(angle)/45));
-
-						//checkState(rightMotorSpeed > leftMotorSpeed);
-
-						if (leftMotorSpeed > 900) 
-						{
-							leftMotorSpeed = 900;
-						}
-						else if (leftMotorSpeed < -900) 
-						{
-							leftMotorSpeed = -900;
-						}
-
-						if (rightMotorSpeed > 900) 
-						{
-							rightMotorSpeed = 900;
-						}
-						else if (rightMotorSpeed < -900) 
-						{
-							rightMotorSpeed = -900;
-						}
+						int rightMotorSpeed = Utils.clamp((int)(0.85 * speed), -900, 900);
+						int leftMotorSpeed = Utils.clamp((slowerWheelSpeed(angle, speed)), -900, 900);
 
 						controller.setRightMotorSpeed(rightMotorSpeed);
 						controller.setLeftMotorSpeed(leftMotorSpeed);
@@ -171,40 +163,15 @@ public class Navigator
 					{
 						System.out.println("Turning right");
 
-						int leftMotorSpeed = MAX_SPEED;
-						int rightMotorSpeed = (int)(0.85 * (MAX_SPEED - Math.sqrt(MAX_SPEED)*Math.abs(angle)/45));
-
-						//checkState(leftMotorSpeed > rightMotorSpeed);
-
-						if (leftMotorSpeed > 900) 
-						{
-							leftMotorSpeed = 900;
-						}
-						else if (leftMotorSpeed < -900) 
-						{
-							leftMotorSpeed = -900;
-						}
-
-						if (rightMotorSpeed > 900) 
-						{
-							rightMotorSpeed = 900;
-						}
-						else if (rightMotorSpeed < -900) 
-						{
-							rightMotorSpeed = -900;
-						}
+						int leftMotorSpeed = Utils.clamp(speed, -900, 900);
+						int rightMotorSpeed = Utils.clamp(
+							(int)(0.85 * slowerWheelSpeed(angle, speed)), -900, 900);
 
 						controller.setLeftMotorSpeed(leftMotorSpeed);
 						controller.setRightMotorSpeed(rightMotorSpeed);
 					}
 					
-					try
-					{
-						Thread.sleep(40);
-					}
-					catch (InterruptedException ie)
-					{
-					}
+					Utils.pause(40);
 				}
 				
 			}
@@ -231,6 +198,11 @@ public class Navigator
 		{
 			WorldState state = client.getWorldState();
 			return (this.colour == RobotColour.BLUE) ? state.getBlue() : state.getYellow();
+		}
+
+		private int slowerWheelSpeed(double val, int speed)
+		{		
+			return (int) (MAX_SPEED - (MAX_SPEED) * Math.abs(val)/45);
 		}
 	}
 }

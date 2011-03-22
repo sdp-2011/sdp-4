@@ -99,11 +99,13 @@ public class TrackBallStrategy extends Strategy
             controller.shoot();
         }
 */
-		controller.driveForward();
-		navigator.navigateTo(ball.getPosition(),0);
-		navigator.addWaypoint(enemyRobot.getPosition(),0);
-		navigator.addWaypoint(ball.getPosition(),0);
-		pause(500000);
+		navigator.navigateTo(ball.getPosition(),0); 
+
+		if (robot.isNear(ball))
+		{
+			controller.shoot();
+		}
+		
     }
 
     private void refresh()
