@@ -1,11 +1,6 @@
 package uk.ac.ed.inf.sdp.group4.controller;
 
-import static com.google.common.base.Preconditions.*;
-
-import lejos.pc.comm.NXTComm;
-import lejos.pc.comm.NXTCommException;
-import lejos.pc.comm.NXTCommFactory;
-import lejos.pc.comm.NXTInfo;
+import static com.google.common.base.Preconditions.checkArgument;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -13,7 +8,10 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import uk.ac.ed.inf.sdp.group4.domain.Position;
+import lejos.pc.comm.NXTComm;
+import lejos.pc.comm.NXTCommException;
+import lejos.pc.comm.NXTCommFactory;
+import lejos.pc.comm.NXTInfo;
 
 public class FatController extends Controller
 {

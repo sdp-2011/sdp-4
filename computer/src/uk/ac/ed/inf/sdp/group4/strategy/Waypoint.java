@@ -19,7 +19,8 @@ public class Waypoint
 		this.position = checkNotNull(position);
 	}
 
-	public Position getPosition() {
+	public Position getPosition() 
+	{
 		return position;
 	}
 
@@ -28,7 +29,19 @@ public class Waypoint
 		this.angle = checkNotNull(angle);
 	}
 
-	public int getAngle() {
+	public int getAngle()
+	{
 		return angle;
 	}
+	
+	public int getX()
+	{
+		return this.position.getX();
+	}
+	
+	public int getY()
+	{
+		return this.position.getY();
+	}
+	
 }
