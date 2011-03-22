@@ -86,11 +86,14 @@ public class Situation extends JPanel
 
 			//draw lines
 			g.setColor(Color.white);
-			g.fillRect((int) (122 * X_RATIO), (int) (0 * Y_RATIO), (int) (1 * X_RATIO), (int) (122 * Y_RATIO));
-			g.fillRect((int) (0 * X_RATIO), (int) (121 * Y_RATIO), (int) (244 * X_RATIO), (int) (1 * Y_RATIO));
-			g.fillRect((int) (0 * X_RATIO), (int) (0 * Y_RATIO), (int) (244 * X_RATIO), (int) (1 * Y_RATIO));
-			g.fillRect((int) (243 * X_RATIO), (int) (0 * Y_RATIO), (int) (1 * X_RATIO), (int) (122 * Y_RATIO));
-			g.fillRect((int) (0 * X_RATIO), (int) (0 * Y_RATIO), (int) (1 * X_RATIO), (int) (122 * Y_RATIO));
+			g.fillRect((int) ((pitchX / 2) * X_RATIO), (int) (0 * Y_RATIO), 
+				(int) (1 * X_RATIO), (int) (pitchY * Y_RATIO));
+			g.fillRect((int) (0 * X_RATIO), (int) ((pitchY - 1) * Y_RATIO), 
+				(int) (pitchX * X_RATIO), (int) (1 * Y_RATIO));
+			g.fillRect((int) (0 * X_RATIO), (int) (0 * Y_RATIO), (int) (pitchX * X_RATIO), (int) (1 * Y_RATIO));
+			g.fillRect((int) ((pitchX - 1) * X_RATIO), (int) (0 * Y_RATIO), 
+				(int) (1 * X_RATIO), (int) (pitchY * Y_RATIO));
+			g.fillRect((int) (0 * X_RATIO), (int) (0 * Y_RATIO), (int) (1 * X_RATIO), (int) (pitchY * Y_RATIO));
 			
 
 			//draw goals
