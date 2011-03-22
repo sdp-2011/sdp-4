@@ -250,6 +250,9 @@ public class CastleWindow extends JFrame {
         pauseButton = new javax.swing.JButton();
         modeButton = new javax.swing.JButton();
         endButton = new javax.swing.JButton();
+		
+		//remove this once sim is fixed
+		simStart.setEnabled(false);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
