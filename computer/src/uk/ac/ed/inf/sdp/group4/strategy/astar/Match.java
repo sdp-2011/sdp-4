@@ -204,7 +204,7 @@ public class Match extends Strategy
 
 	}
 	
-	private void refresh()
+	protected void refresh()
 	{
 		WorldState state = client.getWorldState();
 
