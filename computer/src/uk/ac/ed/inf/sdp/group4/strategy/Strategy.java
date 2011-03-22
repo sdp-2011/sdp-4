@@ -34,7 +34,8 @@ public abstract class Strategy implements IStrategy, Runnable
 	{
 		TRACKBALL,
 		KEYBOARD,
-		INTERCEPT
+		INTERCEPT,
+		SIMPLE
 	}
 
 	public enum Goals
@@ -199,6 +200,11 @@ public abstract class Strategy implements IStrategy, Runnable
 		else if (strat == Strategies.INTERCEPT)
 		{
 			strategy = new InterceptStrategy(null, null, null);
+		}
+
+		else if (strat == Strategies.SIMPLE)
+		{
+			strategy = new SimpleStrat(client, controller, colour);
 		}
 
 		return strategy;
