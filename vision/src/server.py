@@ -5,7 +5,7 @@ import worldstate_pb2
 
 class WorldStateRequestHandler(SocketServer.BaseRequestHandler):
     def setup(self):
-        print self.client_address, 'connected!'
+		pass
 
     def handle(self):
         data = self.request.recv(1024)
@@ -15,7 +15,7 @@ class WorldStateRequestHandler(SocketServer.BaseRequestHandler):
 	
 
     def finish(self):
-        print self.client_address, 'disconnected!'
+		pass
 
 class Server(threading.Thread):
     def __init__(self):

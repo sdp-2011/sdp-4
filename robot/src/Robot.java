@@ -57,6 +57,8 @@ public class Robot
 
 		if (speed < 0)
 			LEFT_MOTOR.backward();
+		else
+			LEFT_MOTOR.forward();
 	}
 
 	public void setRightSpeed(int speed)
@@ -65,6 +67,8 @@ public class Robot
 
 		if (speed < 0)
 			RIGHT_MOTOR.backward();
+		else
+			RIGHT_MOTOR.forward();
 	}
 
 	public void drive(float distance)

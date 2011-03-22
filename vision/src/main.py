@@ -20,15 +20,14 @@ def draw_on_image(image, center_points, other_points):
     cv.ShowImage("Processed:", image)
 	
 def update_worldstate(center_points, other_points):
-	
     WorldState.lock.acquire()
     WorldState.ball["position"]["x"] = center_points[0][0]
     WorldState.ball["position"]["y"] = center_points[0][1]
-    WorldState.blue["position"]["x"] = center_points[1][0]
-    WorldState.blue["position"]["y"] = center_points[1][1]
+    WorldState.blue["position"]["x"] = center_points[1][0][0]
+    WorldState.blue["position"]["y"] = center_points[1][0][1]
     WorldState.blue["rotation"] = center_points[1][1]
-    WorldState.yellow["position"]["x"] = center_points[2][0]
-    WorldState.yellow["position"]["y"] = center_points[2][1]
+    WorldState.yellow["position"]["x"] = center_points[2][0][0]
+    WorldState.yellow["position"]["y"] = center_points[2][0][1]
     WorldState.yellow["rotation"] = center_points[2][1]	
     WorldState.lock.release()
 
@@ -118,8 +117,8 @@ while (True):
 
     stdscr.addstr(12,0, "Ball", curses.A_UNDERLINE | curses.color_pair(1))
     stdscr.addstr(13,0, "Position:" + str(ball_center))
-    #stdscr.addstr(14,0, "Moved:" + str(euclid_distance(old_ball_position, ball_center)))
-    #stdscr.addstr(15,0, "Speed:" + str(calculate_speed(old_ball_position, ball_center, time_diff)))
+    stdscr.addstr(14,0, "Moved:" + str(euclid_distance(old_ball_position, ball_center)))
+    stdscr.addstr(15,0, "Speed:" + str(calculate_speed(old_ball_position, ball_center, time_diff)))
 
     stdscr.addstr(17,0, "FPS:" + str(1/(now-start)))
     stdscr.refresh()

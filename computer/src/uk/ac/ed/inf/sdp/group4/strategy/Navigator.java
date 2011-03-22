@@ -60,7 +60,7 @@ public class Navigator
 	
 	private class SamuelLJackson implements Runnable
 	{
-		private final int MAX_SPEED = 900;
+		private final int MAX_SPEED = 400;
 		
 		private Controller controller;
 		private IVisionClient client;
@@ -142,9 +142,27 @@ public class Navigator
 						System.out.println("Turning left");
 						
 						int rightMotorSpeed = (int)(MAX_SPEED * 0.85);
-						int leftMotorSpeed = (int)(MAX_SPEED - MAX_SPEED*Math.abs(angle)/45);
+						int leftMotorSpeed = (int)(0.85 * (MAX_SPEED - Math.sqrt(MAX_SPEED)*Math.abs(angle)/45));
 
 						//checkState(rightMotorSpeed > leftMotorSpeed);
+
+						if (leftMotorSpeed > 900) 
+						{
+							leftMotorSpeed = 900;
+						}
+						else if (leftMotorSpeed < -900) 
+						{
+							leftMotorSpeed = -900;
+						}
+
+						if (rightMotorSpeed > 900) 
+						{
+							rightMotorSpeed = 900;
+						}
+						else if (rightMotorSpeed < -900) 
+						{
+							rightMotorSpeed = -900;
+						}
 
 						controller.setRightMotorSpeed(rightMotorSpeed);
 						controller.setLeftMotorSpeed(leftMotorSpeed);
@@ -154,9 +172,27 @@ public class Navigator
 						System.out.println("Turning right");
 
 						int leftMotorSpeed = MAX_SPEED;
-						int rightMotorSpeed = (int)(0.85 * (MAX_SPEED - MAX_SPEED*Math.abs(angle)/45));
+						int rightMotorSpeed = (int)(0.85 * (MAX_SPEED - Math.sqrt(MAX_SPEED)*Math.abs(angle)/45));
 
 						//checkState(leftMotorSpeed > rightMotorSpeed);
+
+						if (leftMotorSpeed > 900) 
+						{
+							leftMotorSpeed = 900;
+						}
+						else if (leftMotorSpeed < -900) 
+						{
+							leftMotorSpeed = -900;
+						}
+
+						if (rightMotorSpeed > 900) 
+						{
+							rightMotorSpeed = 900;
+						}
+						else if (rightMotorSpeed < -900) 
+						{
+							rightMotorSpeed = -900;
+						}
 
 						controller.setLeftMotorSpeed(leftMotorSpeed);
 						controller.setRightMotorSpeed(rightMotorSpeed);

@@ -25,18 +25,20 @@ public class TrackBallStrategy extends Strategy
     Position westGoal = new Position(30, 162);
     Position eastGoal = new Position(525, 162);
 
-	Position ballPos = new Position(0,0);
+	//Position ballPos = new Position(0,0);
 
     public TrackBallStrategy(IVisionClient client, Controller controller, RobotColour colour)
     {
         this(client, controller, colour, false);
 		this.navigator = new Navigator(controller, client, colour);
+		controller.beserk(false);
     }
 
     public TrackBallStrategy(IVisionClient client, Controller controller, RobotColour colour, boolean testing)
     {
         super(client, controller, colour, testing);
 		this.navigator = new Navigator(controller, client, colour);
+		controller.beserk(false);
     }
 
     public TrackBallStrategy(Controller controller, WorldState state)
@@ -65,23 +67,43 @@ public class TrackBallStrategy extends Strategy
 			pst.tick(robot, enemyRobot, ball);
 		}
 		penaltySave = false;
-/*
-		if(
 
 		Boolean facingOwnGoal = true;
+/*
+		if (currentGoal.equals(westGoal))
+		{
+			int roBang = (int) (robot.getFacing() % 360);
 
-		if ( 
-        if (ball.isHidden() && Math.abs(goalAngle) < 30)
+			if ((roBang > 190) && (roBang < 350))
+			{
+				facingOwnGoal = false;
+			}
+
+		}		
+		else if (currentGoal.equals(eastGoal))
+		{
+			int roBang = (int) (robot.getFacing() % 360);
+
+			if ((roBang > 10) && (roBang < 170))
+			{
+				facingOwnGoal = false;
+			}
+
+		}	
+	
+		log.debug("Facing our own goal : " + facingOwnGoal);
+
+        if (ball.isHidden() && !facingOwnGoal)
         {
             log.debug("Can't see the ball - Shooting!");
             controller.shoot();
         }
 */
 		controller.driveForward();
-
-//		navigator.navigateTo(ball.getPosition(),0);
-		navigator.navigateTo(eastGoal, 0);
-		pause(10000);
+		navigator.navigateTo(ball.getPosition(),0);
+		navigator.addWaypoint(enemyRobot.getPosition(),0);
+		navigator.addWaypoint(ball.getPosition(),0);
+		pause(500000);
     }
 
     private void refresh()
@@ -92,9 +114,9 @@ public class TrackBallStrategy extends Strategy
         enemyRobot = (ourColour() == RobotColour.BLUE) ? state.getYellow() : state.getBlue();
         ball = state.getBall();
 
-		if (ballPos.distance(ball.getPosition()) < 5) {
-			ballPos = ball.getPosition();
-		}
+		//if (ballPos.distance(ball.getPosition()) < 5) {
+		//	ballPos = ball.getPosition();
+		//}
 	
         log.debug("Robot is facing: " + robot.getFacing());
     }
