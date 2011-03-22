@@ -45,6 +45,11 @@ public class Position
 		return Vector.calcVect(this, dest);
 	}
 
+	public boolean isNear(Position pos)
+	{	
+		return distance(pos) < 10;
+	}
+
 	public double distance(Position dest)
 	{
 		int partX = (dest.getX() - x);

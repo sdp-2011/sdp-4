@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import uk.ac.ed.inf.sdp.group4.controller.Controller;
 import uk.ac.ed.inf.sdp.group4.domain.Position;
 import uk.ac.ed.inf.sdp.group4.world.IVisionClient;
+import uk.ac.ed.inf.sdp.group4.world.*;
 
 public abstract class Strategy implements IStrategy, Runnable
 {
@@ -21,6 +22,10 @@ public abstract class Strategy implements IStrategy, Runnable
 	private Position eastGoal = new Position(525, 162);
 	protected Position currentGoal;
 	protected Position ownGoal;
+
+	protected Robot robot;
+	protected Robot enemyRobot;
+	protected Ball ball;
 
 	boolean keepRunning;
 	boolean paused;
@@ -161,6 +166,21 @@ public abstract class Strategy implements IStrategy, Runnable
 	{
 		keepRunning = false;
 	}
+
+	protected void refresh()
+    {
+        WorldState state = client.getWorldState();
+
+        robot = (ourColour() == RobotColour.BLUE) ? state.getBlue() : state.getYellow();
+        enemyRobot = (ourColour() == RobotColour.BLUE) ? state.getYellow() : state.getBlue();
+        ball = state.getBall();
+
+		//if (ballPos.distance(ball.getPosition()) < 5) {
+		//	ballPos = ball.getPosition();
+		//}
+	
+        log.debug("Robot is facing: " + robot.getFacing());
+    }
 
 	public static Strategy makeStrat(Strategies strat, IVisionClient client, Controller controller, RobotColour colour)
 	{

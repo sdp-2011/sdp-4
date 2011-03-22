@@ -108,21 +108,6 @@ public class TrackBallStrategy extends Strategy
 		
     }
 
-    private void refresh()
-    {
-        WorldState state = client.getWorldState();
-
-        robot = (ourColour() == RobotColour.BLUE) ? state.getBlue() : state.getYellow();
-        enemyRobot = (ourColour() == RobotColour.BLUE) ? state.getYellow() : state.getBlue();
-        ball = state.getBall();
-
-		//if (ballPos.distance(ball.getPosition()) < 5) {
-		//	ballPos = ball.getPosition();
-		//}
-	
-        log.debug("Robot is facing: " + robot.getFacing());
-    }
-
     private Vector getGoalRoute()
     {
         Vector goalRoute = null;
