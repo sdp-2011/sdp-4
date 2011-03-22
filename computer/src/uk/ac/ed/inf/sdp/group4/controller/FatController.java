@@ -184,8 +184,8 @@ public class FatController extends Controller
 	@Override
 	public void setLeftMotorSpeed(int speed)
 	{
-		checkArgument(speed > -900, "Speed must be more than -900");
-		checkArgument(speed < 900, "Speed must be less than 900");
+		checkArgument(speed >= -900, "Speed must be more than -900");
+		checkArgument(speed <= 900, "Speed must be less than 900");
 		
 		log.debug(String.format("Setting the left motor speed: %d", speed));
 		sendCommand(52, speed);
@@ -194,10 +194,10 @@ public class FatController extends Controller
 	@Override
 	public void setRightMotorSpeed(int speed) 
 	{
-		checkArgument(speed > -900, "Speed must be more than -900");
-		checkArgument(speed < 900, "Speed must be less than 900");
+		checkArgument(speed >= -900, "Speed must be more than -900");
+		checkArgument(speed <= 900, "Speed must be less than 900");
 		
-		log.debug(String.format("Setting the left motor speed: %d", speed));
+		log.debug(String.format("Setting the right motor speed: %d", speed));
 		sendCommand(53, speed);
 	}
 }

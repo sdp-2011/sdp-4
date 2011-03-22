@@ -11,7 +11,7 @@ import uk.ac.ed.inf.sdp.group4.domain.InvalidAngleException;
 import uk.ac.ed.inf.sdp.group4.domain.Position;
 import uk.ac.ed.inf.sdp.group4.domain.Vector;
 import uk.ac.ed.inf.sdp.group4.world.Robot;
-import uk.ac.ed.inf.sdp.group4.world.VisionClient;
+import uk.ac.ed.inf.sdp.group4.world.IVisionClient;
 import uk.ac.ed.inf.sdp.group4.world.WorldState;
 
 public class Navigator
@@ -21,7 +21,7 @@ public class Navigator
 	private List<Waypoint> waypoints = Collections.synchronizedList(
 			new ArrayList<Waypoint>());
 	
-	public Navigator(Controller controller, VisionClient client, RobotColour colour)
+	public Navigator(Controller controller, IVisionClient client, RobotColour colour)
 	{
 		setNegotiator(new SamuelLJackson(controller, client, colour));
 		Thread negotiatorThread = new Thread(getNegotiator());
@@ -42,7 +42,7 @@ public class Navigator
 		addWaypoint(destination, angle);
 	}
 	
-	private void addWaypoint(Position destination, int angle)
+	public void addWaypoint(Position destination, int angle)
 	{
 		checkNotNull(destination);
 		checkArgument(angle >= 0, "Angle must be >= 0");
@@ -63,12 +63,12 @@ public class Navigator
 		private final int MAX_SPEED = 900;
 		
 		private Controller controller;
-		private VisionClient client;
+		private IVisionClient client;
 		private RobotColour colour;
 		
 		private Waypoint currentWaypoint;
 		
-		public SamuelLJackson(Controller controller, VisionClient client,
+		public SamuelLJackson(Controller controller, IVisionClient client,
 				RobotColour colour)
 		{
 			setController(controller);
@@ -88,9 +88,9 @@ public class Navigator
 			this.controller = controller;
 		}
 		
-		public void setClient(VisionClient client)
+		public void setClient(IVisionClient client)
 		{
-			checkNotNull(client, "VisionClient cannot be null");
+			checkNotNull(client, "IVisionClient cannot be null");
 			this.client = client;
 		}
 		
@@ -101,7 +101,7 @@ public class Navigator
 			while(true)
 			{
 				// Get the current waypoint.
-				if (atDestination)
+				if (atDestination || this.currentWaypoint == null)
 				{
 					this.currentWaypoint = grabWaypoint();
 					if (this.currentWaypoint == null)
@@ -113,6 +113,10 @@ public class Navigator
 				
 				// Get the current robot position.
 				Robot robot = getCurrentPosition();
+				
+				System.out.println("Robot: [Angle: " + robot.getFacing() + "] [Position: (" + robot.getX() + ", " + robot.getY() + ")]");
+				System.out.println("Waypoint: (" + this.currentWaypoint.getX() + ", " + this.currentWaypoint.getY() + ")");
+				
 				Vector vectorToTarget = null;
 				try {
 					vectorToTarget = robot.getPosition().calcVectTo(
@@ -129,17 +133,41 @@ public class Navigator
 				}
 				else
 				{
-					double angle = vectorToTarget.angleFrom(robot.getFacing());
+					double angle = vectorToTarget.angleFrom(robot.getFacing())/2;
+
+					System.out.println("S-Angle: " + angle);
 					
 					if (angle < 0)
 					{
-						controller.setRightMotorSpeed(MAX_SPEED);
-						controller.setLeftMotorSpeed((int)(MAX_SPEED/(Math.abs(angle) * 0.5)));
+						System.out.println("Turning left");
+						
+						int rightMotorSpeed = (int)(MAX_SPEED * 0.85);
+						int leftMotorSpeed = (int)(MAX_SPEED - MAX_SPEED*Math.abs(angle)/45);
+
+						//checkState(rightMotorSpeed > leftMotorSpeed);
+
+						controller.setRightMotorSpeed(rightMotorSpeed);
+						controller.setLeftMotorSpeed(leftMotorSpeed);
 					}
 					else
 					{
-						controller.setLeftMotorSpeed(MAX_SPEED);
-						controller.setRightMotorSpeed((int)(MAX_SPEED/(Math.abs(angle) * 0.5)));
+						System.out.println("Turning right");
+
+						int leftMotorSpeed = MAX_SPEED;
+						int rightMotorSpeed = (int)(0.85 * (MAX_SPEED - MAX_SPEED*Math.abs(angle)/45));
+
+						//checkState(leftMotorSpeed > rightMotorSpeed);
+
+						controller.setLeftMotorSpeed(leftMotorSpeed);
+						controller.setRightMotorSpeed(rightMotorSpeed);
+					}
+					
+					try
+					{
+						Thread.sleep(40);
+					}
+					catch (InterruptedException ie)
+					{
 					}
 				}
 				

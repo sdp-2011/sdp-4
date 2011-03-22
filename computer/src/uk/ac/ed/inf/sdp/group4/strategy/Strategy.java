@@ -20,6 +20,7 @@ public abstract class Strategy implements IStrategy, Runnable
 	private Position westGoal = new Position(30, 162);
 	private Position eastGoal = new Position(525, 162);
 	protected Position currentGoal;
+	protected Position ownGoal;
 
 	boolean keepRunning;
 	boolean paused;
@@ -45,6 +46,7 @@ public abstract class Strategy implements IStrategy, Runnable
 		this.testing = testing;
 		this.keepRunning = true;
 		this.currentGoal = eastGoal;
+		this.ownGoal = westGoal;
 		this.paused = true;
 	}
 
@@ -136,10 +138,12 @@ public abstract class Strategy implements IStrategy, Runnable
 		if (currentGoal.equals(eastGoal))
 		{
 			currentGoal = westGoal;
+			ownGoal = eastGoal;
 		}
 		else
 		{
 			currentGoal = eastGoal;
+			currentGoal = westGoal;
 		}
 	}
 
@@ -158,13 +162,13 @@ public abstract class Strategy implements IStrategy, Runnable
 		keepRunning = false;
 	}
 
-	public static Strategy makeStrat(Strategies strat)
+	public static Strategy makeStrat(Strategies strat, IVisionClient client, Controller controller, RobotColour colour)
 	{
 		Strategy strategy = null;
 
 		if (strat == Strategies.TRACKBALL)
 		{
-			strategy = new TrackBallStrategy(null, null, null);
+			strategy = new TrackBallStrategy(client, controller, colour);
 		}
 
 		else if (strat == Strategies.KEYBOARD)

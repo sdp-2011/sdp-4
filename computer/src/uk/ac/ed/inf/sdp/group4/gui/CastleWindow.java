@@ -91,8 +91,8 @@ public class CastleWindow extends JFrame {
 	{
 		pop.dispose();
 
-		sim = new Simulator(Strategy.makeStrat(blueStrat), 
-			Strategy.makeStrat(yellStrat));
+		sim = null;//new Simulator(Strategy.makeStrat(blueStrat, ), 
+			//Strategy.makeStrat(yellStrat));
 		new Thread(sim).start();
 		//animator = new Animator(situation, sim.getVision(), true);
 		//new Thread(animator).start();
@@ -107,7 +107,12 @@ public class CastleWindow extends JFrame {
 
 		client = new VisionClient();
 		controller = new FatController();
-		strategy = Strategy.makeStrat(strat);
+		
+		System.out.println("VisionClient: " + client);
+		System.out.println("Controller: " + controller);
+		System.out.println("Colour: " + colour);
+		
+		strategy = Strategy.makeStrat(strat, client, controller, colour);
 		strategy.setup(client, controller, colour, false);
 		new Thread(strategy).start();
 		animator = new Animator(situation, client, false);
