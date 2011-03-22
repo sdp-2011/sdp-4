@@ -75,11 +75,6 @@ public class Communicator
 		}
 	}
 
-	public void finish()
-	{
-		keepReceiving = false;
-	}
-
 	private class StatusSender implements Runnable
 	{
 		public void run()

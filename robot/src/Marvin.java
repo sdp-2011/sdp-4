@@ -118,7 +118,7 @@ public class Marvin
 	 */
 	private void shutdown()
 	{
-		communicator.finish();
+		System.exit(0);
 	}
 
 	/**
