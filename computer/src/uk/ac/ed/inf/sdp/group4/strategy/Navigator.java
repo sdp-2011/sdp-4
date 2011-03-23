@@ -101,83 +101,91 @@ public class Navigator
 			
 			while(true)
 			{
-				// Get the current waypoint.
-				if (atDestination || this.currentWaypoint == null)
+				try
 				{
-					this.currentWaypoint = grabWaypoint();
-
-					if (this.currentWaypoint == null)
+					// Get the current waypoint.
+					if (atDestination || this.currentWaypoint == null)
 					{
+						this.currentWaypoint = grabWaypoint();
+
+						if (this.currentWaypoint == null)
+						{
+							continue;
+						}
+						atDestination = false;
+					}
+
+					System.out.println("Waypoint: " + this.currentWaypoint);
+				
+					// Get the current robot position.
+					Robot robot = getCurrentPosition();
+				
+					System.out.println("Robot: [Angle: " + robot.getFacing() +
+						"] [Position: (" + robot.getX() + ", " + robot.getY() + ")]");
+				
+					System.out.println("Waypoint: (" + this.currentWaypoint.getX() +
+						", " + this.currentWaypoint.getY() + ")");
+				
+					Vector vectorToTarget = null;
+					try {
+						vectorToTarget = robot.getPosition().calcVectTo(
+								this.currentWaypoint.getPosition());
+					} catch (InvalidAngleException e) {
+						e.printStackTrace();
+					}
+				
+					// Are we at the destination?
+					if (vectorToTarget.getMagnitude() < 10)
+					{
+						atDestination = true;
 						continue;
 					}
-					atDestination = false;
-				}
-
-				System.out.println("Waypoint: " + this.currentWaypoint);
-				
-				// Get the current robot position.
-				Robot robot = getCurrentPosition();
-				
-				System.out.println("Robot: [Angle: " + robot.getFacing() +
-					"] [Position: (" + robot.getX() + ", " + robot.getY() + ")]");
-				
-				System.out.println("Waypoint: (" + this.currentWaypoint.getX() +
-					", " + this.currentWaypoint.getY() + ")");
-				
-				Vector vectorToTarget = null;
-				try {
-					vectorToTarget = robot.getPosition().calcVectTo(
-							this.currentWaypoint.getPosition());
-				} catch (InvalidAngleException e) {
-					e.printStackTrace();
-				}
-				
-				// Are we at the destination?
-				if (vectorToTarget.getMagnitude() < 10)
-				{
-					atDestination = true;
-					continue;
-				}
-				else
-				{
-					double angle = vectorToTarget.angleFrom(robot.getFacing())/2;
-					int speed = 0;
-
-					if (angle > Math.abs(15))
-					{
-						speed = MAX_SPEED/2;
-					}
-
 					else
 					{
-						speed = MAX_SPEED;
-					}
+						double angle = vectorToTarget.angleFrom(robot.getFacing())/2;
+						int speed = 0;
 
-					System.out.println("S-Angle: " + angle);
+						if (angle > Math.abs(15))
+						{
+							speed = MAX_SPEED/2;
+						}
+
+						else
+						{
+							speed = MAX_SPEED;
+						}
+
+						System.out.println("S-Angle: " + angle);
 					
-					if (angle < 0)
-					{
-						System.out.println("Turning left");
+						if (angle < 0)
+						{
+							System.out.println("Turning left");
 						
-						int rightMotorSpeed = Utils.clamp((int)(0.85 * speed), -900, 900);
-						int leftMotorSpeed = Utils.clamp((slowerWheelSpeed(angle, speed)), -900, 900);
+							int rightMotorSpeed = Utils.clamp((int)(0.85 * speed), -900, 900);
+							int leftMotorSpeed = Utils.clamp((slowerWheelSpeed(angle, speed)), -900, 900);
 
-						controller.setRightMotorSpeed(rightMotorSpeed);
-						controller.setLeftMotorSpeed(leftMotorSpeed);
-					}
-					else
-					{
-						System.out.println("Turning right");
+							controller.setRightMotorSpeed(rightMotorSpeed);
+							controller.setLeftMotorSpeed(leftMotorSpeed);
+						}
+						else
+						{
+							System.out.println("Turning right");
 
-						int leftMotorSpeed = Utils.clamp(speed, -900, 900);
-						int rightMotorSpeed = Utils.clamp(
-							(int)(0.85 * slowerWheelSpeed(angle, speed)), -900, 900);
+							int leftMotorSpeed = Utils.clamp(speed, -900, 900);
+							int rightMotorSpeed = Utils.clamp(
+								(int)(0.85 * slowerWheelSpeed(angle, speed)), -900, 900);
 
-						controller.setLeftMotorSpeed(leftMotorSpeed);
-						controller.setRightMotorSpeed(rightMotorSpeed);
-					}
+							controller.setLeftMotorSpeed(leftMotorSpeed);
+							controller.setRightMotorSpeed(rightMotorSpeed);
+						}
 					
-					Utils.pause(40);
+						Utils.pause(40);
+					}
+				}
+
+				catch (NullPointerException e)
+				{
+					continue;
 				}
 			}
 		}

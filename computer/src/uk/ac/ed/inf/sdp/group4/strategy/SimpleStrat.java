@@ -41,12 +41,9 @@ public class SimpleStrat extends Strategy
 		{
 			if (!lastBall.isNear(ball.getPosition()))
 			{
-				System.out.println(lastBall.distance(ball.getPosition()));
-
 				sulu.navigateTo(ball.getPosition(), 0);
+				lastBall = ball.getPosition();
 			}
-
-			lastBall = ball.getPosition();
 
 			if (robot.isNear(ball) && facingBall())
 			{
@@ -80,7 +77,7 @@ public class SimpleStrat extends Strategy
 
 	public void penaltyDefend()
 	{
-
+		
 	}
 
 	public void penaltyAttack()
@@ -90,13 +87,15 @@ public class SimpleStrat extends Strategy
 
 	public void suspend()
 	{
-		super.suspend();
 		state = StrategyState.PAUSED;
+		sulu.clearWaypoints();
+		super.suspend();
 	}
 
 	public void resume()
 	{
-		super.resume();
 		state = StrategyState.GETTOBALL;
+		sulu.clearWaypoints();
+		super.resume();
 	}
 }
