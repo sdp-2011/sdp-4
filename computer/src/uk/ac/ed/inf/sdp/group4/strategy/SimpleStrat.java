@@ -1,10 +1,10 @@
 package uk.ac.ed.inf.sdp.group4.strategy;
 
-import uk.ac.ed.inf.sdp.group4.strategy.*;
-import uk.ac.ed.inf.sdp.group4.domain.*;
-import uk.ac.ed.inf.sdp.group4.controller.*;
-import uk.ac.ed.inf.sdp.group4.world.*;
-
+import uk.ac.ed.inf.sdp.group4.controller.Controller;
+import uk.ac.ed.inf.sdp.group4.domain.InvalidAngleException;
+import uk.ac.ed.inf.sdp.group4.domain.Position;
+import uk.ac.ed.inf.sdp.group4.domain.Vector;
+import uk.ac.ed.inf.sdp.group4.world.IVisionClient;
 
 public class SimpleStrat extends Strategy
 {
@@ -22,8 +22,10 @@ public class SimpleStrat extends Strategy
 	public SimpleStrat(IVisionClient client, Controller controller, RobotColour colour)
 	{
 		super(client, controller, colour, false);
+		super.refresh();
 		state = StrategyState.PAUSED;
-		lastBall = ball.getPosition();
+		lastBall = new Position(10000000,100000);
+		sulu = new Navigator(controller, client, colour);
 	}
 
 	public void tick()
@@ -39,6 +41,8 @@ public class SimpleStrat extends Strategy
 		{
 			if (!lastBall.isNear(ball.getPosition()))
 			{
+				System.out.println(lastBall.distance(ball.getPosition()));
+
 				sulu.navigateTo(ball.getPosition(), 0);
 			}
 

@@ -1,4 +1,4 @@
-package uk.ac.ed.inf.sdp.group4.test;
+package helper;
 
 import junit.framework.AssertionFailedError;
 import junit.framework.Test;

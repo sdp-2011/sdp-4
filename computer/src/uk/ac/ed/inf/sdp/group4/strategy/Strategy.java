@@ -1,5 +1,6 @@
 package uk.ac.ed.inf.sdp.group4.strategy;
 
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import uk.ac.ed.inf.sdp.group4.controller.Controller;
 import uk.ac.ed.inf.sdp.group4.domain.Position;
@@ -46,6 +47,8 @@ public abstract class Strategy implements IStrategy, Runnable
 
 	public Strategy(IVisionClient client, Controller controller, RobotColour ourColour, boolean testing)
 	{
+		Logger root = Logger.getRootLogger();
+		root.setLevel(Level.OFF);
 		this.client = client;
 		this.controller = controller;
 		this.ourColour = ourColour;
@@ -63,7 +66,7 @@ public abstract class Strategy implements IStrategy, Runnable
 
 	public void runStrategy()
 	{
-		log.debug("Starting strategy loop...");
+		System.out.println("Starting strategy loop...");
 		while (keepRunning)
 		{
 			if (paused) continue;

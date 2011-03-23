@@ -105,18 +105,24 @@ public class Navigator
 				if (atDestination || this.currentWaypoint == null)
 				{
 					this.currentWaypoint = grabWaypoint();
+
 					if (this.currentWaypoint == null)
 					{
 						continue;
 					}
 					atDestination = false;
 				}
+
+				System.out.println("Waypoint: " + this.currentWaypoint);
 				
 				// Get the current robot position.
 				Robot robot = getCurrentPosition();
 				
-				System.out.println("Robot: [Angle: " + robot.getFacing() + "] [Position: (" + robot.getX() + ", " + robot.getY() + ")]");
-				System.out.println("Waypoint: (" + this.currentWaypoint.getX() + ", " + this.currentWaypoint.getY() + ")");
+				System.out.println("Robot: [Angle: " + robot.getFacing() +
+					"] [Position: (" + robot.getX() + ", " + robot.getY() + ")]");
+				
+				System.out.println("Waypoint: (" + this.currentWaypoint.getX() +
+					", " + this.currentWaypoint.getY() + ")");
 				
 				Vector vectorToTarget = null;
 				try {
@@ -173,7 +179,6 @@ public class Navigator
 					
 					Utils.pause(40);
 				}
-				
 			}
 		}
 		
