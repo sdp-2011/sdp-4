@@ -58,6 +58,7 @@ public class FatController extends Controller
 
 	public void shoot()
 	{
+		System.out.println("Kicking!");
 		log.debug("Shooting!");
 		sendCommand(2, 0);
 	}

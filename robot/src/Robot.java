@@ -106,6 +106,7 @@ public class Robot
 		}
 		catch (InterruptedException e)
 		{
+			Log.e("Kicker was interrupted.");
 		}
 		kicker = new Thread(new ShootThread());
 	}
@@ -182,12 +183,10 @@ public class Robot
 		{
 			try
 			{
-				SHOOT_MOTOR.backward();
-				Thread.sleep(40);
 				SHOOT_MOTOR.forward();
 				Thread.sleep(130);
 				SHOOT_MOTOR.backward();
-				Thread.sleep(150);
+				Thread.sleep(170);
 				SHOOT_MOTOR.stop();
 			}
 			catch (Exception e)

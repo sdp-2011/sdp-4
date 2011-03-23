@@ -25,15 +25,15 @@ public class PenaltyTakeTactic extends Tactic
 		// Turn the opposite direction.
 		if (enemy.inTopHalf())
 		{
-			controller.turn(-15);
+			controller.turn(-30);
 		}
 		else
 		{
-			controller.turn(15);
+			controller.turn(30);
 		}
 
 		// Wait for the turn to complete
-		pause(200);
+		pause(700);
 
 		// Shooot!
 		controller.shoot();

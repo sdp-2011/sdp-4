@@ -12,7 +12,7 @@ public class Ball extends WorldObject
 
 	public boolean isHidden()
 	{
-		return this.getX() == 0 && this.getY() == 0;
+		return this.getX() == 8 && this.getY() == 8;
 	}
 
 	public boolean isVisible()

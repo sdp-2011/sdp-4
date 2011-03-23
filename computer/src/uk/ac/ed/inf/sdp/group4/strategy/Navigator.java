@@ -21,6 +21,7 @@ public class Navigator
 
 	private List<Waypoint> waypoints = Collections.synchronizedList(
 			new ArrayList<Waypoint>());
+	private boolean idle = true;
 	
 	public Navigator(Controller controller, IVisionClient client, RobotColour colour)
 	{
@@ -35,6 +36,11 @@ public class Navigator
 	private void setNegotiator(SamuelLJackson samuelLJackson) {
 		checkNotNull(samuelLJackson);
 		this.negotiator = samuelLJackson;
+	}
+
+	public boolean isIdle()
+	{
+		return waypoints.isEmpty() && idle;
 	}
 
 	public void navigateTo(Position destination, int angle)
@@ -61,7 +67,7 @@ public class Navigator
 	
 	private class SamuelLJackson implements Runnable
 	{
-		private final int MAX_SPEED = 600;
+		private final int MAX_SPEED = 800;
 		
 		private Controller controller;
 		private IVisionClient client;
@@ -113,18 +119,17 @@ public class Navigator
 							continue;
 						}
 						atDestination = false;
+						idle = false;
 					}
-
-					System.out.println("Waypoint: " + this.currentWaypoint);
 				
 					// Get the current robot position.
 					Robot robot = getCurrentPosition();
 				
-					System.out.println("Robot: [Angle: " + robot.getFacing() +
-						"] [Position: (" + robot.getX() + ", " + robot.getY() + ")]");
+					//System.out.println("Robot: [Angle: " + robot.getFacing() +
+						//"] [Position: (" + robot.getX() + ", " + robot.getY() + ")]");
 				
-					System.out.println("Waypoint: (" + this.currentWaypoint.getX() +
-						", " + this.currentWaypoint.getY() + ")");
+					//System.out.println("Waypoint: (" + this.currentWaypoint.getX() +
+						//", " + this.currentWaypoint.getY() + ")");
 				
 					Vector vectorToTarget = null;
 					try {
@@ -135,19 +140,25 @@ public class Navigator
 					}
 				
 					// Are we at the destination?
-					if (vectorToTarget.getMagnitude() < 10)
+					if (vectorToTarget.getMagnitude() < 50)
 					{
+						System.out.println("We're close to the ball. Make the final turn!");
+						controller.setSpeed(300);
+						double angle = vectorToTarget.angleFrom(robot.getFacing());
+						controller.turn((int)angle);
+						Utils.pause(500);
 						atDestination = true;
+						idle = true;
 						continue;
 					}
 					else
 					{
-						double angle = vectorToTarget.angleFrom(robot.getFacing())/2;
+						double angle = vectorToTarget.angleFrom(robot.getFacing());
 						int speed = 0;
 
-						if (angle > Math.abs(15))
+						if (angle > Math.abs(20))
 						{
-							speed = MAX_SPEED/2;
+							speed = MAX_SPEED/3;
 						}
 
 						else
@@ -155,25 +166,33 @@ public class Navigator
 							speed = MAX_SPEED;
 						}
 
-						System.out.println("S-Angle: " + angle);
-					
-						if (angle < 0)
+						//System.out.println("S-Angle: " + angle * 2);
+						
+						if (angle > 150 || angle < -150)
 						{
-							System.out.println("Turning left");
+							//System.out.println("It's a long way behind us. Quickly turn.");
+							//controller.setSpeed(300);
+							//controller.turn(angle);
+							//Utils.pause(500);
+							//continue;
+						}
+						else if (angle < 0)
+						{
+							//System.out.println("Turning left");
 						
 							int rightMotorSpeed = Utils.clamp((int)(0.85 * speed), -900, 900);
-							int leftMotorSpeed = Utils.clamp((slowerWheelSpeed(angle, speed)), -900, 900);
+							int leftMotorSpeed = Utils.clamp((slowerWheelSpeed(angle/2, speed)), -900, 900);
 
 							controller.setRightMotorSpeed(rightMotorSpeed);
 							controller.setLeftMotorSpeed(leftMotorSpeed);
 						}
 						else
 						{
-							System.out.println("Turning right");
+							//System.out.println("Turning right");
 
 							int leftMotorSpeed = Utils.clamp(speed, -900, 900);
 							int rightMotorSpeed = Utils.clamp(
-								(int)(0.85 * slowerWheelSpeed(angle, speed)), -900, 900);
+								(int)(0.85 * slowerWheelSpeed(angle/2, speed)), -900, 900);
 
 							controller.setLeftMotorSpeed(leftMotorSpeed);
 							controller.setRightMotorSpeed(rightMotorSpeed);
@@ -215,7 +234,7 @@ public class Navigator
 
 		private int slowerWheelSpeed(double val, int speed)
 		{		
-			return (int) (MAX_SPEED - (MAX_SPEED) * Math.abs(val)/45);
+			return (int) (speed - (speed * Math.abs(val)/30));
 		}
 	}
 }

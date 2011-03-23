@@ -14,6 +14,11 @@ public class PenaltySaveTactic extends Tactic
 
 	private final double BALL_MOVE_THRESHOLD = 5;
 	private Position initialBallPosition = null;
+	private int state = 1;
+	// 0 is south
+
+    Position westGoal = new Position(30, 162);
+    Position eastGoal = new Position(525, 162);
 
 	public PenaltySaveTactic(Controller controller)
 	{
@@ -28,45 +33,148 @@ public class PenaltySaveTactic extends Tactic
 	@Override
 	public void tick(Robot ours, Robot enemy, Ball ball)
 	{
-		// If this is the first run through of the strategy then we should
-		// store the initial position.
-		if(initialBallPosition == null)
-		{
-			initialBallPosition = ball.getPosition();		
-		}
+	
+		Position ballStart = ball.getPosition();
 
-		// Has the ball moved?
-		double distance = 0;
-		try
+		while (ball.getPosition().distance(ballStart) < 10)
 		{
-			distance = initialBallPosition.calcVectTo(ball.getPosition())
-				.getMagnitude();
-		}
-		catch (InvalidAngleException iae)
-		{
-			//OH FUCK.
-		}
+			if (ours.getX() < 162)
+			{
+				System.out.println("DEFENDING WEST");
+			
+				if (enemy.getFacing() > 285)
+				{
+					System.out.println("They are shooting north");
 
-		while(distance < BALL_MOVE_THRESHOLD)
-		{
-			controller.driveForward(30);
-			pause(1000);
-			controller.driveBackward(40);
-			pause(1000);
+					if (state == 2)
+					{
+						System.out.println("We should be in the way");
+					}
+					else
+					{
+						System.out.println("Move up");
+						controller.setSpeed(900);
+						controller.driveForward(10);
+						state ++;
+						pause(120);
+					}				
+				}
+				else if (enemy.getFacing() < 265)
+				{			
+					System.out.println("They are shooting south");
+
+					if (state == 0)
+					{
+						System.out.println("We should be in the way");
+					}
+					else
+					{
+						System.out.println("Move down");
+						controller.setSpeed(900);
+						controller.driveBackward(10);
+						state --;
+						pause(120);
+					}			
+				}
+				else
+				{
+					System.out.println("They are shooting centrally");
+				
+					if (state == 1)
+					{
+						System.out.println("We should be in the way");
+					}
+					else if (state == 2)
+					{
+						System.out.println("Move down");
+						controller.setSpeed(900);
+						controller.driveBackward(10);
+						state --;
+						pause(120);
+					}			
+					if (state == 0)
+					{
+						System.out.println("We should be in the way");
+					}
+					else
+					{
+						System.out.println("Move up");
+						controller.setSpeed(900);
+						controller.driveForward(10);
+						state ++;
+						pause(120);
+					}			
+				}
+			}
+			else
+				{
+				System.out.println("DEFENDING EAST");
+			
+				if (enemy.getFacing() < 75)
+				{
+					System.out.println("They are shooting north");
+
+					if (state == 2)
+					{
+						System.out.println("We should be in the way");
+					}
+					else
+					{
+						System.out.println("Move up");
+						controller.setSpeed(900);
+						controller.driveForward(10);
+						state ++;
+						pause(120);
+					}				
+				}
+				else if (enemy.getFacing() > 105)
+				{			
+					System.out.println("They are shooting south");
+
+					if (state == 0)
+					{
+						System.out.println("We should be in the way");
+					}
+					else
+					{
+						System.out.println("Move down");
+						controller.setSpeed(900);
+						controller.driveBackward(10);
+						state --;
+						pause(120);
+					}			
+				}
+				else
+				{
+					System.out.println("They are shooting centrally");
+				
+					if (state == 1)
+					{
+						System.out.println("We should be in the way");
+					}
+					else if (state == 2)
+					{
+						System.out.println("Move down");
+						controller.setSpeed(900);
+						controller.driveBackward(10);
+						state --;
+						pause(120);
+					}			
+									if (state == 0)
+					{
+						System.out.println("We should be in the way");
+					}
+					else
+					{
+						System.out.println("Move up");
+						controller.setSpeed(900);
+						controller.driveForward(10);
+						state ++;
+						pause(120);
+					}			
+				}
+			}
 		}
-
-		// CHAAAAARGEEEEEEE
-		controller.setSpeed(900);
-		Vector ballRoute = getBallRoute(ours, ball);
-		double ballAngle = ballRoute.angleFrom(ours.getFacing());
-
-		while (ballAngle > 10)
-		{
-			controller.turn((int)ballAngle);
-			pause(500);
-		}
-
-		controller.driveForward((int)ballRoute.getMagnitude()/2);
 	}
 
 	private Vector getBallRoute(Robot robot, Ball ball)

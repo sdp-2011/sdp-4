@@ -19,8 +19,8 @@ public abstract class Strategy implements IStrategy, Runnable
 
 	boolean testing;
 
-	private Position westGoal = new Position(30, 162);
-	private Position eastGoal = new Position(525, 162);
+	protected Position westGoal = new Position(30, 162);
+	protected Position eastGoal = new Position(525, 162);
 	protected Position currentGoal;
 	protected Position ownGoal;
 
@@ -152,7 +152,7 @@ public abstract class Strategy implements IStrategy, Runnable
 		else
 		{
 			currentGoal = eastGoal;
-			currentGoal = westGoal;
+			ownGoal = westGoal;
 		}
 	}
 

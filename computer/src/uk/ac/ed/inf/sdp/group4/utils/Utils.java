@@ -23,7 +23,6 @@ public class Utils
 		{
 			Thread.sleep(time);
 		}
-
 		catch (InterruptedException e)
 		{
 			System.out.println("Threading is borked");
