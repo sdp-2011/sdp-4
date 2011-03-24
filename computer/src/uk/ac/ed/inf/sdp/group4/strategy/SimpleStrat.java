@@ -93,9 +93,8 @@ public class SimpleStrat extends Strategy
 			// Score goals.
 			case KICK:
 				System.out.println("Shooting!");
-				controller.driveForward(20);
 				controller.shoot();
-				Utils.pause(1000);
+				pause(300);
 				changeState(StrategyState.GETTOBALL);
 				break;
 			
@@ -131,6 +130,7 @@ public class SimpleStrat extends Strategy
 				if (shouldDefend())
 				{
 					System.out.println("We have problems");
+					defenceStrategy();
 					/*
 					if (ball.getPosition().getX() > 162)
 					{
@@ -165,7 +165,6 @@ public class SimpleStrat extends Strategy
 					controller.beserk(true);
 	
 					changeState(StrategyState.GETTOBALL);
-				
 				}			
 				break;
 		}
@@ -211,12 +210,10 @@ public class SimpleStrat extends Strategy
 			if (currentGoal.equals(eastGoal))
 			{
 				sulu.navigateTo(new Position(ball.getX() - 40, ball.getY() + 40), 0);
-				sulu.addWaypoint(new Position(ball.getX() - 40, ball.getY()), 0);
 			}
 			else
 			{
 				sulu.navigateTo(new Position(ball.getX() + 40, ball.getY() + 40), 0);
-				sulu.addWaypoint(new Position(ball.getX() + 40, ball.getY()), 0);
 			}
 		}
 		else
@@ -224,12 +221,10 @@ public class SimpleStrat extends Strategy
 			if (currentGoal.equals(eastGoal))
 			{
 				sulu.navigateTo(new Position(ball.getX() - 40, ball.getY() - 40), 0);
-				sulu.addWaypoint(new Position(ball.getX() - 40, ball.getY()), 0);
 			}
 			else
 			{
 				sulu.navigateTo(new Position(ball.getX() + 40, ball.getY() - 40), 0);
-				sulu.addWaypoint(new Position(ball.getX() + 40, ball.getY()), 0);
 			}
 		}
 	}

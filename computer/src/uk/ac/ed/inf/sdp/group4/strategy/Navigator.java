@@ -140,7 +140,7 @@ public class Navigator
 					}
 				
 					// Are we at the destination?
-					if (vectorToTarget.getMagnitude() < 50)
+					if (vectorToTarget.getMagnitude() < 30)
 					{
 						System.out.println("We're close to the ball. Make the final turn!");
 						controller.setSpeed(300);
@@ -170,13 +170,14 @@ public class Navigator
 						
 						if (angle > 150 || angle < -150)
 						{
-							//System.out.println("It's a long way behind us. Quickly turn.");
-							//controller.setSpeed(300);
-							//controller.turn(angle);
-							//Utils.pause(500);
-							//continue;
+							System.out.println("It's a long way behind us. Quickly turn.");
+							controller.setSpeed(300);
+							controller.turn(angle);
+							Utils.pause(1000);
+							continue;
 						}
-						else if (angle < 0)
+						
+						if (angle < 0)
 						{
 							//System.out.println("Turning left");
 						
@@ -234,7 +235,7 @@ public class Navigator
 
 		private int slowerWheelSpeed(double val, int speed)
 		{		
-			return (int) (speed - (speed * Math.abs(val)/30));
+			return (int) (speed - (speed * Math.abs(val)/35));
 		}
 	}
 }

@@ -34,8 +34,8 @@ public class Situation extends JPanel
 	
 		else 
 		{
-			pitchX = 590;
-			pitchY = 305;
+			pitchX = 640;
+			pitchY = 320;
 		}
 	}
 

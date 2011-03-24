@@ -16,6 +16,7 @@ import uk.ac.ed.inf.sdp.group4.world.WorldState;
 import java.util.Random;
 
 import javax.swing.*;
+import java.awt.Color;
 
 public class CastleWindow extends JFrame {
 
@@ -277,7 +278,7 @@ public class CastleWindow extends JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         logWindow.setColumns(20);
-        logWindow.setEditable(false);
+        logWindow.setEditable(true);
         logWindow.setRows(5);
         jScrollPane1.setViewportView(logWindow);
 
@@ -378,6 +379,7 @@ public class CastleWindow extends JFrame {
         );
 
         pack();
+        getContentPane().setBackground(Color.black);
 
 		endButton.setVisible(false);
 		halfTime.setVisible(false);
