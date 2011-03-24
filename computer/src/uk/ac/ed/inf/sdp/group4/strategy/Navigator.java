@@ -173,7 +173,7 @@ public class Navigator
 							if (vectorToTarget.getMagnitude() > 300)
 							{
 								controller.setSpeed(-900);
-								Utils.pause(1000);
+								Utils.pause(900);
 							}
 							
 							controller.setSpeed(300);
@@ -240,7 +240,7 @@ public class Navigator
 
 		private int slowerWheelSpeed(double val, int speed)
 		{		
-			return (int) (speed - (speed * Math.abs(val)/50));
+			return (int) (speed - (speed * Math.abs(val)/35));
 		}
 	}
 }
