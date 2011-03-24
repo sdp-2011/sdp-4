@@ -83,9 +83,25 @@ public class SimpleStrat extends Strategy
 				//System.out.println("Starting get to ball...");
 				else if (!lastBall.isNear(ball.getPosition()) || sulu.isIdle())
 				{
-					System.out.println("Navigating to the ball...");
-					sulu.navigateTo(ball.getPosition(), 0);
-					lastBall = ball.getPosition();
+					if (isAttacking())
+					{
+						if (currentGoal.equals(eastGoal))
+						{
+							sulu.navigateTo(new Position(ball.getX() + 20, ball.getY()), 0);
+						}
+							
+						else
+						{
+							sulu.navigateTo(new Position(ball.getX() - 20, ball.getY()), 0);
+						}
+					}
+					
+					else
+					{
+						System.out.println("Navigating to the ball...");
+						sulu.navigateTo(ball.getPosition(), 0);
+						lastBall = ball.getPosition();
+					}
 				}
 			
 				break;
@@ -121,52 +137,40 @@ public class SimpleStrat extends Strategy
 				break;
 
 			case OWNGOALRISK:
-				if (((ball.getPosition().getX() > robot.getPosition().getX()) && (currentGoal.equals(eastGoal))) ||((ball.getPosition().getX() < 						robot.getPosition().getX()) && (currentGoal.equals(westGoal))))
+				if (((ball.getPosition().getX() > robot.getPosition().getX()) && 
+					(currentGoal.equals(eastGoal))) || ((ball.getPosition().getX() < 
+						robot.getPosition().getX()) && (currentGoal.equals(westGoal))))
 				{
 					System.out.println("We can probably still get it");
-					sulu.addWaypoint(ball.getPosition(),0);
+					sulu.addWaypoint(ball.getPosition(), 0);
 				}
 
 				if (shouldDefend())
 				{
 					System.out.println("We have problems");
 					defenceStrategy();
-					/*
-					if (ball.getPosition().getX() > 162)
-					{
-						if (currentGoal.equals(westGoal))
-						{
-							sulu.navigateTo(new Position(596,308), 0);
-							sulu.addWaypoint(new Position(596,ball.getPosition().getY()),0);
-						}
-						else
-						{
-							sulu.navigateTo(new Position(55,308), 0);
-							sulu.addWaypoint(new Position(55,ball.getPosition().getY()),0);
-						}
-					}
-					else
-					{
-						if (currentGoal.equals(westGoal))
-						{
-							sulu.navigateTo(new Position(596,63), 0);
-							sulu.addWaypoint(new Position(596,ball.getPosition().getY()),0);
-						}
-						else
-						{
-							sulu.navigateTo(new Position(55,63), 0);
-							sulu.addWaypoint(new Position(55,ball.getPosition().getY()),0);
-						}
-					}
-					*/
 				}
 				else
 				{
 					controller.beserk(true);
-	
 					changeState(StrategyState.GETTOBALL);
 				}			
 				break;
+		}
+	}
+	
+	private void waitPause()
+	{
+		
+		long start = System.currentTimeMillis();
+		
+		while (System.currentTimeMillis() < start + 50)
+		{
+			if (shouldShoot())
+			{
+				System.out.println("Kicking next time around.");
+				changeState(StrategyState.KICK);
+			}
 		}
 	}
 
@@ -235,14 +239,14 @@ public class SimpleStrat extends Strategy
 
 		if (currentGoal.equals(eastGoal))
 		{
-			if ((angle > 30) && (angle < 150))
+			if ((angle > 20) && (angle < 160))
 			{
 				return true;
 			}
 		}
 		else
 		{
-			if ((angle > 210) && (angle < 330))
+			if ((angle > 200) && (angle < 340))
 			{
 				return true;
 			}
@@ -265,6 +269,19 @@ public class SimpleStrat extends Strategy
 		}
 		
 		return Math.abs(robotToBall.angleFrom(robot.getFacing())) < 17;
+	}
+	
+	public boolean isAttacking()
+	{
+		if (currentGoal.equals(eastGoal))
+		{
+			return robot.getX() < ball.getX();
+		}
+		
+		else
+		{
+			return robot.getX() > ball.getX();
+		}
 	}
 
 	public void penaltyDefend()

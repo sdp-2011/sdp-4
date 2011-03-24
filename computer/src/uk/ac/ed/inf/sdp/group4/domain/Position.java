@@ -47,7 +47,7 @@ public class Position
 
 	public boolean isNear(Position pos)
 	{	
-		return distance(pos) < 8;
+		return distance(pos) < 12;
 	}
 
 	public double distance(Position dest)

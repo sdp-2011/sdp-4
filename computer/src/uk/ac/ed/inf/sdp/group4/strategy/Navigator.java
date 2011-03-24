@@ -168,12 +168,17 @@ public class Navigator
 
 						//System.out.println("S-Angle: " + angle * 2);
 						
-						if (angle > 150 || angle < -150)
+						if (angle > 160 || angle < -140)
 						{
-							System.out.println("It's a long way behind us. Quickly turn.");
+							if (vectorToTarget.getMagnitude() > 300)
+							{
+								controller.setSpeed(-900);
+								Utils.pause(1000);
+							}
+							
 							controller.setSpeed(300);
 							controller.turn(angle);
-							Utils.pause(1000);
+							Utils.pause(600);
 							continue;
 						}
 						
@@ -235,7 +240,7 @@ public class Navigator
 
 		private int slowerWheelSpeed(double val, int speed)
 		{		
-			return (int) (speed - (speed * Math.abs(val)/35));
+			return (int) (speed - (speed * Math.abs(val)/50));
 		}
 	}
 }
