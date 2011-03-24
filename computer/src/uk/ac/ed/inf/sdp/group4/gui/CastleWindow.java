@@ -13,6 +13,7 @@ import uk.ac.ed.inf.sdp.group4.strategy.Strategy;
 import uk.ac.ed.inf.sdp.group4.world.IVisionClient;
 import uk.ac.ed.inf.sdp.group4.world.VisionClient;
 import uk.ac.ed.inf.sdp.group4.world.WorldState;
+import java.util.Random;
 
 import javax.swing.*;
 
@@ -253,6 +254,25 @@ public class CastleWindow extends JFrame {
 		
 		//remove this once sim is fixed
 		simStart.setEnabled(false);
+		simStart.setVisible(false);
+
+		Random random = new Random();
+		int select = random.nextInt(3);
+
+		if (select == 0)
+		{
+			logWindow.setText("The only way of finding the limits of the possible is by going beyond them into the" 				+ "impossible.");
+		}
+
+		else if (select == 1)
+		{
+			logWindow.setText("Ask yourself this question: 'Will this matter a year from now?'");
+		}
+
+		else if (select == 2)
+		{
+			logWindow.setText("At least you're not in Stephen's team...");
+		}
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
