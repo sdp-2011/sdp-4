@@ -71,6 +71,6 @@ public abstract class WorldObject
 
 	public boolean isNear(Position position)
 	{
-		return getPosition().distance(position) < 40;
+		return getPosition().distance(position) < 35;
 	}
 }

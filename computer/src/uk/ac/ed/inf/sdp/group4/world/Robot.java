@@ -60,6 +60,16 @@ public class Robot extends WorldObject
 			return this.getX() >= 280;
 		}
 	}
+	
+	public boolean inLeftHalf()
+	{
+		return this.getX() < 280;
+	}
+	
+	public boolean inRightHalf()
+	{
+		return !inLeftHalf();
+	}
 
 	public boolean inEnemyHalf()
 	{
@@ -79,6 +89,30 @@ public class Robot extends WorldObject
 		else
 		{
 			return false;
+		}
+	}
+	
+	public boolean isAimingNorth()
+	{
+		if (inLeftHalf())
+		{
+			return this.getFacing() > 285;
+		}
+		else
+		{
+			return this.getFacing() < 75;
+		}
+	}
+	
+	public boolean isAimingSouth()
+	{
+		if (inLeftHalf())
+		{
+			return this.getFacing() < 265;
+		}
+		else
+		{
+			return this.getFacing() > 105;
 		}
 	}
 }

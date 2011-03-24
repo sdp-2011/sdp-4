@@ -18,12 +18,15 @@ public class SimpleStrat extends Strategy
 		KICK,
 		DEFENCE,
 		PENALTYATTACK,
-		PENALTYDEFEND
+		PENALTYDEFEND,
+		OWNGOALRISK
 	}
 
 	private StrategyState state;
 	private Navigator sulu;
 	private Position lastBall;
+	
+	private PenaltySaveTactic pst;
 
 	public SimpleStrat(IVisionClient client, Controller controller, RobotColour colour)
 	{
@@ -41,6 +44,7 @@ public class SimpleStrat extends Strategy
 
 		// Create the navigator. Warp 9.
 		sulu = new Navigator(controller, client, colour);
+		pst = new PenaltySaveTactic(controller);
 	}
 
 	public void tick()
@@ -57,36 +61,39 @@ public class SimpleStrat extends Strategy
 			
 			// Chase that shit.
 			case GETTOBALL:
-				//System.out.println("Starting get to ball...");
-				if (!lastBall.isNear(ball.getPosition()) || sulu.isIdle())
-				{
-					System.out.println("Navigating to the ball...");
-					sulu.navigateTo(ball.getPosition(), 0);
-					lastBall = ball.getPosition();
-				}
-
 				//System.out.println("Should we shoot?");
 				if (shouldShoot())
 				{
 					System.out.println("Kicking next time around.");
 					changeState(StrategyState.KICK);
 				}
+				
+				if (ball.isHidden())
+				{
+					System.out.println("Oh noes, ball are gon!");
+					break;
+				}
 
 				if (shouldDefend())
 				{
-					System.out.println("Defending the ball...");
-					changeState(StrategyState.DEFENCE);
+					controller.beserk(false);
+					changeState(StrategyState.OWNGOALRISK);
+					break;
+				}
+				//System.out.println("Starting get to ball...");
+				else if (!lastBall.isNear(ball.getPosition()) || sulu.isIdle())
+				{
+					System.out.println("Navigating to the ball...");
+					sulu.navigateTo(ball.getPosition(), 0);
+					lastBall = ball.getPosition();
 				}
 			
-				break;
-			
-			case DEFENCE:
-				defenceStrategy();
 				break;
 			
 			// Score goals.
 			case KICK:
 				System.out.println("Shooting!");
+				controller.driveForward(20);
 				controller.shoot();
 				Utils.pause(1000);
 				changeState(StrategyState.GETTOBALL);
@@ -102,9 +109,64 @@ public class SimpleStrat extends Strategy
 
 			// Defend a penalty.
 			case PENALTYDEFEND:
-				PenaltySaveTactic pst = new PenaltySaveTactic(controller);
+				if (!pst.isInitialised())
+					pst.setInitialBallPosition(ball.getPosition());
+				
 				pst.tick(robot, enemyRobot, ball);
-				changeState(StrategyState.GETTOBALL);
+				
+				if (pst.isDone())
+				{
+					changeState(StrategyState.GETTOBALL);
+				}
+
+				break;
+
+			case OWNGOALRISK:
+				if (((ball.getPosition().getX() > robot.getPosition().getX()) && (currentGoal.equals(eastGoal))) ||((ball.getPosition().getX() < 						robot.getPosition().getX()) && (currentGoal.equals(westGoal))))
+				{
+					System.out.println("We can probably still get it");
+					sulu.addWaypoint(ball.getPosition(),0);
+				}
+
+				if (shouldDefend())
+				{
+					System.out.println("We have problems");
+					/*
+					if (ball.getPosition().getX() > 162)
+					{
+						if (currentGoal.equals(westGoal))
+						{
+							sulu.navigateTo(new Position(596,308), 0);
+							sulu.addWaypoint(new Position(596,ball.getPosition().getY()),0);
+						}
+						else
+						{
+							sulu.navigateTo(new Position(55,308), 0);
+							sulu.addWaypoint(new Position(55,ball.getPosition().getY()),0);
+						}
+					}
+					else
+					{
+						if (currentGoal.equals(westGoal))
+						{
+							sulu.navigateTo(new Position(596,63), 0);
+							sulu.addWaypoint(new Position(596,ball.getPosition().getY()),0);
+						}
+						else
+						{
+							sulu.navigateTo(new Position(55,63), 0);
+							sulu.addWaypoint(new Position(55,ball.getPosition().getY()),0);
+						}
+					}
+					*/
+				}
+				else
+				{
+					controller.beserk(true);
+	
+					changeState(StrategyState.GETTOBALL);
+				
+				}			
 				break;
 		}
 	}
@@ -128,24 +190,20 @@ public class SimpleStrat extends Strategy
 
 	public boolean shouldDefend()
 	{
-		if (currentGoal.equals(eastGoal))
+		if ((ball.getPosition().getX() > 475) && (currentGoal.equals(westGoal)))
 		{
-			if (ball.getX() + 20 < robot.getX())
-			{
-				return true;
-			}
-		}
-		else
+			System.out.println("We need to defend!");
+			return true;
+		}	
+		else if ((ball.getPosition().getX() > 10) && (ball.getPosition().getX() < 125) && (currentGoal.equals(eastGoal)))
 		{
-			if (ball.getX() + 20 > robot.getX())
-			{
-				return true;
-			}
+			System.out.println("We need to defend!");
+			return true;
 		}
 
 		return false;
 	}
-
+ 
 	public void defenceStrategy()
 	{
 		if (ball.inTopHalf())

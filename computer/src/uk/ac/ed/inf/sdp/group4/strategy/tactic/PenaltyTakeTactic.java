@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import uk.ac.ed.inf.sdp.group4.controller.Controller;
 import uk.ac.ed.inf.sdp.group4.world.Ball;
 import uk.ac.ed.inf.sdp.group4.world.Robot;
+import java.util.Random;
 
 public class PenaltyTakeTactic extends Tactic
 {
@@ -23,17 +24,42 @@ public class PenaltyTakeTactic extends Tactic
 	public void tick(Robot ours, Robot enemy, Ball ball)
 	{
 		// Turn the opposite direction.
+		boolean turnedRight = false;
+		
+		Random rand = new Random();
+		int dummy = rand.nextInt(2);
+			
+		if (dummy == 1)
+		{
+			turnedRight = true;
+			controller.turn(28);
+		}
+		
+		else 
+		{
+			controller.turn(-28);
+		}
+		
+		pause(700);
+		
 		if (enemy.inTopHalf())
 		{
-			controller.turn(-30);
+			if (turnedRight)
+			{
+				controller.turn(-50);
+				pause(700);
+			}
 		}
 		else
 		{
-			controller.turn(30);
+			if (!turnedRight)
+			{
+				controller.turn(50);
+				pause(700);
+			}
 		}
 
 		// Wait for the turn to complete
-		pause(700);
 
 		// Shooot!
 		controller.shoot();
