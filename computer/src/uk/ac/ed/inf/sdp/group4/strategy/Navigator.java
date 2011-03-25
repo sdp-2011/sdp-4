@@ -125,11 +125,11 @@ public class Navigator
 					// Get the current robot position.
 					Robot robot = getCurrentPosition();
 				
-					System.out.println("Robot: [Angle: " + robot.getFacing() +
-						"] [Position: (" + robot.getX() + ", " + robot.getY() + ")]");
+					//System.out.println("Robot: [Angle: " + robot.getFacing() +
+					//	"] [Position: (" + robot.getX() + ", " + robot.getY() + ")]");
 				
-					System.out.println("Waypoint: (" + this.currentWaypoint.getX() +
-						", " + this.currentWaypoint.getY() + ")");
+					//System.out.println("Waypoint: (" + this.currentWaypoint.getX() +
+					//	", " + this.currentWaypoint.getY() + ")");
 				
 					Vector vectorToTarget = null;
 					try {
@@ -142,10 +142,11 @@ public class Navigator
 					// Are we at the destination?
 					if (vectorToTarget.getMagnitude() < 30)
 					{
-						System.out.println("We're close to the ball. Make the final turn!");
+						//System.out.println("We're close to the ball. Make the final turn!");
 						controller.setSpeed(300);
 						double angle = vectorToTarget.angleFrom(robot.getFacing());
 						controller.turn((int)angle);
+						System.out.println("Final turn: " + angle);
 						Utils.pause(500);
 						atDestination = true;
 						idle = true;
@@ -158,7 +159,7 @@ public class Navigator
 
 						if (angle > Math.abs(20))
 						{
-							speed = MAX_SPEED/3;
+							speed = MAX_SPEED/2;
 						}
 						else
 						{
@@ -177,13 +178,13 @@ public class Navigator
 							
 							controller.setSpeed(300);
 							controller.turn(angle);
-							Utils.pause(600);
+							Utils.pause(1000);
 							continue;
 						}
 						
 						if (angle < 0)
 						{
-							//System.out.println("Turning left");
+							System.out.println("Turning left");
 						
 							int rightMotorSpeed = Utils.clamp((int)(0.95 * speed), -900, 900);
 							int leftMotorSpeed = Utils.clamp(slowerWheelSpeed((int)angle/2, speed), -900, 900);
@@ -193,7 +194,7 @@ public class Navigator
 						}
 						else
 						{
-							//System.out.println("Turning right");
+							System.out.println("Turning right");
 
 							int leftMotorSpeed = Utils.clamp(speed, -900, 900);
 							int rightMotorSpeed = Utils.clamp((int)(0.95 * slowerWheelSpeed(angle/2, speed)),

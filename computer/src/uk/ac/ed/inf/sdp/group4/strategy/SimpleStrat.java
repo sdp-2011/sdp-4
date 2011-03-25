@@ -196,12 +196,12 @@ public class SimpleStrat extends Strategy
 	{
 		if ((ball.getPosition().getX() > 475) && (currentGoal.equals(westGoal)))
 		{
-			System.out.println("We need to defend!");
+			//System.out.println("We need to defend!");
 			return true;
 		}	
 		else if ((ball.getPosition().getX() > 10) && (ball.getPosition().getX() < 125) && (currentGoal.equals(eastGoal)))
 		{
-			System.out.println("We need to defend!");
+			//System.out.println("We need to defend!");
 			return true;
 		}
 

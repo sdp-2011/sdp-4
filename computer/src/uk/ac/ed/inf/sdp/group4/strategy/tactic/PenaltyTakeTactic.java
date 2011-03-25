@@ -23,6 +23,12 @@ public class PenaltyTakeTactic extends Tactic
 	@Override
 	public void tick(Robot ours, Robot enemy, Ball ball)
 	{
+		boolean eastGoal = ours.getX() > 280;
+		
+		int modifier = 1;
+		if (eastGoal)
+			modifier = -1;
+		
 		// Turn the opposite direction.
 		boolean turnedRight = false;
 		
@@ -32,12 +38,12 @@ public class PenaltyTakeTactic extends Tactic
 		if (dummy == 1)
 		{
 			turnedRight = true;
-			controller.turn(28);
+			controller.turn(modifier * 28);
 		}
 		
 		else 
 		{
-			controller.turn(-28);
+			controller.turn(modifier * -28);
 		}
 		
 		pause(700);
@@ -46,7 +52,7 @@ public class PenaltyTakeTactic extends Tactic
 		{
 			if (turnedRight)
 			{
-				controller.turn(-50);
+				controller.turn(modifier * -50);
 				pause(700);
 			}
 		}
@@ -54,7 +60,7 @@ public class PenaltyTakeTactic extends Tactic
 		{
 			if (!turnedRight)
 			{
-				controller.turn(50);
+				controller.turn(modifier * 50);
 				pause(700);
 			}
 		}
