@@ -109,8 +109,9 @@ public class SimpleStrat extends Strategy
 			// Score goals.
 			case KICK:
 				System.out.println("Shooting!");
+				controller.setSpeed(900);
 				controller.shoot();
-				pause(300);
+				pause(500);
 				changeState(StrategyState.GETTOBALL);
 				break;
 			

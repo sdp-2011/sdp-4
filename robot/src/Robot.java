@@ -183,6 +183,8 @@ public class Robot
 		{
 			try
 			{
+				SHOOT_MOTOR.backward();
+				Thread.sleep(30);
 				SHOOT_MOTOR.forward();
 				Thread.sleep(130);
 				SHOOT_MOTOR.backward();
