@@ -186,7 +186,7 @@ public class Navigator
 						{
 							System.out.println("Turning left");
 						
-							int rightMotorSpeed = Utils.clamp((int)(0.95 * speed), -900, 900);
+							int rightMotorSpeed = Utils.clamp((int)(speed), -900, 900);
 							int leftMotorSpeed = Utils.clamp(slowerWheelSpeed((int)angle/2, speed), -900, 900);
 
 							controller.setRightMotorSpeed(rightMotorSpeed);
@@ -197,7 +197,7 @@ public class Navigator
 							System.out.println("Turning right");
 
 							int leftMotorSpeed = Utils.clamp(speed, -900, 900);
-							int rightMotorSpeed = Utils.clamp((int)(0.95 * slowerWheelSpeed(angle/2, speed)),
+							int rightMotorSpeed = Utils.clamp((int)(slowerWheelSpeed(angle/2, speed)),
 								-900, 900);
 
 							controller.setLeftMotorSpeed(leftMotorSpeed);
